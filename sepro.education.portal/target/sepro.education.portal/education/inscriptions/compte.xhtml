@@ -1,0 +1,163 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:uf="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml">
+	<ui:define name="content">
+		<p:growl id="growl" showDetail="true" sticky="false" />
+		<div class="container-fluid">
+
+			<h:form id="fdial">
+				<h3>#{messages.label_createcomp}</h3>
+				<p:steps activeIndex="0" styleClass="custom" readonly="false">
+					<p:menuitem value="etape1" url="#" />
+					<p:menuitem value="etape2" url="declaration.xhtml" />
+					<p:menuitem value="etape3" url="parent.xhtml" />
+					<p:menuitem value="etape4" url="listecurriculum.xhtml" />
+					<p:menuitem value="etape5" url="televersement.xhtml" />
+					<p:menuitem value="etape6" url="validation.xhtml" />
+				</p:steps>
+			</h:form>
+
+			<br></br> <br></br>
+			
+				<p:tab id="compte" title="#{messages.label_createcomp}">
+				   <p:panel id="pan1" header="#{messages.label_comp}">
+				   <h:form id="forme">
+				   
+					<div class="ui-grid ui-grid-responsive wrap class">
+						<div class="col-xs-12">
+								<div class="row">
+									<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+												value="#{messages.label_emailad}" />
+									</div>
+									
+									<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:inputText styleClass="form-control" id="email"
+												value="#{inscriptionSearchServiceBean.inscriptionDto.emailAdd}"
+												placeholder="#{messages.label_email}" match="emailconfirm"
+												required="true"
+												requiredMessage="#{messages.label_email_requeried}"
+												validatorMessage="#{messages.label_emailadd}">
+												<f:validateRegex
+											pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+												<p:ajax event="keyup" />
+											</p:inputText>
+										</div>
+										
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+												value="#{messages.label_emailadcomfirm}" 
+												for="emailconfirm"/>
+									</div>
+									
+									<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:inputText styleClass="form-control"
+												id="emailconfirm"
+												value="#{inscriptionSearchServiceBean.inscriptionDto.emailAdd}"
+												required="true"
+												placeholder="#{messages.label_emailAdd_confirm}"
+												validatorMessage="#{messages.label_match_email}">
+												<f:validateRegex
+											pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+												<p:ajax event="keyup" />
+											</p:inputText>
+										</div>
+										
+										
+										
+
+										
+										</div>
+										
+										<div class="row">
+										
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+												value="#{messages.label_password_name}" />
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:password styleClass="form-control" id="pwd"
+												value="#{inscriptionSearchServiceBean.inscriptionDto.password}"
+												placeholder="#{messages.label_pwd}" match="confirmpassword"
+												feedback="true" required="true"
+												requiredMessage="#{messages.label_password_requeried}">
+											<p:ajax event="keyup" />
+											</p:password>
+										</div>
+										
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+												value="#{messages.label_confirmpassword_name}"
+												for="confirmpassword" />
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:password styleClass="form-control"
+												id="confirmpassword"
+												value="#{inscriptionSearchServiceBean.inscriptionDto.password}"
+												placeholder="#{messages.label_pwd_confirm}" required="true"
+												validatorMessage="#{messages.label_match_password}"
+												requiredMessage="#{messages.label_confirmpassword_requeried}">
+												<p:ajax event="keyup" />
+											</p:password>
+										</div>
+										</div>
+										
+										<div class="row">
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+												value="#{messages.label_profile}" />
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:selectOneMenu styleClass="form-text"
+												id="profil"
+												value="#{inscriptionSearchServiceBean.inscriptionDto.profile}"
+													required="true"
+										requiredMessage="#{messages.label_profil_requeried}"
+												converter="entityConverter">
+												<f:selectItem
+													itemLabel="#{inscriptionSearchServiceBean.inscriptionDto.profile.profilName}"
+													itemValue="#{inscriptionSearchServiceBean.inscriptionDto.profile}"/>
+												<f:selectItems
+													value="#{inscriptionSearchServiceBean.listProfile}"
+													var="profile" itemValue="#{profile}"
+													itemLabel="#{profile.profilName}" />
+													<f:ajax event="blur" render="" />
+											</p:selectOneMenu>
+											</div>
+											<div class="col-lg-3 col-md-3 col-sm-3"></div>
+									<div class="col-lg-3 col-md-3 col-sm-3"></div>
+										</div>
+										
+										<br></br> <br></br>
+										</div>
+										
+										
+										
+                                        <div class="row">
+                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+											<p:commandButton value="#{messages.label_createcompte}"
+												styleClass="btn btn-primary"
+												action="#{inscriptionSearchServiceBean.redirect2('/sepro.education.portal/education/inscriptions/declaration.xhtml')}"
+												update="growl pan1">
+											</p:commandButton>
+										</div>
+										
+										 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+											<p:commandButton value="#{messages.label_button_annuler}"
+												type="reset" styleClass="btn btn-default btn-sm offset"
+												id="annuler" />
+										</div>
+									</div>
+								</div>
+										
+							
+							</h:form>
+							</p:panel>
+				</p:tab>
+			
+		</div>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,100 @@
+{
+  "checksum": {
+    "previous": "b0511eb4fb36b14e7338d65b0e514dfcaab98204e2ad638799c5f2ddaa970fb9",
+    "current": "b0511eb4fb36b14e7338d65b0e514dfcaab98204e2ad638799c5f2ddaa970fb9"
+  },
+  "fonts": [
+    "/var/www/static/flaticon/download/down-collection_094041100-1457521802/font/Flaticon.ttf",
+    "/var/www/static/flaticon/download/down-collection_094041100-1457521802/font/Flaticon.svg",
+    "/var/www/static/flaticon/download/down-collection_094041100-1457521802/font/Flaticon.woff",
+    "/var/www/static/flaticon/download/down-collection_094041100-1457521802/font/Flaticon.eot"
+  ],
+  "glyphs": {
+    "avatar": {
+      "codepoint": 61696,
+      "source": "/var/www/static/flaticon/download/down-collection_094041100-1457521802/svg/avatar.svg"
+    },
+    "cogwheel28": {
+      "codepoint": 61697,
+      "source": "/var/www/static/flaticon/download/down-collection_094041100-1457521802/svg/cogwheel28.svg"
+    },
+    "computer": {
+      "codepoint": 61698,
+      "source": "/var/www/static/flaticon/download/down-collection_094041100-1457521802/svg/computer.svg"
+    },
+    "gps": {
+      "codepoint": 61699,
+      "source": "/var/www/static/flaticon/download/down-collection_094041100-1457521802/svg/gps.svg"
+    },
+    "list100": {
+      "codepoint": 61700,
+      "source": "/var/www/static/flaticon/download/down-collection_094041100-1457521802/svg/list100.svg"
+    },
+    "man115": {
+      "codepoint": 61701,
+      "source": "/var/www/static/flaticon/download/down-collection_094041100-1457521802/svg/man115.svg"
+    },
+    "profile10": {
+      "codepoint": 61702,
+      "source": "/var/www/static/flaticon/download/down-collection_094041100-1457521802/svg/profile10.svg"
+    },
+    "school": {
+      "codepoint": 61703,
+      "source": "/var/www/static/flaticon/download/down-collection_094041100-1457521802/svg/school.svg"
+    },
+    "school52": {
+      "codepoint": 61704,
+      "source": "/var/www/static/flaticon/download/down-collection_094041100-1457521802/svg/school52.svg"
+    },
+    "symbols": {
+      "codepoint": 61705,
+      "source": "/var/www/static/flaticon/download/down-collection_094041100-1457521802/svg/symbols.svg"
+    },
+    "tool598": {
+      "codepoint": 61706,
+      "source": "/var/www/static/flaticon/download/down-collection_094041100-1457521802/svg/tool598.svg"
+    },
+    "transport315": {
+      "codepoint": 61707,
+      "source": "/var/www/static/flaticon/download/down-collection_094041100-1457521802/svg/transport315.svg"
+    },
+    "wall-clock": {
+      "codepoint": 61708,
+      "source": "/var/www/static/flaticon/download/down-collection_094041100-1457521802/svg/wall-clock.svg"
+    }
+  },
+  "options": {
+    "autowidth": false,
+    "config": false,
+    "css_selector": ".flaticon-{{glyph}}",
+    "debug": false,
+    "font_ascent": 448,
+    "font_descent": 64,
+    "font_design_size": 16,
+    "font_em": 512,
+    "font_name": "Flaticon",
+    "force": true,
+    "input": {
+      "templates": "/var/www/static/flaticon/download/down-collection_094041100-1457521802/svg",
+      "vectors": "/var/www/static/flaticon/download/down-collection_094041100-1457521802/svg"
+    },
+    "no_hash": true,
+    "output": {
+      "css": "/var/www/static/flaticon/download/down-collection_094041100-1457521802/font",
+      "fonts": "/var/www/static/flaticon/download/down-collection_094041100-1457521802/font",
+      "preview": "/var/www/static/flaticon/download/down-collection_094041100-1457521802/font"
+    },
+    "preprocessor_path": null,
+    "quiet": true,
+    "templates": [
+      "../../../../../sites/flaticon/libraries/webfont/templates/flaticon.html",
+      "../../../../../sites/flaticon/libraries/webfont/templates/_flaticon.scss",
+      "../../../../../sites/flaticon/libraries/webfont/templates/flaticon.css"
+    ]
+  },
+  "templates": [
+    "/var/www/static/flaticon/download/down-collection_094041100-1457521802/font/flaticon.html",
+    "/var/www/static/flaticon/download/down-collection_094041100-1457521802/font/_flaticon.scss",
+    "/var/www/static/flaticon/download/down-collection_094041100-1457521802/font/flaticon.css"
+  ]
+}

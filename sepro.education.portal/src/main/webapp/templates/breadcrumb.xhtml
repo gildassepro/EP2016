@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<div class="row">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<!--breadcrumbs start -->
+			<ul class="breadcrumb">
+				<li><a href="../index.xhtml"><i class="fa fa-home"></i></a></li>
+				<ui:repeat var="module" value="#{userServiceBean.listModules}">
+					<c:set var="modparam" value="#{module.idModule}" />
+					<c:set var="modselect" value="#{userServiceBean.selectedModule}" />
+					<ui:fragment rendered="#{modparam eq modselect}">
+						<li><h:outputLink value="../#{module.moduleRef}">
+				   				#{module.moduleName}
+				   				<f:param name="menu" value="0" />
+								<f:param name="sousmenu" value="0" />
+							</h:outputLink></li>
+						<ui:repeat var="menu" value="#{module.menus.menu}">
+							<c:set var="menparam" value="#{menu.idMenu}" />
+							<c:set var="menselect" value="#{userServiceBean.selectedMenu}" />
+							<ui:fragment rendered="#{menparam eq menselect}">
+								<li><a href="#">#{menu.menuName}</a></li>
+								<ui:repeat var="childMenu" value="#{menu.childMenu.childMenu}">
+									<c:set var="smenparam" value="#{childMenu.idMenu}" />
+									<c:set var="smenselect"
+										value="#{userServiceBean.selectedSousMenu}" />
+									<ui:fragment rendered="#{smenparam eq smenselect}">
+										<li class="active">#{childMenu.menuName}</li>
+									</ui:fragment>
+								</ui:repeat>
+							</ui:fragment>
+						</ui:repeat>
+					</ui:fragment>
+				</ui:repeat>
+			</ul>
+		</div>
+	</div>
+</ui:fragment>

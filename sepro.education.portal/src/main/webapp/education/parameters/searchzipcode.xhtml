@@ -1,0 +1,228 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:uf="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+	template="/templates/template.xhtml">
+	<ui:define name="content">
+		<p:growl id="growl" showDetail="true" sticky="false" />
+		<div class="container-fluid">
+			<b:row>
+				<p:overlayPanel id="updatzipcode" widgetVar="updatezipcode"
+					showEffect="fade" hideEffect="fade" dismissable="false"
+					showCloseIcon="true">
+					<div class="messages">
+						<p:messages for="description" id="zareaname"></p:messages>
+						<p:messages for="zipcode" id="zzipcode"></p:messages>
+						<p:messages for="selectcity" id="listecity"></p:messages>
+					</div>
+					<h:form id="fdial">
+						<h3 style="margin-top: 0">
+							<p:outputLabel value="#{messages.label_creationzipcode}"
+								rendered="#{zipCodeSearchServiceBean.isAction()}" />
+							<p:outputLabel value="#{messages.label_modifier_Zipcode}"
+								rendered="#{!zipCodeSearchServiceBean.isAction()}" />
+						</h3>
+
+						<div class="ui-grid ui-grid-responsive">
+							<div class="row">
+								<div class="col-md-4 col-sm-4 label-input">
+									<p:outputLabel value="#{messages.label_city}:*" />
+								</div>
+								<div class="col-md-8 col-sm-8">
+									<p:selectOneMenu id="selectcity" styleClass="form-text"
+										value="#{zipCodeSearchServiceBean.zipcodeDto.city}"
+										converter="entityConverter"
+										placeholder="#{messages.label_city}" required="true"
+										immediate="true"
+										requiredMessage="#{messages.label_choix_ville}">
+										<f:selectItem
+											itemLabel="#{zipCodeSearchServiceBean.zipcodeDto.city.cityName}"
+											itemValue="#{zipCodeSearchServiceBean.zipcodeDto.city}"
+											label="#{messages.label_zipcode}" />
+										<f:selectItems value="#{zipCodeSearchServiceBean.listCity}"
+											var="city" itemValue="#{city}" itemLabel="#{city.cityName}" />
+									</p:selectOneMenu>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-4 col-sm-4 label-input">
+									<p:outputLabel value="#{messages.label_zipcode}*" />
+								</div>
+								<div class="col-md-8 col-sm-8">
+									<p:inputText id="zipcode"
+										value="#{zipCodeSearchServiceBean.zipcodeDto.zipCode}"
+										placeholder="#{messages.label_zipcode}">
+										<f:validateLength minimum="1" maximum="64" />
+										<p:ajax update="zzipcode" event="keyup" />
+									</p:inputText>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-4 col-sm-4 label-input">
+									<p:outputLabel value="#{messages.label_description}*" />
+								</div>
+								<div class="col-md-8 col-sm-8">
+									<p:inputText id="desciption"
+										value="#{zipCodeSearchServiceBean.zipcodeDto.areaName}"
+										placeholder="#{messages.label_description}" required="true"
+										requiredMessage="#{messages.label_description_zipcode_requeried}">
+										<f:validateLength maximum="128" />
+										<p:ajax update="zareaname" event="keyup" />
+									</p:inputText>
+								</div>
+							</div>
+
+							<div class="button-wrapper">
+								<p:commandButton value="#{messages.label_modifier}"
+									styleClass="btn btn-primary"
+									rendered="#{!zipCodeSearchServiceBean.isAction()}"
+									action="#{zipCodeSearchServiceBean.updateZipCode()}"
+									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatezipcode').hide()"
+									update="forme fdial growl" />
+								<p:commandButton value="#{messages.label_create}"
+									styleClass="btn btn-primary"
+									rendered="#{zipCodeSearchServiceBean.isAction()}"
+									action="#{zipCodeSearchServiceBean.createZipCode()}"
+									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatezipcode').hide()"
+									update="forme fdial growl" />
+								<p:commandButton value="#{messages.label_button_annuler}"
+									type="reset" onclick="PF('updatezipcode').hide()"
+									update="fdial" styleClass="btn btn-default btn-sm offset"
+									id="annulerButton">
+								</p:commandButton>
+							</div>
+						</div>
+					</h:form>
+				</p:overlayPanel>
+
+				<h:form id="forme">
+					<p:accordionPanel>
+						<p:tab title="#{messages.label_listzipcode}">
+							<b:row styleClass="listPage">
+								<div class="table-header">
+									<p:commandButton id="add" title="#{messages.label_add}"
+										action="#{zipCodeSearchServiceBean.initDualList('2')}"
+										update="@([id$=updatzipcode])"
+										oncomplete="PF('updatezipcode').show()"
+										value="#{messages.label_modifier}"
+										styleClass="btn btn-primary submit-button"
+										icon="fa fa-fw fa-plus">
+									</p:commandButton>
+									<p:blockUI block="add" trigger="add">
+											#{messages.label_loading}<br />
+										<p:graphicImage value="/resources/images/loadingpics.gif" />
+									</p:blockUI>
+								</div>
+								<p:dataTable id="listzipcode"
+									value="#{zipCodeSearchServiceBean.listZipcode}" var="zipcod"
+									widgetVar="zipcodeTable" emptyMessage="#{messages.label_empty}"
+									styleClass="listeTable table-responsive filterable"
+									tableStyleClass="table table-striped table-condensed table-hover"
+									rowKey="#{zipcod.idZipcode}" selectionMode="single"
+									paginator="true" paginatorPosition="bottom"
+									paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
+									rows="10" filterBy="#{zipcod.areaName}">
+
+									<p:column priority="3" width="40"
+										filterBy="#{zipcod.idZipcode}" filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_id}" />
+										</f:facet>
+										<h:outputText value="#{zipcod.idZipcode}"></h:outputText>
+									</p:column>
+
+									<p:column priority="2"
+										filterBy="#{zipcod.city.region.country.countryName}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_countryname}" />
+										</f:facet>
+										<h:outputText
+											value="#{zipcod.city.region.country.countryName}"></h:outputText>
+									</p:column>
+
+									<p:column priority="2" filterBy="#{zipcod.city.cityName}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_cityname}" />
+										</f:facet>
+										<h:outputText value="#{zipcod.city.cityName}"></h:outputText>
+									</p:column>
+
+									<p:column priority="1" filterBy="#{zipcod.zipCode}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_zipcode}" />
+										</f:facet>
+										<h:outputText value="#{zipcod.zipCode}"></h:outputText>
+									</p:column>
+
+									<p:column priority="2" filterBy="#{zipcod.areaName}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_description}" />
+										</f:facet>
+										<h:outputText value="#{zipcod.areaName}"></h:outputText>
+									</p:column>
+
+
+									<p:column priority="1" width="100" filterMatchMode="contains">
+										<f:facet name="header">
+											<!-- 		 <p:outputLabel value="#{messages.label_action}" /> -->
+											<p:outputLabel value="#{messages.label_action}" />
+										</f:facet>
+										<p:commandButton id="modifier" styleClass="btn btn-success"
+											title="#{messages.label_modifier}"
+											action="#{zipCodeSearchServiceBean.initDualList('1')}"
+											update="@([id$=updatzipcode])"
+											oncomplete="PF('updatezipcode').show()"
+											value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil">
+											<f:setPropertyActionListener value="#{zipcod}"
+												target="#{zipCodeSearchServiceBean.zipscodeDto}" />
+										</p:commandButton>
+
+										<p:commandButton id="supprimer" styleClass="btn btn-danger"
+											title="#{messages.label_supprimer1}"
+											onclick="PF('confirmation').show()"
+											value="#{messages.label_supprimer1}"
+											icon="fa fa-fw fa-remove">
+											<f:setPropertyActionListener value="#{zipcod}"
+												target="#{zipCodeSearchServiceBean.zipscodeDto}" />
+										</p:commandButton>
+										<p:blockUI block="listzipcode"
+											trigger="listzipcode:supprimer,listzipcode:modifier">
+											#{messages.label_loading}<br />
+											<p:graphicImage value="/resources/images/loadingpics.gif" />
+										</p:blockUI>
+										<p:confirmDialog
+											message="#{messages.label_msg_alerte_supression}"
+											header="Confirmation" widgetVar="confirmation">
+											<p:commandButton value="#{messages.label_msg_confirmOui}"
+												onclick="PF('confirmation').hide()"
+												action="#{zipCodeSearchServiceBean.supprimerZipCode()}"
+												update="forme growl" />
+											<p:commandButton value="#{messages.label_msg_confirmNon}"
+												onclick="PF('confirmation').hide()" type="button" />
+										</p:confirmDialog>
+									</p:column>
+								</p:dataTable>
+
+								<p:contextMenu for="listzipcode">
+									<p:menuitem value="Modifier" icon="ui-icon-search" />
+									<p:menuitem value="Supprimer" icon="ui-icon-search" />
+									<p:separator />
+									<p:menuitem value="Détails" icon="ui-icon-close" />
+								</p:contextMenu>
+							</b:row>
+						</p:tab>
+					</p:accordionPanel>
+				</h:form>
+			</b:row>
+		</div>
+	</ui:define>
+</ui:composition>
+

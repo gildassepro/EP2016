@@ -1,0 +1,220 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:uf="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+	template="/templates/template.xhtml">
+	<ui:define name="content">
+		<p:growl id="growl" showDetail="true" sticky="false" />
+		<div class="container-fluid">
+			<b:row>
+				<p:overlayPanel id="updatregion" widgetVar="updateregion"
+					showEffect="fade" hideEffect="fade" dismissable="false"
+					showCloseIcon="true">
+					<div class="messages">
+						<p:messages for="regionname" id="rregionname"></p:messages>
+						<p:messages for="regioncode" id="rregioncode"></p:messages>
+						<p:messages for="selectcountry" id="listecountry"></p:messages>
+					</div>
+					<h:form id="fdial">
+						<h3 style="margin-top: 0">
+							<p:outputLabel value="#{messages.label_createregion}"
+								rendered="#{regionSearchServiceBean.isAction()}" />
+							<p:outputLabel value="#{messages.label_modifier_Region}"
+								rendered="#{!regionSearchServiceBean.isAction()}" />
+						</h3>
+
+						<div class="ui-grid ui-grid-responsive">
+							<div class="row">
+								<div class="col-md-4 col-sm-4 label-input">
+									<p:outputLabel value="#{messages.label_country}:*" />
+								</div>
+								<div class="col-md-8 col-sm-8">
+									<p:selectOneMenu id="selectcountry" styleClass="form-text"
+										value="#{regionSearchServiceBean.regionDto.country}"
+										converter="entityConverter"
+										placeholder="#{messages.label_country}" required="true"
+										immediate="true"
+										requiredMessage="#{messages.label_pays_requeried}">
+										<f:selectItem
+											itemLabel="#{regionSearchServiceBean.regionDto.country.countryName}"
+											itemValue="#{regionSearchServiceBean.regionDto.country}"
+											label="#{messages.label_region}" />
+										<f:selectItems value="#{regionSearchServiceBean.listCountry}"
+											var="country" itemValue="#{country}"
+											itemLabel="#{country.countryName}" />
+									</p:selectOneMenu>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-4 col-sm-4 label-input">
+									<p:outputLabel value="#{messages.label_regioncode}*" />
+								</div>
+								<div class="col-md-8 col-sm-8">
+									<p:inputText id="regioncode" styleClass="form-text" maxlength="3"
+										value="#{regionSearchServiceBean.regionDto.regionCode}"
+										placeholder="#{messages.label_regioncode}" required="true"
+										requiredMessage="#{messages.label_regioncode_requeried}">
+										<f:validateLength minimum="3" maximum="3" />
+										<p:ajax update="rregioncode" event="keyup" />
+									</p:inputText>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-4 col-sm-4 label-input">
+									<p:outputLabel value="#{messages.label_regionname}*" />
+								</div>
+								<div class="col-md-8 col-sm-8">
+									<p:inputText id="regionname" styleClass="form-text" maxlength="128"
+										value="#{regionSearchServiceBean.regionDto.regionName}"
+										placeholder="#{messages.label_regionname}" required="true"
+										requiredMessage="#{messages.label_regioname_requeried}">
+										<f:validateLength minimum="5" maximum="128" />
+										<p:ajax update="rregionname" event="keyup" />
+									</p:inputText>
+								</div>
+							</div>
+
+							<div class="button-wrapper">
+								<p:commandButton value="#{messages.label_modifier}"
+									styleClass="btn btn-primary"
+									rendered="#{!regionSearchServiceBean.isAction()}"
+									action="#{regionSearchServiceBean.updateRegion()}"
+									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateregion').hide()"
+									update="forme fdial growl" />
+								<p:commandButton value="#{messages.label_create}"
+									styleClass="btn btn-primary"
+									rendered="#{regionSearchServiceBean.isAction()}"
+									action="#{regionSearchServiceBean.createRegion()}"
+									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateregion').hide()"
+									update="forme fdial growl" />
+								<p:commandButton value="#{messages.label_button_annuler}"
+									type="reset" onclick="PF('updateregion').hide()" update="forme"
+									styleClass="btn btn-default btn-sm offset">
+								</p:commandButton>
+							</div>
+						</div>
+					</h:form>
+				</p:overlayPanel>
+
+				<h:form id="forme">
+					<p:accordionPanel>
+						<p:tab title="#{messages.label_listregion}">
+							<b:row styleClass="listPage">
+								<div class="table-header">
+									<p:commandButton id="add" title="#{messages.label_add}"
+										action="#{regionSearchServiceBean.initDualList('2')}"
+										update="@([id$=updatregion])"
+										oncomplete="PF('updateregion').show()"
+										value="#{messages.label_modifier}"
+										styleClass="btn btn-primary submit-button"
+										icon="fa fa-fw fa-plus">
+									</p:commandButton>
+									<p:blockUI block="add" trigger="add">
+											#{messages.label_loading}<br />
+										<p:graphicImage value="/resources/images/loadingpics.gif" />
+									</p:blockUI>
+								</div>
+								<p:dataTable id="listregions"
+									value="#{regionSearchServiceBean.listRegion}" var="regions"
+									widgetVar="regionTable" emptyMessage="#{messages.label_empty}"
+									styleClass="listeTable table-responsive filterable"
+									tableStyleClass="table table-striped table-condensed table-hover"
+									rowKey="#{regions.idRegion}" selectionMode="single"
+									paginator="true" paginatorPosition="bottom"
+									paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
+									rows="10" filterBy="#{regions.regionName}">
+
+									<p:column priority="3" width="40"
+										filterBy="#{regions.idRegion}" filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_id}" />
+										</f:facet>
+										<h:outputText value="#{regions.idRegion}"></h:outputText>
+									</p:column>
+
+									<p:column priority="2"
+										filterBy="#{regions.country.countryName}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_countryname}" />
+										</f:facet>
+										<h:outputText value="#{regions.country.countryName}"></h:outputText>
+									</p:column>
+
+									<p:column priority="4" filterBy="#{regions.regionCode}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_regioncode}" />
+										</f:facet>
+										<h:outputText value="#{regions.regionCode}"></h:outputText>
+									</p:column>
+
+									<p:column priority="1" filterBy="#{regions.regionName}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_regionname}" />
+										</f:facet>
+										<h:outputText value="#{regions.regionName}"></h:outputText>
+									</p:column>
+
+									<p:column priority="1" width="100" filterMatchMode="contains">
+										<f:facet name="header">
+											<!-- 		 <p:outputLabel value="#{messages.label_action}" /> -->
+											<p:outputLabel value="#{messages.label_action}" />
+										</f:facet>
+										<p:commandButton id="modifier" styleClass="btn btn-success"
+											title="#{messages.label_modifier}"
+											action="#{regionSearchServiceBean.initDualList('1')}"
+											update="@([id$=updatregion])"
+											oncomplete="PF('updateregion').show()"
+											value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil">
+											<f:setPropertyActionListener value="#{regions}"
+												target="#{regionSearchServiceBean.regionsDto}" />
+										</p:commandButton>
+
+										<p:commandButton id="supprimer" styleClass="btn btn-danger"
+											title="#{messages.label_supprimer1}"
+											onclick="PF('confirmation').show()"
+											value="#{messages.label_supprimer1}"
+											icon="fa fa-fw fa-remove">
+											<f:setPropertyActionListener value="#{regions}"
+												target="#{regionSearchServiceBean.regionsDto}" />
+											<!-- 												<f:param name="regions" value="#{regions.idRegion}"/> -->
+										</p:commandButton>
+										<p:blockUI block="listregions"
+											trigger="listregions:supprimer,listregions:modifier">
+											#{messages.label_loading}<br />
+											<p:graphicImage value="/resources/images/loadingpics.gif" />
+										</p:blockUI>
+									</p:column>
+								</p:dataTable>
+
+								<p:confirmDialog
+									message="#{messages.label_msg_alerte_supression}"
+									header="Confirmation" widgetVar="confirmation">
+									<p:commandButton value="#{messages.label_msg_confirmOui}"
+										onclick="PF('confirmation').hide()"
+										action="#{regionSearchServiceBean.supprimerRegion()}"
+										update="forme growl" />
+									<p:commandButton value="#{messages.label_msg_confirmNon}"
+										onclick="PF('confirmation').hide()" type="button" />
+								</p:confirmDialog>
+								<p:contextMenu for="listregions">
+									<p:menuitem value="Modifier" icon="ui-icon-search" />
+									<p:menuitem value="Supprimer" icon="ui-icon-search" />
+									<p:separator />
+									<p:menuitem value="Détails" icon="ui-icon-close" />
+								</p:contextMenu>
+							</b:row>
+						</p:tab>
+					</p:accordionPanel>
+				</h:form>
+			</b:row>
+		</div>
+	</ui:define>
+</ui:composition>
+

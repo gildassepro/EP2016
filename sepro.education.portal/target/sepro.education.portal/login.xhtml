@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Education Portal</title>
+	<meta name="author" content="Sepro" />
+	<meta name="description" content="Goupe sepro education portal" />
+	<meta name="KEYWORDS" content="sepro, education" />
+	<meta name="robots" content="index, follow" />
+	<meta name="revisit-after" content="7 days" />
+	<meta name="DISTRIBUTION" content="GLOBAL" />
+	<meta http-equiv="PRAGMA" content="NO-CACHE" />
+	<meta name="copyright" content="Groupe Sepro" />
+	<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+	<meta name="MobileOptimized" content="width" />
+	<meta name="HandheldFriendly" content="true" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta http-equiv="cleartype" content="on" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<link href="resources/css/style.css" rel="stylesheet" type="text/css" />
+</h:head>
+<h:body
+	styleClass="skin-black pace-done col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
+	<div class="container-fluid">
+		<b:row>
+			<header>
+				<div class="l--header">
+					<a href="http://www.groupesepro.com/" target="_blank"><img
+						src="resources/images/logo_EP.png" /></a>
+				</div>
+			</header>
+		</b:row>
+		<b:row>
+			<h:form styleClass="form-signin" prependId="false">
+				<h2 class="form-signin-heading">#{messages.label_please_login}</h2>
+				<p:messages id="login"></p:messages>
+				<!-- <h:outputText value="#{messages.label_user_name}:" /> -->
+				<b:inputText id="userlogin" value="#{userServiceBean.userlogin}"
+					placeholder="#{messages.label_user_name}" required="true"
+					requiredMessage="#{messages.label_user_requeried}"
+					validatorMessage="#{messages.label_user_length}">
+					<f:validateLength minimum="4" maximum="64" />
+				</b:inputText>
+				<p:watermark for="userlogin"
+					value="#{messages.label_user_watermark}" />
+				<!-- <h:outputText value="#{messages.label_password_name}:" /> -->
+				<b:inputText value="#{userServiceBean.password}" id="password"
+					placeholder="#{messages.label_password_name}" type="password"
+					required="true"
+					requiredMessage="#{messages.label_password_requeried}">
+				</b:inputText>
+				<p:watermark for="password"
+					value="#{messages.label_password_watermark}" />
+				<b:selectBooleanCheckbox value="true" caption="Remember me" />
+				<b:commandButton id="loginButton" update="login"
+					look="primary btn-block" value="#{messages.label_connexion}"
+					size="lg" action="#{userServiceBean.connectLogin}" />
+			</h:form>
+		</b:row>
+		<b:row>
+			<footer>
+				<div class="colophon">
+					<span class="copyright"
+						style="color: #f2f3f8; font-size: 0.875rem; margin: 0 10px;">©
+						2016 - <a class="author" href="http://www.groupesepro.com"
+						target="_blank" style="display: inline-block; color: #ff612b;">Groupe
+							Sepro</a>
+					</span>
+				</div>
+			</footer>
+		</b:row>
+	</div>
+</h:body>
+</html>

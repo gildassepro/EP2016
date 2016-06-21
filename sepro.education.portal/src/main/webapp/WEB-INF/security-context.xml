@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+        xmlns:sec="http://www.springframework.org/schema/security"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:beans="http://www.springframework.org/schema/beans"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="
+     http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+    http://www.springframework.org/schema/security
+    http://www.springframework.org/schema/security/spring-security-3.2.xsd
+    http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+    <!-- Enable method level Spring Security by annotations  -->
+    <sec:global-method-security pre-post-annotations="enabled" />
+    <sec:http auto-config="true" use-expressions="true">
+
+<!--         Page level Spring Security : Intercept access to resources in /pages/secure/**
+        <sec:intercept-url pattern="/education/**" access="hasRole('addRole')" />
+
+        Page level Spring Security : Permit access to resources in /pages/unsecure/**
+        <sec:intercept-url pattern="/templates/**" access="permitAll"/>
+
+        Page level Spring Security : Intercept access to resources in /**
+        <sec:intercept-url pattern="/**" access="hasRole('ROLE_MODERATOR')"/>
+
+        Page level Spring Security : Enable Primefaces
+        <sec:intercept-url pattern="/javax.faces.resource/**" access="permitAll"/>
+ -->
+ 	<sec:intercept-url pattern="/javax.faces.resource/**" access="permitAll" />
+    <sec:intercept-url pattern="/templates/**" access="permitAll"/>
+    <sec:intercept-url pattern="/css/**" access="permitAll"/>
+    <sec:intercept-url pattern="/education/**" access="hasRole('user')"/> 
+        <!-- Define login page for Spring Security -->
+        <sec:form-login login-page="/login.xhtml"/>
+	<sec:session-management invalid-session-url="/login.xhtml" session-fixation-protection="newSession" >
+		   <sec:concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
+	</sec:session-management>
+        <!-- Define logout properties for Spring Security -->
+        <sec:logout invalidate-session="true" delete-cookies="true" logout-url="/logout"  logout-success-url="/login.xhtml"></sec:logout>
+    </sec:http>
+    <context:annotation-config/>
+	<context:component-scan base-package="org.sepro.authentifictionweb.security"/>
+	
+    <!-- Set customUserDetailsService class as the authentication Manager for Spring Security-->
+    <sec:authentication-manager alias="authenticationManager">
+        <sec:authentication-provider user-service-ref="customUserDetailsService">
+        <!-- 	<sec:password-encoder hash="plaintext"></sec:password-encoder> -->
+         	<sec:password-encoder ref="encoder" /> 
+        </sec:authentication-provider>
+    </sec:authentication-manager>
+
+	<beans:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+	 	<beans:constructor-arg name="strength" value="11" /> 
+	</beans:bean>
+
+</beans:beans>

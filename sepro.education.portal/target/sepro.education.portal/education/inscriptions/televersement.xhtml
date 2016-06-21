@@ -1,0 +1,345 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:uf="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+	template="/templates/template.xhtml">
+	<ui:define name="content">
+
+		<div class="container-fluid">
+			<h:form id="fdial">
+				<h3>#{messages.label_msg_televersement}</h3>
+				<p:steps activeIndex="4" styleClass="custom" readonly="false">
+					<p:menuitem value="#{messages.label_step1}" url="compte.xhtml" />
+					<p:menuitem value="#{messages.label_step2}" url="declaration.xhtml" />
+					<p:menuitem value="#{messages.label_step3}" url="parent.xhtml" />
+					<p:menuitem value="#{messages.label_step4}"
+						url="listecurriculum.xhtml" />
+					<p:menuitem value="#{messages.label_step5}" url="#" />
+					<p:menuitem value="#{messages.label_step6}" url="validation.xhtml" />
+
+				</p:steps>
+
+			</h:form>
+			<br></br> <br></br>
+
+			<p:tab id="televersement"
+				title="#{messages.label_step_televersement}">
+				<p:panel id="panstep5" header="#{messages.label_step_televersement}">
+					<h:form id="forme">
+
+						<div class="ui-grid ui-grid-responsive">
+							<div class="col-xs-12">
+
+								<p:fieldset legend="Inscription">
+									<div class="ui-grid ui-grid-responsive wrap class">
+										<div class="col-xs-12">
+											<div class="row">
+												<div class="col-lg-3 col-md-3 col-sm-3">
+													<p:outputLabel value="#{messages.label_anneeacademique}*" />
+												</div>
+												<div class="col-lg-3 col-md-3 col-sm-3">
+													<p:selectOneMenu styleClass="form-text" id="anneeacademik"
+														value="#{inscriptionSearchServiceBean.inscriptionStep3Dto.academicYear}"
+														converter="entityConverter" readonly="true">
+														<f:selectItem
+															itemLabel="#{inscriptionSearchServiceBean.inscriptionStep3Dto.academicYear.value}"
+															itemValue="#{inscriptionSearchServiceBean.inscriptionStep3Dto.academicYear}" />
+														<f:selectItems
+															value="#{inscriptionSearchServiceBean.listacademiqueyear}"
+															var="academicYear" itemValue="#{academicYear}"
+															itemLabel="#{academicYear.value}" />
+														<p:ajax event="valueChange"
+															listener="#{inscriptionSearchServiceBean.testformTeleversement()}"
+															update=":formbuttons:enregistrer :formbuttons:next" />
+													</p:selectOneMenu>
+												</div>
+												<div class="col-lg-3 col-md-3 col-sm-3">
+													<p:outputLabel
+														value="#{messages.label_programme_academique}*" />
+												</div>
+
+												<div class="col-lg-3 col-md-3 col-sm-3">
+													<p:selectOneMenu styleClass="form-text"
+														id="programacademik"
+														value="#{inscriptionSearchServiceBean.inscriptionStep3Dto.programmeCalendar}"
+														converter="entityConverter">
+														<f:selectItem
+															itemLabel="#{inscriptionSearchServiceBean.inscriptionStep3Dto.programmeCalendar.programme.nameProgramme}"
+															itemValue="#{inscriptionSearchServiceBean.inscriptionStep3Dto.programmeCalendar}" />
+														<f:selectItems
+															value="#{inscriptionSearchServiceBean.listeProgramme}"
+															var="programmeCalendar" itemValue="#{programmeCalendar}"
+															itemLabel="#{programmeCalendar.programme.nameProgramme}" />
+														<p:ajax event="valueChange"
+															listener="#{inscriptionSearchServiceBean.testformTeleversement()}"
+															update=":formbuttons:enregistrer :formbuttons:next" />
+													</p:selectOneMenu>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-lg-3 col-md-3 col-sm-3">
+													<p:outputLabel value="#{messages.label_study_year}*" />
+												</div>
+												<div class="col-lg-3 col-md-3 col-sm-3">
+													<p:selectOneMenu styleClass="form-text" id="studyyears"
+														value="#{inscriptionSearchServiceBean.inscriptionStep3Dto.academicYear}"
+														converter="entityConverter">
+														<f:selectItem
+															itemLabel="#{inscriptionSearchServiceBean.inscriptionStep3Dto.academicYear.value}"
+															itemValue="#{inscriptionSearchServiceBean.inscriptionStep3Dto.academicYear}" />
+														<f:selectItems
+															value="#{inscriptionSearchServiceBean.listacademiqueyear}"
+															var="academicYear" itemValue="#{academicYear}"
+															itemLabel="#{academicYear.value}" />
+														<p:ajax event="valueChange"
+															listener="#{inscriptionSearchServiceBean.testformTeleversement()}"
+															update=":formbuttons:enregistrer :formbuttons:next" />
+													</p:selectOneMenu>
+												</div>
+												<div class="col-lg-3 col-md-3 col-sm-3">
+													<p:outputLabel value="#{messages.label_curriculum}*" />
+												</div>
+												<div class="col-lg-3 col-md-3 col-sm-3">
+													<p:selectOneMenu styleClass="form-text" id="curriculum"
+														value="#{inscriptionSearchServiceBean.inscriptionStep3Dto.academicSector}"
+														converter="entityConverter">
+														<f:selectItem
+															itemLabel="#{inscriptionSearchServiceBean.inscriptionStep3Dto.academicSector.value}"
+															itemValue="#{inscriptionSearchServiceBean.inscriptionStep3Dto.academicSector}" />
+														<f:selectItems
+															value="#{inscriptionSearchServiceBean.listfiliere}"
+															var="academicSector" itemValue="#{academicSector}"
+															itemLabel="#{academicSector.value}" />
+														<p:ajax event="valueChange"
+															listener="#{inscriptionSearchServiceBean.testformTeleversement()}"
+															update=":formbuttons:enregistrer :formbuttons:next" />
+													</p:selectOneMenu>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-lg-3 col-md-3 col-sm-3"></div>
+												<div class="col-lg-3 col-md-3 col-sm-3"></div>
+												<div class="col-lg-3 col-md-3 col-sm-3">
+													<p:outputLabel value="#{messages.label_document_type}*" />
+												</div>
+												<div class="col-lg-3 col-md-3 col-sm-3">
+													<p:selectOneMenu styleClass="form-text" id="typedoc"
+														value="#{inscriptionSearchServiceBean.inscriptionStep3Dto.typeOfDocument}"
+														converter="entityConverter">
+														<f:selectItem
+															itemLabel="#{inscriptionSearchServiceBean.inscriptionStep3Dto.typeOfDocument.value}"
+															itemValue="#{inscriptionSearchServiceBean.inscriptionStep3Dto.typeOfDocument}" />
+														<f:selectItems
+															value="#{inscriptionSearchServiceBean.listdocument}"
+															var="typeOfDocument" itemValue="#{typeOfDocument}"
+															itemLabel="#{typeOfDocument.value}" />
+														<p:ajax event="valueChange"
+															listener="#{inscriptionSearchServiceBean.testformTeleversement()}"
+															update=":formbuttons:enregistrer :formbuttons:next" />
+													</p:selectOneMenu>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-lg-3 col-md-3 col-sm-3">
+													<p:outputLabel value="#{messages.label_description}*" />
+												</div>
+												<div class="col-lg-3 col-md-3 col-sm-3">
+													<p:inputText id="docname" styleClass="form-text"
+														value="#{inscriptionSearchServiceBean.inscriptionStep3Dto.description}"
+														placeholder="#{messages.label_description}"
+														requiredMessage="#{messages.label_programmename_requeried}">
+														<p:ajax
+															listener="#{inscriptionSearchServiceBean.testformTeleversement()}"
+															update=":formbuttons:enregistrer :formbuttons:next"
+															event="keyup" />
+													</p:inputText>
+												</div>
+												<div class="col-lg-3 col-md-3 col-sm-3">
+													<h:form enctype="multipart/form-data">
+														<p:messages id="messages" showDetail="true" />
+														<p:fileUpload label="messages.label_select"
+															uploadLabel="messages.label_upload"
+															cancelLabel="messages.label_cancel"
+															multiple="true"
+															allowTypes="/(\.|\/)(pdf)$/"
+															fileUploadListener="#{inscriptionSearchServiceBean.upload}"
+															fileLimit="2" mode="advanced" update="messages"
+															sizeLimit="200000000" dragDropSupport="false" />
+														<br />
+													</h:form>
+													<p:separator />
+												</div>
+												<div class="col-lg-3 col-md-3 col-sm-3"></div>
+											</div>
+										</div>
+									</div>
+
+								</p:fieldset>
+							</div>
+						</div>
+					</h:form>
+
+					<!-- BUTTTON -->
+					<h:form id="formbuttons">
+						<div class="row">
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+								<p:commandButton id="before" title="Precedent"
+									styleClass="btn btn-primary submit-button"
+									action="#{inscriptionSearchServiceBean.redirectionprecedent2('/sepro.education.portal/education/inscriptions/listecurriculum.xhtml')}"
+									value="#{messages.label_precedent}">
+								</p:commandButton>
+							</div>
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+
+								<p:commandButton id="save1" title="Enregistrer brouillon"
+									styleClass="btn btn-primary submit-button"
+									action="#{inscriptionSearchServiceBean.enregistrerBrouillonInscriptionStepfive()}"
+									value="Enregistrer brouillon">
+								</p:commandButton>
+							</div>
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+
+								<p:commandButton id="enregistrer" title="Enregistrer"
+									styleClass="btn btn-primary submit-button"
+									update="formdatatable forme enregistrer"
+									disabled="#{inscriptionSearchServiceBean.testdoc}"
+									action="#{inscriptionSearchServiceBean.enregistrerInscriptionStepfive()}"
+									value="Enregistrer">
+								</p:commandButton>
+							</div>
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+
+								<p:commandButton id="next" title="Suivant"
+									disabled="#{inscriptionSearchServiceBean.testdoc}"
+									styleClass="btn btn-primary submit-button"
+									value="#{messages.label_suivant}"
+									action="#{inscriptionSearchServiceBean.redirectionsuivant2('/sepro.education.portal/education/inscriptions/validation.xhtml')}">
+								</p:commandButton>
+							</div>
+
+						</div>
+					</h:form>
+					<!-- FIN BUTTON -->
+					<br></br>
+					<h:form id="formdatatable">
+
+						<div class="ui-grid-row">
+
+							<p:dataTable id="listteleversement"
+								value="#{inscriptionSearchServiceBean.listdocinscriptions}"
+								var="doc" widgetVar="menuTable"
+								emptyMessage="#{messages.label_empty}"
+								styleClass="listeTable table-responsive filterable"
+								tableStyleClass="table table-striped table-condensed table-hover"
+								rowKey="#{doc.idInscriptionSteptree}" selectionMode="single"
+								paginator="true" paginatorPosition="bottom"
+								paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
+								rows="10" filterBy="#{doc.idInscriptionSteptree}">
+
+								<p:column priority="3" width="120"
+									filterBy="#{doc.typeOfDocument}" filterMatchMode="contains">
+									<f:facet name="header">
+										<p:outputLabel value="#{messages.label_document_type}" />
+									</f:facet>
+									<h:outputText value="#{doc.typeOfDocument.value}"></h:outputText>
+								</p:column>
+
+								<p:column priority="2" filterBy="#{doc.description}"
+									filterMatchMode="contains">
+									<f:facet name="header">
+										<p:outputLabel value="#{messages.label_description}" />
+									</f:facet>
+									<h:outputText value="#{doc.description}"></h:outputText>
+								</p:column>
+
+								<p:column priority="1" filterBy="#{doc.idInscriptionSteptree}"
+									filterMatchMode="contains">
+									<f:facet name="header">
+										<p:outputLabel value="#{messages.label_telecharger}" />
+									</f:facet>
+									<!-- 									<p:commandButton id="visualiser" onclick="PF('dlg2').show();" -->
+									<!-- 										styleClass="btn btn-success" -->
+									<!-- 										title="#{messages.label_visualiser}" -->
+									<!-- 										value="#{doc.nameOfDocument}" icon="fa fa-fw fa-search"> -->
+									<!-- 									</p:commandButton> -->
+									<!-- 									<p:dialog header="#{doc.nameOfDocument}" widgetVar="dlg2" -->
+									<!-- 										modal="true" height="100"> -->
+									<!-- 										<h:outputText value="This is a Modal Dialog." /> -->
+									<!-- 									</p:dialog> -->
+									<!-- 									<p:lightBox iframe="true" id="visualiser"> -->
+									<!-- 										<h:outputLink value="D:\Test\Inter-VLAN Routing.pdf" -->
+									<!-- 											title="#{messages.label_visualiser}"> -->
+									<!-- 											<p:commandButton id="visualisercommande" -->
+									<!-- 												styleClass="btn btn-success" -->
+									<!-- 												title="#{messages.label_visualiser}" -->
+									<!-- 												icon="fa fa-fw fa-search"> -->
+									<!-- 											</p:commandButton> -->
+									<!-- 										</h:outputLink> -->
+									<!-- 									</p:lightBox> -->
+
+
+									<h:commandLink title="#{messages.label_visualiser}"
+										styleClass="btn btn-success"
+										action="#{inscriptionSearchServiceBean.loadPDF}"
+										target="_blank">
+										<p:commandButton id="visualisercode"
+											styleClass="btn btn-success"
+											title="#{messages.label_visualiser}"
+											icon="fa fa-fw fa-search">
+										</p:commandButton>
+										<f:setPropertyActionListener value="#{doc}"
+											target="#{inscriptionSearchServiceBean.inscriptionStep3Dtos}" />
+									</h:commandLink>
+
+								</p:column>
+
+								<p:column priority="1" width="100" filterMatchMode="contains">
+
+									<f:facet name="header">
+										<p:outputLabel value="#{messages.label_action}" />
+									</f:facet>
+
+									<p:commandButton id="supprimer" styleClass="btn btn-danger"
+										title="#{messages.label_supprimer1}"
+										onclick="PF('confirmation').show()"
+										value="#{messages.label_supprimer1}" icon="fa fa-fw fa-remove">
+										<f:setPropertyActionListener value="#{doc}"
+											target="#{inscriptionSearchServiceBean.inscriptionStep3supDtos}" />
+									</p:commandButton>
+
+									<p:blockUI block="listteleversement"
+										trigger="listteleversement:supprimer">
+										#{messages.label_loading}<br />
+										<p:graphicImage value=" /resources/images/loadingpics.gif" />
+									</p:blockUI>
+
+								</p:column>
+							</p:dataTable>
+
+						</div>
+					</h:form>
+
+					<h:form id="formdialog">
+						<p:confirmDialog id="pdialogue"
+							message="#{messages.label_msg_alerte_supression}"
+							header="Confirmation" widgetVar="confirmation">
+							<p:outputLabel
+								value="#{inscriptionSearchServiceBean.inscriptionStep3Dto.nameOfDocument}" />
+							<p:commandButton value="#{messages.label_msg_confirmOui}"
+								onclick="PF('confirmation').hide()"
+								action="#{inscriptionSearchServiceBean.supprimerListdoc()}"
+								update="formdatatable" />
+							<p:commandButton value="#{messages.label_msg_confirmNon}"
+								onclick="PF('confirmation').hide()" type="button" />
+						</p:confirmDialog>
+
+					</h:form>
+
+				</p:panel>
+
+			</p:tab>
+		</div>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,377 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:uf="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml">
+
+	<ui:define name="content">
+		<p:growl id="growl" showDetail="true" sticky="false" />
+		<div class="container-fluid">
+
+			<h:form id="fdial">
+				<h3>#{messages.label_declaration}</h3>
+				<p:steps activeIndex="1" styleClass="custom" readonly="false">
+					<p:menuitem value="etape1" url="compte.xhtml" />
+					<p:menuitem value="etape2" url="#" />
+					<p:menuitem value="etape3" url="parent.xhtml" />
+					<p:menuitem value="etape4" url="listecurriculum.xhtml" />
+					<p:menuitem value="etape5" url="televersement.xhtml" />
+					<p:menuitem value="etape6" url="validation.xhtml" />
+				</p:steps>
+			</h:form>
+
+			<br></br> <br></br>
+
+			<p:tab id="declaration" title="#{messages.label_declaration}">
+				<p:panel id="pan1" header="#{messages.label_identite}">
+					<h:form id="forme">
+						<div class="ui-grid ui-grid-responsive wrap class">
+							<div class="col-xs-12">
+								<div class="row">
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+											value="#{messages.label_name}" />
+									</div>
+
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:inputText styleClass="form-control" id="name"
+											value="#{inscriptionSearchServiceBean.inscription1Dto.name}"
+											placeholder="#{messages.label_name1}">
+											<p:ajax event="keyup"
+												listener="#{inscriptionSearchServiceBean.testform()}"
+												update="enregistrer suivant" />
+										</p:inputText>
+									</div>
+
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+											value="#{messages.label_firstname}" />
+									</div>
+
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:inputText styleClass="form-control" id="prenom1"
+											value="#{inscriptionSearchServiceBean.inscription1Dto.firstName}"
+											placeholder="#{messages.label_firstName1}">
+											<p:ajax event="keyup"
+												listener="#{inscriptionSearchServiceBean.testform()}"
+												update="enregistrer suivant" />
+										</p:inputText>
+									</div>
+								</div>
+								<br></br>
+								<div class="row">
+
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+											value="#{messages.labeldatedenaiss}" />
+									</div>
+
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:calendar id="datedenaissance"
+											value="#{inscriptionSearchServiceBean.inscription1Dto.birthday}"
+											placeholder="#{messages.label_birthday1}" showOn="button"
+											pattern="MM/dd/yyyy">
+											<f:converter converterId="dateConverter" />
+											<p:ajax event="dateSelect" />
+										</p:calendar>
+									</div>
+
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+											value="#{messages.label_placeOfBirthday}" />
+									</div>
+
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:inputText styleClass="form-control" id="lieunaissance"
+											value="#{inscriptionSearchServiceBean.inscription1Dto.placeOfBirthday}"
+											placeholder="#{messages.label_placeOfBirthday1}">
+											<p:ajax event="keyup"
+												listener="#{inscriptionSearchServiceBean.testform()}"
+												update="enregistrer suivant" />
+										</p:inputText>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+											value="#{messages.label_email_namepeople}" />
+									</div>
+
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:inputText styleClass="form-control" id="email1"
+											readonly="true"
+											value="#{inscriptionSearchServiceBean.inscriptionDto.emailAdd}">
+										</p:inputText>
+									</div>
+
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+											value="#{messages.label_sexe}" />
+									</div>
+
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:selectOneMenu styleClass="form-text" id="sexe"
+											value="#{inscriptionSearchServiceBean.inscription1Dto.sexe}"
+											converter="entityConverter">
+											<f:selectItem
+												itemLabel="#{inscriptionSearchServiceBean.inscription1Dto.sexe.value}"
+												itemValue="#{inscriptionSearchServiceBean.inscription1Dto.sexe}" />
+											<f:selectItems
+												value="#{inscriptionSearchServiceBean.listsexe}" var="sexe"
+												itemValue="#{sexe}" itemLabel="#{sexe.value}" />
+											<p:ajax event="valueChange"
+												listener="#{inscriptionSearchServiceBean.testform()}"
+												update="enregistrer suivant" />
+										</p:selectOneMenu>
+									</div>
+								</div>
+
+
+								<div class="row">
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+											value="#{messages.label_typeOfDocument}" />
+									</div>
+
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:selectOneMenu styleClass="form-text" id="document"
+											value="#{inscriptionSearchServiceBean.inscription1Dto.typeOfDocument}"
+											converter="entityConverter">
+											<f:selectItem
+												itemLabel="#{inscriptionSearchServiceBean.inscription1Dto.typeOfDocument.value}"
+												itemValue="#{inscriptionSearchServiceBean.inscription1Dto.typeOfDocument}" />
+											<f:selectItems
+												value="#{inscriptionSearchServiceBean.listdocument}"
+												var="typeOfDocument" itemValue="#{typeOfDocument}"
+												itemLabel="#{typeOfDocument.value}" />
+											<p:ajax event="valueChange"
+												listener="#{inscriptionSearchServiceBean.testform()}"
+												update="enregistrer suivant" />
+										</p:selectOneMenu>
+									</div>
+
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+											value="#{messages.label_identityNumber}" />
+									</div>
+
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:inputText styleClass="form-control" id="identityNumber"
+											maxlength="20"
+											value="#{inscriptionSearchServiceBean.inscription1Dto.identityNumber}"
+											placeholder="#{messages.label_identityNumber1}"
+											validatorMessage="#{messages.label_telephone1eta}">
+											<f:validateRegex pattern="^[0-9]+$"
+												update="enregistrer suivant" />
+											<p:ajax event="keyup"
+												listener="#{inscriptionSearchServiceBean.testform()}"
+												update="enregistrer suivant" />
+										</p:inputText>
+									</div>
+								</div>
+								<div class="row">
+								   <div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+											value="#{messages.label_paysnaissance}" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:selectOneMenu styleClass="form-text" id="pays"
+											value="#{inscriptionSearchServiceBean.inscription1Dto.countryOfBirthday}"
+											converter="entityConverter">
+											<f:selectItem
+												itemLabel="#{inscriptionSearchServiceBean.inscription1Dto.countryOfBirthday.countryName}"
+												itemValue="#{inscriptionSearchServiceBean.inscription1Dto.countryOfBirthday}" />
+											<f:selectItems
+												value="#{inscriptionSearchServiceBean.listcountry}"
+												var="countryOfBirthday" itemValue="#{countryOfBirthday}"
+												itemLabel="#{countryOfBirthday.countryName}" />
+											<p:ajax event="valueChange"
+												listener="#{inscriptionSearchServiceBean.phoneformat()}"
+												update="enregistrer suivant" />
+										</p:selectOneMenu>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+											value="#{messages.label_paysderesidence}" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:selectOneMenu styleClass="form-text" id="paysresidence"
+											value="#{inscriptionSearchServiceBean.inscription1Dto.countryAddress}"
+											converter="entityConverter">
+											<f:selectItem
+												itemLabel="#{inscriptionSearchServiceBean.inscription1Dto.countryAddress.countryName}"
+												itemValue="#{inscriptionSearchServiceBean.inscription1Dto.countryAddress}" />
+											<f:selectItems
+												value="#{inscriptionSearchServiceBean.listcountry}"
+												var="countryAddress" itemValue="#{countryAddress}"
+												itemLabel="#{countryAddress.countryName}" />
+											<p:ajax event="valueChange"
+												listener="#{inscriptionSearchServiceBean.maskPhone()}"
+												update="phone1 enregistrer suivant region1" />
+										</p:selectOneMenu>
+									</div>
+									<br></br>
+								</div>
+
+								<div class="row">
+								<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+											value="#{messages.label_regions}" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:selectOneMenu styleClass="form-text" id="region1"
+											value="#{inscriptionSearchServiceBean.inscription1Dto.regionAddress}"
+											converter="entityConverter">
+											<f:selectItem
+												itemLabel="#{inscriptionSearchServiceBean.inscription1Dto.regionAddress.regionName}"
+												itemValue="#{inscriptionSearchServiceBean.inscription1Dto.regionAddress}"
+												label="#{messages.label_region}" />
+											<f:selectItems
+												value="#{inscriptionSearchServiceBean.listregion}"
+												var="regionAddress" itemValue="#{regionAddress}"
+												itemLabel="#{regionAddress.regionName}" />
+											<p:ajax event="valueChange"
+												listener="#{inscriptionSearchServiceBean.updateListville()}"
+												update="enregistrer suivant city1" />
+										</p:selectOneMenu>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+											value="#{messages.label_citys}" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:selectOneMenu styleClass="form-text" id="city1"
+											value="#{inscriptionSearchServiceBean.inscription1Dto.cityAddress}"
+											converter="entityConverter">
+											<f:selectItem
+												itemLabel="#{inscriptionSearchServiceBean.inscription1Dto.cityAddress.cityName}"
+												itemValue="#{inscriptionSearchServiceBean.inscription1Dto.cityAddress}"
+												label="#{messages.label_region}" />
+											<f:selectItems
+												value="#{inscriptionSearchServiceBean.listcity}"
+												var="cityAddress" itemValue="#{cityAddress}"
+												itemLabel="#{cityAddress.cityName}" />
+											<p:ajax event="valueChange"
+												listener="#{inscriptionSearchServiceBean.updateListzipcode()}"
+												update="enregistrer suivant zipcode1" />
+										</p:selectOneMenu>
+									</div>
+								</div>
+								<div class="row">
+								<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+											value="#{messages.label_zipcodes}" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:selectOneMenu styleClass="form-text" id="zipcode1"
+											value="#{inscriptionSearchServiceBean.inscription1Dto.zipcodeAddress}"
+											converter="entityConverter">
+											<f:selectItem
+												itemLabel="#{inscriptionSearchServiceBean.inscription1Dto.zipcodeAddress.zipCode}"
+												itemValue="#{inscriptionSearchServiceBean.inscription1Dto.zipcodeAddress}"
+												label="#{messages.label_region}" />
+											<f:selectItems
+												value="#{inscriptionSearchServiceBean.listzipcode}"
+												var="zipcodeAddress" itemValue="#{zipcodeAddress}"
+												itemLabel="#{zipcodeAddress.zipCode}" />
+											<p:ajax event="valueChange"
+												listener="#{inscriptionSearchServiceBean.testform()}"
+												update="enregistrer suivant" />
+										</p:selectOneMenu>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+											value="#{messages.label_nationality}" />
+									</div>
+
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:selectOneMenu styleClass="form-text" id="nationnalite"
+											value="#{inscriptionSearchServiceBean.inscription1Dto.nationality}"
+											converter="entityConverter">
+											<f:selectItem
+												itemLabel="#{inscriptionSearchServiceBean.inscription1Dto.nationality.value}"
+												itemValue="#{inscriptionSearchServiceBean.inscription1Dto.nationality}" />
+											<f:selectItems
+												value="#{inscriptionSearchServiceBean.listnationalite}"
+												var="nationality" itemValue="#{nationality}"
+												itemLabel="#{nationality.value}" />
+											<p:ajax event="valueChange"
+												listener="#{inscriptionSearchServiceBean.testform()}"
+												update="enregistrer suivant" />
+										</p:selectOneMenu>
+									</div>
+								</div>
+								<div class="row">
+									 <div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+											value="#{messages.label_phoneNumber}" />
+									</div>
+
+                                     <div class="col-lg-3 col-md-3 col-sm-3">
+										<p:inputMask styleClass="form-control" id="phone1"
+											value="#{inscriptionSearchServiceBean.inscription1Dto.phoneNumber}"
+											placeholder="#{messages.label_phoneNumber1}"
+											validatorMessage="#{messages.label_telephone1eta}" mask="#{inscriptionSearchServiceBean.maskphonformat}">
+											<p:ajax event="keyup"
+												listener="#{inscriptionSearchServiceBean.testform()}"
+												update="enregistrer suivant" />
+										</p:inputMask>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+											value="#{messages.label_maritalStatus}" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:selectOneMenu styleClass="form-text" id="etatcivile"
+											value="#{inscriptionSearchServiceBean.inscription1Dto.maritalStatus}"
+											converter="entityConverter">
+											<f:selectItem
+												itemLabel="#{inscriptionSearchServiceBean.inscription1Dto.maritalStatus.value}"
+												itemValue="#{inscriptionSearchServiceBean.inscription1Dto.maritalStatus}" />
+											<f:selectItems
+												value="#{inscriptionSearchServiceBean.listetatcivile}"
+												var="maritalStatus" itemValue="#{maritalStatus}"
+												itemLabel="#{maritalStatus.value}" />
+											<p:ajax event="valueChange"
+												listener="#{inscriptionSearchServiceBean.testform()}"
+												update="enregistrer suivant" />
+										</p:selectOneMenu>
+									</div>
+								</div>
+								<br></br> <br></br>
+								<div class="row">
+									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+										<p:commandButton id="enregistrerbrouillon"
+										    action="#{inscriptionSearchServiceBean.enregistrerInscriptionSteponebrouillon()}"
+											styleClass="btn btn-primary submit-button"
+											value="#{messages.label_enregistrerbrouillon}">
+										</p:commandButton>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+										<p:commandButton id="enregistrer"
+											action="#{inscriptionSearchServiceBean.enregistrerInscriptionstepone()}"
+											styleClass="btn btn-primary submit-button"
+											update="growl pan1"
+											disabled="#{inscriptionSearchServiceBean.test}"
+											value="#{messages.label_enregistrer}">
+										</p:commandButton>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+										<p:commandButton value="#{messages.label_suivant}"
+											id="suivant"
+											action="#{inscriptionSearchServiceBean.redirectionsuivant('/sepro.education.portal/education/inscriptions/parent.xhtml')}"
+											disabled="#{inscriptionSearchServiceBean.test}"
+											styleClass="btn btn-primary">
+										</p:commandButton>
+									</div>
+								</div>
+							</div>
+						</div>
+					</h:form>
+				</p:panel>
+			</p:tab>
+		</div>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,191 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:uf="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+	template="/templates/template.xhtml">
+	<ui:define name="content">
+		<p:growl id="growl" showDetail="true" sticky="false" />
+
+		<div class="container-fluid">
+			<b:row>
+				<p:overlayPanel id="updatlanguage" widgetVar="updatelanguage"
+					showEffect="fade" hideEffect="fade" dismissable="false"
+					showCloseIcon="true">
+					<h:form id="fdial">
+
+						<h3 style="margin-top: 0">
+							<p:outputLabel value="#{messages.label_modifier_Language}"
+								rendered="#{!languageSearchServiceBean.isAction()}" />
+							<p:outputLabel value="#{messages.label_Creation_language}"
+								rendered="#{languageSearchServiceBean.isAction()}" />
+						</h3>
+						<div class="ui-grid ui-grid-responsive">
+							<div class="row">
+								<div class="col-md-4 col-sm-4 label-input">
+									<p:outputLabel value="#{messages.label_language_code}" />
+								</div>
+								<div class="col-md-8 col-sm-8">
+									<p:inputText id="codelangue" maxlength="5"
+										value="#{languageSearchServiceBean.languageDto.languageCode}"
+										placeholder="#{messages.label_code_language}" required="true"
+										requiredMessage="#{messages.label_codelanguage_requeried}">
+										<f:validateLength minimum="3" maximum="5" />
+										<p:ajax event="keyup" />
+									</p:inputText>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-4 col-sm-4 label-input">
+									<p:outputLabel value="#{messages.label_languagename}" />
+								</div>
+								<div class="col-md-8 col-sm-8">
+									<p:inputText id="nomlangue" maxlength="128"
+										value="#{languageSearchServiceBean.languageDto.languageName}"
+										placeholder="#{messages.label_nom_language}">
+										<p:ajax event="keyup" />
+										<f:validateLength minimum="0" maximum="128" />
+									</p:inputText>
+								</div>
+							</div>
+
+							<div class="button-wrapper">
+								<p:commandButton value="#{messages.label_modifier}"
+									styleClass="btn btn-primary"
+									action="#{languageSearchServiceBean.updateLanguage()}"
+									rendered="#{!languageSearchServiceBean.isAction()}"
+									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatelanguage').hide()"
+									update="forme fdial growl">
+								</p:commandButton>
+								<p:commandButton value="#{messages.label_create}"
+									styleClass="btn btn-primary"
+									rendered="#{languageSearchServiceBean.isAction()}"
+									action="#{languageSearchServiceBean.createLanguage()}"
+									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatelanguage').hide()"
+									update="forme fdial growl">
+								</p:commandButton>
+								<p:commandButton value="#{messages.label_button_annuler}"
+									type="reset" onclick="PF('updatelanguage').hide()"
+									update="fdial" styleClass="btn btn-default btn-sm offset"
+									id="annulerButton">
+								</p:commandButton>
+							</div>
+						</div>
+					</h:form>
+				</p:overlayPanel>
+
+				<h:form id="forme">
+					<p:accordionPanel>
+						<p:tab title="#{messages.label_Recherche_Language}">
+							<b:row styleClass="listPage">
+								<div class="table-header">
+									<p:commandButton id="add" title="#{messages.label_add}"
+										action="#{languageSearchServiceBean.initDualList('2')}"
+										update="@([id$=updatlanguage])"
+										oncomplete="PF('updatelanguage').show()"
+										value="#{messages.label_modifier}"
+										styleClass="btn btn-primary submit-button"
+										icon="fa fa-fw fa-plus">
+									</p:commandButton>
+									<p:blockUI block="add" trigger="add">
+											#{messages.label_loading}<br />
+										<p:graphicImage value="/resources/images/loadingpics.gif" />
+									</p:blockUI>
+								</div>
+
+								<p:dataTable id="listlang"
+									value="#{languageSearchServiceBean.listlanguage}"
+									var="language" widgetVar="menuTable"
+									emptyMessage="#{messages.label_empty}"
+									styleClass="listeTable table-responsive filterable"
+									tableStyleClass="table table-striped table-condensed table-hover"
+									rowKey="#{language.idLanguage}" selectionMode="single"
+									paginator="true" paginatorPosition="bottom"
+									paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
+									rows="10" filterBy="#{language.languageName}">
+
+									<p:column priority="3" width="40"
+										filterBy="#{language.idLanguage}" filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_id}" />
+										</f:facet>
+										<h:outputText value="#{language.idLanguage}"></h:outputText>
+									</p:column>
+
+									<p:column priority="2" filterBy="#{language.languageCode}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_language_codes}" />
+										</f:facet>
+										<h:outputText value="#{language.languageCode}"></h:outputText>
+									</p:column>
+
+									<p:column priority="1" filterBy="#{language.languageName}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_languagename}" />
+										</f:facet>
+										<h:outputText value="#{language.languageName}"></h:outputText>
+									</p:column>
+
+									<p:column priority="1" width="100" filterMatchMode="contains">
+
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_action}" />
+										</f:facet>
+
+										<p:commandButton id="modifier" styleClass="btn btn-success"
+											title="#{messages.label_modifier}"
+											action="#{languageSearchServiceBean.initDualList('1')}"
+											update="@([id$=updatlanguage])"
+											oncomplete="PF('updatelanguage').show()"
+											value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil">
+											<f:setPropertyActionListener value="#{language}"
+												target="#{languageSearchServiceBean.languagesDto}" />
+										</p:commandButton>
+
+										<p:commandButton id="supprimer" styleClass="btn btn-danger"
+											title="#{messages.label_supprimer1}"
+											onclick="PF('confirmation').show()"
+											value="#{messages.label_supprimer1}"
+											icon="fa fa-fw fa-remove">
+											<f:setPropertyActionListener value="#{language}"
+												target="#{languageSearchServiceBean.languagesDto}" />
+										</p:commandButton>
+
+										<p:blockUI block="listlang"
+											trigger="listlang:supprimer,listlang:modifier">
+										#{messages.label_loading}<br />
+											<p:graphicImage value="/resources/images/loadingpics.gif" />
+										</p:blockUI>
+
+										<p:confirmDialog
+											message="#{messages.label_msg_alerte_supression}"
+											header="Confirmation" widgetVar="confirmation">
+											<p:commandButton value="#{messages.label_msg_confirmOui}"
+												onclick="PF('confirmation').hide()"
+												action="#{languageSearchServiceBean.supprimerLanguage()}"
+												update="forme growl" />
+											<p:commandButton value="#{messages.label_msg_confirmNon}"
+												onclick="PF('confirmation').hide()" type="button" />
+										</p:confirmDialog>
+									</p:column>
+								</p:dataTable>
+
+								<p:contextMenu for="listlang">
+									<p:menuitem value="Modifier" icon="ui-icon-search" />
+									<p:menuitem value="Supprimer" icon="ui-icon-search" />
+									<p:separator />
+									<p:menuitem value="Détails" icon="ui-icon-close" />
+								</p:contextMenu>
+
+							</b:row>
+						</p:tab>
+					</p:accordionPanel>
+				</h:form>
+			</b:row>
+		</div>
+	</ui:define>
+</ui:composition>

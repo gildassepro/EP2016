@@ -1,0 +1,395 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:uf="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+	template="/templates/template.xhtml">
+	<ui:define name="content">
+		<p:growl id="growl" showDetail="true" sticky="false" />
+		<div class="container-fluid">
+			<b:row>
+				<p:overlayPanel id="updatprogrammcalendar"
+					widgetVar="updateprogrammcalendar" showEffect="fade"
+					hideEffect="fade" dismissable="false" showCloseIcon="true">
+					<h:form id="fdialprogramme">
+						<p:outputPanel id="updatprogrammcalendarDetail">
+							<div class="ui-grid ui-grid-responsive wrap class">
+								<f:facet name="header">
+									<p:outputLabel value="#{messages.labelprogrammcalendar}" />
+								</f:facet>
+								<div class="col-xs-12">
+									<div class="row">
+										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+											<p:outputLabel value="#{messages.label_programm_name}*" />
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+
+											<p:selectOneMenu
+												styleClass="col-lg-10 col-md-10 col-sm-12 form-text"
+												id="nomprogrammecalendar"
+												value="#{programmeCalendarCreateServiceBean.programmeCalendarDto.programme}"
+												converter="entityConverter"
+												placeholder="#{messages.label_academic_years}"
+												required="true"
+												requiredMessage="#{messages.label_academic_years_requeried}">
+												<f:selectItem
+													itemLabel="#{programmeCalendarCreateServiceBean.programmeCalendarDto.programme.nameProgramme}"
+													itemValue="#{programmeCalendarCreateServiceBean.programmeCalendarDto.programme}"
+													label="#{messages.label_choix_module}" />
+												<f:selectItems
+													value="#{programmeCalendarCreateServiceBean.listProgramme}"
+													var="programmes" itemValue="#{programmes}"
+													itemLabel="#{programmes.nameProgramme}" />
+											</p:selectOneMenu>
+
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+											<p:outputLabel value="#{messages.label_academic_years}:*" />
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+											<p:selectOneMenu id="selectprogrammeacademicyears"
+												styleClass="form-text"
+												value="#{programmeCalendarCreateServiceBean.programmeCalendarDto.academiqueYear}"
+												converter="entityConverter"
+												placeholder="#{messages.label_academic_years}"
+												required="true"
+												requiredMessage="#{messages.label_academic_years_requeried}">
+												<f:selectItem
+													itemLabel="#{programmeCalendarCreateServiceBean.programmeCalendarDto.academiqueYear.value}"
+													itemValue="#{programmeCalendarCreateServiceBean.programmeCalendarDto.academiqueYear}"
+													label="#{messages.labelestablishment}" />
+												<f:selectItems
+													value="#{programmeCalendarCreateServiceBean.listPopuplistAY}"
+													var="academiqueYearn" itemValue="#{academiqueYearn}"
+													itemLabel="#{academiqueYearn.value}" />
+											</p:selectOneMenu>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+											<p:outputLabel value="#{messages.labeldatedebut}:*" />
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+											<p:calendar id="buttonstart"
+												value="#{programmeCalendarCreateServiceBean.programmeCalendarDto.startDate}"
+												showOn="button" pattern="MM/dd/yyyy" required="true"
+												requiredMessage="#{messages.label_startDate_requeried}"
+												placeholder="#{messages.label_labeldatedebut}">
+												<f:converter converterId="dateConverter" />
+												<p:ajax event="dateSelect" />
+											</p:calendar>
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+											<p:outputLabel value="#{messages.labeldatefin}:*" />
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">			
+											<p:calendar id="buttonend"
+												value="#{programmeCalendarCreateServiceBean.programmeCalendarDto.endDate}"
+												showOn="button" pattern="MM/dd/yyyy" required="true"
+												requiredMessage="#{messages.label_startDate_requeried}"
+												placeholder="#{messages.label_labeldatefin}">
+												<f:converter converterId="dateConverter" />
+												<p:ajax event="dateSelect" />
+											</p:calendar>
+										</div>
+									</div>
+								</div>
+
+								<p:fieldset legend="#{messages.label_moduless}">
+									<div class="row">
+										<div class="col-xs-12">
+											<div class="col-lg-3 col-md-3 col-sm-12">
+												<p:outputLabel
+													styleClass="col-lg-2 col-md-2 col-sm-12 label-input"
+													value="#{messages.label_module1}" />
+												<p:selectOneMenu
+													styleClass="col-lg-10 col-md-10 col-sm-12 form-text"
+													id="selectmoduleprogrammess"
+													value="#{programmeCalendarCreateServiceBean.moduleCalendarDto.academicModule}"
+													converter="entityConverter"
+													placeholder="#{messages.label_academic_years}"
+													requiredMessage="#{messages.label_academic_years_requeried}">
+													<f:selectItem
+														itemLabel="#{programmeCalendarCreateServiceBean.moduleCalendarDto.academicModule.moduleName}"
+														itemValue="#{programmeCalendarCreateServiceBean.moduleCalendarDto.academicModule}"
+														label="#{messages.label_choix_module}" />
+													<f:selectItems
+														value="#{programmeCalendarCreateServiceBean.selectedAcademicmodule}"
+														var="academicModulez" itemValue="#{academicModulez}"
+														itemLabel="#{academicModulez.moduleName}" />
+												</p:selectOneMenu>
+											</div>
+											<div class="col-lg-3 col-md-3 col-sm-12">
+												<p:outputLabel
+													styleClass="col-lg-2 col-md-2 col-sm-12 label-input"
+													value="#{messages.label_session}" />
+												<p:selectOneMenu
+													styleClass="col-lg-10 col-md-10 col-sm-12 form-text"
+													id="selectsessionmodule"
+													value="#{programmeCalendarCreateServiceBean.moduleCalendarDto.session}"
+													converter="entityConverter"
+													placeholder="#{messages.label_academic_years}"
+													requiredMessage="#{messages.label_academic_years_requeried}">
+													<f:selectItem
+														itemLabel="#{programmeCalendarCreateServiceBean.moduleCalendarDto.session.sessionName}"
+														itemValue="#{programmeCalendarCreateServiceBean.moduleCalendarDto.session}"
+														label="#{messages.label_session}" />
+													<f:selectItems
+														value="#{programmeCalendarCreateServiceBean.listSession}"
+														var="sessions" itemValue="#{sessions}"
+														itemLabel="#{sessions.sessionName}" />
+												</p:selectOneMenu>
+											</div>
+											<div class="col-lg-3 col-md-3 col-sm-12">
+												<p:outputLabel
+													styleClass="col-lg-3 col-md-3 col-sm-12 label-input"
+													value="#{messages.label_coef}" />
+												<p:inputText
+													styleClass="col-lg-9 col-md-9 col-sm-12 form-control"
+													id="coef"
+													value="#{programmeCalendarCreateServiceBean.moduleCalendarDto.coefficient}">
+												</p:inputText>
+											</div>
+											<div class="col-lg-3 col-md-3 col-sm-12">
+												<p:commandButton styleClass="btn btn-primary submit-button"
+													id="add" title="#{messages.label_adds}"
+													update="listModuleProgramm fdialprogramme growl formlistprogrammecalendar"
+													disabled="#{programmeCalendarCreateServiceBean.test}"
+													action="#{programmeCalendarCreateServiceBean.addModuleProgramme()}"
+													value="#{messages.label_adds}" icon="fa fa-fw fa-plus">
+												</p:commandButton>
+											</div>
+										</div>
+									</div>
+								</p:fieldset>
+							</div>
+
+							<b:row styleClass="listPage">
+								<p:dataTable id="listModuleProgramm"
+									value="#{programmeCalendarCreateServiceBean.selectedlistemodulecalendar}"
+									var="moduleP" widgetVar="modulePTable"
+									emptyMessage="#{messages.label_empty}"
+									styleClass="listeTable table-responsive filterable"
+									tableStyleClass="table table-striped table-condensed table-hover"
+									rowKey="#{moduleP.idModuleCalendar}" selectionMode="single"
+									paginator="true" paginatorPosition="bottom"
+									paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
+									rows="10" filterBy="#{moduleP.academicModule.moduleName}">
+
+									<p:column priority="1"
+										filterBy="#{moduleP.academicModule.moduleName}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_list_module}" />
+										</f:facet>
+										<h:outputText value="#{moduleP.academicModule.moduleName}"></h:outputText>
+									</p:column>
+
+									<p:column priority="2"
+										filterBy="#{moduleP.session.sessionName}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_session}" />
+										</f:facet>
+										<h:outputText value="#{moduleP.session.sessionName}"></h:outputText>
+									</p:column>
+
+									<p:column priority="2" filterBy="#{moduleP.coefficient}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_coef}" />
+										</f:facet>
+										<h:outputText value="#{moduleP.coefficient}"></h:outputText>
+									</p:column>
+
+									<p:column priority="1" width="100" filterMatchMode="contains">
+										<f:facet name="header">
+											<!-- 		 <p:outputLabel value="#{messages.label_action}" /> -->
+											<p:outputLabel value="#{messages.label_action}" />
+										</f:facet>
+
+										<p:commandButton id="supprimer" styleClass="btn btn-danger"
+											title="#{messages.label_supprimer1}"
+											onclick="PF('confirmationmod').show()"
+											value="#{messages.label_supprimer1}"
+											icon="fa fa-fw fa-remove">
+											<f:setPropertyActionListener value="#{moduleP}"
+												target="#{programmeCalendarCreateServiceBean.moduleCalendarDtos}" />
+										</p:commandButton>
+
+										<p:blockUI block="listModuleProgramm"
+											trigger="listModuleProgramm:supprimer">
+										#{messages.label_loading}<br />
+											<p:graphicImage value="/resources/images/loadingpics.gif" />
+										</p:blockUI>
+										<p:confirmDialog appendToBody="true"
+											message="#{messages.label_msg_alerte_supression}"
+											header="Confirmation" widgetVar="confirmationmod">
+											<p:commandButton value="#{messages.label_msg_confirmOui}"
+												onclick="PF('confirmationmod').hide()"
+												action="#{programmeCalendarCreateServiceBean.supprimerModuleCalendar()}"
+												update="listModuleProgramm growl" />
+											<p:commandButton value="#{messages.label_msg_confirmNon}"
+												update="formlistprogrammecalendar"
+												onclick="PF('confirmation').hide()" type="button" />
+										</p:confirmDialog>
+									</p:column>
+
+								</p:dataTable>
+								<p:contextMenu for="listModuleProgramm">
+									<p:menuitem value="Modifier" icon="ui-icon-search" />
+									<p:menuitem value="Supprimer" icon="ui-icon-search" />
+									<p:separator />
+									<p:menuitem value="Détails" icon="ui-icon-close" />
+								</p:contextMenu>
+
+								<div class="button-wrapper">
+									<p:commandButton value="#{messages.label_modifier}"
+										styleClass="btn btn-primary"
+										rendered="#{!programmeCalendarCreateServiceBean.isAction()}"
+										action="#{programmeCalendarCreateServiceBean.updateProgrammeCalendar()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprogrammcalendar').hide()"
+										update="fdialprogramme formlistprogrammecalendar growl" />
+
+									<p:commandButton value="#{messages.label_create}"
+										styleClass="btn btn-primary"
+										rendered="#{programmeCalendarCreateServiceBean.isAction()}"
+										action="#{programmeCalendarCreateServiceBean.saveProgrammeCalendar()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprogrammcalendar').hide()"
+										update="growl formlistprogrammecalendar fdialprogramme" />
+									<p:commandButton value="#{messages.label_button_annuler}"
+										type="reset" onclick="PF('updateprogrammcalendar').hide()"
+										update="fdialprogramme"
+										styleClass="btn btn-default btn-sm offset">
+									</p:commandButton>
+								</div>
+							</b:row>
+						</p:outputPanel>
+					</h:form>
+
+				</p:overlayPanel>
+
+				<h:form id="formlistprogrammecalendar">
+					<p:accordionPanel>
+						<p:tab title="#{messages.label_programm_calendar}">
+							<b:row styleClass="listPage">
+								<div class="table-header">
+									<p:commandButton id="add" title="#{messages.label_add}"
+										action="#{programmeCalendarCreateServiceBean.initDualList('2')}"
+										update="@([id$=updatprogrammcalendar])"
+										oncomplete="PF('updateprogrammcalendar').show()"
+										value="#{messages.label_modifier}"
+										styleClass="btn btn-primary submit-button"
+										icon="fa fa-fw fa-plus">
+									</p:commandButton>
+									<p:blockUI block="add" trigger="add">
+											#{messages.label_loading}<br />
+										<p:graphicImage value="/resources/images/loadingpics.gif" />
+									</p:blockUI>
+								</div>
+								<p:dataTable id="listprogrammecalendar"
+									value="#{programmeCalendarCreateServiceBean.listProgrammeCalendar}"
+									var="programmcalendar" widgetVar="programmcalendarTable"
+									emptyMessage="#{messages.label_empty}"
+									styleClass="listeTable table-responsive filterable"
+									tableStyleClass="table table-striped table-condensed table-hover"
+									rowKey="#{programmcalendar.idProgrammeCalendar}"
+									selectionMode="single" paginator="true"
+									paginatorPosition="bottom"
+									paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
+									rows="10" filterBy="#{programmcalendar.nameModule}">
+
+									<p:column priority="1"
+										filterBy="#{programmcalendar.programme.nameProgramme}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_programm_name}" />
+										</f:facet>
+										<h:outputText
+											value="#{programmcalendar.programme.nameProgramme}"></h:outputText>
+									</p:column>
+
+									<p:column priority="2"
+										filterBy="#{programmcalendar.academiqueYear.value}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_academic_years}" />
+										</f:facet>
+										<h:outputText
+											value="#{programmcalendar.academiqueYear.value}"></h:outputText>
+									</p:column>
+
+									<p:column priority="2" filterBy="#{programmcalendar.startDate}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.labeldatedebut}" />
+										</f:facet>
+										<h:outputText value="#{programmcalendar.startDate}"></h:outputText>
+									</p:column>
+
+									<p:column priority="2" filterBy="#{programmcalendar.endDate}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.labeldatefin}" />
+										</f:facet>
+										<h:outputText value="#{programmcalendar.endDate}"></h:outputText>
+									</p:column>
+
+									<p:column priority="1" width="100" filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_action}" />
+										</f:facet>
+
+										<p:commandButton id="modifier" styleClass="btn btn-success"
+											title="#{messages.label_modifier}"
+											action="#{programmeCalendarCreateServiceBean.initDualList('1')}"
+											update="@([id$=updatprogrammcalendar])"
+											oncomplete="PF('updateprogrammcalendar').show()"
+											value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil">
+											<f:setPropertyActionListener value="#{programmcalendar}"
+												target="#{programmeCalendarCreateServiceBean.programmeCalendarDtos}" />
+										</p:commandButton>
+
+										<p:commandButton id="supprimer" styleClass="btn btn-danger"
+											title="#{messages.label_supprimer1}"
+											onclick="PF('confirmation').show()"
+											value="#{messages.label_supprimer1}"
+											icon="fa fa-fw fa-remove">
+											<f:setPropertyActionListener value="#{programmcalendar}"
+												target="#{programmeCalendarCreateServiceBean.programmeCalendarDtos}" />
+										</p:commandButton>
+										<p:blockUI block="listprogrammecalendar"
+											trigger="listprogrammecalendar:supprimer, listprogrammecalendar:modifier">
+										#{messages.label_loading}<br />
+											<p:graphicImage value="/resources/images/loadingpics.gif" />
+										</p:blockUI>
+										<p:confirmDialog
+											message="#{messages.label_msg_alerte_supression}"
+											header="Confirmation" widgetVar="confirmation">
+											<p:commandButton value="#{messages.label_msg_confirmOui}"
+												onclick="PF('confirmation').hide()"
+												action="#{programmeCalendarCreateServiceBean.supprimerProgrammeCalendar()}"
+												update="listprogrammecalendar growl" />
+											<p:commandButton value="#{messages.label_msg_confirmNon}"
+												onclick="PF('confirmation').hide()" type="button" />
+										</p:confirmDialog>
+									</p:column>
+
+
+								</p:dataTable>
+								<p:contextMenu for="listprogrammecalendar">
+									<p:menuitem value="Modifier" icon="ui-icon-search" />
+									<p:menuitem value="Supprimer" icon="ui-icon-search" />
+									<p:separator />
+									<p:menuitem value="Détails" icon="ui-icon-close" />
+								</p:contextMenu>
+							</b:row>
+						</p:tab>
+					</p:accordionPanel>
+				</h:form>
+
+			</b:row>
+		</div>
+	</ui:define>
+</ui:composition>

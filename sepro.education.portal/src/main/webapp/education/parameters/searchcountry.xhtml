@@ -1,0 +1,323 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:uf="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+	template="/templates/template.xhtml">
+	<ui:define name="content">
+		<p:growl id="growl" showDetail="true" sticky="false" />
+
+		<div class="container-fluid">
+			<b:row>
+				<p:overlayPanel id="updatcountry" widgetVar="updatecountry"
+					showEffect="fade" hideEffect="fade" dismissable="false"
+					showCloseIcon="true">
+
+					<h:form id="fdial">
+
+						<h3 style="margin-top: 0">
+							<p:outputLabel value="#{messages.label_creationcountry}"
+								rendered="#{countrySearchServiceBean.isAction()}" />
+							<p:outputLabel value="#{messages.label_modifier_Country}"
+								rendered="#{!countrySearchServiceBean.isAction()}" />
+						</h3>
+
+
+
+
+						<div class="ui-grid ui-grid-responsive">
+							<div class="row">
+								<div class="col-md-6 col-sm-6 label-input">
+									<p:outputLabel value="#{messages.label_iso_country_code}" />
+								</div>
+								<div class="col-md-6 col-sm-6">
+									<p:inputText id="iso" maxlength="3" styleClass="form-text"
+										value="#{countrySearchServiceBean.countryDto.isoCountryCode}"
+										placeholder="#{messages.label_iso_country_code1}"
+										required="true"
+										requiredMessage="#{messages.label_iso_requeried}">
+										<f:validateLength minimum="3" maximum="3" />
+										<p:ajax event="keyup" />
+									</p:inputText>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6 col-sm-6 label-input">
+									<p:outputLabel value="#{messages.labelalpha3}" />
+								</div>
+								<div class="col-md-6 col-sm-6">
+									<p:inputText id="alpha3" maxlength="3" styleClass="form-text"
+										value="#{countrySearchServiceBean.countryDto.alpha3}"
+										placeholder="#{messages.labelalpha31}" required="true"
+										requiredMessage="#{messages.label_alpha3_requeried}">
+										<f:validateLength minimum="3" maximum="3" />
+										<p:ajax event="keyup" />
+									</p:inputText>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6 col-sm-6 label-input">
+									<p:outputLabel value="#{messages.labelalpha2}" />
+								</div>
+								<div class="col-md-6 col-sm-6">
+									<p:inputText id="alpha2" maxlength="2" styleClass="form-text"
+										value="#{countrySearchServiceBean.countryDto.alpha2}"
+										placeholder="#{messages.labelalpha21}" required="true"
+										requiredMessage="#{messages.label_alpha2_requeried}">
+										<f:validateLength minimum="2" maximum="2" />
+										<p:ajax event="keyup" />
+									</p:inputText>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6 col-sm-6 label-input">
+									<p:outputLabel value="#{messages.label_country_name}" />
+								</div>
+								<div class="col-md-6 col-sm-6">
+									<p:inputText id="countryname" maxlength="128"
+										styleClass="form-text"
+										value="#{countrySearchServiceBean.countryDto.countryName}"
+										placeholder="#{messages.label_country_name1}" required="true"
+										requiredMessage="#{messages.label_countryname_requeried}">
+										<f:validateLength maximum="128" />
+										<p:ajax event="keyup" />
+									</p:inputText>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6 col-sm-6 label-input">
+									<p:outputLabel value="#{messages.label_choix_language}" />
+								</div>
+								<div class="col-md-6 col-sm-6">
+									<p:selectOneMenu styleClass="form-text" id="lg"
+										value="#{countrySearchServiceBean.countryDto.language}"
+										converter="entityConverter"
+										placeholder="#{messages.label_country}" required="true"
+										requiredMessage="#{messages.label_choixlangue_requeried}">
+										<f:selectItem
+											itemLabel="#{countrySearchServiceBean.countryDto.language.languageName}"
+											itemValue="#{countrySearchServiceBean.countryDto.language}" />
+										<f:selectItems
+											value="#{countrySearchServiceBean.listlanguage}"
+											var="language" itemValue="#{language}"
+											itemLabel="#{language.languageName}" />
+										<f:ajax event="blur" render="" />
+									</p:selectOneMenu>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6 col-sm-6 label-input">
+									<p:outputLabel
+										value="#{messages.label_choix_mobilephoneformat}" />
+								</div>
+								<div class="col-md-6 col-sm-6">
+									<p:selectOneMenu styleClass="form-text" id="mobileph"
+										value="#{countrySearchServiceBean.countryDto.mobilePhoneFormat}"
+										converter="entityConverter"
+										placeholder="#{messages.label_country}">
+										<f:selectItem
+											itemLabel="#{countrySearchServiceBean.countryDto.mobilePhoneFormat.description}"
+											itemValue="#{countrySearchServiceBean.countryDto.mobilePhoneFormat}" />
+										<f:selectItems
+											value="#{countrySearchServiceBean.listmobilephoneformat}"
+											var="mobilePhoneFormat" itemValue="#{mobilePhoneFormat}"
+											itemLabel="#{mobilePhoneFormat.description}" />
+									</p:selectOneMenu>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6 col-sm-6 label-input">
+									<p:outputLabel value="#{messages.label_choix_lanphoneformat}" />
+								</div>
+								<div class="col-md-6 col-sm-6">
+									<p:selectOneMenu styleClass="form-text" id="lanph"
+										value="#{countrySearchServiceBean.countryDto.lanPhoneFormat}"
+										converter="entityConverter"
+										placeholder="#{messages.label_country}">
+										<f:selectItem
+											itemLabel="#{countrySearchServiceBean.countryDto.lanPhoneFormat.description}"
+											itemValue="#{countrySearchServiceBean.countryDto.lanPhoneFormat}" />
+										<f:selectItems
+											value="#{countrySearchServiceBean.listlanphoneformat}"
+											var="lanPhoneFormat" itemValue="#{lanePhoneFormat}"
+											itemLabel="#{lanPhoneFormat.description}" />
+									</p:selectOneMenu>
+								</div>
+							</div>
+
+							<div class="button-wrapper">
+								<p:commandButton value="#{messages.label_modifier}"
+									styleClass="btn btn-primary"
+									rendered="#{!countrySearchServiceBean.isAction()}"
+									action="#{countrySearchServiceBean.updateCountry()}"
+									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatecountry').hide()"
+									update="forme fdial growl">
+								</p:commandButton>
+								<p:commandButton value="#{messages.label_create}"
+									styleClass="btn btn-primary"
+									rendered="#{countrySearchServiceBean.isAction()}"
+									action="#{countrySearchServiceBean.createCountry()}"
+									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatecountry').hide()"
+									update="forme fdial growl">
+								</p:commandButton>
+								<p:commandButton value="#{messages.label_button_annuler}"
+									type="reset" onclick="PF('updatecountry').hide()"
+									update="fdial" styleClass="btn btn-default btn-sm offset"
+									id="annulerButton" />
+							</div>
+						</div>
+					</h:form>
+				</p:overlayPanel>
+
+				<h:form id="forme">
+					<p:accordionPanel>
+						<p:tab title="#{messages.label_Recherche_Country}">
+							<b:row styleClass="listPage">
+								<div class="table-header">
+									<p:commandButton id="add" title="#{messages.label_add}"
+										action="#{countrySearchServiceBean.initDualList('2')}"
+										update="@([id$=updatcountry])"
+										oncomplete="PF('updatecountry').show()"
+										value="#{messages.label_modifier}"
+										styleClass="btn btn-primary submit-button"
+										icon="fa fa-fw fa-plus">
+									</p:commandButton>
+
+									<p:blockUI block="add" trigger="add">
+											#{messages.label_loading}<br />
+										<p:graphicImage value="/resources/images/loadingpics.gif" />
+									</p:blockUI>
+								</div>
+
+								<p:dataTable id="listcountrys"
+									value="#{countrySearchServiceBean.listcountry}" var="country"
+									widgetVar="menuTable" emptyMessage="#{messages.label_empty}"
+									styleClass="listeTable table-responsive filterable"
+									tableStyleClass="table table-striped table-condensed table-hover"
+									rowKey="#{country.idCountry}" selectionMode="single"
+									paginator="true" paginatorPosition="bottom"
+									paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
+									rows="10" filterBy="#{country.countryName}">
+
+									<p:column priority="3" width="40"
+										filterBy="#{country.idCountry}" filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_id}" />
+										</f:facet>
+										<h:outputText value="#{country.idCountry}"></h:outputText>
+									</p:column>
+
+									<p:column priority="1" filterBy="#{country.countryName}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_countryname}" />
+										</f:facet>
+										<h:outputText value="#{country.countryName}"></h:outputText>
+									</p:column>
+
+									<p:column priority="2" filterBy="#{country.alpha3}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.labelalphas3}" />
+										</f:facet>
+										<h:outputText value="#{country.alpha3}"></h:outputText>
+									</p:column>
+
+									<p:column priority="2" filterBy="#{country.alpha2}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.labelalphas2}" />
+										</f:facet>
+										<h:outputText value="#{country.alpha2}"></h:outputText>
+									</p:column>
+
+									<p:column priority="3" filterBy="#{country.language}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.labellanguage}" />
+										</f:facet>
+										<h:outputText value="#{country.language.languageCode}"></h:outputText>
+									</p:column>
+
+									<p:column priority="3" filterBy="#{country.mobilePhoneFormat}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.labelmobilePhoneFormat}" />
+										</f:facet>
+										<h:outputText value="#{country.mobilePhoneFormat.description}"></h:outputText>
+									</p:column>
+
+									<p:column priority="3" filterBy="#{country.lanPhoneFormat}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.labellanPhoneFormat}" />
+										</f:facet>
+										<h:outputText value="#{country.lanPhoneFormat.description}"></h:outputText>
+									</p:column>
+
+									<p:column priority="1" width="100" filterMatchMode="contains">
+
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_action}" />
+										</f:facet>
+
+										<p:commandButton id="modifier" styleClass="btn btn-success"
+											title="#{messages.label_modifier}"
+											action="#{countrySearchServiceBean.initDualList('1')}"
+											update="@([id$=updatcountry])"
+											oncomplete="PF('updatecountry').show()"
+											value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil">
+											<f:setPropertyActionListener value="#{country}"
+												target="#{countrySearchServiceBean.contryDto}" />
+										</p:commandButton>
+
+										<p:commandButton id="supprimer" styleClass="btn btn-danger"
+											title="#{messages.label_supprimer1}"
+											onclick="PF('confirmation').show()"
+											value="#{messages.label_supprimer1}"
+											icon="fa fa-fw fa-remove">
+											<f:setPropertyActionListener value="#{country}"
+												target="#{countrySearchServiceBean.contryDto}" />
+										</p:commandButton>
+
+										<p:blockUI block="listcountrys"
+											trigger="listcountrys:supprimer,listcountrys:modifier">
+										#{messages.label_loading}<br />
+											<p:graphicImage value="/resources/images/loadingpics.gif" />
+										</p:blockUI>
+
+										<p:confirmDialog 
+											message="#{messages.label_msg_alerte_supression}"
+											header="Confirmation" widgetVar="confirmation">
+											<p:commandButton value="#{messages.label_msg_confirmOui}"
+												onclick="PF('confirmation').hide()"
+												action="#{countrySearchServiceBean.supprimerCountry()}"
+												update="forme growl" />
+											<p:commandButton value="#{messages.label_msg_confirmNon}"   
+												onclick="PF('confirmation').hide()" type="button" />
+										</p:confirmDialog>
+									</p:column>
+								</p:dataTable>
+
+								<p:contextMenu for="listcountrys">
+									<p:menuitem value="Modifier" icon="ui-icon-search" />
+									<p:menuitem value="Supprimer" icon="ui-icon-search" />
+									<p:separator />
+									<p:menuitem value="Détails" icon="ui-icon-close" />
+								</p:contextMenu>
+
+							</b:row>
+						</p:tab>
+					</p:accordionPanel>
+				</h:form>
+			</b:row>
+		</div>
+	</ui:define>
+</ui:composition>

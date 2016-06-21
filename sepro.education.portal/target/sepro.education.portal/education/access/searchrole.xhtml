@@ -1,0 +1,55 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:uf="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+	template="/templates/template.xhtml">
+	<ui:define name="content">
+		<div class="container-fluid">
+			<b:row>
+				<h:form id="forme">
+					<p:accordionPanel>
+						<p:tab title="#{messages.label_Recherche_Role}">
+							<b:row styleClass="listPage">
+								<p:dataTable id="listrole"
+									value="#{roleSearchServiceBean.listrole}" var="role"
+									widgetVar="menuTable" emptyMessage="#{messages.label_empty}"
+									styleClass="listeTable table-responsive filterable"
+									tableStyleClass="table table-striped table-condensed table-hover"
+									rowKey="#{role.idRole}" selectionMode="single" paginator="true"
+									paginatorPosition="bottom"
+									paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
+									rows="10" filterBy="#{role.roleName}">
+
+									<p:column priority="2" filterBy="#{role.idRole}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_id}" />
+										</f:facet>
+										<h:outputText value="#{role.idRole}"></h:outputText>
+									</p:column>
+
+									<p:column priority="1" filterBy="#{role.roleName}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_rolename}" />
+										</f:facet>
+										<h:outputText value="#{role.roleName}"></h:outputText>
+									</p:column>
+								</p:dataTable>
+
+								<p:contextMenu for="listrole">
+									<p:menuitem value="Modifier" icon="ui-icon-search" />
+									<p:menuitem value="Supprimer" icon="ui-icon-search" />
+									<p:separator />
+									<p:menuitem value="Détails" icon="ui-icon-close" />
+								</p:contextMenu>
+							</b:row>
+						</p:tab>
+					</p:accordionPanel>
+				</h:form>
+			</b:row>
+		</div>
+	</ui:define>
+</ui:composition>

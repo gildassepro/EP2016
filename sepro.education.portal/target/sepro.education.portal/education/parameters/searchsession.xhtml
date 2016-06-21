@@ -1,0 +1,280 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:uf="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+	template="/templates/template.xhtml">
+	<ui:define name="content">
+		<p:growl id="growl" showDetail="true" sticky="false" />
+
+		<div class="container-fluid">
+			<b:row>
+				<p:overlayPanel id="updatsession" widgetVar="updatesession"
+					showEffect="fade" hideEffect="fade" dismissable="false"
+					showCloseIcon="true">
+					<h:form id="fdial">
+						<h3 style="margin-top: 0">
+							<p:outputLabel value="#{messages.label_modifier_Session}"
+								rendered="#{!sessionSearchServiceBean.isAction()}" />
+							<p:outputLabel value="#{messages.label_creer_session}"
+								rendered="#{sessionSearchServiceBean.isAction()}" />
+						</h3>
+						
+						<div class="ui-grid ui-grid-responsive session">
+							<div class="row">
+								<div class="col-md-6 col-sm-6 label-input">
+									<p:outputLabel value="#{messages.label_nom_session}" />
+								</div>
+								<div class="col-md-6 col-sm-6">
+									<p:inputText styleClass="form-control" id="nomsession" maxlength="128"
+										value="#{sessionSearchServiceBean.sessionDto.sessionName}"
+										placeholder="#{messages.labelnomsession}" required="true"
+										immediate="true"
+										requiredMessage="#{messages.label_nomsession_requeried}">
+									<f:validateLength minimum="5" maximum="128" />
+										<p:ajax event="keyup" />
+									</p:inputText>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6 col-sm-6 label-input">
+									<p:outputLabel value="#{messages.label_anneeacademique}" />
+								</div>
+								<div class="col-md-6 col-sm-6">
+									<p:selectOneMenu styleClass="form-text" id="anneeacademique"
+										value="#{sessionSearchServiceBean.sessionDto.academiqueYear}"
+										converter="entityConverter" required="true" immediate="true"
+										requiredMessage="#{messages.label_anneeacademique_requeried}">
+										<f:selectItem
+											itemLabel="#{sessionSearchServiceBean.sessionDto.academiqueYear.value}"
+											itemValue="#{sessionSearchServiceBean.sessionDto.academiqueYear}" />
+										<f:selectItems
+											value="#{sessionSearchServiceBean.listanneeacademique}"
+											var="academiqueYear" itemValue="#{academiqueYear}"
+											itemLabel="#{academiqueYear.value}" />
+										<f:ajax event="blur" render="" />
+									</p:selectOneMenu>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6 col-sm-6 label-input">
+									<p:outputLabel value="#{messages.labeldatedebut}"
+										for="datedebut" />
+								</div>
+								<div class="col-md-6 col-sm-6">
+									<p:calendar id="datedebut"
+										value="#{sessionSearchServiceBean.sessionDto.startDate}"
+										showOn="button" pattern="MM/dd/yyyy"
+										required="true"
+										requiredMessage="#{messages.label_startDate_requeried}"
+										placeholder="#{messages.label_labeldatedebut}">
+										<f:converter converterId="dateConverter" />
+										<p:ajax event="dateSelect" />
+									</p:calendar>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6 col-sm-6 label-input">
+									<p:outputLabel value="#{messages.labeldatefin}" for="datefin" />
+								</div>
+								<div class="col-md-6 col-sm-6">
+									<p:calendar id="datefin"
+										value="#{sessionSearchServiceBean.sessionDto.endDate}"
+										showOn="button" pattern="MM/dd/yyyy"
+										required="true"
+										requiredMessage="#{messages.label_endDate_requeried}"
+										placeholder="#{messages.label_labeldatefin}">
+										<f:converter converterId="dateConverter" />
+										<p:ajax event="dateSelect" />
+									</p:calendar>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6 col-sm-6 label-input">
+									<p:outputLabel value="#{messages.labelstatus}" />
+								</div>
+								<div class="col-md-6 col-sm-6">
+									<p:selectOneMenu styleClass="form-text" id="statut"
+										value="#{sessionSearchServiceBean.sessionDto.statusSession}"
+										converter="entityConverter"
+										required="true" immediate="true"
+										requiredMessage="#{messages.label_statusSession_requeried}"
+										placeholder="#{messages.label_country}">
+										<f:selectItem
+											itemLabel="#{sessionSearchServiceBean.sessionDto.statusSession.value}"
+											itemValue="#{sessionSearchServiceBean.sessionDto.statusSession}" />
+										<f:selectItems value="#{sessionSearchServiceBean.liststatut}"
+											var="statusSession" itemValue="#{statusSession}"
+											itemLabel="#{statusSession.value}" />
+											<f:ajax event="blur" render="" />
+									</p:selectOneMenu>
+								</div>
+							</div>
+
+							<div class="button-wrapper">
+								<p:commandButton value="#{messages.label_modifier}"
+									styleClass="btn btn-primary"
+									rendered="#{!sessionSearchServiceBean.isAction()}"
+									action="#{sessionSearchServiceBean.updateSession()}"
+									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatesession').hide()"
+									update="forme fdial growl">
+								</p:commandButton>
+
+								<p:commandButton value="#{messages.label_create}"
+									styleClass="btn btn-primary"
+									rendered="#{sessionSearchServiceBean.isAction()}"
+									action="#{sessionSearchServiceBean.createSession()}"
+									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatesession').hide()"
+									update="forme fdial growl">
+								</p:commandButton>
+
+								<p:commandButton value="#{messages.label_button_annuler}"
+									type="reset" onclick="PF('updatesession').hide()"
+									update="fdial" styleClass="btn btn-default btn-sm offset" id="annulerButton">
+								</p:commandButton>
+							</div>
+						</div>
+					</h:form>
+				</p:overlayPanel>
+
+				<h:form id="forme">
+					<p:accordionPanel>
+						<p:tab title="#{messages.label_Recherche_Session}">
+							<b:row styleClass="listPage">
+								<div class="table-header">
+
+									<p:commandButton id="add" title="#{messages.label_add}"
+										action="#{sessionSearchServiceBean.initDualList('2')}"
+										update="@([id$=updatsession])"
+										oncomplete="PF('updatesession').show()"
+										value="#{messages.label_modifier}"
+										styleClass="btn btn-primary submit-button"
+										icon="fa fa-fw fa-plus">
+									</p:commandButton>
+
+									<p:blockUI block="add" trigger="add">
+											#{messages.label_loading}<br />
+										<p:graphicImage value="/resources/images/loadingpics.gif" />
+									</p:blockUI>
+								</div>
+
+								<p:dataTable id="listsessions"
+									value="#{sessionSearchServiceBean.listsession}" var="sess"
+									widgetVar="menuTable" emptyMessage="#{messages.label_empty}"
+									styleClass="listeTable table-responsive filterable"
+									tableStyleClass="table table-striped table-condensed table-hover"
+									rowKey="#{sess.idSession}" selectionMode="single"
+									paginator="true" paginatorPosition="bottom"
+									paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
+									rows="10" filterBy="#{sess.sessionName}">
+
+									<p:column priority="3" width="40" filterBy="#{sess.idSession}"
+										filterMatchMode="contains">
+
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_id}" />
+										</f:facet>
+
+										<h:outputText value="#{sess.idSession}"></h:outputText>
+									</p:column>
+
+									<p:column priority="1" filterBy="#{sess.academiqueYear}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_anneeacademiquesession}" />
+										</f:facet>
+										<h:outputText value="#{sess.academiqueYear.value}"></h:outputText>
+									</p:column>
+
+									<p:column priority="1" filterBy="#{session.sessionName}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_nom_session_name}" />
+										</f:facet>
+										<h:outputText value="#{sess.sessionName}"></h:outputText>
+									</p:column>
+
+									<p:column priority="1" filterBy="#{sess.statusSession}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.labelstatussession}" />
+										</f:facet>
+										<h:outputText value="#{sess.statusSession.value}"></h:outputText>
+									</p:column>
+
+									<p:column priority="1" filterBy="#{sess.startDate}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.labeldatedebut}" />
+										</f:facet>
+										<h:outputText value="#{sess.startDate}"></h:outputText>
+									</p:column>
+
+									<p:column priority="1" filterBy="#{sess.endDate}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.labeldatefin}" />
+										</f:facet>
+										<h:outputText value="#{sess.endDate}"></h:outputText>
+									</p:column>
+
+									<p:column priority="1" width="141" filterMatchMode="contains">
+
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_action}" />
+										</f:facet>
+
+										<p:commandButton id="modifier" styleClass="btn btn-success"
+											title="#{messages.label_modifier}"
+											action="#{sessionSearchServiceBean.initDualList('1')}"
+											update="@([id$=updatsession])"
+											oncomplete="PF('updatesession').show()"
+											value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil">
+											<f:setPropertyActionListener value="#{sess}"
+												target="#{sessionSearchServiceBean.sesionDto}" />
+										</p:commandButton>
+
+										<p:commandButton id="supprimer" styleClass="btn btn-danger"
+											title="#{messages.label_supprimer1}"
+											onclick="PF('confirmation').show()"
+											value="#{messages.label_supprimer1}"
+											icon="fa fa-fw fa-remove">
+											<f:setPropertyActionListener value="#{sess}"
+												target="#{sessionSearchServiceBean.sesionDto}" />
+										</p:commandButton>
+
+										<p:blockUI block="listsessions"
+											trigger="listsessions:supprimer,listsessions:modifier">
+										#{messages.label_loading}<br />
+											<p:graphicImage value="/resources/images/loadingpics.gif" />
+										</p:blockUI>
+
+										<p:confirmDialog
+											message="#{messages.label_msg_alerte_supression}"
+											header="Confirmation" widgetVar="confirmation">
+											<p:commandButton value="#{messages.label_msg_confirmOui}"
+												onclick="PF('confirmation').hide()"
+												action="#{sessionSearchServiceBean.supprimerSession()}"
+												update="forme growl" />
+											<p:commandButton value="#{messages.label_msg_confirmNon}"
+												onclick="PF('confirmation').hide()" type="button" />
+										</p:confirmDialog>
+									</p:column>
+								</p:dataTable>
+
+								<p:contextMenu for="listsessions">
+									<p:menuitem value="Modifier" icon="ui-icon-search" />
+									<p:menuitem value="Supprimer" icon="ui-icon-search" />
+									<p:separator />
+									<p:menuitem value="Détails" icon="ui-icon-close" />
+								</p:contextMenu>
+
+							</b:row>
+						</p:tab>
+					</p:accordionPanel>
+				</h:form>
+			</b:row>
+		</div>
+	</ui:define>
+</ui:composition>

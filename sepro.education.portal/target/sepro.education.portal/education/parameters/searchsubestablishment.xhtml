@@ -1,0 +1,849 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:uf="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+	template="/templates/template.xhtml">
+	<ui:define name="content">
+		<p:growl id="growl" showDetail="true" sticky="false" />
+		<div class="container-fluid">
+			<b:row>
+				<p:overlayPanel id="updatsubestablishment"
+					widgetVar="updatesubestablishment" showEffect="fade"
+					hideEffect="fade" dismissable="false" showCloseIcon="true">
+
+					<div class="messages">
+						<p:messages for="selectsubestcountry" id="listecountrysub"
+							autoUpdate="true" showDetail="true" closable="true"></p:messages>
+						<p:messages for="selectsubestregion" id="listeregionsub"
+							autoUpdate="true" showDetail="true" closable="true"></p:messages>
+						<p:messages for="selectsubestcity" id="listecitysub"
+							autoUpdate="true" showDetail="true" closable="true"></p:messages>
+						<p:messages for="selectsubestzipcode" id="listezipcodesub"
+							autoUpdate="true" showDetail="true" closable="true"></p:messages>
+						<p:messages for="namesubestablishment"
+							id="namesubestablishmentmsg" autoUpdate="true" showDetail="true"
+							closable="true"></p:messages>
+						<p:messages for="selectgerantville" id="listevillegerant"
+							autoUpdate="true" showDetail="true" closable="true"></p:messages>
+						<p:messages for="selectgerantPays" id="listepaysgerant"
+							autoUpdate="true" showDetail="true" closable="true"></p:messages>
+						<p:messages for="selectgerantregion" id="listeregiongerant"
+							autoUpdate="true" showDetail="true" closable="true"></p:messages>
+						<p:messages for="selectgerantzipcode" id="listezipcodegerant"
+							autoUpdate="true" showDetail="true" closable="true"></p:messages>
+						<p:messages for="selectcontactville" id="listevillecontact"
+							autoUpdate="true" showDetail="true" closable="true"></p:messages>
+						<p:messages for="selectcontactcountry" id="listepayscontact"></p:messages>
+						<p:messages for="selectcontactzipcode" id="listezipcodecontact"></p:messages>
+						<p:messages for="selectregioncontact" id="listeregioncontact"></p:messages>
+						<p:messages for="idsubestmail" id="mailsub"></p:messages>
+						<p:messages for="gemail" id="mailge"></p:messages>
+						<p:messages for="comail" id="mailco"></p:messages>
+					</div>
+
+					<h:form id="fdial">
+						<h3>
+							<h:outputLabel value="#{messages.label_create_subestablishment}"
+								rendered="#{subEstablishmentSearchServiceBean.isAction()}" />
+							<h:outputLabel
+								value="#{messages.label_modifier_subestablishment}"
+								rendered="#{!subEstablishmentSearchServiceBean.isAction()}" />
+						</h3>
+
+						<p:tabView id="tabs">
+							<p:tab id="tab1" title="#{messages.label_identifiant}">
+								<div class="ui-grid ui-grid-responsive wrap">
+									<div class="ui-grid-col-12">
+										<div class="row">
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_name_establishment}:*" />
+												<p:inputText id="nameestablishment"
+													label="#{messages.label_name_establishment}"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.establishment.nameEstablishment}"
+													placeholder="#{messages.label_name_establishment}"
+													readonly="true" />
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_name_subestablishment}:*" />
+												<p:inputText id="namesubestablishment"
+													label="#{messages.label_name_subestablishment}"
+													required="true"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.nameSubestablishment}"
+													placeholder="#{messages.label_name_subestablishment}"
+													requiredMessage="#{messages.label_name_subestablishment_required}">
+													<p:ajax update="namesubestablishmentmsg" event="keyup" />
+												</p:inputText>
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_locate_sub}:*" />
+												<p:inputText id="sublocate"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.location}"
+													placeholder="#{messages.label_locate_sub}" />
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_description1}:" />
+												<p:inputText id="subdescription"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.description}"
+													placeholder="#{messages.label_description1}" />
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_siteweb}:" />
+												<p:inputText id="subweb"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.websiteAddress}"
+													placeholder="#{messages.label_siteweb}" />
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_twitter}:" />
+												<p:inputText id="subtwitt"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.twitterId}"
+													placeholder="#{messages.label_twitter}" />
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_youtube}:" />
+												<p:inputText id="subutube"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.youtubechannel}"
+													placeholder="#{messages.label_youtube}" />
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_facebook}:" />
+												<p:inputText id="subface"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.facebookId}"
+													placeholder="#{messages.label_facebook}" />
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_statut_name}:*" />
+												<h:selectOneRadio id="selectsubstatus"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.status}">
+													<f:converter converterId="javax.faces.Boolean" />
+													<f:selectItem itemLabel="#{messages.label_actif}"
+														itemValue="true" />
+													<f:selectItem itemLabel="#{messages.label_inactif}"
+														itemValue="false" />
+												</h:selectOneRadio>
+											</div>
+										</div>
+									</div>
+								</div>
+							</p:tab>
+
+							<p:tab id="tab2" title="#{messages.label_addresse}">
+								<div class="ui-grid ui-grid-responsive wrap">
+									<div class="ui-grid-col-12">
+										<div class="row">
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_country}:*" />
+												<p:selectOneMenu id="selectsubestcountry"
+													styleClass="form-text"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.country}"
+													converter="entityConverter"
+													placeholder="#{messages.label_country}" required="true"
+													requiredMessage="#{messages.label_pays_requeried}">
+													<f:selectItem
+														itemLabel="#{subEstablishmentSearchServiceBean.subEstablishmentDto.country.countryName}"
+														itemValue="#{subEstablishmentSearchServiceBean.subEstablishmentDto.country}"
+														label="#{messages.label_country}" />
+													<f:selectItems
+														value="#{subEstablishmentSearchServiceBean.listCountry}"
+														var="country" itemValue="#{country}"
+														itemLabel="#{country.countryName}" />
+													<p:ajax event="valueChange"
+														listener="#{subEstablishmentSearchServiceBean.maskPhoneAdresse()}"
+														update="subestfax subtel1 subtel2 selectsubestregion selectsubestcity selectsubestzipcode" />
+												</p:selectOneMenu>
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_regionname}:*" />
+												<p:selectOneMenu id="selectsubestregion"
+													styleClass="form-text"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.region}"
+													converter="entityConverter"
+													placeholder="#{messages.label_regionname}" required="true"
+													requiredMessage="#{messages.label_choix_region}">
+													<f:selectItem
+														itemLabel="#{subEstablishmentSearchServiceBean.subEstablishmentDto.region.regionName}"
+														itemValue="#{subEstablishmentSearchServiceBean.subEstablishmentDto.region}"
+														label="#{messages.label_region}" />
+													<f:selectItems
+														value="#{subEstablishmentSearchServiceBean.listRegion}"
+														var="region" itemValue="#{region}"
+														itemLabel="#{region.regionName}" />
+														<p:ajax event="valueChange"
+														listener="#{subEstablishmentSearchServiceBean.onchangeCityAdresse()}"
+														update="selectsubestcity selectsubestzipcode" />
+												</p:selectOneMenu>
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_city}:*" />
+												<p:selectOneMenu id="selectsubestcity"
+													styleClass="form-text"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.city}"
+													converter="entityConverter"
+													placeholder="#{messages.label_city}" required="true"
+													requiredMessage="#{messages.label_choix_ville}">
+													<f:selectItem
+														itemLabel="#{subEstablishmentSearchServiceBean.subEstablishmentDto.city.cityName}"
+														itemValue="#{subEstablishmentSearchServiceBean.subEstablishmentDto.city}"
+														label="#{messages.label_city}" />
+													<f:selectItems
+														value="#{subEstablishmentSearchServiceBean.listCity}"
+														var="city" itemValue="#{city}"
+														itemLabel="#{city.cityName}" />
+														<p:ajax event="valueChange"
+														listener="#{subEstablishmentSearchServiceBean.onchangeZipCodeAdresse()}"
+														update="selectsubestzipcode" />
+												</p:selectOneMenu>
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_zipcode}:*" />
+												<p:selectOneMenu id="selectsubestzipcode"
+													styleClass="form-text"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.zipcode}"
+													converter="entityConverter"
+													placeholder="#{messages.label_country}" required="true"
+													requiredMessage="#{messages.label_code_zipcode_requeried}">
+													<f:selectItem
+														itemLabel="#{subEstablishmentSearchServiceBean.subEstablishmentDto.zipcode.zipCode}"
+														itemValue="#{subEstablishmentSearchServiceBean.subEstablishmentDto.zipcode}"
+														label="#{messages.label_zipcode}" />
+													<f:selectItems
+														value="#{subEstablishmentSearchServiceBean.listZipCode}"
+														var="zipcode" itemValue="#{zipcode}"
+														itemLabel="#{zipcode.zipCode}" />
+												</p:selectOneMenu>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_address_ligne1}:*" />
+												<p:inputText id="subesaddress1"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.addressLigne1}"
+													placeholder="#{messages.label_address_ligne1}" />
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_address_ligne2}:" />
+												<p:inputText id="subestaddress2"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.addressLigne2}"
+													placeholder="#{messages.label_address_ligne2}" />
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_address_ligne3}:" />
+												<p:inputText id="subestaddress3"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.addressLigne3}"
+													placeholder="#{messages.label_address_ligne3}" />
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_alintention}:" />
+												<p:inputText id="subestcarof"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.careOf}"
+													placeholder="#{messages.label_alintention}" />
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_email}:*" />
+												<p:inputText id="subestmail"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.emailAddress}"
+													placeholder="#{messages.label_email}"
+													validatorMessage="#{messages.label_requis_mail}">
+													<f:validateRegex
+														pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+												</p:inputText>
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_ligne_tel1}:*" />
+												<p:inputMask styleClass="form-control" id="subtel1"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.lanPhoneNumber1}"
+													placeholder="#{messages.label_ligne_tel1}"
+													mask="#{subEstablishmentSearchServiceBean.maskphonformatadresse}">
+												</p:inputMask>
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_ligne_tel2}:" />
+												<p:inputMask styleClass="form-control" id="subtel2"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.lanPhoneNumber2}"
+													placeholder="#{messages.label_ligne_tel2}"
+													mask="#{subEstablishmentSearchServiceBean.maskphonformatadresse}">
+												</p:inputMask>
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_fax}:" />
+												<p:inputMask styleClass="form-control" id="subestfax"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.faxNumber}"
+													placeholder="#{messages.label_fax}"
+													mask="#{subEstablishmentSearchServiceBean.maskphonformatadresse}">
+												</p:inputMask>
+											</div>
+										</div>
+									</div>
+								</div>
+							</p:tab>
+
+
+							<p:tab id="tab3" title="#{messages.label_gerant}">
+								<div class="ui-grid ui-grid-responsive wrap">
+									<div class="ui-grid-col-12">
+										<div class="row">
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_name}:*" />
+												<p:inputText id="gename"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerLastName}"
+													placeholder="#{messages.label_name}" />
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_surname}:*" />
+												<p:inputText id="gesurname"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerFistName}"
+													placeholder="#{messages.label_surname}" />
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_secsurname}:" />
+												<p:inputText id="gesecsurname"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerMiddleName}"
+													placeholder="#{messages.label_secsurname}" />
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_function}:" />
+												<p:inputText id="gefonction"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerPosition}"
+													placeholder="#{messages.label_function}" />
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_country}:*" />
+												<p:selectOneMenu id="selectgerantPays"
+													styleClass="form-text"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerCountry}"
+													converter="entityConverter"
+													placeholder="#{messages.label_country}" required="true"
+													requiredMessage="#{messages.label_pays_requeried}">
+													<f:selectItem
+														itemLabel="#{subEstablishmentSearchServiceBean.subEstablishmentDto.country.countryName}"
+														itemValue="#{subEstablishmentSearchServiceBean.subEstablishmentDto.country}"
+														label="#{messages.label_country}" />
+													<f:selectItems
+														value="#{subEstablishmentSearchServiceBean.listCountry}"
+														var="country" itemValue="#{country}"
+														itemLabel="#{country.countryName}" />
+													<p:ajax event="valueChange"
+														listener="#{subEstablishmentSearchServiceBean.maskPhoneGerant()}"
+														update="gelitel1 gelitel2 gelifax selectgerantregion selectgerantville selectgerantzipcode" />
+												</p:selectOneMenu>
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_regionname}:*" />
+												<p:selectOneMenu id="selectgerantregion"
+													styleClass="form-text"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerRegion}"
+													converter="entityConverter"
+													placeholder="#{messages.label_regionname}" required="true"
+													requiredMessage="#{messages.label_choix_region}">
+													<f:selectItem
+														itemLabel="#{subEstablishmentSearchServiceBean.subEstablishmentDto.region.regionName}"
+														itemValue="#{subEstablishmentSearchServiceBean.subEstablishmentDto.region}"
+														label="#messages.label_regionname}" />
+													<f:selectItems
+														value="#{subEstablishmentSearchServiceBean.listRegion}"
+														var="region" itemValue="#{region}"
+														itemLabel="#{region.regionName}" />
+														<p:ajax event="valueChange"
+														listener="#{subEstablishmentSearchServiceBean.onchangeCityGerant()}"
+														update="selectgerantville selectgerantzipcode" />
+												</p:selectOneMenu>
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_city}:*" />
+												<p:selectOneMenu id="selectgerantville"
+													styleClass="form-text"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerCity}"
+													converter="entityConverter"
+													placeholder="#{messages.label_city}" required="true"
+													requiredMessage="#{messages.label_choix_ville}">
+													<f:selectItem
+														itemLabel="#{subEstablishmentSearchServiceBean.subEstablishmentDto.city.cityName}"
+														itemValue="#{subEstablishmentSearchServiceBean.subEstablishmentDto.city}"
+														label="#{messages.label_city}" />
+													<f:selectItems
+														value="#{subEstablishmentSearchServiceBean.listCity}"
+														var="city" itemValue="#{city}"
+														itemLabel="#{city.cityName}" />
+														<p:ajax event="valueChange"
+														listener="#{subEstablishmentSearchServiceBean.onchangeZipCodeGerant()}"
+														update="selectgerantzipcode" />
+												</p:selectOneMenu>
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_zipcode}:*" />
+												<p:selectOneMenu id="selectgerantzipcode"
+													styleClass="form-text"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerZipcode}"
+													converter="entityConverter"
+													placeholder="#{messages.label_zipcode}" required="true"
+													requiredMessage="#{messages.label_code_zipcode_requeried}">
+													<f:selectItem
+														itemLabel="#{subEstablishmentSearchServiceBean.subEstablishmentDto.zipcode.zipCode}"
+														itemValue="#{subEstablishmentSearchServiceBean.subEstablishmentDto.zipcode}"
+														label="#{messages.label_region}" />
+													<f:selectItems
+														value="#{subEstablishmentSearchServiceBean.listZipCode}"
+														var="zipcode" itemValue="#{zipcode}"
+														itemLabel="#{zipcode.zipCode}" />
+												</p:selectOneMenu>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_address_ligne1}:" />
+												<p:inputText di="addrli1"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerAddressLigne1}"
+													placeholder="#{messages.label_address_ligne1}" />
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_address_ligne2}:" />
+												<p:inputText id="addrli2"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerAddressLigne2}"
+													placeholder="#{messages.label_address_ligne2}" />
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_address_ligne3}:" />
+												<p:inputText id="addrli3"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerAddressLigne3}"
+													placeholder="#{messages.label_address_ligne3}" />
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_alintention}:" />
+												<p:inputText id="gecarof"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerCareOf}"
+													placeholder="#{messages.label_alintention}" />
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_email}:*" />
+												<p:inputText id="gemail"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerEmailAddress}"
+													placeholder="#{messages.label_email}"
+													validatorMessage="#{messages.label_requis_mail}">
+													<f:validateRegex
+														pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+												</p:inputText>
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_ligne_tel1}:*" />
+												<p:inputMask styleClass="form-control" id="gelitel1"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerLanPhoneNumber1}"
+													placeholder="#{messages.label_ligne_tel1}"
+													mask="#{subEstablishmentSearchServiceBean.maskphonformatgerant}">
+												</p:inputMask>
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_ligne_tel2}:" />
+												<p:inputMask styleClass="form-control" id="gelitel2"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerLanPhoneNumber2}"
+													placeholder="#{messages.label_ligne_tel2}"
+													mask="#{subEstablishmentSearchServiceBean.maskphonformatgerant}">
+												</p:inputMask>
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_fax}:" />
+												<p:inputMask styleClass="form-control" id="gelifax"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerFaxNumber}"
+													placeholder="#{messages.label_fax}"
+													mask="#{subEstablishmentSearchServiceBean.maskphonformatgerant}">
+												</p:inputMask>
+											</div>
+										</div>
+									</div>
+								</div>
+							</p:tab>
+
+							<p:tab id="tab4" title="#{messages.label_Contact}">
+								<div class="ui-grid ui-grid-responsive wrap">
+									<div class="ui-grid-col-12">
+										<div class="row">
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_name}:*" />
+												<p:inputText id="nameco"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactLastName}"
+													placeholder="#{messages.label_name}" />
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_surname}:*" />
+												<p:inputText id="surnameco"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactFistName}"
+													placeholder="#{messages.label_surname}" />
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_secsurname}:" />
+												<p:inputText id="secsurnameco"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactMiddleName}"
+													placeholder="#{messages.label_secsurname}" />
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_function}:" />
+												<p:inputText id="cofonction"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactPosition}"
+													placeholder="#{messages.label_function}" />
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_country}:*" />
+												<p:selectOneMenu id="selectcontactcountry"
+													styleClass="form-text"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactCountry}"
+													converter="entityConverter"
+													placeholder="#{messages.label_country}" required="true"
+													requiredMessage="#{messages.label_pays_requeried}">
+													<f:selectItem
+														itemLabel="#{subEstablishmentSearchServiceBean.subEstablishmentDto.country.countryName}"
+														itemValue="#{subEstablishmentSearchServiceBean.subEstablishmentDto.country}"
+														label="#{messages.label_country}" />
+													<f:selectItems
+														value="#{subEstablishmentSearchServiceBean.listCountry}"
+														var="country" itemValue="#{country}"
+														itemLabel="#{country.countryName}" />
+													<p:ajax event="valueChange"
+														listener="#{subEstablishmentSearchServiceBean.maskPhoneContact()}"
+														update="cotel1 cotel2 cofax selectregioncontact selectcontactville selectcontactzipcode" />
+												</p:selectOneMenu>
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_regionname}:*" />
+												<p:selectOneMenu id="selectregioncontact"
+													styleClass="form-text"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactRegion}"
+													converter="entityConverter"
+													placeholder="#{messages.label_regionname}" required="true"
+													requiredMessage="#{messages.label_choix_region}">
+													<f:selectItem
+														itemLabel="#{subEstablishmentSearchServiceBean.subEstablishmentDto.region.regionName}"
+														itemValue="#{subEstablishmentSearchServiceBean.subEstablishmentDto.region}"
+														label="#{messages.label_region}" />
+													<f:selectItems
+														value="#{subEstablishmentSearchServiceBean.listRegion}"
+														var="region" itemValue="#{region}"
+														itemLabel="#{region.regionName}" />
+														<p:ajax event="valueChange"
+														listener="#{subEstablishmentSearchServiceBean.onchangeCityContact()}"
+														update="selectcontactville selectcontactzipcode" />
+												</p:selectOneMenu>
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_city}:*" />
+												<p:selectOneMenu id="selectcontactville"
+													styleClass="form-text"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactCity}"
+													converter="entityConverter"
+													placeholder="#{messages.label_city}" required="true"
+													requiredMessage="#{messages.label_choix_ville}">
+													<f:selectItem
+														itemLabel="#{subEstablishmentSearchServiceBean.subEstablishmentDto.city.cityName}"
+														itemValue="#{subEstablishmentSearchServiceBean.subEstablishmentDto.city}"
+														label="#{messages.label_city}" />
+													<f:selectItems
+														value="#{subEstablishmentSearchServiceBean.listCity}"
+														var="city" itemValue="#{city}"
+														itemLabel="#{city.cityName}" />
+														<p:ajax event="valueChange"
+														listener="#{subEstablishmentSearchServiceBean.onchangeZipCodeContact()}"
+														update="selectcontactzipcode" />
+												</p:selectOneMenu>
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_zipcode}:*" />
+												<p:selectOneMenu id="selectcontactzipcode"
+													styleClass="form-text"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactZipcode}"
+													converter="entityConverter"
+													placeholder="#{messages.label_zipcode}" required="true"
+													requiredMessage="#{messages.label_code_zipcode_requeried}">
+													<f:selectItem
+														itemLabel="#{subEstablishmentSearchServiceBean.subEstablishmentDto.zipcode.zipCode}"
+														itemValue="#{subEstablishmentSearchServiceBean.subEstablishmentDto.zipcode}"
+														label="#{messages.label_zipcode}" />
+													<f:selectItems
+														value="#{subEstablishmentSearchServiceBean.listZipCode}"
+														var="zipcode" itemValue="#{zipcode}"
+														itemLabel="#{zipcode.zipCode}" />
+												</p:selectOneMenu>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_address_ligne1}:" />
+												<p:inputText id="coaddrlign1"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactAddressLigne1}"
+													placeholder="#{messages.label_address_ligne1}" />
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_address_ligne2}:" />
+												<p:inputText id="coaddrlign2"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactAddressLigne2}"
+													placeholder="#{messages.label_address_ligne2}" />
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_address_ligne3}:" />
+												<p:inputText id="coaddrlign3"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactAddressLigne3}"
+													placeholder="#{messages.label_address_ligne3}" />
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_alintention}:" />
+												<p:inputText id="coalof"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactCareOf}"
+													placeholder="#{messages.label_alintention}" />
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_email}:*" />
+												<p:inputText id="comail"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactEmailAddress}"
+													placeholder="#{messages.label_email}"
+													validatorMessage="#{messages.label_requis_mail}">
+													<f:validateRegex
+														pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+												</p:inputText>
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_ligne_tel1}:" />
+												<p:inputMask styleClass="form-control" id="cotel1"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactLanPhoneNumber1}"
+													placeholder="#{messages.label_ligne_tel1}"
+													mask="#{subEstablishmentSearchServiceBean.maskphonformatcontact}">
+												</p:inputMask>
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_ligne_tel2}:" />
+												<p:inputMask styleClass="form-control" id="cotel2"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactLanPhoneNumber2}"
+													placeholder="#{messages.label_ligne_tel2}"
+													mask="#{subEstablishmentSearchServiceBean.maskphonformatcontact}">
+												</p:inputMask>
+											</div>
+											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
+												<h:outputLabel styleClass="col-xs-12"
+													value="#{messages.label_fax}:" />
+												<p:inputMask styleClass="form-control" id="cofax"
+													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactFaxNumber}"
+													placeholder="#{messages.label_fax}"
+													mask="#{subEstablishmentSearchServiceBean.maskphonformatcontact}">
+												</p:inputMask>
+											</div>
+										</div>
+									</div>
+								</div>
+							</p:tab>
+						</p:tabView>
+
+						<div class="button-wrapper">
+							<p:commandButton value="#{messages.label_modifier}"
+								styleClass="btn btn-primary"
+								rendered="#{!subEstablishmentSearchServiceBean.isAction()}"
+								action="#{subEstablishmentSearchServiceBean.updateSubEstablishment()}"
+								oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatesubestablishment').hide()"
+								update="forme fdial growl" />
+							<p:commandButton value="#{messages.label_create}"
+								styleClass="btn btn-primary"
+								rendered="#{subEstablishmentSearchServiceBean.isAction()}"
+								action="#{subEstablishmentSearchServiceBean.createSubEstablishment()}"
+								oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatesubestablishment').hide()"
+								update="forme fdial growl" />
+							<p:commandButton value="#{messages.label_button_annuler}"
+								type="reset" onclick="PF('updatesubestablishment').hide()"
+								update="forme" styleClass="btn btn-default btn-sm offset">
+							</p:commandButton>
+						</div>
+					</h:form>
+				</p:overlayPanel>
+
+				<h:form id="forme">
+					<p:accordionPanel>
+						<p:tab title="#{messages.label_subestablishment}">
+							<b:row styleClass="listPage">
+								<div class="table-header">
+									<p:commandButton id="add" title="#{messages.label_add}"
+										action="#{subEstablishmentSearchServiceBean.initDualList('2')}"
+										update="@([id$=updatsubestablishment])"
+										oncomplete="PF('updatesubestablishment').show()"
+										value="#{messages.label_modifier}"
+										styleClass="btn btn-primary submit-button"
+										icon="fa fa-fw fa-plus">
+									</p:commandButton>
+									<p:blockUI block="add" trigger="add">
+											#{messages.label_loading}<br />
+										<p:graphicImage value="/resources/images/loadingpics.gif" />
+									</p:blockUI>
+								</div>
+
+								<p:dataTable id="listsousetablissement"
+									value="#{subEstablishmentSearchServiceBean.listSubEstablishment}"
+									var="subestablishment" widgetVar="subestablishmentTable"
+									emptyMessage="#{messages.label_empty}"
+									styleClass="listeTable table-responsive filterable"
+									tableStyleClass="table table-striped table-condensed table-hover"
+									rowKey="#{subestablishment.idSubEstablishmentDto}"
+									selectionMode="single" paginator="true"
+									paginatorPosition="bottom"
+									paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
+									rows="10" filterBy="#{subestablishment.nameSubestablishment}">
+
+									<p:column priority="3" width="40"
+										filterBy="#{subestablishment.idSubEstablishmentDto}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<h:outputLabel value="#{messages.label_id}" />
+										</f:facet>
+										<h:outputText
+											value="#{subestablishment.idSubEstablishmentDto}"></h:outputText>
+									</p:column>
+
+									<p:column priority="2"
+										filterBy="#{subestablishment.nameSubestablishment}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<h:outputLabel value="#{messages.label_subestablishment}" />
+										</f:facet>
+										<h:outputText value="#{subestablishment.nameSubestablishment}"></h:outputText>
+									</p:column>
+
+									<p:column priority="4" filterBy="#{subestablishment.location}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<h:outputLabel value="#{messages.label_locate_sub}" />
+										</f:facet>
+										<h:outputText value="#{subestablishment.location}"></h:outputText>
+									</p:column>
+
+									<p:column priority="1"
+										filterBy="#{subestablishment.description}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<h:outputLabel value="#{messages.label_description1}" />
+										</f:facet>
+										<h:outputText value="#{subestablishment.description}"></h:outputText>
+									</p:column>
+
+									<p:column priority="2"
+										filterBy="#{subestablishment.description}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<h:outputLabel value="#{messages.label_statut_name}" />
+										</f:facet>
+										<h:outputText value="#{subestablishment.description}"></h:outputText>
+									</p:column>
+
+									<p:column priority="1" width="100" filterMatchMode="contains">
+										<f:facet name="header">
+											<!-- 		 <h:outputLabel value="#{messages.label_action}" /> -->
+											<h:outputLabel value="#{messages.label_action}" />
+										</f:facet>
+										<p:commandButton id="modifier" styleClass="btn btn-success"
+											title="#{messages.label_modifier}"
+											action="#{subEstablishmentSearchServiceBean.initDualList('1')}"
+											update="@([id$=updatsubestablishment])"
+											oncomplete="PF('updatesubestablishment').show()"
+											value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil">
+											<f:setPropertyActionListener value="#{subestablishment}"
+												target="#{subEstablishmentSearchServiceBean.subEstablishmentsDto}" />
+										</p:commandButton>
+
+										<p:commandButton id="supprimer" styleClass="btn btn-danger"
+											title="#{messages.label_supprimer1}"
+											onclick="PF('confirmation').show()"
+											value="#{messages.label_supprimer1}"
+											icon="fa fa-fw fa-remove">
+											<f:setPropertyActionListener value="#{subestablishment}"
+												target="#{subEstablishmentSearchServiceBean.subEstablishmentsDto}" />
+										</p:commandButton>
+										<p:blockUI block="listsousetablissement"
+											trigger="listsousetablissement:supprimer,listsousetablissement:modifier">
+											#{messages.label_loading}<br />
+											<p:graphicImage value="/resources/images/loadingpics.gif" />
+										</p:blockUI>
+									</p:column>
+								</p:dataTable>
+
+								<p:confirmDialog
+									message="#{messages.label_msg_alerte_supression}"
+									header="Confirmation" widgetVar="confirmation">
+									<p:commandButton value="#{messages.label_msg_confirmOui}"
+										onclick="PF('confirmation').hide()"
+										action="#{subEstablishmentSearchServiceBean.supprimerSubEstablishment()}"
+										update="forme growl" />
+									<p:commandButton value="#{messages.label_msg_confirmNon}"
+										onclick="PF('confirmation').hide()" type="button" />
+								</p:confirmDialog>
+								<p:contextMenu for="listsousetablissement">
+									<p:menuitem value="Modifier" icon="ui-icon-search" />
+									<p:menuitem value="Supprimer" icon="ui-icon-search" />
+									<p:separator />
+									<p:menuitem value="Détails" icon="ui-icon-close" />
+								</p:contextMenu>
+							</b:row>
+						</p:tab>
+					</p:accordionPanel>
+				</h:form>
+			</b:row>
+		</div>
+	</ui:define>
+</ui:composition>

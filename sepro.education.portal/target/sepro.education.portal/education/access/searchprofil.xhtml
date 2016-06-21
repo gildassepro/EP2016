@@ -1,0 +1,182 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:uf="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+	template="/templates/template.xhtml">
+	<ui:define name="content">
+		<p:growl id="growl" showDetail="true" sticky="false" />
+		<div class="container-fluid">
+			<b:row>
+				<p:overlayPanel id="updatprofile" widgetVar="updateprofile"
+					showEffect="fade" hideEffect="fade" dismissable="false"
+					showCloseIcon="true">
+					<div class="messages">
+						<p:messages for="profilname" id="pnomprofil"></p:messages>
+						<p:messages id="mesuserlogin"></p:messages>
+					</div>
+					<h:form id="fdial">
+						<h3 style="margin-top: 0">
+							<p:outputLabel value="#{messages.label_createprofile}"
+								rendered="#{profilSearchServiceBean.isAction()}" />
+							<p:outputLabel value="#{messages.label_modifier_profile}"
+								rendered="#{!profilSearchServiceBean.isAction()}" />
+						</h3>
+
+						<div class="ui-grid ui-grid-responsive">
+							<div class="row">
+								<div class="col-md-5 col-sm-5 label-input">
+									<p:outputLabel value="#{messages.label_profile_name}*" />
+								</div>
+								
+								<div class="col-md-7 col-sm-7">
+									<p:inputText id="profilname"
+										styleClass="form-text form-control"
+										value="#{profilSearchServiceBean.profilDto.profilName}"
+										placeholder="#{messages.label_profile_name}"
+										readonly="#{!profilSearchServiceBean.isAction()}"
+										required="true"
+										requiredMessage="#{messages.label_profile_requeried}">
+										<p:ajax update="pnomprofil" event="keyup" />
+									</p:inputText>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-5 col-sm-5 label-input">
+									<p:outputLabel value="#{messages.label_choix_module}*" />
+								</div>
+								<div class="col-md-7 col-sm-7">
+									<p:selectCheckboxMenu id="modulelist"
+										value="#{profilSearchServiceBean.listModuleDestination}"
+										filter="true" filterMatchMode="startsWith"
+										converter="entityConverter" panelStyle=""
+										label="#{messages.label_choix_module}:">
+										<f:selectItems
+											value="#{profilSearchServiceBean.listModuleSource}"
+											var="module" itemValue="#{module}"
+											itemLabel="#{module.moduleName} #{module.description}" />
+									</p:selectCheckboxMenu>
+								</div>
+							</div>
+							<div class="button-wrapper">
+								<p:commandButton id="modifier"
+									value="#{messages.label_modifier}"
+									styleClass="btn btn-primary submit-button"
+									rendered="#{!profilSearchServiceBean.isAction()}"
+									action="#{profilSearchServiceBean.updateProfil()}"
+									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprofile').hide()"
+									update="forme fdial growl">
+								</p:commandButton>
+								<p:commandButton id="creer" value="#{messages.label_create}"
+									styleClass="btn btn-primary"
+									rendered="#{profilSearchServiceBean.isAction()}"
+									action="#{profilSearchServiceBean.createProfil()}"
+									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprofile').hide()"
+									update="forme fdial growl" />
+								<p:commandButton id="annulerButton" type="reset"
+									onclick="PF('updateprofile').hide()" update="fdial"
+									styleClass="btn btn-default btn-sm offset"
+									value="#{messages.label_button_annuler}">
+								</p:commandButton>
+							</div>
+						</div>
+					</h:form>
+				</p:overlayPanel>
+
+				<h:form id="forme">
+					<p:accordionPanel>
+						<p:tab title="#{messages.label_listprofil}">
+							<b:row styleClass="listPage">
+								<div class="table-header">
+									<p:commandButton id="add" title="#{messages.label_add}"
+										action="#{profilSearchServiceBean.initDualList('2')}"
+										update="@([id$=updatprofile])"
+										oncomplete="PF('updateprofile').show()"
+										value="#{messages.label_modifier}"
+										styleClass="btn btn-primary submit-button"
+										icon="fa fa-fw fa-plus">
+									</p:commandButton>
+								</div>
+								<p:dataTable id="Listprofiles"
+									value="#{profilSearchServiceBean.listProfile}" var="profil"
+									widgetVar="profilTable" emptyMessage="#{messages.label_empty}"
+									styleClass="listeTable table-responsive filterable"
+									tableStyleClass="table table-striped table-condensed table-hover"
+									rowKey="#{profil.idProfile}" selectionMode="single"
+									paginator="true" paginatorPosition="bottom"
+									paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
+									rows="10" filterBy="#{profil.profilName}">
+
+									<p:column priority="2" width="40"
+										filterBy="#{profil.idProfile}" filterMatchMode="contains">
+										<f:facet name="header" data-hide="phone, tablet">
+											<p:outputLabel value="#{messages.label_id}" />
+										</f:facet>
+										<p:outputLabel value="#{profil.idProfile}"></p:outputLabel>
+									</p:column>
+
+									<p:column priority="1" filterBy="#{profil.profilName}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_profile_name}" />
+										</f:facet>
+										<p:outputLabel value="#{profil.profilName}"></p:outputLabel>
+									</p:column>
+
+									<p:column priority="1" width="100" filterMatchMode="contains">
+										<f:facet name="header">
+											<!-- 		 <p:outputLabel value="#{messages.label_action}" /> -->
+											<p:outputLabel value="#{messages.label_action}" />
+										</f:facet>
+										<p:commandButton id="modifier" styleClass="btn btn-success"
+											title="#{messages.label_modifier}"
+											action="#{profilSearchServiceBean.initDualList('1')}"
+											update="@([id$=updatprofile])"
+											oncomplete="PF('updateprofile').show()"
+											value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil">
+											<f:setPropertyActionListener value="#{profil}"
+												target="#{profilSearchServiceBean.profileDto}" />
+										</p:commandButton>
+
+										<p:commandButton id="supprimer" styleClass="btn btn-danger"
+											title="#{messages.label_supprimer1}"
+											onclick="PF('confirmation').show()"
+											value="#{messages.label_supprimer1}"
+											icon="fa fa-fw fa-remove">
+											<f:setPropertyActionListener value="#{profil}"
+												target="#{profilSearchServiceBean.profileDto}" />
+										</p:commandButton>
+										<p:blockUI block="Listprofiles"
+											trigger="Listprofiles:supprimer,Listprofiles:modifier">
+										#{messages.label_loading}<br />
+											<p:graphicImage value="/resources/images/loadingpics.gif" />
+										</p:blockUI>
+										<p:confirmDialog
+											message="#{messages.label_msg_alerte_supression}"
+											header="Confirmation" widgetVar="confirmation">
+											<p:commandButton value="#{messages.label_msg_confirmOui}"
+												onclick="PF('confirmation').hide()"
+												action="#{profilSearchServiceBean.supprimerProfil()}"
+												update="forme growl" />
+											<p:commandButton value="#{messages.label_msg_confirmNon}"
+												onclick="PF('confirmation').hide()" type="button" />
+										</p:confirmDialog>
+									</p:column>
+								</p:dataTable>
+
+
+								<p:contextMenu for="Listprofiles">
+									<p:menuitem value="Modifier" icon="ui-icon-search" />
+									<p:menuitem value="Supprimer" icon="ui-icon-search" />
+									<p:separator />
+									<p:menuitem value="Détails" icon="ui-icon-close" />
+								</p:contextMenu>
+							</b:row>
+						</p:tab>
+					</p:accordionPanel>
+				</h:form>
+			</b:row>
+		</div>
+	</ui:define>
+</ui:composition>

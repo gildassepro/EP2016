@@ -1,0 +1,139 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:uf="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+	template="/templates/template.xhtml">
+	<ui:define name="content">
+		<b:container
+			styleClass="l--form col-lg-8 col-md-8 col-sm-8 col-xs-10 col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-1">
+			<b:row>
+				<h:form id="forme">
+					<p:fieldset legend="#{messages.label_createuser}">
+						<b:row styleClass="listPage table-responsive">
+							<b:row>
+								<b:column span="12">
+									<p:messages id="createmessageUser"></p:messages>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="5"
+									styleClass="col-lg-5 col-sm-5 col-xs-10 label-input">
+									<h:outputText value="#{messages.label_user_name}:" />
+								</b:column>
+								<b:column span="7"
+									styleClass="col-lg-7 col-sm-7 col-xs-10 form-item form-type-textfield">
+									<p:inputText styleClass="form-text" id="userlogin"
+										value="#{userCreateServiceBean.userlogin}"
+										placeholder="#{messages.label_user_name}" required="true"
+										immediate="true"
+										requiredMessage="#{messages.label_login_requeried}"
+										validatorMessage="#{messages.label_user_length}">
+										<f:validateLength minimum="4" maximum="64" />
+										<p:ajax update="mesuserlogin" event="keyup" />
+									</p:inputText>
+									<p:messages id="mesuserlogin"></p:messages>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="5"
+									styleClass="col-lg-5 col-sm-5 col-xs-10 label-input">
+									<h:outputText value="#{messages.label_password_name}:" />
+								</b:column>
+								<b:column span="7"
+									styleClass="col-lg-7 col-sm-7 col-xs-10 form-item form-type-textfield">
+									<p:password styleClass="form-text"
+										value="#{userCreateServiceBean.password}" id="password"
+										placeholder="#{messages.label_password_name}"
+										promptLabel="#{messages.label_password_name}"
+										weakLabel="#{messages.label_weakLabel}"
+										goodLabel="#{messages.label_goodLabel}"
+										strongLabel="#{messages.label_strongLabel}" feedback="true"
+										inline="true" required="true"
+										validatorMessage="#{messages.label_match_password}"
+										match="confirmpassword"
+										requiredMessage="#{messages.label_password_requeried}">
+									</p:password>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="5"
+									styleClass="col-lg-5 col-sm-5 col-xs-10 label-input">
+									<h:outputText value="#{messages.label_confirmpassword_name}:" />
+								</b:column>
+								<b:column span="7"
+									styleClass="col-lg-7 col-sm-7 col-xs-10 form-item form-type-textfield">
+									<p:password styleClass="form-text"
+										value="#{userCreateServiceBean.password}" id="confirmpassword"
+										placeholder="#{messages.label_confirmpassword_name}"
+										required="true"
+										validatorMessage="#{messages.label_match_password}"
+										requiredMessage="#{messages.label_confirmpassword_requeried}">
+										<p:ajax update="mesconfirmpassword" event="keyup" />
+									</p:password>
+									<p:messages id="mesconfirmpassword"></p:messages>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="5"
+									styleClass="col-lg-5 col-sm-5 col-xs-10 label-input">
+									<h:outputText value="#{messages.label_emailadd}:" />
+								</b:column>
+								<b:column span="7"
+									styleClass="col-lg-7 col-sm-7 col-xs-10 form-item form-type-textfield">
+									<p:inputText styleClass="form-text" id="emailadd"
+										value="#{userCreateServiceBean.emailadd}"
+										placeholder="#{messages.label_emailadd}" required="true"
+										immediate="true"
+										requiredMessage="#{messages.label_emailadd_requeried}"
+										validatorMessage="#{messages.label_emailadd}">
+										<f:validateRegex
+											pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+										<p:ajax update="mesemailadd" event="keyup" />
+									</p:inputText>
+									<p:messages id="mesemailadd"></p:messages>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="5"
+									styleClass="col-lg-5 col-sm-5 col-xs-10 label-input">
+									<h:outputText value="#{messages.label_profile}:" />
+								</b:column>
+								<b:column span="7"
+									styleClass="col-lg-7 col-sm-7 col-xs-10 form-item form-type-textfield">
+									<b:selectOneMenu styleClass="form-text"
+										value="#{userCreateServiceBean.profile}"
+										placeholder="#{messages.label_profile}" required="true"
+										immediate="true"
+										requiredMessage="#{messages.label_profile_requeried}">
+										<f:selectItems value="#{userCreateServiceBean.listProfile}"
+											var="profile" itemValue="#{profile}"
+											itemLabel="#{profile.profilName}" />
+									</b:selectOneMenu>
+								</b:column>
+							</b:row>
+							<b:row styleClass="button-wrapper">
+								<b:column span="4"
+									styleClass="col-lg-4 col-sm-4 col-xs-6 col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-xs-offset-1">
+									<p:commandButton styleClass="btn btn-primary submit-button"
+										value="#{messages.label_create}"
+										action="#{userCreateServiceBean.createUser}"
+										update="createmessageUser" id="createButton" />
+								</b:column>
+								<b:column span="3" styleClass="col-lg-3 col-sm-3 col-xs-4">
+									<p:commandButton type="button"
+										styleClass="btn btn-primary submit-button"
+										value="#{messages.label_button_annuler}"
+										action="adminaccess?faces-redirect=true">
+										<f:ajax />
+									</p:commandButton>
+								</b:column>
+							</b:row>
+						</b:row>
+					</p:fieldset>
+				</h:form>
+			</b:row>
+		</b:container>
+	</ui:define>
+</ui:composition>

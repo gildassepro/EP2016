@@ -1,0 +1,49 @@
+@charset "UTF-8";
+/*
+// Main stylesheet containing layout, features and style overrides
+// ========================================================================== */
+/*
+* Author: Gildas Kodjo
+* https://twitter.com/gildaskodjo
+*
+* Inspired by SMACSS + SCSS starter v2.0 of @jonathanpath SMACSS http://smacss.com
+* https://github.com/jonathanpath/SASS-SMACSS
+* See file structure in http://jonathanpath.com/sass+smacss/scss/style.scss
+* Sass Structure inspired by : https://github.com/sutter/POPY-starter-HTML-SCSS
+*
+* Coding rules : https://github.com/necolas/idiomatic-css
+*
+*/
+.ui-steps .ui-steps-item {
+	width: 15%;
+}
+
+.ui-state-highlight {
+	text-shadow: none !important;
+}
+
+.ui-steps.custom {
+	margin-bottom: 30px;
+}
+
+.ui-steps.custom .ui-steps-item .ui-menuitem-link {
+	height: 10px;
+	padding: 0 1em;
+}
+
+.ui-steps.custom .ui-steps-item .ui-steps-number {
+	background-color: #0081c2;
+	color: #FFFFFF;
+	display: inline-block;
+	width: 30px;
+	border-radius: 10px;
+	margin-top: -10px;
+	margin-bottom: 10px;
+}
+.flaticon-notes:before {
+  content: "\f106";
+}
+
+.flaticon-teacher-with-stick:before {
+  content: "\f10b";
+}

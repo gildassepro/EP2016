@@ -1,0 +1,1098 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:uf="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+	template="/templates/template.xhtml">
+	<ui:define name="content">
+		<p:growl id="growl" showDetail="true" sticky="false" />
+		<div class="container-fluid">
+			<b:row>
+				<p:overlayPanel id="updatprof" widgetVar="updateprof"
+					showEffect="fade" hideEffect="fade" dismissable="false"
+					showCloseIcon="true">
+					<div class="messages">
+						<p:messages for="name" id="name"></p:messages>
+						<p:messages for="surname" id="surname"></p:messages>
+						<p:messages for="datenaisse" id="datenaisse"></p:messages>
+						<p:messages for="paysnaissance" id="listecountrynaiss"></p:messages>
+						<p:messages for="placebirth" id="placebirth"></p:messages>
+						<p:messages for="etatcivil" id="listeetatcivil"></p:messages>
+						<p:messages for="nationnality" id="listenationnality"></p:messages>
+						<p:messages for="docidentity" id="listedocidentity"></p:messages>
+						<p:messages for="phone" id="phone"></p:messages>
+						<p:messages for="pays" id="listecountry"></p:messages>
+						<p:messages for="region" id="listeregion"></p:messages>
+						<p:messages for="zipcode" id="listezipcode"></p:messages>
+						<p:messages for="city" id="listecity"></p:messages>
+						<!-- 						<p:messages for="datenaisse" id="listecountry"></p:messages> -->
+					</div>
+					<h:form id="fdial">
+						<h3 style="margin-top: 0">
+							<p:outputLabel value="#{messages.label_createprof}"
+								rendered="#{teacherSearchServiceBean.isAction()}" />
+							<p:outputLabel value="#{messages.label_modifier_prof}"
+								rendered="#{!teacherSearchServiceBean.isAction()}" />
+						</h3>
+						<div class="ui-grid ui-grid-responsive wrap class">
+							<div class="col-xs-12">
+								<div class="row">
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_name}*" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:inputText styleClass="form-control" id="name"
+											value="#{teacherSearchServiceBean.identityTeacherDto.name}">
+										</p:inputText>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_surname}*" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:inputText styleClass="form-control" id="surname"
+											value="#{teacherSearchServiceBean.identityTeacherDto.firstName}">
+										</p:inputText>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.labeldatedenaiss}*" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:calendar id="datenaisse"
+											value="#{teacherSearchServiceBean.identityTeacherDto.birthday}"
+											showOn="button" pattern="MM/dd/yyyy"
+											placeholder="#{messages.labeldatedenaiss}">
+											<f:converter converterId="dateConverter" />
+										</p:calendar>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_paysnaissance}" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:selectOneMenu styleClass="form-text" id="paysnaissance"
+											value="#{teacherSearchServiceBean.identityTeacherDto.countryOfBirthday}"
+											converter="entityConverter">
+											<f:selectItem
+												itemLabel="#{teacherSearchServiceBean.identityTeacherDto.countryOfBirthday.countryName}"
+												itemValue="#{teacherSearchServiceBean.identityTeacherDto.countryOfBirthday}" />
+											<f:selectItems
+												value="#{teacherSearchServiceBean.listCountry}"
+												var="countryofbirthday" itemValue="#{countryofbirthday}"
+												itemLabel="#{countryofbirthday.countryName}" />
+										</p:selectOneMenu>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_placeOfBirthday}" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:inputText styleClass="form-control" id="placebirth"
+											value="#{teacherSearchServiceBean.identityTeacherDto.placeOfBirthday}">
+										</p:inputText>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_sexe}*" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:selectOneMenu styleClass="form-text" id="sexe"
+											value="#{teacherSearchServiceBean.identityTeacherDto.sexe}"
+											converter="entityConverter">
+											<f:selectItem
+												itemLabel="#{teacherSearchServiceBean.identityTeacherDto.sexe.value}"
+												itemValue="#{teacherSearchServiceBean.identityTeacherDto.sexe}" />
+											<f:selectItems value="#{teacherSearchServiceBean.listsexe}"
+												var="sexe" itemValue="#{sexe}" itemLabel="#{sexe.value}" />
+										</p:selectOneMenu>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_maritalStatus}" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:selectOneMenu styleClass="form-text" id="etatcivil"
+											value="#{teacherSearchServiceBean.identityTeacherDto.maritalStatus}"
+											converter="entityConverter">
+											<f:selectItem
+												itemLabel="#{teacherSearchServiceBean.identityTeacherDto.maritalStatus.value}"
+												itemValue="#{teacherSearchServiceBean.identityTeacherDto.maritalStatus}" />
+											<f:selectItems
+												value="#{teacherSearchServiceBean.listetatcivile}"
+												var="maritalstatus" itemValue="#{maritalstatus}"
+												itemLabel="#{maritalstatus.value}" />
+										</p:selectOneMenu>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_nationality}" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:selectOneMenu styleClass="form-text" id="nationnality"
+											value="#{teacherSearchServiceBean.identityTeacherDto.nationality}"
+											converter="entityConverter">
+											<f:selectItem
+												itemLabel="#{teacherSearchServiceBean.identityTeacherDto.nationality.value}"
+												itemValue="#{teacherSearchServiceBean.identityTeacherDto.nationality}" />
+											<f:selectItems
+												value="#{teacherSearchServiceBean.listnationalite}"
+												var="nationality" itemValue="#{nationality}"
+												itemLabel="#{nationality.value}" />
+										</p:selectOneMenu>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_typeOfDocument}*" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:selectOneMenu styleClass="form-text" id="docidentity"
+											value="#{teacherSearchServiceBean.identityTeacherDto.typeOfDocument}"
+											converter="entityConverter">
+											<f:selectItem
+												itemLabel="#{teacherSearchServiceBean.identityTeacherDto.typeOfDocument.value}"
+												itemValue="#{teacherSearchServiceBean.identityTeacherDto.typeOfDocument}" />
+											<f:selectItems
+												value="#{teacherSearchServiceBean.listdocumentidentity}"
+												var="typeofdocument" itemValue="#{typeofdocument}"
+												itemLabel="#{typeofdocument.value}" />
+										</p:selectOneMenu>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_identityNumber}*" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:inputText styleClass="form-control" id="idnumber"
+											value="#{teacherSearchServiceBean.identityTeacherDto.identityNumber}">
+										</p:inputText>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_paysderesidence}*" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:selectOneMenu styleClass="form-text" id="pays"
+											value="#{teacherSearchServiceBean.identityTeacherDto.countryAddress}"
+											converter="entityConverter">
+											<f:selectItem
+												itemLabel="#{teacherSearchServiceBean.identityTeacherDto.countryAddress.countryName}"
+												itemValue="#{teacherSearchServiceBean.identityTeacherDto.countryAddress}" />
+											<f:selectItems
+												value="#{teacherSearchServiceBean.listCountry}"
+												var="countryaddress" itemValue="#{countryaddress}"
+												itemLabel="#{countryaddress.countryName}" />
+											<p:ajax event="valueChange"
+												listener="#{teacherSearchServiceBean.maskPhone()}"
+												update=":fdial:phone :fdial:region :fdial:city :fdial:zipcode" />
+										</p:selectOneMenu>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_region}*" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:selectOneMenu styleClass="form-text" id="region"
+											value="#{teacherSearchServiceBean.identityTeacherDto.regionAddress}"
+											converter="entityConverter">
+											<f:selectItem
+												itemLabel="#{teacherSearchServiceBean.identityTeacherDto.regionAddress.regionName}"
+												itemValue="#{teacherSearchServiceBean.identityTeacherDto.regionAddress}"
+												label="#{messages.label_region}" />
+											<f:selectItems value="#{teacherSearchServiceBean.listRegion}"
+												var="regionAddress" itemValue="#{regionAddress}"
+												itemLabel="#{regionAddress.regionName}" />
+											<p:ajax event="valueChange"
+												listener="#{teacherSearchServiceBean.onchangeCity()}"
+												update=":fdial:city :fdial:zipcode" />
+										</p:selectOneMenu>
+									</div>
+
+								</div>
+								<div class="row">
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_city}*" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:selectOneMenu styleClass="form-text" id="city"
+											value="#{teacherSearchServiceBean.identityTeacherDto.cityAddress}"
+											converter="entityConverter">
+											<f:selectItem
+												itemLabel="#{teacherSearchServiceBean.identityTeacherDto.cityAddress.cityName}"
+												itemValue="#{teacherSearchServiceBean.identityTeacherDto.cityAddress}" />
+											<f:selectItems value="#{teacherSearchServiceBean.listCity}"
+												var="cityAddress" itemValue="#{cityAddress}"
+												itemLabel="#{cityAddress.cityName}" />
+											<p:ajax event="valueChange"
+												listener="#{teacherSearchServiceBean.onchangeZipCode()}"
+												update=":fdial:zipcode" />
+										</p:selectOneMenu>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_zipcode}" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:selectOneMenu styleClass="form-text" id="zipcode"
+											value="#{teacherSearchServiceBean.identityTeacherDto.zipcodeAddress}"
+											converter="entityConverter">
+											<f:selectItem
+												itemLabel="#{teacherSearchServiceBean.identityTeacherDto.zipcodeAddress.zipCode}"
+												itemValue="#{teacherSearchServiceBean.identityTeacherDto.zipcodeAddress}"
+												label="#{messages.label_region}" />
+											<f:selectItems
+												value="#{teacherSearchServiceBean.listZipcode}"
+												var="zipcodeAddress" itemValue="#{zipcodeAddress}"
+												itemLabel="#{zipcodeAddress.zipCode}" />
+										</p:selectOneMenu>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_phoneNumber}*" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:inputMask styleClass="form-control" id="phone"
+											value="#{teacherSearchServiceBean.identityTeacherDto.phoneNumber}"
+											placeholder="#{messages.label_phoneNumber1}"
+											mask="#{teacherSearchServiceBean.maskphonformatteacher}">
+										</p:inputMask>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_adresseemail}*" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:inputText styleClass="form-control" id="email"
+											value="#{teacherSearchServiceBean.identityTeacherDto.emailAdd}"
+											placeholder="#{messages.label_email}" match="email"
+											required="true"
+											requiredMessage="#{messages.label_email_requeried}"
+											validatorMessage="#{messages.label_emailadd}">
+											<f:validateRegex
+												pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+											<p:ajax event="keyup" />
+										</p:inputText>
+									</div>
+
+								</div>
+
+								<div class="row">
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_address_ligne1}*" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:inputText styleClass="form-control" id="adr1"
+											value="#{teacherSearchServiceBean.identityTeacherDto.addressLigne1}">
+										</p:inputText>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_specialite}" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+
+										<p:selectOneMenu styleClass="form-text" id="listspe"
+											value="#{teacherSearchServiceBean.identityTeacherDto.speciality}"
+											converter="entityConverter">
+											<f:selectItem
+												itemLabel="#{teacherSearchServiceBean.identityTeacherDto.speciality.value}"
+												itemValue="#{teacherSearchServiceBean.identityTeacherDto.speciality}" />
+											<f:selectItems
+												value="#{teacherSearchServiceBean.listspecialite}"
+												var="speciality" itemValue="#{speciality}"
+												itemLabel="#{speciality.value}" />
+										</p:selectOneMenu>
+
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_address_ligne2}" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:inputText styleClass="form-control" id="adr2"
+											value="#{teacherSearchServiceBean.identityTeacherDto.addressLigne2}">
+										</p:inputText>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_address_ligne3}" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:inputText styleClass="form-control" id="adr3"
+											value="#{teacherSearchServiceBean.identityTeacherDto.addressLigne3}">
+										</p:inputText>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_address_ligne4}" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:inputText styleClass="form-control" id="adr4"
+											value="#{teacherSearchServiceBean.identityTeacherDto.addressLigne4}">
+										</p:inputText>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3"></div>
+									<div class="col-lg-3 col-md-3 col-sm-3"></div>
+								</div>
+							</div>
+						</div>
+						<div class="ui-grid ui-grid-responsive">
+
+							<div class="button-wrapper">
+								<p:commandButton value="#{messages.label_modifier}"
+									styleClass="btn btn-primary"
+									rendered="#{!teacherSearchServiceBean.isAction()}"
+									action="#{teacherSearchServiceBean.updateProf()}"
+									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprof').hide()"
+									update="forme fdial growl" />
+								<p:commandButton value="#{messages.label_create}"
+									styleClass="btn btn-primary"
+									rendered="#{teacherSearchServiceBean.isAction()}"
+									action="#{teacherSearchServiceBean.createProf()}"
+									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprof').hide()"
+									update="forme fdial growl" />
+								<p:commandButton value="#{messages.label_button_annuler}"
+									type="reset" onclick="PF('updateprof').hide()" update="forme"
+									styleClass="btn btn-default btn-sm offset">
+								</p:commandButton>
+							</div>
+						</div>
+					</h:form>
+				</p:overlayPanel>
+
+
+
+				<p:overlayPanel id="updatprofcv" widgetVar="updateprofcv"
+					showEffect="fade" hideEffect="fade" dismissable="false"
+					showCloseIcon="true">
+					<div class="messages"></div>
+					<h:form id="fdial1">
+						<p:panel header="#{messages.label_professeur_cv}">
+
+							<div class="ui-grid ui-grid-responsive wrap class">
+								<div class="col-xs-12">
+									<div class="row">
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:outputLabel value="#{messages.label_name_professeur}" />
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:inputText styleClass="form-control" id="nomprof"
+												readonly="true"
+												value="#{teacherSearchServiceBean.selectedidentityTeacherDto.name}"
+												placeholder="#{messages.label_name_establishment1}">
+											</p:inputText>
+										</div>
+
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:outputLabel value="#{messages.label_prenomprof}" />
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:inputText styleClass="form-control" id="prenom"
+												readonly="true"
+												value="#{teacherSearchServiceBean.selectedidentityTeacherDto.firstName}"
+												placeholder="#{messages.label_pattente1}">
+											</p:inputText>
+										</div>
+									</div>
+
+
+									<div class="row">
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:outputLabel value="#{messages.label_dedut}" />
+										</div>
+
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:calendar id="datedebut"
+												value="#{teacherSearchServiceBean.cvteacherDto.startDate}"
+												showOn="button" pattern="MM/dd/yyyy" required="true"
+												requiredMessage="#{messages.label_startDate_requeried}"
+												placeholder="#{messages.label_labeldatedebut}">
+												<f:converter converterId="dateConverter" />
+												<p:ajax event="dateSelect" update="growl" />
+											</p:calendar>
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:outputLabel value="#{messages.label_fin}" />
+										</div>
+
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:calendar id="datefin"
+												value="#{teacherSearchServiceBean.cvteacherDto.enDate}"
+												showOn="button" pattern="MM/dd/yyyy" required="true"
+												requiredMessage="#{messages.label_endDate_requeried}"
+												placeholder="#{messages.label_labeldatefin}">
+												<f:converter converterId="dateConverter" />
+												<p:ajax event="dateSelect" update="growl" />
+											</p:calendar>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:outputLabel value="#{messages.label_libelle}" />
+										</div>
+
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:inputText styleClass="form-control" id="libelle"
+												value="#{teacherSearchServiceBean.cvteacherDto.diploma}"
+												placeholder="#{messages.label_diploma}" required="true"
+												requiredMessage="#{messages.label_diploma_requeried}">
+											</p:inputText>
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<h:form enctype="multipart/form-data">
+												<p:messages id="messages" showDetail="true" />
+												<p:fileUpload label="messages.label_select"
+													uploadLabel="messages.label_upload"
+													cancelLabel="messages.label_cancel"
+													fileUploadListener="#{teacherSearchServiceBean.upload }"
+													fileLimit="1" mode="advanced" update="messages growl"
+													dragDropSupport="false" required="true"
+													requiredMessage="#{messages.label_diploma_requeried}" />
+												<br />
+											</h:form>
+											<p:separator />
+										</div>
+										<div></div>
+									</div>
+									<div class="row">
+										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+											<p:commandButton id="enregistrer"
+												styleClass="btn btn-primary submit-button"
+												rendered="#{teacherSearchServiceBean.isAction1()}"
+												value="#{messages.label_enregistrer}"
+												action="#{teacherSearchServiceBean.enregistrerCvprof()}"
+												oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprofcv').show()"
+												update="formdatatablecv growl">
+											</p:commandButton>
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+											<p:commandButton id="modifiercv"
+												styleClass="btn btn-primary submit-button"
+												rendered="#{!teacherSearchServiceBean.isAction1()}"
+												value="#{messages.label_modifier}"
+												action="#{teacherSearchServiceBean.modifierCvprof()}"
+												oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprofcv').show()"
+												update="formdatatablecv growl">
+											</p:commandButton>
+										</div>
+									</div>
+
+
+								</div>
+							</div>
+						</p:panel>
+					</h:form>
+					<br />
+					<br />
+					<h:form id="formdatatablecv">
+						<p:dataTable id="listcv"
+							value="#{teacherSearchServiceBean.listexperienceprof}"
+							var="experience" widgetVar="menuTable"
+							emptyMessage="#{messages.label_empty}"
+							styleClass="listeTable table-responsive filterable"
+							tableStyleClass="table table-striped table-condensed table-hover"
+							rowKey="#{experience.idCvteacher}" selectionMode="single"
+							paginator="true" paginatorPosition="bottom"
+							paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
+							rows="10" filterBy="#{experience.idCvteacher}">
+
+							<p:column priority="3" width="40"
+								filterBy="#{experience.idCvteacher}" filterMatchMode="contains">
+								<f:facet name="header">
+									<p:outputLabel value="#{messages.label_id}" />
+								</f:facet>
+								<h:outputText value="#{experience.idCvteacher}"></h:outputText>
+							</p:column>
+
+							<p:column priority="2" filterBy="#{experience.startDate}"
+								filterMatchMode="contains">
+								<f:facet name="header">
+									<p:outputLabel value="#{messages.label_deduts}" />
+								</f:facet>
+								<h:outputText value="#{experience.startDate}"></h:outputText>
+							</p:column>
+
+							<p:column priority="1" filterBy="#{experience.enDate}"
+								filterMatchMode="contains">
+								<f:facet name="header">
+									<p:outputLabel value="#{messages.label_fins}" />
+								</f:facet>
+								<h:outputText value="#{experience.enDate}"></h:outputText>
+							</p:column>
+
+							<p:column priority="1" filterBy="#{experience.diploma}"
+								filterMatchMode="contains">
+								<f:facet name="header">
+									<p:outputLabel value="#{messages.label_libelles}" />
+								</f:facet>
+								<h:outputText value="#{experience.diploma}"></h:outputText>
+							</p:column>
+
+							<p:column priority="1" filterBy="#{experience.idCvteacher}"
+								filterMatchMode="contains">
+								<f:facet name="header">
+									<p:outputLabel value="#{messages.label_telechargement}" />
+								</f:facet>
+								<h:commandLink title="#{messages.label_visualiser}"
+									styleClass="btn btn-success"
+									action="#{teacherSearchServiceBean.loadPDF}" target="_blank">
+									<p:commandButton id="visualisercode"
+										styleClass="btn btn-success"
+										title="#{messages.label_visualiser}" icon="fa fa-fw fa-search">
+									</p:commandButton>
+									<f:setPropertyActionListener value="#{experience}"
+										target="#{teacherSearchServiceBean.cvteacherDtos}" />
+								</h:commandLink>
+
+							</p:column>
+
+							<p:column priority="1" width="100" filterMatchMode="contains">
+
+								<f:facet name="header">
+									<p:outputLabel value="#{messages.label_action}" />
+								</f:facet>
+
+
+								<p:commandButton id="modifiercv1" styleClass="btn btn-success"
+									title="#{messages.label_modifier}" update="fdial1"
+									action="#{teacherSearchServiceBean.initDualListcv('1')}"
+									value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil">
+									<f:setPropertyActionListener value="#{experience}"
+										target="#{teacherSearchServiceBean.selectedcvteacherDto}" />
+								</p:commandButton>
+
+								<p:commandButton id="supprimercv" styleClass="btn btn-danger"
+									title="#{messages.label_supprimer1}"
+									oncomplete="PF('confirmation').show()" update="formdialogcv"
+									value="#{messages.label_supprimer1}" icon="fa fa-fw fa-remove">
+									<f:setPropertyActionListener value="#{experience}"
+										target="#{teacherSearchServiceBean.cvteacherDtos}" />
+								</p:commandButton>
+
+
+
+								<p:blockUI block="listcv"
+									trigger="listcv:supprimercv,listcv:modifiercv1">
+                                    #{messages.label_loading}<br />
+									<p:graphicImage value="/resources/images/loadingpics.gif" />
+								</p:blockUI>
+
+
+							</p:column>
+						</p:dataTable>
+					</h:form>
+					<h:form id="formdialogcv">
+						<p:confirmDialog id="pdialoguecv"
+							message="#{messages.label_msg_alerte_supression}"
+							header="Confirmation" widgetVar="confirmation">
+							<p:commandButton value="#{messages.label_msg_confirmOui}"
+								onclick="PF('confirmation').hide()"
+								action="#{teacherSearchServiceBean.supprimerCvprof()}"
+								update="formdatatablecv growl" />
+							<p:commandButton value="#{messages.label_msg_confirmNon}"
+								onclick="PF('confirmation').hide()" type="button" />
+						</p:confirmDialog>
+					</h:form>
+				</p:overlayPanel>
+
+				<p:overlayPanel id="updatprofdetail" widgetVar="updateprofdetail"
+					showEffect="fade" hideEffect="fade" dismissable="false"
+					showCloseIcon="true">
+					<div class="messages"></div>
+					<h:form id="fdial2">
+						<p:panel header="#{messages.label_professeur_detail}">
+
+							<div class="ui-grid ui-grid-responsive wrap class">
+								<div class="col-xs-12">
+									<div class="row">
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:outputLabel value="#{messages.label_name_professeur}" />
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:inputText styleClass="form-control" id="nomprof"
+												readonly="true"
+												value="#{teacherSearchServiceBean.selectedidentityTeacherDto.name}"
+												placeholder="#{messages.label_name_establishment1}">
+											</p:inputText>
+										</div>
+
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:outputLabel value="#{messages.label_prenomprof}" />
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:inputText styleClass="form-control" id="prenom"
+												readonly="true"
+												value="#{teacherSearchServiceBean.selectedidentityTeacherDto.firstName}"
+												placeholder="#{messages.label_pattente1}">
+											</p:inputText>
+										</div>
+									</div>
+
+
+									<div class="row">
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:outputLabel value="#{messages.label_horairededut}" />
+										</div>
+
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:selectOneMenu styleClass="form-text" id="horairedebut"
+												value="#{teacherSearchServiceBean.detailteacherDto.startHour}"
+												converter="entityConverter" required="true"
+												requiredMessage="#{messages.label_startHour_requeried}">
+												<f:selectItem
+													itemLabel="#{teacherSearchServiceBean.detailteacherDto.startHour.value}"
+													itemValue="#{teacherSearchServiceBean.detailteacherDto.startHour}" />
+												<f:selectItems
+													value="#{teacherSearchServiceBean.listhoraire}"
+													var="horaire" itemValue="#{horaire}"
+													itemLabel="#{horaire.value}" />
+												<f:ajax event="blur" render="" />
+											</p:selectOneMenu>
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:outputLabel value="#{messages.label_horairefin}" />
+										</div>
+
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:selectOneMenu styleClass="form-text" id="horairefin"
+												value="#{teacherSearchServiceBean.detailteacherDto.stopHour}"
+												converter="entityConverter" required="true"
+												requiredMessage="#{messages.label_stopHour_requeried}">
+												<f:selectItem
+													itemLabel="#{teacherSearchServiceBean.detailteacherDto.stopHour.value}"
+													itemValue="#{teacherSearchServiceBean.detailteacherDto.stopHour}" />
+												<f:selectItems
+													value="#{teacherSearchServiceBean.listhoraire}"
+													var="horaire" itemValue="#{horaire}"
+													itemLabel="#{horaire.value}" />
+												<f:ajax event="blur" render="" />
+											</p:selectOneMenu>
+										</div>
+									</div>
+
+
+									<div class="row">
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:outputLabel value="#{messages.label_periodedispo}" />
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:selectOneMenu styleClass="form-text" id="dispo"
+												value="#{teacherSearchServiceBean.detailteacherDto.workingMonth}"
+												converter="entityConverter" required="true"
+												requiredMessage="#{messages.label_workingMonth_requeried}">
+												<f:selectItem
+													itemLabel="#{teacherSearchServiceBean.detailteacherDto.workingMonth.value}"
+													itemValue="#{teacherSearchServiceBean.detailteacherDto.workingMonth}" />
+												<f:selectItems value="#{teacherSearchServiceBean.listmois}"
+													var="mois" itemValue="#{mois}" itemLabel="#{mois.value}" />
+												<f:ajax event="blur" render="" />
+											</p:selectOneMenu>
+										</div>
+
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:outputLabel value="#{messages.label_volumehoraire}" />
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:inputText styleClass="form-control" id="volume"
+												value="#{teacherSearchServiceBean.detailteacherDto.numberOfHoursWorked}"
+												placeholder="#{messages.labelvolumehoraire}" required="true"
+												requiredMessage="#{messages.label_numberOfHoursWorked_requeried}">
+											</p:inputText>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:outputLabel value="#{messages.label_prixheure}" />
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-3">
+											<p:inputText styleClass="form-control" id="prix"
+												value="#{teacherSearchServiceBean.detailteacherDto.hourRate}"
+												placeholder="#{messages.labelprixmodule}" required="true"
+												requiredMessage="#{messages.label_hourRate_requeried}">
+											</p:inputText>
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+											<p:commandButton id="enregistrer"
+												styleClass="btn btn-primary submit-button"
+												rendered="#{teacherSearchServiceBean.isAction2()}"
+												value="#{messages.label_enregistrer}"
+												action="#{teacherSearchServiceBean.enregistrerDetailprof()}"
+												oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprofdetail').show()"
+												update="growl fdial2">
+											</p:commandButton>
+
+										</div>
+
+
+									</div>
+								</div>
+
+							</div>
+
+						</p:panel>
+					</h:form>
+					<h:form id="fdialfiel">
+
+						<p:fieldset legend="#{messages.label_moduless}">
+							<p:commandButton styleClass="btn btn-primary submit-button"
+								id="add" title="#{messages.label_adds}"
+								action="#{teacherSearchServiceBean.addModuleTeacher()}"
+								value="#{messages.label_adds}" icon="fa fa-fw fa-plus"
+								oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprofdetail').show()"
+								update="formdatatabledetail growl fdialfiel">
+							</p:commandButton>
+							<div class="row">
+								<div class="col-xs-12">
+
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_nommodule}" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:selectOneMenu styleClass="form-text" id="module"
+											value="#{teacherSearchServiceBean.teacherModuleDto.academicModule}"
+											converter="entityConverter" required="true"
+											requiredMessage="#{messages.label_academicModule_requeried}"
+											placeholder="#{messages.label_profile}">
+											<f:selectItem
+												itemLabel="#{teacherSearchServiceBean.teacherModuleDto.academicModule.moduleName}"
+												itemValue="#{teacherSearchServiceBean.teacherModuleDto.academicModule}" />
+											<f:selectItems value="#{teacherSearchServiceBean.listmodule}"
+												var="module" itemValue="#{module}"
+												itemLabel="#{module.moduleName}" />
+											<f:ajax event="blur" render="" />
+										</p:selectOneMenu>
+									</div>
+
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_filiere}" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:selectOneMenu styleClass="form-text" id="filiere"
+											value="#{teacherSearchServiceBean.teacherModuleDto.academicSector}"
+											converter="entityConverter" required="true"
+											requiredMessage="#{messages.label_academicSector_requeried}"
+											placeholder="#{messages.label_profile}">
+											<f:selectItem
+												itemLabel="#{teacherSearchServiceBean.teacherModuleDto.academicSector.value}"
+												itemValue="#{teacherSearchServiceBean.teacherModuleDto.academicSector}" />
+											<f:selectItems
+												value="#{teacherSearchServiceBean.listfiliere}"
+												var="filiere" itemValue="#{filiere}"
+												itemLabel="#{filiere.value}" />
+											<f:ajax event="blur" render="" />
+										</p:selectOneMenu>
+									</div>
+
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_academic_years}" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:selectOneMenu styleClass="form-text" id="anneeacademiques"
+											value="#{teacherSearchServiceBean.teacherModuleDto.academiqueYear}"
+											converter="entityConverter" required="true"
+											requiredMessage="#{messages.label_academiqueYear_requeried}"
+											placeholder="#{messages.label_country}">
+											<f:selectItem
+												itemLabel="#{teacherSearchServiceBean.teacherModuleDto.academiqueYear.value}"
+												itemValue="#{teacherSearchServiceBean.teacherModuleDto.academiqueYear}" />
+											<f:selectItems
+												value="#{teacherSearchServiceBean.listanneeacademique}"
+												var="academiqueYear" itemValue="#{academiqueYear}"
+												itemLabel="#{academiqueYear.value}" />
+											<f:ajax event="blur" render="" />
+										</p:selectOneMenu>
+									</div>
+
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_priorite}" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:selectOneMenu styleClass="form-text" id="priorite"
+											value="#{teacherSearchServiceBean.teacherModuleDto.priority}"
+											converter="entityConverter" required="true"
+											requiredMessage="#{messages.label_priority_requeried}"
+											placeholder="#{messages.label_country}">
+											<f:selectItem
+												itemLabel="#{teacherSearchServiceBean.teacherModuleDto.priority.value}"
+												itemValue="#{teacherSearchServiceBean.teacherModuleDto.priority}" />
+											<f:selectItems
+												value="#{teacherSearchServiceBean.listpriorite}"
+												var="priorite" itemValue="#{priorite}"
+												itemLabel="#{priorite.value}" />
+											<f:ajax event="blur" render="" />
+										</p:selectOneMenu>
+									</div>
+
+
+
+								</div>
+							</div>
+						</p:fieldset>
+
+						<div class="row">
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+								<p:commandButton id="modifierdetail"
+									styleClass="btn btn-primary submit-button"
+									rendered="#{!teacherSearchServiceBean.isAction2()}"
+									value="#{messages.label_modifier}"
+									action="#{teacherSearchServiceBean.modifModuleTeacher()}"
+									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprofdetail').show()"
+									update="formdatatabledetail growl">
+								</p:commandButton>
+							</div>
+						</div>
+					</h:form>
+
+					<br />
+
+					<br />
+					<h:form id="formdatatabledetail">
+						<p:dataTable id="listdoc"
+							value="#{teacherSearchServiceBean.listdetal}" var="doc"
+							widgetVar="menuTable" emptyMessage="#{messages.label_empty}"
+							styleClass="listeTable table-responsive filterable"
+							tableStyleClass="table table-striped table-condensed table-hover"
+							rowKey="#{doc.idTeacherModule}" selectionMode="single"
+							paginator="true" paginatorPosition="bottom"
+							paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
+							rows="10" filterBy="#{doc.idTeacherModule}">
+
+							<p:column priority="3" width="40"
+								filterBy="#{doc.idTeacherModule}" filterMatchMode="contains">
+								<f:facet name="header">
+									<p:outputLabel value="#{messages.label_id}" />
+								</f:facet>
+								<h:outputText value="#{doc.idTeacherModule}"></h:outputText>
+							</p:column>
+
+							<p:column priority="2"
+								filterBy="#{doc.academicModule.moduleName}"
+								filterMatchMode="contains">
+								<f:facet name="header">
+									<p:outputLabel value="#{messages.label_nommoduleacademique}" />
+								</f:facet>
+								<h:outputText value="#{doc.academicModule.moduleName}"></h:outputText>
+							</p:column>
+
+							<p:column priority="1" filterBy="#{doc.academicSector.value}"
+								filterMatchMode="contains">
+								<f:facet name="header">
+									<p:outputLabel value="#{messages.label_name_filiere}" />
+								</f:facet>
+								<h:outputText value="#{doc.academicSector.value}"></h:outputText>
+							</p:column>
+
+							<p:column priority="1" filterBy="#{doc.academiqueYear.value}"
+								filterMatchMode="contains">
+								<f:facet name="header">
+									<p:outputLabel value="#{messages.label_name_annee}" />
+								</f:facet>
+								<h:outputText value="#{doc.academiqueYear.value}"></h:outputText>
+							</p:column>
+
+							<p:column priority="1" filterBy="#{doc.priority.value}"
+								filterMatchMode="contains">
+								<f:facet name="header">
+									<p:outputLabel value="#{messages.label_name_proprite}" />
+								</f:facet>
+								<h:outputText value="#{doc.priority.value}"></h:outputText>
+							</p:column>
+
+							<p:column priority="1" width="100" filterMatchMode="contains">
+
+								<f:facet name="header">
+									<p:outputLabel value="#{messages.label_action}" />
+								</f:facet>
+
+
+								<p:commandButton id="modifierdetail1"
+									styleClass="btn btn-success" title="#{messages.label_modifier}"
+									update="fdialfiel"
+									action="#{teacherSearchServiceBean.initDualListdetail('1')}"
+									value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil">
+									<f:setPropertyActionListener value="#{doc}"
+										target="#{teacherSearchServiceBean.selectedteacherModuleDto}" />
+								</p:commandButton>
+
+								<p:commandButton id="supprimerdetail"
+									styleClass="btn btn-danger"
+									title="#{messages.label_supprimer1}"
+									oncomplete="PF('confirmation').show()"
+									update="formdialogdetail" value="#{messages.label_supprimer1}"
+									icon="fa fa-fw fa-remove">
+									<f:setPropertyActionListener value="#{doc}"
+										target="#{teacherSearchServiceBean.teacherModuleDtos}" />
+								</p:commandButton>
+
+
+
+								<p:blockUI block="listdoc"
+									trigger="listdoc:supprimerdetail,listdoc:modifierdetail1">
+										#{messages.label_loading}<br />
+									<p:graphicImage value="/resources/images/loadingpics.gif" />
+								</p:blockUI>
+
+
+							</p:column>
+						</p:dataTable>
+					</h:form>
+					<h:form id="formdialogdetail">
+						<p:confirmDialog id="pdialoguedetail"
+							message="#{messages.label_msg_alerte_supression}"
+							header="Confirmation" widgetVar="confirmation">
+							<p:commandButton value="#{messages.label_msg_confirmOui}"
+								onclick="PF('confirmation').hide()"
+								action="#{teacherSearchServiceBean.supprimerModuleteacher()}"
+								update="formdatatabledetail" />
+							<p:commandButton value="#{messages.label_msg_confirmNon}"
+								onclick="PF('confirmation').hide()" type="button" />
+						</p:confirmDialog>
+					</h:form>
+				</p:overlayPanel>
+
+				<h:form id="forme">
+					<p:accordionPanel>
+						<p:tab title="#{messages.label_prof_identity}">
+							<b:row styleClass="listPage">
+								<div class="table-header">
+									<p:commandButton id="add" title="#{messages.label_adds}"
+										action="#{teacherSearchServiceBean.initDualList('2')}"
+										update="@([id$=updatprof])"
+										oncomplete="PF('updateprof').show()"
+										value="#{messages.label_modifier}"
+										styleClass="btn btn-primary submit-button"
+										icon="fa fa-fw fa-plus">
+									</p:commandButton>
+									<p:blockUI block="add" trigger="add">
+											#{messages.label_loading}<br />
+										<p:graphicImage value="/resources/images/loadingpics.gif" />
+									</p:blockUI>
+								</div>
+								<p:dataTable id="listprofs"
+									value="#{teacherSearchServiceBean.listTeacher}" var="teacher"
+									widgetVar="teacherTable" emptyMessage="#{messages.label_empty}"
+									styleClass="listeTable table-responsive filterable"
+									tableStyleClass="table table-striped table-condensed table-hover"
+									rowKey="#{teacher.idIdentityTeacher}" selectionMode="single"
+									paginator="true" paginatorPosition="bottom"
+									paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
+									rows="10" filterBy="#{teacher.idIdentityTeacher}">
+
+									<p:column priority="3" width="100"
+										filterBy="#{teacher.idIdentityTeacher}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_number_inscription}" />
+										</f:facet>
+										<h:outputText value="#{teacher.idIdentityTeacher}"></h:outputText>
+									</p:column>
+
+									<p:column priority="2" filterBy="#{teacher.speciality}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_specialite}" />
+										</f:facet>
+										<h:outputText value="#{teacher.speciality.value}"></h:outputText>
+									</p:column>
+
+									<p:column priority="1" filterBy="#{teacher.name}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_name}" />
+										</f:facet>
+										<h:outputText value="#{teacher.name}"></h:outputText>
+									</p:column>
+
+									<p:column priority="1" filterBy="#{teacher.surname}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_surname}" />
+										</f:facet>
+										<h:outputText value="#{teacher.firstName}"></h:outputText>
+									</p:column>
+
+									<p:column priority="4" filterBy="#{teacher.birthday}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_annee_naissance}" />
+										</f:facet>
+										<h:outputText value="#{teacher.birthday}"></h:outputText>
+									</p:column>
+
+									<p:column priority="1" width="150" filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_action}" />
+										</f:facet>
+
+										<p:commandButton id="modifier" styleClass="btn btn-success"
+											title="#{messages.label_modifier}"
+											action="#{teacherSearchServiceBean.initDualList('1')}"
+											update="@([id$=updatprof])"
+											oncomplete="PF('updateprof').show()"
+											value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil">
+											<f:setPropertyActionListener value="#{teacher}"
+												target="#{teacherSearchServiceBean.identityTeacherDtos}" />
+										</p:commandButton>
+
+										<p:commandButton id="cv" title="#{messages.label_add}"
+											action="#{teacherSearchServiceBean.initDualListcv('2')}"
+											update="@([id$=updatprofcv])"
+											oncomplete="PF('updateprofcv').show()"
+											value="#{messages.label_modifier}"
+											styleClass="btn btn-primary submit-button"
+											icon="fa fa-fw fa-file">
+											<f:setPropertyActionListener value="#{teacher}"
+												target="#{teacherSearchServiceBean.selectedidentityTeacherDto}" />
+										</p:commandButton>
+										<p:commandButton id="details"
+											title="#{messages.label_detail1}"
+											action="#{teacherSearchServiceBean.initDualListdetail('2')}"
+											update="@([id$=updatprofdetail])"
+											oncomplete="PF('updateprofdetail').show()"
+											value="#{messages.label_detail1}"
+											styleClass="btn btn-primary submit-button"
+											icon="fa fa-fw fa-list">
+											<f:setPropertyActionListener value="#{teacher}"
+												target="#{teacherSearchServiceBean.selectedidentityTeacherDto}" />
+										</p:commandButton>
+										<p:commandButton id="supprimer" styleClass="btn btn-danger"
+											title="#{messages.label_supprimer1}"
+											onclick="PF('confirmation').show()"
+											value="#{messages.label_supprimer1}"
+											icon="fa fa-fw fa-remove">
+											<f:setPropertyActionListener value="#{teacher}"
+												target="#{teacherSearchServiceBean.identityTeacherDtos}" />
+										</p:commandButton>
+										<p:blockUI block="listprofs"
+											trigger="listprofs:supprimer,listprofs:modifier,listprofs:cv,listprofs:details">
+											#{messages.label_loading}<br />
+											<p:graphicImage value="/resources/images/loadingpics.gif" />
+										</p:blockUI>
+									</p:column>
+								</p:dataTable>
+
+								<p:confirmDialog
+									message="#{messages.label_msg_alerte_supression}"
+									header="Confirmation" widgetVar="confirmation">
+									<p:commandButton value="#{messages.label_msg_confirmOui}"
+										onclick="PF('confirmation').hide()"
+										action="#{teacherSearchServiceBean.supprimerProf()}"
+										update="forme growl" />
+									<p:commandButton value="#{messages.label_msg_confirmNon}"
+										onclick="PF('confirmation').hide()" type="button" />
+								</p:confirmDialog>
+								<p:contextMenu for="listprofs">
+									<p:menuitem value="Modifier" icon="ui-icon-search" />
+									<p:menuitem value="Supprimer" icon="ui-icon-search" />
+									<p:separator />
+									<p:menuitem value="Détails" icon="ui-icon-close" />
+								</p:contextMenu>
+							</b:row>
+						</p:tab>
+					</p:accordionPanel>
+				</h:form>
+			</b:row>
+		</div>
+	</ui:define>
+</ui:composition>
+

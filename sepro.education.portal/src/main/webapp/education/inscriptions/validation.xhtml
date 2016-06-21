@@ -1,0 +1,101 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:uf="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+	template="/templates/template.xhtml">
+	<ui:define name="content">
+
+		<div class="container-fluid">
+			<h:form id="fdial">
+				<h3>#{messages.label_msg_Validation}</h3>
+				<p:steps activeIndex="5" styleClass="custom" readonly="false">
+					<p:menuitem value="etape1" url="compte.xhtml" />
+					<p:menuitem value="etape2" url="declaration.xhtml" />
+					<p:menuitem value="etape3" url="parent.xhtml" />
+					<p:menuitem value="etape4" url="listecurriculum.xhtml" />
+					<p:menuitem value="etape5" url="televersement.xhtml" />
+					<p:menuitem value="etape6" url="#" />
+				</p:steps>
+
+			</h:form>
+			<br></br> <br></br>
+			<h:form id="forme">
+				<p:tab id="validation" title="En attente de validation">
+					<p:panel header="Validation">
+						<div class="ui-grid ui-grid-responsive wrap class">
+							<div class="col-xs-12">
+								<div class="row">
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_doc_status}" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:inputText styleClass="form-control" id="statusdoc"
+											value="#{inscriptionSearchServiceBean.inscription2Dto.phoneNumber}"
+											readonly="true">
+										</p:inputText>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3"></div>
+									<div class="col-lg-3 col-md-3 col-sm-3"></div>
+								</div>
+								<div class="row">
+									<div class="col-lg-6 col-md-6 col-sm-6">
+										<p:outputLabel value="#{messages.label_msg_remarque_doc}" />
+									</div>
+									<div class="col-lg-6 col-md-6 col-sm-6"></div>
+								</div>
+								<div class="row">
+									<p:fieldset legend="Remarques">
+										<div class="col-xs-12">
+											<h:form enctype="multipart/form-data">
+												<p:messages id="messages" showDetail="true" />
+												<p:fileUpload label="messages.label_select"
+													uploadLabel="messages.label_upload"
+													cancelLabel="messages.label_cancel"
+													allowTypes="/(\.|\/)(pdf)$/"
+													fileUploadListener="#{inscriptionSearchServiceBean.upload2}"
+													fileLimit="1" mode="advanced" update="messages"
+													sizeLimit="200000000" dragDropSupport="false" />
+												<br />
+											</h:form>
+										</div>
+									</p:fieldset>
+								</div>
+								<div class="row">
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_number_inscription}" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:inputText styleClass="form-control" id="numberinscription"
+											value="#{inscriptionSearchServiceBean.inscription2Dto.phoneNumber}"
+											readonly="true">
+										</p:inputText>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3"></div>
+									<div class="col-lg-3 col-md-3 col-sm-3"></div>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-6 col-md-6 col-sm-6">
+								<p:commandButton id="before" title="Precedent"
+									styleClass="btn btn-primary submit-button"
+									action="#{inscriptionSearchServiceBean.redirectionprecedent2('/sepro.education.portal/education/inscriptions/televersement.xhtml')}"
+									value="#{messages.label_precedent}">
+								</p:commandButton>
+							</div>
+							<div class="col-lg-6 col-md-6 col-sm-6">
+								<p:commandButton id="impression" title="impression"
+									disabled="true" value="Impression document d'impression">
+								</p:commandButton>
+							</div>
+						</div>
+					</p:panel>
+				</p:tab>
+
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>

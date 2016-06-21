@@ -1,0 +1,18 @@
+@font-face {
+  font-family: 'PTS76F';
+  src: url('PTS76F.eot');
+  src: url('PTS76F.eot?#iefix') format('embedded-opentype'),
+       url('PTS76F.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PTSans-BoldItalic';
+  src: url('PTSans-BoldItalic.woff') format('woff'),
+       url('PTSans-BoldItalic.ttf') format('truetype'),
+       url('PTSans-BoldItalic.svg#PTSans-BoldItalic') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+

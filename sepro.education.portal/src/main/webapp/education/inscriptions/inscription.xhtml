@@ -1,0 +1,204 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:uf="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml">
+	<ui:define name="content">
+		<div class="container-fluid">
+
+			<h:form id="fdial">
+
+				<h3>#{messages.label_createcomp}</h3>
+				<p:steps activeIndex="1" styleClass="custom" readonly="false">
+					<p:menuitem value="#{messages.label_createcomp}" url="#" />
+					<p:menuitem value="#{messages.label_declaration}" url="#" />
+					<p:menuitem value="#{messages.label_identiteparent}" url="#" />
+					<p:menuitem value="Confirmation" url="#" />
+
+
+				<h3>Interactive</h3>
+				<p:steps activeIndex="0" styleClass="custom" readonly="false">
+					<p:menuitem value="Creation compte" url="listecurriculum.xhtml" />
+					<p:menuitem value="Activation compte" url="televersement.xhtml" />
+					<p:menuitem value="Declaration d'identité" url="validation.xhtml" />
+					<p:menuitem value="Confirmation" url="#" />
+
+				<h3>#{messages.label_createcomp}</h3>
+				<p:steps activeIndex="0" styleClass="custom" readonly="false">
+					<p:menuitem value="#{messages.label_createcomp}" url="#" />
+					<p:menuitem value="#{messages.label_msg_inscription_programme}" url="listecurriculum.xhtml" />
+					<p:menuitem value="#{messages.label_msg_televersement}" url="televersement.xhtml" />
+					<p:menuitem value="#{messages.label_msg_Validation}" url="validation.xhtml" />
+
+				</p:steps>
+			</h:form>
+			<div></div>
+			<h:form id="forme">
+			<p:tab id="compte" title="#{messages.label_createcomp}">
+				<div class="ui-grid ui-grid-responsive">
+					<div class="ui-grid-col-12">
+						<p:panel header="#{messages.label_comp}">
+							<div class="ui-grid-row">
+
+								<div class="ui-grid-col-12 col-md-6 col-lg-6">
+									<div class="ui-grid-row row-school">
+										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+											value="#{messages.label_emailad}" />
+										<p:inputText styleClass="ui-grid-col-6 col-sm-6" id="email"
+											value="#{inscriptionSearchServiceBean.inscriptionDto.emailAdd}">
+										</p:inputText>
+									</div>
+
+									<div class="ui-grid-row row-school">
+										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+											value="#{messages.label_password_name}" />
+
+										<p:password styleClass="ui-grid-col-6 col-sm-6" id="pwd"
+											value="#{inscriptionSearchServiceBean.inscriptionDto.password}" />
+
+									</div>
+									<div class="ui-grid-row row-school">
+										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+											value="#{messages.label_confirmpassword_name}"
+											for="confirmpassword" />
+										<p:password styleClass="ui-grid-col-6 col-sm-6"
+											id="confirmpassword"
+											value="#{inscriptionSearchServiceBean.inscriptionDto.password}">
+										</p:password>
+
+									</div>
+
+									<div class="button-wrapper">
+										<p:commandButton value="#{messages.label_createcompte}"
+											styleClass="btn btn-primary"
+											action="#{inscriptionSearchServiceBean.createCompte()}">
+										</p:commandButton>
+										<!-- 												<p:commandButton value="#{messages.label_button_annuler}" -->
+										<!-- 													type="reset" styleClass="btn btn-default btn-sm offset" -->
+										<!-- 													id="annuler" /> -->
+									</div>
+
+								</div>
+
+								<div class="ui-grid-col-12 col-md-6 col-lg-6">
+
+									<div class="ui-grid-row row-school">
+										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+											value="#{messages.label_emailadcomfirm}" />
+										<p:inputText styleClass="ui-grid-col-6 col-sm-6"
+											id="emailconfirm"
+											value="#{inscriptionSearchServiceBean.inscriptionDto.emailAdd}">
+										</p:inputText>
+									</div>
+
+									<div class="ui-grid-row row-school">
+										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+											value="#{messages.label_profile}" />
+										<p:selectOneMenu styleClass="ui-grid-col-6 col-sm-6"
+											id="profil"
+											value="#{inscriptionSearchServiceBean.inscriptionDto.profile}"
+											converter="entityConverter"
+											placeholder="#{messages.label_profile}">
+											<f:selectItem
+												itemLabel="#{inscriptionSearchServiceBean.inscriptionDto.profile.profilName}"
+												itemValue="#{inscriptionSearchServiceBean.inscriptionDto.profile}" />
+											<f:selectItems
+												value="#{inscriptionSearchServiceBean.listProfile}"
+												var="profile" itemValue="#{profile}"
+												itemLabel="#{profile.profilName}" />
+										</p:selectOneMenu>
+									</div>
+								</div>
+							</div>
+
+						</p:panel>
+					</div>
+				</div>
+			</p:tab>
+			</h:form>
+			<p:tab id="compte" title="#{messages.label_createcomp}">
+				<div class="ui-grid ui-grid-responsive">
+					<div class="ui-grid-col-12">
+						<p:panel header="#{messages.label_comp}">
+							<div class="ui-grid-row">
+
+								<div class="ui-grid-col-12 col-md-6 col-lg-6">
+									<div class="ui-grid-row row-school">
+										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+											value="#{messages.label_emailad}" />
+										<p:inputText styleClass="ui-grid-col-6 col-sm-6" id="email"
+											value="#{inscriptionSearchServiceBean.inscriptionDto.emailAdd}">
+										</p:inputText>
+									</div>
+
+									<div class="ui-grid-row row-school">
+										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+											value="#{messages.label_password_name}" />
+
+										<p:password styleClass="ui-grid-col-6 col-sm-6" id="pwd"
+											value="#{inscriptionSearchServiceBean.inscriptionDto.password}" />
+
+									</div>
+									<div class="ui-grid-row row-school">
+										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+											value="#{messages.label_confirmpassword_name}"
+											for="confirmpassword" />
+										<p:password styleClass="ui-grid-col-6 col-sm-6"
+											id="confirmpassword"
+											value="#{inscriptionSearchServiceBean.inscriptionDto.password}">
+										</p:password>
+
+									</div>
+
+									<div class="button-wrapper">
+										<p:commandButton value="#{messages.label_createcompte}"
+											styleClass="btn btn-primary"
+											action="#{inscriptionSearchServiceBean.createCompte()}">
+										</p:commandButton>
+										<!-- 												<p:commandButton value="#{messages.label_button_annuler}" -->
+										<!-- 													type="reset" styleClass="btn btn-default btn-sm offset" -->
+										<!-- 													id="annuler" /> -->
+									</div>
+
+								</div>
+
+								<div class="ui-grid-col-12 col-md-6 col-lg-6">
+
+									<div class="ui-grid-row row-school">
+										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+											value="#{messages.label_emailadcomfirm}" />
+										<p:inputText styleClass="ui-grid-col-6 col-sm-6"
+											id="emailconfirm"
+											value="#{inscriptionSearchServiceBean.inscriptionDto.emailAdd}">
+										</p:inputText>
+									</div>
+
+									<div class="ui-grid-row row-school">
+										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+											value="#{messages.label_profile}" />
+										<p:selectOneMenu styleClass="ui-grid-col-6 col-sm-6"
+											id="profil"
+											value="#{inscriptionSearchServiceBean.inscriptionDto.profile}"
+											converter="entityConverter"
+											placeholder="#{messages.label_profile}">
+											<f:selectItem
+												itemLabel="#{inscriptionSearchServiceBean.inscriptionDto.profile.profilName}"
+												itemValue="#{inscriptionSearchServiceBean.inscriptionDto.profile}" />
+											<f:selectItems
+												value="#{inscriptionSearchServiceBean.listProfile}"
+												var="profile" itemValue="#{profile}"
+												itemLabel="#{profile.profilName}" />
+										</p:selectOneMenu>
+									</div>
+								</div>
+							</div>
+
+						</p:panel>
+					</div>
+				</div>
+			</p:tab>
+		</div>
+
+	</ui:define>
+</ui:composition>

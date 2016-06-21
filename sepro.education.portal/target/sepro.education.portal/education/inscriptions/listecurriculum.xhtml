@@ -1,0 +1,342 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:uf="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+	template="/templates/template.xhtml">
+	<ui:define name="content">
+		<div class="container-fluid">
+			<p:growl id="growl" showDetail="true" sticky="false" />
+			<h:form id="fdial">
+				<h3>#{messages.label_msg_inscription_programme}</h3>
+				<p:steps activeIndex="3" styleClass="custom" readonly="false">
+					<p:menuitem value="#{messages.label_step1}" url="compte.xhtml" />
+					<p:menuitem value="#{messages.label_step2}" url="declaration.xhtml" />
+					<p:menuitem value="#{messages.label_step3}" url="parent.xhtml" />
+					<p:menuitem value="#{messages.label_step4}" url="#" />
+					<p:menuitem value="#{messages.label_step5}"
+						url="televersement.xhtml" />
+					<p:menuitem value="#{messages.label_step6}" url="validation.xhtml" />
+
+				</p:steps>
+
+			</h:form>
+			<br></br> <br></br>
+			<p:tab id="inscurriculum" title="#{messages.label_step_curriculum}">
+
+				<p:panel id="panstep4" header="#{messages.label_step_curriculum}">
+
+					<h:form id="forme">
+
+						<div class="ui-grid ui-grid-responsive wrap class">
+							<div class="col-xs-12">
+								<div class="row">
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_etablissement_etude}*" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:inputText styleClass="form-control" id="nom"
+											value="#{inscriptionSearchServiceBean.inscriptionStep4Dto.nameOfScool}">
+											<p:ajax event="keyup"
+												listener="#{inscriptionSearchServiceBean.testformListCursus()}"
+												update=":formbuttons:enregistrer" />
+										</p:inputText>
+									</div>
+									<div class="col-lg-offset-1 col-lg-2 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_diplome_obtenu}*" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:inputText styleClass="form-control" id="email2"
+											maxlength="128"
+											value="#{inscriptionSearchServiceBean.inscriptionStep4Dto.diploma}">
+											<p:ajax event="keyup"
+												listener="#{inscriptionSearchServiceBean.testformListCursus()}"
+												update=":formbuttons:enregistrer" />
+										</p:inputText>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_mention_obtenu}*" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:selectOneMenu styleClass="form-text" id="mentionobtain"
+											value="#{inscriptionSearchServiceBean.inscriptionStep4Dto.grade}"
+											converter="entityConverter">
+											<f:selectItem
+												itemLabel="#{inscriptionSearchServiceBean.inscriptionStep4Dto.grade.value}"
+												itemValue="#{inscriptionSearchServiceBean.inscriptionStep4Dto.grade}" />
+											<f:selectItems
+												value="#{inscriptionSearchServiceBean.listmention}"
+												var="mention" itemValue="#{mention}"
+												itemLabel="#{mention.value}" />
+											<p:ajax event="valueChange"
+												listener="#{inscriptionSearchServiceBean.testformListCursus()}"
+												update=":formbuttons:enregistrer" />
+										</p:selectOneMenu>
+									</div>
+									<div class="col-lg-offset-1 col-lg-2 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_name_contact}*" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:inputText styleClass="form-control" id="contact"
+											value="#{inscriptionSearchServiceBean.inscriptionStep4Dto.contactName}">
+											<p:ajax event="keyup"
+												listener="#{inscriptionSearchServiceBean.testformListCursus()}"
+												update=":formbuttons:enregistrer" />
+										</p:inputText>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_year_start}*" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:calendar id="buttonstart"
+											value="#{inscriptionSearchServiceBean.inscriptionStep4Dto.startDate}"
+											showOn="button" pattern="MM/dd/yyyy" required="true"
+											requiredMessage="#{messages.label_startDate_requeried}"
+											placeholder="#{messages.label_labeldatedebut}">
+											<f:converter converterId="dateConverter" />
+											<p:ajax event="dateSelect" />
+										</p:calendar>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_year_end}*" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:calendar id="buttonend"
+											value="#{inscriptionSearchServiceBean.inscriptionStep4Dto.enDate}"
+											showOn="button" pattern="MM/dd/yyyy" required="true"
+											requiredMessage="#{messages.label_enDate_requeried}"
+											placeholder="#{messages.label_labeldatefin}">
+											<f:converter converterId="dateConverter" />
+											<p:ajax event="dateSelect" />
+										</p:calendar>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_typeOfContact}*" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:selectOneMenu styleClass="form-text" id="typecontact"
+											value="#{inscriptionSearchServiceBean.inscriptionStep4Dto.typeOfContact}"
+											converter="entityConverter">
+											<f:selectItem
+												itemLabel="#{inscriptionSearchServiceBean.inscriptionStep4Dto.typeOfContact.value}"
+												itemValue="#{inscriptionSearchServiceBean.inscriptionStep4Dto.typeOfContact}" />
+											<f:selectItems
+												value="#{inscriptionSearchServiceBean.listtypecontact}"
+												var="typecontact" itemValue="#{typecontact}"
+												itemLabel="#{typecontact.value}" />
+											<p:ajax event="valueChange"
+												listener="#{inscriptionSearchServiceBean.testformListCursus()}"
+												update=":formbuttons:enregistrer :formbuttons:next" />
+										</p:selectOneMenu>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_email_name_contact}*" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:inputText styleClass="form-control" id="email"
+											value="#{inscriptionSearchServiceBean.inscriptionStep4Dto.contactEmail}">
+											<f:validateRegex
+												pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"
+												update=":formbuttons:enregistrer :formbuttons:next" />
+											<p:ajax event="keyup"
+												listener="#{inscriptionSearchServiceBean.testformListCursus()}"
+												update=":formbuttons:enregistrer :formbuttons:next" />
+										</p:inputText>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_number_contact}*" />
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:inputText styleClass="form-control" id="numcontact"
+											value="#{inscriptionSearchServiceBean.inscriptionStep4Dto.contactTelephoneNumber}">
+											<f:validateRegex pattern="^[+]?[0-9]+$"
+												update=":formbuttons:enregistrer :formbuttons:next" />
+											<p:ajax event="keyup"
+												listener="#{inscriptionSearchServiceBean.testformListCursus()}"
+												update=":formbuttons:enregistrer :formbuttons:next" />
+										</p:inputText>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3"></div>
+									<div class="col-lg-3 col-md-3 col-sm-3"></div>
+								</div>
+							</div>
+						</div>
+
+					</h:form>
+
+					<!-- début fomulaire boutton -->
+					<h:form id="formbuttons">
+						<div class="row">
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+								<p:commandButton id="before"
+									action="#{inscriptionSearchServiceBean.redirectionprecedent2('/sepro.education.portal/education/inscriptions/parent.xhtml')}"
+									value="#{messages.label_precedent}"
+									styleClass="btn btn-primary">
+								</p:commandButton>
+							</div>
+
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+								<p:commandButton id="enregistrerbrouillon"
+									styleClass="btn btn-primary submit-button"
+									action="#{inscriptionSearchServiceBean.enregistrerbrouillonInscriptionStepfour()}"
+									value="#{messages.label_enregistrerbrouillon}">
+								</p:commandButton>
+							</div>
+
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+								<p:commandButton id="enregistrer"
+									styleClass="btn btn-primary submit-button"
+									value="#{messages.label_enregistrer}"
+									action="#{inscriptionSearchServiceBean.enregistrerInscriptionStepfour()}"
+									disabled="#{inscriptionSearchServiceBean.testlist}"
+									update="formdatatable forme enregistrer">
+								</p:commandButton>
+							</div>
+
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+								<p:commandButton value="#{messages.label_suivant}" id="next"
+									action="#{inscriptionSearchServiceBean.redirectionsuivant2('/sepro.education.portal/education/inscriptions/televersement.xhtml')}"
+									disabled="#{inscriptionSearchServiceBean.testlist}"
+									styleClass="btn btn-primary">
+								</p:commandButton>
+							</div>
+						</div>
+					</h:form>
+					<!-- Fin fomulaire bouton -->
+
+					<br></br>
+
+
+					<h:form id="formdatatable">
+						<p:dataTable id="listcurriculum"
+							value="#{inscriptionSearchServiceBean.listestablishment}"
+							var="listestablishment" widgetVar="menuTable"
+							emptyMessage="#{messages.label_empty}"
+							styleClass="listeTable table-responsive filterable"
+							tableStyleClass="table table-striped table-condensed table-hover"
+							rowKey="#{listestablishment.idInscriptionStepfour}"
+							selectionMode="single" paginator="true"
+							paginatorPosition="bottom"
+							paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
+							rows="10" filterBy="#{listestablishment.idInscriptionStepfour}">
+
+							<p:column priority="1" width="100"
+								filterBy="#{listestablishment.nameOfScool}"
+								filterMatchMode="contains">
+								<f:facet name="header">
+									<p:outputLabel value="#{messages.label_establishment}" />
+								</f:facet>
+								<h:outputText value="#{listestablishment.nameOfScool}"></h:outputText>
+							</p:column>
+
+							<p:column priority="2" filterBy="#{listestablishment.startDate}"
+								filterMatchMode="contains">
+								<f:facet name="header">
+									<p:outputLabel value="#{messages.label_year_start}" />
+								</f:facet>
+								<h:outputText value="#{listestablishment.startDate}"></h:outputText>
+							</p:column>
+
+							<p:column priority="2" filterBy="#{listestablishment.enDate}"
+								filterMatchMode="contains">
+								<f:facet name="header">
+									<p:outputLabel value="#{messages.label_year_end}" />
+								</f:facet>
+								<h:outputText value="#{listestablishment.enDate}"></h:outputText>
+							</p:column>
+
+							<p:column priority="1"
+								filterBy="#{listestablishment.contactName}"
+								filterMatchMode="contains">
+								<f:facet name="header">
+									<p:outputLabel value="#{messages.label_Contact}" />
+								</f:facet>
+								<h:outputText value="#{listestablishment.contactName}"></h:outputText>
+							</p:column>
+
+							<p:column priority="2"
+								filterBy="#{listestablishment.contactEmail}"
+								filterMatchMode="contains">
+								<f:facet name="header">
+									<p:outputLabel value="#{messages.label_email}" />
+								</f:facet>
+								<h:outputText value="#{listestablishment.contactEmail}"></h:outputText>
+							</p:column>
+
+							<p:column priority="3"
+								filterBy="#{listestablishment.contactTelephoneNumber}"
+								filterMatchMode="contains">
+								<f:facet name="header">
+									<p:outputLabel value="#{messages.label_tel}" />
+								</f:facet>
+								<h:outputText
+									value="#{listestablishment.contactTelephoneNumber}"></h:outputText>
+							</p:column>
+
+							<p:column priority="1" width="100" filterMatchMode="contains">
+								<f:facet name="header">
+									<p:outputLabel value="#{messages.label_action}" />
+								</f:facet>
+								<p:commandButton id="modifier" styleClass="btn btn-success"
+									title="#{messages.label_modifier}" update="forme"
+									action="#{inscriptionSearchServiceBean.mis_a_jour_bouton2}"
+									value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil">
+									<f:setPropertyActionListener value="#{listestablishment}"
+										target="#{inscriptionSearchServiceBean.inscriptionStep4Dto}" />
+								</p:commandButton>
+
+								<p:commandButton id="supprimer" styleClass="btn btn-danger"
+									title="#{messages.label_supprimer1}"
+									oncomplete="PF('confirmation').show()" update="formdialog"
+									value="#{messages.label_supprimer1}" icon="fa fa-fw fa-remove">
+									<f:setPropertyActionListener value="#{listestablishment}"
+										target="#{inscriptionSearchServiceBean.inscriptionStep4supDtos}" />
+								</p:commandButton>
+
+								<p:blockUI block="listcurriculum"
+									trigger="listcurriculum:supprimer,listcurriculum:modifier">
+										#{messages.label_loading}<br />
+									<p:graphicImage value="/resources/images/loadingpics.gif" />
+								</p:blockUI>
+
+							</p:column>
+						</p:dataTable>
+					</h:form>
+
+
+					<!-- Fin fomulaire datatable -->
+
+					<!-- Fin fomulaire dialogue -->
+					<h:form id="formdialog">
+						<p:confirmDialog id="pdialogue"
+							message="#{messages.label_msg_alerte_supression}"
+							header="Confirmation" widgetVar="confirmation">
+							<p:outputLabel
+								value="#{inscriptionSearchServiceBean.inscriptionStep4Dtos.nameOfScool}" />
+							<p:commandButton value="#{messages.label_msg_confirmOui}"
+								onclick="PF('confirmation').hide()"
+								action="#{inscriptionSearchServiceBean.supprimerListcursus()}"
+								update="formdatatable" />
+							<p:commandButton value="#{messages.label_msg_confirmNon}"
+								onclick="PF('confirmation').hide()" type="button" />
+						</p:confirmDialog>
+					</h:form>
+					<!-- Fin fomulaire dialogue -->
+
+
+				</p:panel>
+
+			</p:tab>
+
+		</div>
+	</ui:define>
+</ui:composition>
