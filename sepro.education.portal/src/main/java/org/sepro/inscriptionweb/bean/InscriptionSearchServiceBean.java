@@ -1939,8 +1939,7 @@ if(inscription2Dto.getRegionAddress().getIdRegion() != null ){
 				inscriptionStep3Dto = insererdocument;
 				inscriptionStep3supDtos = insererdocument;
 				
-				inscriptionStep3Dto = new InscriptionSteptreeDto();
-				inscriptionStep3Dto.setInscriptionAuthentification(inscriptionDto);
+				
 						
 				
 			}

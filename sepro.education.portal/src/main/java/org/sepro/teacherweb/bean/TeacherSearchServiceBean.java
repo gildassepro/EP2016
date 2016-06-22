@@ -153,6 +153,7 @@ public class TeacherSearchServiceBean implements Serializable {
 	private boolean action = false;
 	private boolean action1 = false;
 	private boolean action2 = false;
+	private boolean testdetail = true;
 	private String maskphonformatteacher;
 
 	private UploadedFile myfile;
@@ -160,6 +161,23 @@ public class TeacherSearchServiceBean implements Serializable {
 	private String destination = "D:\\Testuplodefile\\";
 	File file;
 	private static final int DEFAULT_BUFFER_SIZE = 10240;
+
+	
+	
+	
+	
+	
+	public boolean isTestdetail() {
+		return testdetail;
+	}
+
+
+
+	public void setTestdetail(boolean testdetail) {
+		this.testdetail = testdetail;
+	}
+
+
 
 	public List<CityDto> getListCity2() {
 		return listCity2;
@@ -282,6 +300,7 @@ public class TeacherSearchServiceBean implements Serializable {
 					.getIdentityTeacher());
 			listexperienceprof = cvteacherServicewsEndpoint
 					.searchCvteacherServicews(cvtserchaeacherDto);
+			logger.debug(" @@@@@@@@@@@@@@ la taille de la liste est "+listexperienceprof.size());
 		}
 		return listexperienceprof;
 	}
@@ -316,6 +335,8 @@ public class TeacherSearchServiceBean implements Serializable {
 	}
 
 	public List<DetailteacherDto> getListdetailprof() {
+		logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		
 		return listdetailprof;
 	}
 
@@ -324,19 +345,24 @@ public class TeacherSearchServiceBean implements Serializable {
 	}
 
 	public List<TeacherModuleDto> getListdetal() {
-
+         logger.debug("kkkkkkkkkkkkk");
 		if (teacherModuleDto.getDetailteacher() != null) {
+			logger.debug("llllllllllll");
 			if (detailteacherDto.getIdentityTeacher() != null) {
+				 logger.debug("mmmmmmmmmmmmmmmmm");
 				TeacherModuleDto tm = new TeacherModuleDto();
 				detailteacherDto.setIdDetailteacher(detailteacherDto
 						.getIdentityTeacher().getIdIdentityTeacher());
 				tm.setDetailteacher(teacherModuleDto.getDetailteacher());
+				logger.debug("nnnnnnnnnnnnnnnnnnn"+detailteacherDto.getIdDetailteacher());
 				listdetal = teachedModuleServicewsEndpoint
 						.searchTeachedModuleServicews(tm);
 			}
 
 			detailteacherDto.setIdentityTeacher(detailteacherDto
 					.getIdentityTeacher());
+			detailteacherServicewsEndpoint.searchDetailteacherServicews(detailteacherDto);
+			logger.debug("taille detaille "+listdetailprof.size());
 
 		}
 
@@ -732,7 +758,7 @@ public void onchangeZipCode(){
 	}
 
 	public void initDualListdetail(String daction) {
-
+		logger.debug("debut init dualist detail");
 		if (daction.equals("1")) {
 			teacherModuleDto = selectedteacherModuleDto;
 			listhoraire = new ArrayList<PopuplistDto>();
@@ -744,8 +770,10 @@ public void onchangeZipCode(){
 		}
 
 		else {
-			detailteacherDto = new DetailteacherDto();
+
+			testdetail = true;
 			teacherModuleDto = new TeacherModuleDto();
+			detailteacherDto = new DetailteacherDto();
 			listhoraire = new ArrayList<PopuplistDto>();
 			listpriorite = new ArrayList<PopuplistDto>();
 			listmois = new ArrayList<PopuplistDto>();
@@ -753,18 +781,26 @@ public void onchangeZipCode(){
 			listanneeacademique = new ArrayList<PopuplistDto>();
 			initCreatedetailprof();
 			try {
-
+				logger.debug("je suis dans le try");
 				if (selectedidentityTeacherDto != null) {
+					logger.debug("111111111111111111111");
 					detailteacherServicewsEndpoint = detailteacherServicews
 							.getDetailteacherServicewsImplPort();
 					teachedModuleServicewsEndpoint = teachedModuleServicews
 							.getTeachedModuleServicewsImplPort();
+					logger.debug("2222222222222222222222");
 					teacherModuleDto.setDetailteacher(detailteacherDto);
+					logger.debug("333333333333333333333333333");
 					detailteacherDto
 							.setIdentityTeacher(selectedidentityTeacherDto);
+					logger.debug("id = "+detailteacherDto.getIdDetailteacher());
+					logger.debug("id = "+detailteacherDto);
+					
 
 				}
-
+			
+			
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -804,6 +840,7 @@ public void onchangeZipCode(){
 
 	public void initCreatedetailprof() {
 		try {
+			logger.debug("debut init create dualist detail");
 			action2 = true;
 			popuplistDtoServicewsEndpoint = popuplistDtoServicews
 					.getPopuplistDtoServicewsImplPort();
@@ -919,6 +956,9 @@ public void onchangeZipCode(){
 					.getDetailteacherServicewsImplPort();
 			createdetailprof = detailteacherServicewsEndpoint
 					.createDetailteacherServicews(createdetailprof);
+			activatebuton();
+			//detailteacherDto = new DetailteacherDto();
+			
 
 		} catch (Exception ex) {
 
@@ -932,12 +972,16 @@ public void onchangeZipCode(){
 		init();
 		return null;
 	}
+	
+	public void activatebuton(){
+		logger.debug("hfhfhfhfhfh");
+		testdetail = false;
+	}
 
 	public String addModuleTeacher() {
 		FacesMessage msg = null;
 		TeacherModuleDto teachermodulecreate = new TeacherModuleDto();
 		try {
-
 			teachermodulecreate.setDetailteacher(detailteacherDto);
 			teachermodulecreate.setAcademicModule(teacherModuleDto
 					.getAcademicModule());
@@ -962,7 +1006,7 @@ public void onchangeZipCode(){
 		init();
 		return null;
 	}
-
+	
 	public String modifModuleTeacher() {
 		FacesMessage msg = null;
 		TeacherModuleDto teachermodulemodif = new TeacherModuleDto();

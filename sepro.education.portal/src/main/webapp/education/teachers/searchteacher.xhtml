@@ -718,7 +718,7 @@
 												value="#{messages.label_enregistrer}"
 												action="#{teacherSearchServiceBean.enregistrerDetailprof()}"
 												oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprofdetail').show()"
-												update="growl fdial2">
+												update="growl fdial2 :fdialfiel:add">
 											</p:commandButton>
 
 										</div>
@@ -736,6 +736,7 @@
 						<p:fieldset legend="#{messages.label_moduless}">
 							<p:commandButton styleClass="btn btn-primary submit-button"
 								id="add" title="#{messages.label_adds}"
+								disabled="#{teacherSearchServiceBean.testdetail}"
 								action="#{teacherSearchServiceBean.addModuleTeacher()}"
 								value="#{messages.label_adds}" icon="fa fa-fw fa-plus"
 								oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprofdetail').show()"
@@ -1047,7 +1048,7 @@
 										<p:commandButton id="details"
 											title="#{messages.label_detail1}"
 											action="#{teacherSearchServiceBean.initDualListdetail('2')}"
-											update="@([id$=updatprofdetail])"
+											update="@([id$=updatprofdetail])  :fdial2"
 											oncomplete="PF('updateprofdetail').show()"
 											value="#{messages.label_detail1}"
 											styleClass="btn btn-primary submit-button"

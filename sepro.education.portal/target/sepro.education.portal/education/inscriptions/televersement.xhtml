@@ -166,7 +166,7 @@
 															allowTypes="/(\.|\/)(pdf)$/"
 															fileUploadListener="#{inscriptionSearchServiceBean.upload}"
 															fileLimit="2" mode="advanced" update="messages"
-															sizeLimit="200000000" dragDropSupport="false" />
+															sizeLimit="200000000" dragDropSupport="false"/>
 														<br />
 													</h:form>
 													<p:separator />
@@ -200,17 +200,15 @@
 								</p:commandButton>
 							</div>
 							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-
 								<p:commandButton id="enregistrer" title="Enregistrer"
 									styleClass="btn btn-primary submit-button"
-									update="formdatatable forme enregistrer"
+									update="formdatatable enregistrer forme:docname"
 									disabled="#{inscriptionSearchServiceBean.testdoc}"
 									action="#{inscriptionSearchServiceBean.enregistrerInscriptionStepfive()}"
 									value="Enregistrer">
 								</p:commandButton>
 							</div>
 							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-
 								<p:commandButton id="next" title="Suivant"
 									disabled="#{inscriptionSearchServiceBean.testdoc}"
 									styleClass="btn btn-primary submit-button"
