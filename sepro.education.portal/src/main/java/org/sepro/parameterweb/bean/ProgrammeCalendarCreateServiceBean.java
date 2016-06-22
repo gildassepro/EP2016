@@ -375,6 +375,8 @@ public class ProgrammeCalendarCreateServiceBean implements Serializable {
 		return null;
 
 	}
+	
+	
 
 	public String addModuleProgramme() {
 		FacesMessage msg = null;
