@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ListeProgrammeAcademique" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7e9704de-d6ee-4d8c-b30b-8594c4d2cbfd">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="3"/>
+	<field name="Nom Programme" class="java.lang.String"/>
+	<field name="Annee Academique" class="java.lang.String"/>
+	<field name="Filiere Academique" class="java.lang.String"/>
+	<field name="Cursus" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="79" backcolor="#3399FF" uuid="8429c676-d378-4325-ba33-3b484768a993"/>
+			</rectangle>
+			<image>
+				<reportElement x="14" y="16" width="257" height="50" uuid="ff08fece-7a03-4733-b07d-47e28751e1b6"/>
+				<imageExpression><![CDATA["C:\\Users\\SEPRO\\Pictures\\UPMLOGO.PNG"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="182" y="11" width="235" height="24" uuid="a4c22fae-899d-4d85-b666-6aa147a62ace"/>
+				<textElement>
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LISTE DES PROGRAMMES]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="138" height="20" uuid="62f49cff-7ab7-428a-b1f8-08820e96bb91"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOM PROGRAMME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="138" y="0" width="138" height="20" uuid="042fe89d-31f3-43ba-8652-c6ea923a6719"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ANNEE ACADEMIQUE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="276" y="0" width="141" height="20" uuid="f4d235f9-8bed-407c-a398-e547d090d6a2"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FILIERE ACADEMIQUE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="417" y="0" width="138" height="20" uuid="82ed463c-2337-4b2e-a7d8-a9fea2d70003"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CURSUS]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="138" height="20" uuid="6aa88c0e-f233-4a0e-8a13-9923959b60b9"/>
+				<textFieldExpression><![CDATA[$F{Nom Programme}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="138" y="0" width="138" height="20" uuid="cab7f628-3a71-4488-9cbc-2f72889f1805"/>
+				<textFieldExpression><![CDATA[$F{Annee Academique}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="276" y="0" width="141" height="20" uuid="723a944f-1828-4d3d-a7ea-80afacfc6822"/>
+				<textFieldExpression><![CDATA[$F{Filiere Academique}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="417" y="0" width="138" height="20" uuid="00722af5-f1ce-4414-ad73-5bf148f10f5b"/>
+				<textFieldExpression><![CDATA[$F{Cursus}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

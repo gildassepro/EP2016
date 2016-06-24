@@ -1,7 +1,9 @@
 package org.sepro.parameterweb.bean;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -12,11 +14,15 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import net.sf.jasperreports.engine.JasperRunManager;
+
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 import javax.faces.application.FacesMessage;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 
 import org.sepro.parameterweb.serviceapi.AcademicModuleDto;
 import org.sepro.parameterweb.serviceapi.CurriculumDto;
@@ -40,6 +46,8 @@ import org.sepro.parameterweb.serviceimpl.ProgrammeDtoServicews;
 import org.sepro.parameterweb.serviceimpl.ProgrammeDtoServicewsEndpoint;
 import org.sepro.parameterweb.serviceimpl.SessionDtoServicews;
 import org.sepro.parameterweb.serviceimpl.SessionDtoServicewsEndpoint;
+
+import com.itextpdf.text.pdf.codec.Base64.InputStream;
 
 @ManagedBean
 @ViewScoped
@@ -514,5 +522,41 @@ public class ProgrammeSearchServiceBean implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	 public void  print() {
+		    
+         
+         try {
+             
+              FacesContext facesContext = FacesContext.getCurrentInstance();
+                 HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
+                 InputStream reportStream = (InputStream) facesContext.getExternalContext().getResourceAsStream("/org.sepro.report.jrxml/ListeProgrammeAcademique.jasper");
+
+                 ServletOutputStream servletOutputStream = response.getOutputStream();
+
+              
+                 facesContext.responseComplete();
+                 response.setContentType("application/pdf");
+
+                 JasperRunManager.runReportToPdfStream(reportStream, servletOutputStream,
+                         new HashMap(),new net.sf.jasperreports.engine.JREmptyDataSource());
+
+                
+                 servletOutputStream.flush();
+                 servletOutputStream.close();
+         
+         
+         } catch (IOException e) {
+         System.out.print(e.getMessage());
+
+         }
+         
+         catch (Exception e) {
+             // TODO: handle exception
+             e.printStackTrace();
+         }
+
+ 
+ }
+
 
 }

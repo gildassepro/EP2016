@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.2.final using JasperReports Library version 6.2.2  -->
+<!-- 2016-06-24T17:38:40 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TestListeProgramme" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d6537a68-6c92-418f-99e3-457c12349a7c">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="nameProgramme" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="academiqueYear" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="academicGrade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="curriculum" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="101" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="560" height="79" backcolor="#244FB3" uuid="8b8899a1-67cf-47e5-942a-9e11757c2433"/>
+			</rectangle>
+			<image>
+				<reportElement x="10" y="10" width="160" height="60" uuid="d1e609b0-1ac0-4425-8ffd-866596ea6ccc"/>
+				<imageExpression><![CDATA["C:/Users/SEPRO/Pictures/UPMLOGO.PNG"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="46" splitType="Stretch">
+			<staticText>
+				<reportElement x="160" y="10" width="220" height="30" uuid="fd28d849-e733-46b6-86c9-a9e9a753f3e6"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[LISTE DES PROGRAMMES]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="141" height="30" uuid="82ffd422-c1bb-4ebc-9a95-9127267832bd"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+					<paragraph lineSpacing="Proportional"/>
+				</textElement>
+				<text><![CDATA[NOM PROGRAMME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="0" width="138" height="30" uuid="7e9094c9-baf1-4a82-87f5-987df6de492b"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ANNEE ACADEMIQUE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="0" width="138" height="30" uuid="664e0796-a713-4fe1-8804-622a3de5b2f0"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FILIERE ACADEMIQUE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="417" y="0" width="138" height="30" uuid="ecb32a10-452d-4a83-8cfb-ff9e09fa65da"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CURSUS]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="34" width="141" height="30" uuid="a5758033-828f-42e6-8786-4394c3ad5bf8"/>
+				<textFieldExpression><![CDATA[$F{nameProgramme}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="141" y="34" width="138" height="30" uuid="f60e66ba-441f-4960-9d46-9a8c49d2d392"/>
+				<textFieldExpression><![CDATA[$F{academiqueYear}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="279" y="34" width="138" height="30" uuid="87f4a92a-5fe0-40eb-9e01-80e97bfac748"/>
+				<textFieldExpression><![CDATA[$F{academicGrade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="417" y="34" width="138" height="30" uuid="c391ff70-94e6-4738-b798-7a106671af1b"/>
+				<textFieldExpression><![CDATA[$F{curriculum}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
