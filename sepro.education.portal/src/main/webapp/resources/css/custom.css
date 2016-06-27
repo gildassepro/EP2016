@@ -31,6 +31,10 @@
 	padding: 0 1em;
 }
 
+.requireds {
+	color: red;
+}
+
 .ui-steps.custom .ui-steps-item .ui-steps-number {
 	background-color: #0081c2;
 	color: #FFFFFF;

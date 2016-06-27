@@ -28,7 +28,7 @@
 						<div class="ui-grid ui-grid-responsive">
 							<div class="row">
 								<div class="col-md-4 col-sm-4 label-input">
-									<p:outputLabel value="#{messages.label_country}:*" />
+									<p:outputLabel value="#{messages.label_country}:"/><span class="requireds">*</span>
 								</div>
 								<div class="col-md-8 col-sm-8">
 									<p:selectOneMenu id="selectcountry" styleClass="form-text"
@@ -50,7 +50,7 @@
 
 							<div class="row">
 								<div class="col-md-4 col-sm-4 label-input">
-									<p:outputLabel value="#{messages.label_regioncode}*" />
+									<p:outputLabel value="#{messages.label_regioncode}"/><span class="requireds">*</span>
 								</div>
 								<div class="col-md-8 col-sm-8">
 									<p:inputText id="regioncode" styleClass="form-text" maxlength="3"
@@ -65,7 +65,7 @@
 
 							<div class="row">
 								<div class="col-md-4 col-sm-4 label-input">
-									<p:outputLabel value="#{messages.label_regionname}*" />
+									<p:outputLabel value="#{messages.label_regionname}" /><span class="requireds">*</span>
 								</div>
 								<div class="col-md-8 col-sm-8">
 									<p:inputText id="regionname" styleClass="form-text" maxlength="128"

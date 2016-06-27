@@ -1,11 +1,18 @@
 package org.sepro.parameterweb.bean;
 
+import groovy.ui.text.FindReplaceUtility;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
 
@@ -14,7 +21,19 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.JasperRunManager;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.export.JRPdfExporterParameter;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -107,10 +126,55 @@ public class ProgrammeSearchServiceBean implements Serializable {
 
 	private AcademicModuleDto selectedAcademicmodul;
 
+	private String field_name_programme;
+	private String field_filiere_programme;
+	private int field_academic_year;
+	private String field_cursus;
+	
 	private boolean action = false;
 	public boolean typeOfCourse;
+	public static JasperDesign jasperDesign;
+    public static JasperPrint jasperPrint;
+    public static JasperReport jasperReport;
+    public static String reportTemplateUrl = "D:\\EP\\trunk\\sepro.education.portal\\src\\main\\java\\org\\sepro\\report\\jrxml\\ListeProgramme.jrxml";
 
 	
+
+    
+    
+    
+    
+	public String getField_name_programme() {
+		return field_name_programme;
+	}
+
+	public void setField_name_programme(String field_name_programme) {
+		this.field_name_programme = field_name_programme;
+	}
+
+	public String getField_filiere_programme() {
+		return field_filiere_programme;
+	}
+
+	public void setField_filiere_programme(String field_filiere_programme) {
+		this.field_filiere_programme = field_filiere_programme;
+	}
+
+	public int getField_academic_year() {
+		return field_academic_year;
+	}
+
+	public void setField_academic_year(int field_academic_year) {
+		this.field_academic_year = field_academic_year;
+	}
+
+	public String getField_cursus() {
+		return field_cursus;
+	}
+
+	public void setField_cursus(String field_cursus) {
+		this.field_cursus = field_cursus;
+	}
 
 	public List<ModuleCalendarDto> getListModuleCalendar() {
 		return listModuleCalendar;
@@ -522,6 +586,24 @@ public class ProgrammeSearchServiceBean implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	
+	
+//	public void generatereport(){
+//		
+//		logger.debug("ELLE VEUX GENERER");
+//		try {
+//			programmeDtoServicewsEndpoint = programmeDtoServicews
+//					.getProgrammeDtoServicewsImplPort();
+//			listProgramme = programmeDtoServicewsEndpoint
+//					.getAllProgrammeServicews();
+//			
+//		
+//			
+//		}catch(Exception ex){
+//			
+//		}
+//		
+//	}
 	 public void  print() {
 		    
          
@@ -557,6 +639,45 @@ public class ProgrammeSearchServiceBean implements Serializable {
 
  
  }
+	 
+//	 public void goToReportPage(){
+//		 try
+//	        {
+//	            InputStream resourceAsStream = (InputStream) Thread.currentThread().getContextClassLoader()
+//	                    .getResourceAsStream(reportTemplateUrl);
+//	            //get report file and then load into jasperDesign
+//	            jasperDesign = JRXmlLoader.load(resourceAsStream);
+//	            //compile the jasperDesign
+//	            jasperReport = JasperCompileManager.compileReport(jasperDesign);
+//	            
+//	            ByteArrayOutputStream output = new ByteArrayOutputStream();
+//	            OutputStream outputfile = new FileOutputStream(new File("c:/temp/ListeProgrammeAcademique.pdf"));
+//	            
+//	            //fill the ready report with data and parameter
+//	            jasperPrint = JasperFillManager.fillReport(jasperReport, getParameters(), new JRBeanCollectionDataSource(programmeDtoServicewsEndpoint.getAllProgrammeServicews()));
+//	            
+//	            
+//	            //coding for PDF
+//	            JRPdfExporter exporterPdf = new JRPdfExporter();
+//	            exporterPdf.setParameter(JRPdfExporterParameter.JASPER_PRINT, jasperPrint);
+//	            exporterPdf.setParameter(JRPdfExporterParameter.OUTPUT_STREAM, output);
+//	            exporterPdf.exportReport();
+//	            outputfile.write(output.toByteArray());
+//	            
+//	        }
+//	        catch (JRException e)
+//	        {
+//	            e.printStackTrace();
+//	        }
+//	    }
+//	 
+//	
+//	 private static Map<String, Object> getParameters()
+//	    {
+//	        Map<String, Object> params = new HashMap<String, Object>();
+//	        params.put("footerText", "Just to demonstrate how to pass parameters to report");
+//	        return params;
+//	    }
 
 
 }

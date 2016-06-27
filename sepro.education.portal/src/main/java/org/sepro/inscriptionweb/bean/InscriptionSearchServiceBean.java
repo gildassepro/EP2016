@@ -202,7 +202,7 @@ public class InscriptionSearchServiceBean implements Serializable {
 	private UploadedFile myfile;
 	private Calendar now = Calendar.getInstance();
 	private String filename;
-	private String destination = "D:\\Test\\";
+	private String destination = "F:\\DossierTeleversement\\";
 	File file;
 	private static final int DEFAULT_BUFFER_SIZE = 10240; // 10KB.
 	

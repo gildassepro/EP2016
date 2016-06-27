@@ -158,7 +158,7 @@ public class TeacherSearchServiceBean implements Serializable {
 
 	private UploadedFile myfile;
 	private String filename;
-	private String destination = "D:\\Testuplodefile\\";
+	private String destination = "F:\\DossierCVTeacher\\";
 	File file;
 	private static final int DEFAULT_BUFFER_SIZE = 10240;
 
