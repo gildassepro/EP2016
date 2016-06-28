@@ -588,22 +588,6 @@ public class ProgrammeSearchServiceBean implements Serializable {
 	}
 	
 	
-//	public void generatereport(){
-//		
-//		logger.debug("ELLE VEUX GENERER");
-//		try {
-//			programmeDtoServicewsEndpoint = programmeDtoServicews
-//					.getProgrammeDtoServicewsImplPort();
-//			listProgramme = programmeDtoServicewsEndpoint
-//					.getAllProgrammeServicews();
-//			
-//		
-//			
-//		}catch(Exception ex){
-//			
-//		}
-//		
-//	}
 	 public void  print() {
 		    
          

@@ -32,7 +32,7 @@
 								<div class="row row-school">
 									<div class="col-sm-6">
 										<p:outputLabel styleClass="col-sm-6 col-xs-12"
-											value="#{messages.label_name_building}" /><span class="requireds">*</span>
+											value="#{messages.label_name_building}" /><span class="requireds">(*)</span>
 										<p:inputText styleClass="col-sm-6 col-xs-12"
 											id="buildingnames"
 											value="#{buildingSearchServiceBean.buildingDto.nameBuilding}"
@@ -43,7 +43,7 @@
 									</div>
 									<div class="col-sm-6">
 										<p:outputLabel styleClass="col-sm-6 col-xs-12"
-											value="#{messages.label_establishment}:" /><span class="requireds">*</span>
+											value="#{messages.label_establishment}:" /><span class="requireds">(*)</span>
 										<p:selectOneMenu styleClass="col-sm-6 col-xs-12"
 											id="selectestablishment"
 											value="#{buildingSearchServiceBean.buildingDto.establishment}"
@@ -104,7 +104,7 @@
 								<div class="row row-school">
 									<div class="col-sm-6">
 										<p:outputLabel styleClass="col-sm-6 col-xs-12"
-											value="#{messages.label_situation_geographique}" /><span class="requireds">*</span>
+											value="#{messages.label_situation_geographique}" /><span class="requireds">(*)</span>
 										<p:inputText styleClass="col-sm-6 col-xs-12" id="gps"
 											value="#{buildingSearchServiceBean.buildingDto.geographicalLocation}"
 											placeholder="#{messages.label_situation_geographique}">

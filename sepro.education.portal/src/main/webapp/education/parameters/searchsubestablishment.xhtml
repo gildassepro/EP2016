@@ -59,7 +59,7 @@
 										<div class="row">
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_name_establishment}:"/><span class="requireds">*</span>
+													value="#{messages.label_name_establishment}:"/><span class="requireds">(*)</span>
 												<p:inputText id="nameestablishment"
 													label="#{messages.label_name_establishment}"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.establishment.nameEstablishment}"
@@ -68,7 +68,7 @@
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_name_subestablishment}:"/><span class="requireds">*</span>
+													value="#{messages.label_name_subestablishment}:"/><span class="requireds">(*)</span>
 												<p:inputText id="namesubestablishment"
 													label="#{messages.label_name_subestablishment}"
 													required="true"
@@ -80,7 +80,7 @@
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_locate_sub}:"/><span class="requireds">*</span>
+													value="#{messages.label_locate_sub}:"/><span class="requireds">(*)</span>
 												<p:inputText id="sublocate"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.location}"
 													placeholder="#{messages.label_locate_sub}" />
@@ -126,7 +126,7 @@
 										<div class="row">
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_statut_name}:"/><span class="requireds">*</span>
+													value="#{messages.label_statut_name}:"/><span class="requireds">(*)</span>
 												<h:selectOneRadio id="selectsubstatus"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.status}">
 													<f:converter converterId="javax.faces.Boolean" />
@@ -147,7 +147,7 @@
 										<div class="row">
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_country}:"/><span class="requireds">*</span>
+													value="#{messages.label_country}:"/><span class="requireds">(*)</span>
 												<p:selectOneMenu id="selectsubestcountry"
 													styleClass="form-text"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.country}"
@@ -169,7 +169,7 @@
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_regionname}:"/><span class="requireds">*</span>
+													value="#{messages.label_regionname}:"/><span class="requireds">(*)</span>
 												<p:selectOneMenu id="selectsubestregion"
 													styleClass="form-text"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.region}"
@@ -191,7 +191,7 @@
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_city}:"/><span class="requireds">*</span>
+													value="#{messages.label_city}:"/><span class="requireds">(*)</span>
 												<p:selectOneMenu id="selectsubestcity"
 													styleClass="form-text"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.city}"
@@ -213,7 +213,7 @@
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_zipcode}:"/><span class="requireds">*</span>
+													value="#{messages.label_zipcode}:"/><span class="requireds">(*)</span>
 												<p:selectOneMenu id="selectsubestzipcode"
 													styleClass="form-text"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.zipcode}"
@@ -234,7 +234,7 @@
 										<div class="row">
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_address_ligne1}:"/><span class="requireds">*</span>
+													value="#{messages.label_address_ligne1}:"/><span class="requireds">(*)</span>
 												<p:inputText id="subesaddress1"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.addressLigne1}"
 													placeholder="#{messages.label_address_ligne1}" />
@@ -264,7 +264,7 @@
 										<div class="row">
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_email}:"/><span class="requireds">*</span>
+													value="#{messages.label_email}:"/><span class="requireds">(*)</span>
 												<p:inputText id="subestmail"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.emailAddress}"
 													placeholder="#{messages.label_email}"
@@ -275,7 +275,7 @@
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_ligne_tel1}:"/><span class="requireds">*</span>
+													value="#{messages.label_ligne_tel1}:"/><span class="requireds">(*)</span>
 												<p:inputMask id="subtel1"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.lanPhoneNumber1}"
 													placeholder="#{messages.label_ligne_tel1}"
@@ -312,14 +312,14 @@
 										<div class="row">
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_name}:"/><span class="requireds">*</span>
+													value="#{messages.label_name}:"/><span class="requireds">(*)</span>
 												<p:inputText id="gename"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerLastName}"
 													placeholder="#{messages.label_name}" />
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_surname}:"/><span class="requireds">*</span>
+													value="#{messages.label_surname}:"/><span class="requireds">(*)</span>
 												<p:inputText id="gesurname"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerFistName}"
 													placeholder="#{messages.label_surname}" />
@@ -342,7 +342,7 @@
 										<div class="row">
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_country}:"/><span class="requireds">*</span>
+													value="#{messages.label_country}:"/><span class="requireds">(*)</span>
 												<p:selectOneMenu id="selectgerantPays"
 													styleClass="form-text"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerCountry}"
@@ -364,7 +364,7 @@
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_regionname}:"/><span class="requireds">*</span>
+													value="#{messages.label_regionname}:"/><span class="requireds">(*)</span>
 												<p:selectOneMenu id="selectgerantregion"
 													styleClass="form-text"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerRegion}"
@@ -386,7 +386,7 @@
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_city}:"/><span class="requireds">*</span>
+													value="#{messages.label_city}:"/><span class="requireds">(*)</span>
 												<p:selectOneMenu id="selectgerantville"
 													styleClass="form-text"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerCity}"
@@ -408,7 +408,7 @@
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_zipcode}:"/><span class="requireds">*</span>
+													value="#{messages.label_zipcode}:"/><span class="requireds">(*)</span>
 												<p:selectOneMenu id="selectgerantzipcode"
 													styleClass="form-text"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerZipcode}"
@@ -459,7 +459,7 @@
 										<div class="row">
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_email}:"/><span class="requireds">*</span>
+													value="#{messages.label_email}:"/><span class="requireds">(*)</span>
 												<p:inputText id="gemail"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerEmailAddress}"
 													placeholder="#{messages.label_email}"
@@ -470,7 +470,7 @@
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_ligne_tel1}:"/><span class="requireds">*</span>
+													value="#{messages.label_ligne_tel1}:"/><span class="requireds">(*)</span>
 												<p:inputMask id="gelitel1"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerLanPhoneNumber1}"
 													placeholder="#{messages.label_ligne_tel1}"
@@ -506,14 +506,14 @@
 										<div class="row">
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_name}:"/><span class="requireds">*</span>
+													value="#{messages.label_name}:"/><span class="requireds">(*)</span>
 												<p:inputText id="nameco"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactLastName}"
 													placeholder="#{messages.label_name}" />
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_surname}:"/><span class="requireds">*</span>
+													value="#{messages.label_surname}:"/><span class="requireds">(*)</span>
 												<p:inputText id="surnameco"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactFistName}"
 													placeholder="#{messages.label_surname}" />
@@ -536,7 +536,7 @@
 										<div class="row">
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_country}:"/><span class="requireds">*</span>
+													value="#{messages.label_country}:"/><span class="requireds">(*)</span>
 												<p:selectOneMenu id="selectcontactcountry"
 													styleClass="form-text"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactCountry}"
@@ -558,7 +558,7 @@
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_regionname}:"/><span class="requireds">*</span>
+													value="#{messages.label_regionname}:"/><span class="requireds">(*)</span>
 												<p:selectOneMenu id="selectregioncontact"
 													styleClass="form-text"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactRegion}"
@@ -580,7 +580,7 @@
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_city}:"/><span class="requireds">*</span>
+													value="#{messages.label_city}:"/><span class="requireds">(*)</span>
 												<p:selectOneMenu id="selectcontactville"
 													styleClass="form-text"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactCity}"
@@ -602,7 +602,7 @@
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_zipcode}:"/><span class="requireds">*</span>
+													value="#{messages.label_zipcode}:"/><span class="requireds">(*)</span>
 												<p:selectOneMenu id="selectcontactzipcode"
 													styleClass="form-text"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactZipcode}"
@@ -653,7 +653,7 @@
 										<div class="row">
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_email}:"/><span class="requireds">*</span>
+													value="#{messages.label_email}:"/><span class="requireds">(*)</span>
 												<p:inputText id="comail"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactEmailAddress}"
 													placeholder="#{messages.label_email}"
@@ -664,7 +664,7 @@
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_ligne_tel1}:"/><span class="requireds">*</span>
+													value="#{messages.label_ligne_tel1}:"/><span class="requireds">(*)</span>
 												<p:inputMask id="cotel1"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactLanPhoneNumber1}"
 													placeholder="#{messages.label_ligne_tel1}"
