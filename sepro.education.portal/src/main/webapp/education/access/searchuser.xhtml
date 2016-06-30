@@ -27,7 +27,7 @@
 							<div class="ui-grid-row">
 								<div class="ui-grid-col-6 label-input">
 									<p:outputLabel value="#{messages.label_login_name}"
-										rendered="#{userSearchServiceBean.isAction()}" />
+										rendered="#{userSearchServiceBean.isAction()}" /><span class="requireds">(*)</span>
 								</div>
 
 								<div class="ui-grid-col-6">
@@ -46,7 +46,7 @@
 							<div class="ui-grid-row">
 								<div class="ui-grid-col-6 label-input">
 									<p:outputLabel value="#{messages.label_password_name}"
-										for="pwd" rendered="#{userSearchServiceBean.isAction()}" />
+										for="pwd" rendered="#{userSearchServiceBean.isAction()}" /><span class="requireds">(*)</span>
 								</div>
 								<div class="ui-grid-col-6">
 									<p:password styleClass="form-text form-control" id="pwd"
@@ -64,7 +64,7 @@
 								<div class="ui-grid-col-6 label-input">
 									<p:outputLabel value="#{messages.label_confirmpassword_name}"
 										for="confirmpassword"
-										rendered="#{userSearchServiceBean.isAction()}" />
+										rendered="#{userSearchServiceBean.isAction()}" /><span class="requireds">(*)</span>
 								</div>
 								<div class="ui-grid-col-6">
 									<p:password styleClass="form-text form-control" id="confirmpassword"
@@ -80,7 +80,7 @@
 
 							<div class="ui-grid-row">
 								<div class="ui-grid-col-6 label-input">
-									<p:outputLabel value="#{messages.label_email_name}" />
+									<p:outputLabel value="#{messages.label_email_name}" /><span class="requireds">(*)</span>
 								</div>
 								<div class="ui-grid-col-6">
 									<p:inputText styleClass="form-text form-control" id="emailadd" maxlength="64"
@@ -99,7 +99,7 @@
 
 							<div class="ui-grid-row">
 								<div class="ui-grid-col-6 label-input">
-									<p:outputLabel value="#{messages.label_profile}" />
+									<p:outputLabel value="#{messages.label_profile}" /><span class="requireds">(*)</span>
 								</div>
 								<div class="ui-grid-col-6">
 									<p:selectOneMenu styleClass="form-text" id="profil"

@@ -7,6 +7,48 @@
 	template="/templates/template.xhtml">
 	<ui:define name="content">
 		<p:growl id="growl" showDetail="true" sticky="false" />
+		<div>
+			<h:form id="pmenu">
+				<p:menubar>
+
+					<p:menuitem value="#{messages.label_new}"
+						title="#{messages.label_new}"
+						action="#{subEstablishmentSearchServiceBean.initDualList('2')}"
+						update="@([id$=updatsubestablishment])"
+						oncomplete="PF('updatesubestablishment').show()"
+						icon="fa fa-fw fa-plus" />
+
+					<p:menuitem 
+					   process="@([id$=listsousetablissement])"
+						update="@([id$=updatsubestablishment])" icon="fa fa-fw fa-pencil"
+						value="#{messages.label_modifier}"
+						action="#{subEstablishmentSearchServiceBean.initDualList('1')}"
+						oncomplete="PF('updatesubestablishment').show()" />
+
+					<p:menuitem value="#{messages.label_supprimer1}"
+						
+					icon="ui-icon-close" />
+
+					<p:menuitem value="#{messages.label_print}"
+						
+					 icon="fa fa-fw fa-print" />
+
+					<p:submenu label="#{messages.label_options}" icon="ui-icon-gear">
+						<p:submenu label="#{messages.label_options}"
+							icon="ui-icon-refresh">
+							<p:menuitem value="Save" actionListener="#{menuView.save}"
+								icon="ui-icon-disk" />
+							<p:menuitem value="Update" actionListener="#{menuView.update}"
+								icon="ui-icon-arrowrefresh-1-w" />
+						</p:submenu>
+						<p:submenu label="Non-Ajax" icon="ui-icon-newwin">
+							<p:menuitem value="Delete" actionListener="#{menuView.delete}"
+								icon="ui-icon-close" ajax="false" />
+						</p:submenu>
+					</p:submenu>
+				</p:menubar>
+			</h:form>
+		</div>
 		<div class="container-fluid">
 			<b:row>
 				<p:overlayPanel id="updatsubestablishment"
@@ -59,7 +101,8 @@
 										<div class="row">
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_name_establishment}:"/><span class="requireds">(*)</span>
+													value="#{messages.label_name_establishment}:" />
+												<span class="requireds">(*)</span>
 												<p:inputText id="nameestablishment"
 													label="#{messages.label_name_establishment}"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.establishment.nameEstablishment}"
@@ -68,7 +111,8 @@
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_name_subestablishment}:"/><span class="requireds">(*)</span>
+													value="#{messages.label_name_subestablishment}:" />
+												<span class="requireds">(*)</span>
 												<p:inputText id="namesubestablishment"
 													label="#{messages.label_name_subestablishment}"
 													required="true"
@@ -80,7 +124,8 @@
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_locate_sub}:"/><span class="requireds">(*)</span>
+													value="#{messages.label_locate_sub}:" />
+												<span class="requireds">(*)</span>
 												<p:inputText id="sublocate"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.location}"
 													placeholder="#{messages.label_locate_sub}" />
@@ -126,7 +171,8 @@
 										<div class="row">
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_statut_name}:"/><span class="requireds">(*)</span>
+													value="#{messages.label_statut_name}:" />
+												<span class="requireds">(*)</span>
 												<h:selectOneRadio id="selectsubstatus"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.status}">
 													<f:converter converterId="javax.faces.Boolean" />
@@ -147,7 +193,8 @@
 										<div class="row">
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_country}:"/><span class="requireds">(*)</span>
+													value="#{messages.label_country}:" />
+												<span class="requireds">(*)</span>
 												<p:selectOneMenu id="selectsubestcountry"
 													styleClass="form-text"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.country}"
@@ -169,7 +216,8 @@
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_regionname}:"/><span class="requireds">(*)</span>
+													value="#{messages.label_regionname}:" />
+												<span class="requireds">(*)</span>
 												<p:selectOneMenu id="selectsubestregion"
 													styleClass="form-text"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.region}"
@@ -184,14 +232,15 @@
 														value="#{subEstablishmentSearchServiceBean.listRegion}"
 														var="region" itemValue="#{region}"
 														itemLabel="#{region.regionName}" />
-														<p:ajax event="valueChange"
+													<p:ajax event="valueChange"
 														listener="#{subEstablishmentSearchServiceBean.onchangeCityAdresse()}"
 														update="selectsubestcity selectsubestzipcode" />
 												</p:selectOneMenu>
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_city}:"/><span class="requireds">(*)</span>
+													value="#{messages.label_city}:" />
+												<span class="requireds">(*)</span>
 												<p:selectOneMenu id="selectsubestcity"
 													styleClass="form-text"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.city}"
@@ -206,14 +255,15 @@
 														value="#{subEstablishmentSearchServiceBean.listCity}"
 														var="city" itemValue="#{city}"
 														itemLabel="#{city.cityName}" />
-														<p:ajax event="valueChange"
+													<p:ajax event="valueChange"
 														listener="#{subEstablishmentSearchServiceBean.onchangeZipCodeAdresse()}"
 														update="selectsubestzipcode" />
 												</p:selectOneMenu>
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_zipcode}:"/><span class="requireds">(*)</span>
+													value="#{messages.label_zipcode}:" />
+												<span class="requireds">(*)</span>
 												<p:selectOneMenu id="selectsubestzipcode"
 													styleClass="form-text"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.zipcode}"
@@ -234,7 +284,8 @@
 										<div class="row">
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_address_ligne1}:"/><span class="requireds">(*)</span>
+													value="#{messages.label_address_ligne1}:" />
+												<span class="requireds">(*)</span>
 												<p:inputText id="subesaddress1"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.addressLigne1}"
 													placeholder="#{messages.label_address_ligne1}" />
@@ -264,7 +315,8 @@
 										<div class="row">
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_email}:"/><span class="requireds">(*)</span>
+													value="#{messages.label_email}:" />
+												<span class="requireds">(*)</span>
 												<p:inputText id="subestmail"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.emailAddress}"
 													placeholder="#{messages.label_email}"
@@ -275,7 +327,8 @@
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_ligne_tel1}:"/><span class="requireds">(*)</span>
+													value="#{messages.label_ligne_tel1}:" />
+												<span class="requireds">(*)</span>
 												<p:inputMask id="subtel1"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.lanPhoneNumber1}"
 													placeholder="#{messages.label_ligne_tel1}"
@@ -284,8 +337,8 @@
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_ligne_tel2}:"/>
-												<p:inputMask  id="subtel2"
+													value="#{messages.label_ligne_tel2}:" />
+												<p:inputMask id="subtel2"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.lanPhoneNumber2}"
 													placeholder="#{messages.label_ligne_tel2}"
 													mask="#{subEstablishmentSearchServiceBean.maskphonformatadresse}">
@@ -293,7 +346,7 @@
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_fax}:"/>
+													value="#{messages.label_fax}:" />
 												<p:inputMask id="subestfax"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.faxNumber}"
 													placeholder="#{messages.label_fax}"
@@ -312,14 +365,16 @@
 										<div class="row">
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_name}:"/><span class="requireds">(*)</span>
+													value="#{messages.label_name}:" />
+												<span class="requireds">(*)</span>
 												<p:inputText id="gename"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerLastName}"
 													placeholder="#{messages.label_name}" />
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_surname}:"/><span class="requireds">(*)</span>
+													value="#{messages.label_surname}:" />
+												<span class="requireds">(*)</span>
 												<p:inputText id="gesurname"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerFistName}"
 													placeholder="#{messages.label_surname}" />
@@ -342,7 +397,8 @@
 										<div class="row">
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_country}:"/><span class="requireds">(*)</span>
+													value="#{messages.label_country}:" />
+												<span class="requireds">(*)</span>
 												<p:selectOneMenu id="selectgerantPays"
 													styleClass="form-text"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerCountry}"
@@ -364,7 +420,8 @@
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_regionname}:"/><span class="requireds">(*)</span>
+													value="#{messages.label_regionname}:" />
+												<span class="requireds">(*)</span>
 												<p:selectOneMenu id="selectgerantregion"
 													styleClass="form-text"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerRegion}"
@@ -379,14 +436,15 @@
 														value="#{subEstablishmentSearchServiceBean.listRegion}"
 														var="region" itemValue="#{region}"
 														itemLabel="#{region.regionName}" />
-														<p:ajax event="valueChange"
+													<p:ajax event="valueChange"
 														listener="#{subEstablishmentSearchServiceBean.onchangeCityGerant()}"
 														update="selectgerantville selectgerantzipcode" />
 												</p:selectOneMenu>
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_city}:"/><span class="requireds">(*)</span>
+													value="#{messages.label_city}:" />
+												<span class="requireds">(*)</span>
 												<p:selectOneMenu id="selectgerantville"
 													styleClass="form-text"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerCity}"
@@ -401,14 +459,15 @@
 														value="#{subEstablishmentSearchServiceBean.listCity}"
 														var="city" itemValue="#{city}"
 														itemLabel="#{city.cityName}" />
-														<p:ajax event="valueChange"
+													<p:ajax event="valueChange"
 														listener="#{subEstablishmentSearchServiceBean.onchangeZipCodeGerant()}"
 														update="selectgerantzipcode" />
 												</p:selectOneMenu>
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_zipcode}:"/><span class="requireds">(*)</span>
+													value="#{messages.label_zipcode}:" />
+												<span class="requireds">(*)</span>
 												<p:selectOneMenu id="selectgerantzipcode"
 													styleClass="form-text"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerZipcode}"
@@ -459,7 +518,8 @@
 										<div class="row">
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_email}:"/><span class="requireds">(*)</span>
+													value="#{messages.label_email}:" />
+												<span class="requireds">(*)</span>
 												<p:inputText id="gemail"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerEmailAddress}"
 													placeholder="#{messages.label_email}"
@@ -470,7 +530,8 @@
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_ligne_tel1}:"/><span class="requireds">(*)</span>
+													value="#{messages.label_ligne_tel1}:" />
+												<span class="requireds">(*)</span>
 												<p:inputMask id="gelitel1"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.managerLanPhoneNumber1}"
 													placeholder="#{messages.label_ligne_tel1}"
@@ -506,14 +567,16 @@
 										<div class="row">
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_name}:"/><span class="requireds">(*)</span>
+													value="#{messages.label_name}:" />
+												<span class="requireds">(*)</span>
 												<p:inputText id="nameco"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactLastName}"
 													placeholder="#{messages.label_name}" />
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_surname}:"/><span class="requireds">(*)</span>
+													value="#{messages.label_surname}:" />
+												<span class="requireds">(*)</span>
 												<p:inputText id="surnameco"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactFistName}"
 													placeholder="#{messages.label_surname}" />
@@ -536,7 +599,8 @@
 										<div class="row">
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_country}:"/><span class="requireds">(*)</span>
+													value="#{messages.label_country}:" />
+												<span class="requireds">(*)</span>
 												<p:selectOneMenu id="selectcontactcountry"
 													styleClass="form-text"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactCountry}"
@@ -558,7 +622,8 @@
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_regionname}:"/><span class="requireds">(*)</span>
+													value="#{messages.label_regionname}:" />
+												<span class="requireds">(*)</span>
 												<p:selectOneMenu id="selectregioncontact"
 													styleClass="form-text"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactRegion}"
@@ -573,14 +638,15 @@
 														value="#{subEstablishmentSearchServiceBean.listRegion}"
 														var="region" itemValue="#{region}"
 														itemLabel="#{region.regionName}" />
-														<p:ajax event="valueChange"
+													<p:ajax event="valueChange"
 														listener="#{subEstablishmentSearchServiceBean.onchangeCityContact()}"
 														update="selectcontactville selectcontactzipcode" />
 												</p:selectOneMenu>
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_city}:"/><span class="requireds">(*)</span>
+													value="#{messages.label_city}:" />
+												<span class="requireds">(*)</span>
 												<p:selectOneMenu id="selectcontactville"
 													styleClass="form-text"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactCity}"
@@ -595,14 +661,15 @@
 														value="#{subEstablishmentSearchServiceBean.listCity}"
 														var="city" itemValue="#{city}"
 														itemLabel="#{city.cityName}" />
-														<p:ajax event="valueChange"
+													<p:ajax event="valueChange"
 														listener="#{subEstablishmentSearchServiceBean.onchangeZipCodeContact()}"
 														update="selectcontactzipcode" />
 												</p:selectOneMenu>
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_zipcode}:"/><span class="requireds">(*)</span>
+													value="#{messages.label_zipcode}:" />
+												<span class="requireds">(*)</span>
 												<p:selectOneMenu id="selectcontactzipcode"
 													styleClass="form-text"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactZipcode}"
@@ -623,21 +690,21 @@
 										<div class="row">
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_address_ligne1}:"/>
+													value="#{messages.label_address_ligne1}:" />
 												<p:inputText id="coaddrlign1"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactAddressLigne1}"
 													placeholder="#{messages.label_address_ligne1}" />
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_address_ligne2}:"/>
+													value="#{messages.label_address_ligne2}:" />
 												<p:inputText id="coaddrlign2"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactAddressLigne2}"
 													placeholder="#{messages.label_address_ligne2}" />
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_address_ligne3}:"/>
+													value="#{messages.label_address_ligne3}:" />
 												<p:inputText id="coaddrlign3"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactAddressLigne3}"
 													placeholder="#{messages.label_address_ligne3}" />
@@ -653,7 +720,8 @@
 										<div class="row">
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_email}:"/><span class="requireds">(*)</span>
+													value="#{messages.label_email}:" />
+												<span class="requireds">(*)</span>
 												<p:inputText id="comail"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactEmailAddress}"
 													placeholder="#{messages.label_email}"
@@ -664,7 +732,8 @@
 											</div>
 											<div class="col-lg-3 col-md-6 col-sm-6 subestablishment">
 												<h:outputLabel styleClass="col-xs-12"
-													value="#{messages.label_ligne_tel1}:"/><span class="requireds">(*)</span>
+													value="#{messages.label_ligne_tel1}:" />
+												<span class="requireds">(*)</span>
 												<p:inputMask id="cotel1"
 													value="#{subEstablishmentSearchServiceBean.subEstablishmentDto.contactLanPhoneNumber1}"
 													placeholder="#{messages.label_ligne_tel1}"
@@ -720,21 +789,7 @@
 					<p:accordionPanel>
 						<p:tab title="#{messages.label_subestablishment}">
 							<b:row styleClass="listPage">
-								<div class="table-header">
-									<p:commandButton id="add" title="#{messages.label_add}"
-										action="#{subEstablishmentSearchServiceBean.initDualList('2')}"
-										update="@([id$=updatsubestablishment])"
-										oncomplete="PF('updatesubestablishment').show()"
-										value="#{messages.label_modifier}"
-										styleClass="btn btn-primary submit-button"
-										icon="fa fa-fw fa-plus">
-									</p:commandButton>
-									<p:blockUI block="add" trigger="add">
-											#{messages.label_loading}<br />
-										<p:graphicImage value="/resources/images/loadingpics.gif" />
-									</p:blockUI>
-								</div>
-
+								
 								<p:dataTable id="listsousetablissement"
 									value="#{subEstablishmentSearchServiceBean.listSubEstablishment}"
 									var="subestablishment" widgetVar="subestablishmentTable"
@@ -742,8 +797,9 @@
 									styleClass="listeTable table-responsive filterable"
 									tableStyleClass="table table-striped table-condensed table-hover"
 									rowKey="#{subestablishment.idSubEstablishmentDto}"
-									selectionMode="single" paginator="true"
-									paginatorPosition="bottom"
+									selectionMode="single"
+									selection="#{subEstablishmentSearchServiceBean.subEstablishmentsDto}"
+									paginator="true" paginatorPosition="bottom"
 									paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
 									rows="10" filterBy="#{subestablishment.nameSubestablishment}">
 
@@ -791,22 +847,29 @@
 										</f:facet>
 										<h:outputText value="#{subestablishment.description}"></h:outputText>
 									</p:column>
+									<f:facet name="footer">
+										<p:commandButton id="modifs" process="listsousetablissement"
+											update="@([id$=updatsubestablishment])"
+											icon="fa fa-fw fa-pencil" value="#{messages.label_modifier}"
+											action="#{subEstablishmentSearchServiceBean.initDualList('1')}"
+											oncomplete="PF('updatesubestablishment').show()">
+										</p:commandButton>
+									</f:facet>
 
 									<p:column priority="1" width="100" filterMatchMode="contains">
 										<f:facet name="header">
 											<!-- 		 <h:outputLabel value="#{messages.label_action}" /> -->
 											<h:outputLabel value="#{messages.label_action}" />
 										</f:facet>
-										<p:commandButton id="modifier" styleClass="btn btn-success"
-											title="#{messages.label_modifier}"
-											action="#{subEstablishmentSearchServiceBean.initDualList('1')}"
-											update="@([id$=updatsubestablishment])"
-											oncomplete="PF('updatesubestablishment').show()"
-											value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil">
-											<f:setPropertyActionListener value="#{subestablishment}"
-												target="#{subEstablishmentSearchServiceBean.subEstablishmentsDto}" />
-										</p:commandButton>
-
+<!-- 										<p:commandButton id="modifier" styleClass="btn btn-success" -->
+<!-- 											title="#{messages.label_modifier}" -->
+<!-- 											action="#{subEstablishmentSearchServiceBean.initDualList('1')}" -->
+<!-- 											update="@([id$=updatsubestablishment])" -->
+<!-- 											oncomplete="PF('updatesubestablishment').show()" -->
+<!-- 											value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil"> -->
+<!-- 											<f:setPropertyActionListener value="#{subestablishment}" -->
+<!-- 												target="#{subEstablishmentSearchServiceBean.subEstablishmentsDto}" /> -->
+<!-- 										</p:commandButton> -->
 										<p:commandButton id="supprimer" styleClass="btn btn-danger"
 											title="#{messages.label_supprimer1}"
 											onclick="PF('confirmation').show()"
@@ -816,7 +879,7 @@
 												target="#{subEstablishmentSearchServiceBean.subEstablishmentsDto}" />
 										</p:commandButton>
 										<p:blockUI block="listsousetablissement"
-											trigger="listsousetablissement:supprimer,listsousetablissement:modifier">
+											trigger="listsousetablissement:supprimer,listsousetablissement:modifs ">
 											#{messages.label_loading}<br />
 											<p:graphicImage value="/resources/images/loadingpics.gif" />
 										</p:blockUI>
