@@ -21,6 +21,7 @@ import org.sepro.authentificationweb.serviceapi.ProfileDto.Modules;
 import org.sepro.parameterweb.serviceapi.CityDto;
 import org.sepro.parameterweb.serviceapi.CountryDto;
 import org.sepro.parameterweb.serviceapi.RegionDto;
+
 import org.sepro.parameterweb.serviceimpl.CityServicews;
 import org.sepro.parameterweb.serviceimpl.CityServicewsEndpoint;
 import org.sepro.parameterweb.serviceimpl.CountryServicews;
@@ -54,7 +55,31 @@ public class RegionSearchServiceBean implements Serializable {
 	private List<CountryDto> listCountry = new ArrayList<CountryDto>();
 
 	private boolean action = false;
+	
+	private boolean action2 = false;
+	private boolean action3 = true;
 	private RegionDto regionDto = new RegionDto();
+
+	
+	
+	
+	
+	
+	public boolean isAction3() {
+		return action3;
+	}
+
+	public void setAction3(boolean action3) {
+		this.action3 = action3;
+	}
+
+	public boolean isAction2() {
+		return action2;
+	}
+
+	public void setAction2(boolean action2) {
+		this.action2 = action2;
+	}
 
 	public CityDto getCityDto() {
 		return cityDto;
@@ -179,10 +204,14 @@ public class RegionSearchServiceBean implements Serializable {
 		if (baction.equals("1")) {
 			regionDto = regionsDto;
 			listCountry = new ArrayList<CountryDto>();
+			action2 = true;
+			action3= false;
 			initUpdate();
 		} else {
 			regionDto = new RegionDto();
 			listCountry = new ArrayList<CountryDto>();
+			action2 = true;
+			action3= false;
 			initCreate();
 		}
 		logger.debug("FIN CREATE REGION +++++++++++++");
@@ -192,7 +221,7 @@ public class RegionSearchServiceBean implements Serializable {
 		try {
 			logger.debug("end initUpdate");
 			action = false;
-
+	
 			countryServicewsEndpoint = countryServicews
 					.getCountryServicewsImplPort();
 			listCountry = countryServicewsEndpoint.getAllCountryServicews();

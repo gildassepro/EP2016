@@ -30,6 +30,7 @@
 							<div class="row">
 								<div class="col-md-6 col-sm-6 label-input">
 									<p:outputLabel value="#{messages.label_iso_country_code}" />
+									<span class="requireds">(*)</span>
 								</div>
 								<div class="col-md-6 col-sm-6">
 									<p:inputText id="iso" maxlength="3" styleClass="form-text"
@@ -46,6 +47,7 @@
 							<div class="row">
 								<div class="col-md-6 col-sm-6 label-input">
 									<p:outputLabel value="#{messages.labelalpha3}" />
+									<span class="requireds">(*)</span>
 								</div>
 								<div class="col-md-6 col-sm-6">
 									<p:inputText id="alpha3" maxlength="3" styleClass="form-text"
@@ -61,6 +63,7 @@
 							<div class="row">
 								<div class="col-md-6 col-sm-6 label-input">
 									<p:outputLabel value="#{messages.labelalpha2}" />
+									<span class="requireds">(*)</span>
 								</div>
 								<div class="col-md-6 col-sm-6">
 									<p:inputText id="alpha2" maxlength="2" styleClass="form-text"
@@ -76,6 +79,7 @@
 							<div class="row">
 								<div class="col-md-6 col-sm-6 label-input">
 									<p:outputLabel value="#{messages.label_country_name}" />
+									<span class="requireds">(*)</span>
 								</div>
 								<div class="col-md-6 col-sm-6">
 									<p:inputText id="countryname" maxlength="128"
@@ -92,6 +96,7 @@
 							<div class="row">
 								<div class="col-md-6 col-sm-6 label-input">
 									<p:outputLabel value="#{messages.label_choix_language}" />
+									<span class="requireds">(*)</span>
 								</div>
 								<div class="col-md-6 col-sm-6">
 									<p:selectOneMenu styleClass="form-text" id="lg"
@@ -293,14 +298,14 @@
 											<p:graphicImage value="/resources/images/loadingpics.gif" />
 										</p:blockUI>
 
-										<p:confirmDialog 
+										<p:confirmDialog
 											message="#{messages.label_msg_alerte_supression}"
 											header="Confirmation" widgetVar="confirmation">
 											<p:commandButton value="#{messages.label_msg_confirmOui}"
 												onclick="PF('confirmation').hide()"
 												action="#{countrySearchServiceBean.supprimerCountry()}"
 												update="forme growl" />
-											<p:commandButton value="#{messages.label_msg_confirmNon}"   
+											<p:commandButton value="#{messages.label_msg_confirmNon}"
 												onclick="PF('confirmation').hide()" type="button" />
 										</p:confirmDialog>
 									</p:column>

@@ -7,48 +7,41 @@
 	template="/templates/template.xhtml">
 	<ui:define name="content">
 		<p:growl id="growl" showDetail="true" sticky="false" />
-		<div>
-			<h:form id="pmenu">
-				<p:menubar>
 
-					<p:menuitem value="#{messages.label_new}"
-						title="#{messages.label_new}"
-						action="#{subEstablishmentSearchServiceBean.initDualList('2')}"
-						update="@([id$=updatsubestablishment])"
-						oncomplete="PF('updatesubestablishment').show()"
-						icon="fa fa-fw fa-plus" />
+		<h:form id="pmenu">
+			<p:menubar>
 
-					<p:menuitem 
-					   process="@([id$=listsousetablissement])"
-						update="@([id$=updatsubestablishment])" icon="fa fa-fw fa-pencil"
-						value="#{messages.label_modifier}"
-						action="#{subEstablishmentSearchServiceBean.initDualList('1')}"
-						oncomplete="PF('updatesubestablishment').show()" />
+				<p:menuitem value="#{messages.label_new}"
+					title="#{messages.label_new}"
+					action="#{subEstablishmentSearchServiceBean.initDualList('2')}"
+					update="@([id$=updatsubestablishment])"
+					oncomplete="PF('updatesubestablishment').show()"
+					icon="fa fa-fw fa-plus" />
 
-					<p:menuitem value="#{messages.label_supprimer1}"
-						
+				<p:menuitem value="#{messages.label_modifier}"
+					title="#{messages.label_modifier}"
+					action="#{subEstablishmentSearchServiceBean.initDualList('1')}"
+					process="@([id$=listsousetablissement])"
+					update="@([id$=listsousetablissement])"
+					oncomplete="PF('updatesubestablishment').show()"
+					icon="fa fa-fw fa-pencil" />
+
+				<p:menuitem value="#{messages.label_supprimer1}"
 					icon="ui-icon-close" />
 
-					<p:menuitem value="#{messages.label_print}"
-						
-					 icon="fa fa-fw fa-print" />
+				<p:menuitem value="#{messages.label_print}" icon="fa fa-fw fa-print" />
 
-					<p:submenu label="#{messages.label_options}" icon="ui-icon-gear">
-						<p:submenu label="#{messages.label_options}"
-							icon="ui-icon-refresh">
-							<p:menuitem value="Save" actionListener="#{menuView.save}"
-								icon="ui-icon-disk" />
-							<p:menuitem value="Update" actionListener="#{menuView.update}"
-								icon="ui-icon-arrowrefresh-1-w" />
-						</p:submenu>
-						<p:submenu label="Non-Ajax" icon="ui-icon-newwin">
-							<p:menuitem value="Delete" actionListener="#{menuView.delete}"
-								icon="ui-icon-close" ajax="false" />
-						</p:submenu>
+				<p:submenu label="#{messages.label_options}" style="margin-left:68%"
+					icon="ui-icon-gear">
+					<p:submenu label="#{messages.label_options}" icon="ui-icon-refresh">
 					</p:submenu>
-				</p:menubar>
-			</h:form>
-		</div>
+					<p:submenu label="Selectionne" icon="ui-icon-newwin">
+					</p:submenu>
+				</p:submenu>
+			</p:menubar>
+		</h:form>
+
+
 		<div class="container-fluid">
 			<b:row>
 				<p:overlayPanel id="updatsubestablishment"
@@ -789,7 +782,6 @@
 					<p:accordionPanel>
 						<p:tab title="#{messages.label_subestablishment}">
 							<b:row styleClass="listPage">
-								
 								<p:dataTable id="listsousetablissement"
 									value="#{subEstablishmentSearchServiceBean.listSubEstablishment}"
 									var="subestablishment" widgetVar="subestablishmentTable"
@@ -797,12 +789,60 @@
 									styleClass="listeTable table-responsive filterable"
 									tableStyleClass="table table-striped table-condensed table-hover"
 									rowKey="#{subestablishment.idSubEstablishmentDto}"
-									selectionMode="single"
+									selectionMode="single" paginator="true"
 									selection="#{subEstablishmentSearchServiceBean.subEstablishmentsDto}"
-									paginator="true" paginatorPosition="bottom"
-									paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
+									rowsPerPageTemplate="5,10,15"
+									paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
 									rows="10" filterBy="#{subestablishment.nameSubestablishment}">
-
+									<f:facet name="header" style="margin-left:30%">
+										<p:commandButton id="add"
+											styleClass="btn btn-primary submit-button"
+											value="#{messages.label_new}" title="#{messages.label_new}"
+											action="#{subEstablishmentSearchServiceBean.initDualList('2')}"
+											update="@([id$=updatsubestablishment])"
+											oncomplete="PF('updatesubestablishment').show()"
+											icon="fa fa-fw fa-plus">
+										</p:commandButton>
+										<p:commandButton id="modifs" process="listsousetablissement"
+											styleClass="btn btn-primary submit-button"
+											value="#{messages.label_modifier}"
+											update="@([id$=updatsubestablishment])"
+											icon="fa fa-fw fa-pencil"
+											action="#{subEstablishmentSearchServiceBean.initDualList('1')}"
+											oncomplete="PF('updatesubestablishment').show()">
+										</p:commandButton>
+										<p:commandButton id="delete" process="listsousetablissement"
+											styleClass="btn btn-primary submit-button"
+											value="#{messages.label_supprimer1}"
+											title="#{messages.label_supprimer1}"
+											onclick="PF('confirmation').show()" icon="fa fa-fw fa-remove">
+										</p:commandButton>
+										<p:commandButton id="print" process="listsousetablissement"
+											styleClass="btn btn-primary submit-button"
+											title="#{messages.label_print}"
+											value="#{messages.label_print}"
+											onclick="PF('confirmation').show()" icon="fa fa-fw fa-print">
+										</p:commandButton>
+										<p:splitButton value="#{messages.label_options}"
+											actionListener="#{buttonView.save}" icon="ui-icon-gear">
+											<p:menuitem value="Update"
+												actionListener="#{buttonView.update}"
+												icon="ui-icon-arrowrefresh-1-w" />
+											<p:menuitem value="Delete"
+												actionListener="#{buttonView.delete}" ajax="false"
+												icon="ui-icon-close" />
+											<p:separator />
+											<p:menuitem value="Homepage" icon="ui-icon-extlink" />
+										</p:splitButton>
+										<p:blockUI block="listsousetablissement"
+											trigger="listsousetablissement:delete,listsousetablissement:modifs,listsousetablissement:print,listsousetablissement:add">
+											#{messages.label_loading}<br />
+											<p:graphicImage value="/resources/images/loadingpics.gif" />
+										</p:blockUI>
+									</f:facet>
+									<f:facet name="header">
+										<br></br>
+									</f:facet>
 									<p:column priority="3" width="40"
 										filterBy="#{subestablishment.idSubEstablishmentDto}"
 										filterMatchMode="contains">
@@ -846,43 +886,6 @@
 											<h:outputLabel value="#{messages.label_statut_name}" />
 										</f:facet>
 										<h:outputText value="#{subestablishment.description}"></h:outputText>
-									</p:column>
-									<f:facet name="footer">
-										<p:commandButton id="modifs" process="listsousetablissement"
-											update="@([id$=updatsubestablishment])"
-											icon="fa fa-fw fa-pencil" value="#{messages.label_modifier}"
-											action="#{subEstablishmentSearchServiceBean.initDualList('1')}"
-											oncomplete="PF('updatesubestablishment').show()">
-										</p:commandButton>
-									</f:facet>
-
-									<p:column priority="1" width="100" filterMatchMode="contains">
-										<f:facet name="header">
-											<!-- 		 <h:outputLabel value="#{messages.label_action}" /> -->
-											<h:outputLabel value="#{messages.label_action}" />
-										</f:facet>
-<!-- 										<p:commandButton id="modifier" styleClass="btn btn-success" -->
-<!-- 											title="#{messages.label_modifier}" -->
-<!-- 											action="#{subEstablishmentSearchServiceBean.initDualList('1')}" -->
-<!-- 											update="@([id$=updatsubestablishment])" -->
-<!-- 											oncomplete="PF('updatesubestablishment').show()" -->
-<!-- 											value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil"> -->
-<!-- 											<f:setPropertyActionListener value="#{subestablishment}" -->
-<!-- 												target="#{subEstablishmentSearchServiceBean.subEstablishmentsDto}" /> -->
-<!-- 										</p:commandButton> -->
-										<p:commandButton id="supprimer" styleClass="btn btn-danger"
-											title="#{messages.label_supprimer1}"
-											onclick="PF('confirmation').show()"
-											value="#{messages.label_supprimer1}"
-											icon="fa fa-fw fa-remove">
-											<f:setPropertyActionListener value="#{subestablishment}"
-												target="#{subEstablishmentSearchServiceBean.subEstablishmentsDto}" />
-										</p:commandButton>
-										<p:blockUI block="listsousetablissement"
-											trigger="listsousetablissement:supprimer,listsousetablissement:modifs ">
-											#{messages.label_loading}<br />
-											<p:graphicImage value="/resources/images/loadingpics.gif" />
-										</p:blockUI>
 									</p:column>
 								</p:dataTable>
 

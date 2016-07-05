@@ -24,7 +24,7 @@
 						<div class="ui-grid ui-grid-responsive session">
 							<div class="row">
 								<div class="col-md-6 col-sm-6 label-input">
-									<p:outputLabel value="#{messages.label_nom_session}" />
+									<p:outputLabel value="#{messages.label_nom_session}" /><span class="requireds">(*)</span>
 								</div>
 								<div class="col-md-6 col-sm-6">
 									<p:inputText styleClass="form-control" id="nomsession" maxlength="128"
@@ -39,7 +39,7 @@
 							</div>
 							<div class="row">
 								<div class="col-md-6 col-sm-6 label-input">
-									<p:outputLabel value="#{messages.label_anneeacademique}" />
+									<p:outputLabel value="#{messages.label_anneeacademique}" /><span class="requireds">(*)</span>
 								</div>
 								<div class="col-md-6 col-sm-6">
 									<p:selectOneMenu styleClass="form-text" id="anneeacademique"
@@ -60,7 +60,7 @@
 							<div class="row">
 								<div class="col-md-6 col-sm-6 label-input">
 									<p:outputLabel value="#{messages.labeldatedebut}"
-										for="datedebut" />
+										for="datedebut" /><span class="requireds">(*)</span>
 								</div>
 								<div class="col-md-6 col-sm-6">
 									<p:calendar id="datedebut"
@@ -76,7 +76,7 @@
 							</div>
 							<div class="row">
 								<div class="col-md-6 col-sm-6 label-input">
-									<p:outputLabel value="#{messages.labeldatefin}" for="datefin" />
+									<p:outputLabel value="#{messages.labeldatefin}" for="datefin" /><span class="requireds">(*)</span>
 								</div>
 								<div class="col-md-6 col-sm-6">
 									<p:calendar id="datefin"
@@ -92,7 +92,7 @@
 							</div>
 							<div class="row">
 								<div class="col-md-6 col-sm-6 label-input">
-									<p:outputLabel value="#{messages.labelstatus}" />
+									<p:outputLabel value="#{messages.labelstatus}" /><span class="requireds">(*)</span>
 								</div>
 								<div class="col-md-6 col-sm-6">
 									<p:selectOneMenu styleClass="form-text" id="statut"

@@ -9,14 +9,14 @@
 		<p:growl id="growl" showDetail="true" sticky="false" />
 		<div class="container-fluid">
 			<b:row>
-				<p:overlayPanel id="updatcity" widgetVar="updatecity"
-					showEffect="fade" hideEffect="fade" dismissable="false"
-					showCloseIcon="true">
-					<div class="messages">
-						<p:messages for="cityname" id="cname"></p:messages>
-						<p:messages for="citycode" id="ccode"></p:messages>
-						<p:messages for="selectregion" id="listeregion"></p:messages>
-					</div>
+				<div class="messages">
+					<p:messages for="cityname" id="cname"></p:messages>
+					<p:messages for="citycode" id="ccode"></p:messages>
+					<p:messages for="selectregion" id="listeregion"></p:messages>
+				</div>
+				
+				<p:panel id="updatcity" widgetVar="updatecity">
+
 					<h:form id="fdial">
 						<h3 style="margin-top: 0">
 							<p:outputLabel value="#{messages.label_createville}"
@@ -28,7 +28,8 @@
 						<div class="ui-grid ui-grid-responsive">
 							<div class="row">
 								<div class="col-md-4 col-sm-4 label-input">
-									<p:outputLabel value="#{messages.label_region}:" /><span class="requireds">(*)</span>
+									<p:outputLabel value="#{messages.label_region}:" />
+									<span class="requireds">(*)</span>
 								</div>
 								<div class="col-md-8 col-sm-8">
 									<p:selectOneMenu id="selectregion" styleClass="form-text"
@@ -50,7 +51,8 @@
 
 							<div class="row">
 								<div class="col-md-4 col-sm-4 label-input">
-									<p:outputLabel value="#{messages.label_citycode}" /><span class="requireds">(*)</span>
+									<p:outputLabel value="#{messages.label_citycode}" />
+									<span class="requireds">(*)</span>
 								</div>
 								<div class="col-md-8 col-sm-8">
 									<p:inputText id="citycode" styleClass="form-text"
@@ -64,7 +66,8 @@
 
 							<div class="row">
 								<div class="col-md-4 col-sm-4 label-input">
-									<p:outputLabel value="#{messages.label_cityname}" /><span class="requireds">(*)</span>
+									<p:outputLabel value="#{messages.label_cityname}" />
+									<span class="requireds">(*)</span>
 								</div>
 								<div class="col-md-8 col-sm-8">
 									<p:inputText id="cityname" styleClass="form-text"
@@ -97,34 +100,62 @@
 							</div>
 						</div>
 					</h:form>
-				</p:overlayPanel>
+				</p:panel>
 
 				<h:form id="forme">
 					<p:accordionPanel>
 						<p:tab title="#{messages.label_listcity}" id="tabl">
 							<b:row styleClass="listPage">
-								<div class="table-header">
-									<p:commandButton id="add" title="#{messages.label_add}"
-										action="#{citySearchServiceBean.initDualList('2')}"
-										update="@([id$=updatcity])"
-										oncomplete="PF('updatecity').show()"
-										value="#{messages.label_modifier}"
+
+								<div id="menubutton">
+									<p:commandButton id="add"
 										styleClass="btn btn-primary submit-button"
-										icon="fa fa-fw fa-plus">
+										value="#{messages.label_new}" title="#{messages.label_new}"
+										action="#{citySearchServiceBean.initDualList('2')}"
+										update="@([id$=updatcity]) forme fdial"
+										oncomplete="PF('updatecity').show()" icon="fa fa-fw fa-plus">
 									</p:commandButton>
-									<p:blockUI block="add" trigger="add">
-											#{messages.label_loading}<br />
-										<p:graphicImage value="/resources/images/loadingpics.gif" />
-									</p:blockUI>
+									<p:commandButton id="modifs"
+										styleClass="btn btn-primary submit-button"
+										value="#{messages.label_modifier}"
+										update="@([id$=updatcity]) forme fdial"
+										oncomplete="PF('updatecity').show()" icon="fa fa-fw fa-pencil"
+										action="#{citySearchServiceBean.initDualList('1')}">
+									</p:commandButton>
+									<p:commandButton id="delete" process="listcities"
+										styleClass="btn btn-primary submit-button"
+										value="#{messages.label_supprimer1}"
+										title="#{messages.label_supprimer1}"
+										onclick="PF('confirmation').show()" icon="fa fa-fw fa-remove">
+									</p:commandButton>
+									<p:commandButton id="print" process="listcities"
+										styleClass="btn btn-primary submit-button"
+										title="#{messages.label_print}"
+										value="#{messages.label_print}"
+										onclick="PF('confirmation').show()" icon="fa fa-fw fa-print">
+									</p:commandButton>
+									<p:splitButton value="#{messages.label_options}"
+										actionListener="#{buttonView.save}" icon="ui-icon-gear">
+										<p:menuitem value="Update"
+											actionListener="#{buttonView.update}"
+											icon="ui-icon-arrowrefresh-1-w" />
+										<p:menuitem value="Delete"
+											actionListener="#{buttonView.delete}" ajax="false"
+											icon="ui-icon-close" />
+										<p:separator />
+										<p:menuitem value="Homepage" icon="ui-icon-extlink" />
+									</p:splitButton>
 								</div>
 								<p:dataTable id="listcities"
+								rendered="#{!citySearchServiceBean.isAction2()}"
 									value="#{citySearchServiceBean.listCity}" var="cities"
 									widgetVar="cityTable" emptyMessage="#{messages.label_empty}"
 									styleClass="listeTable table-responsive filterable"
 									tableStyleClass="table table-striped table-condensed table-hover"
 									rowKey="#{cities.idCity}" selectionMode="single"
-									paginator="true" paginatorPosition="bottom"
-									paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
+									selection="#{citySearchServiceBean.citiesDto}"
+									rowsPerPageTemplate="5,10,15"
+									paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
 									rows="10" filterBy="#{cities.cityName}">
 
 									<p:column priority="3" width="40" filterBy="#{cities.idCity}"
@@ -168,49 +199,17 @@
 										<h:outputText value="#{cities.cityName}"></h:outputText>
 									</p:column>
 
-
-									<p:column priority="1" width="100" filterMatchMode="contains">
-										<f:facet name="header">
-											<!-- 		 <p:outputLabel value="#{messages.label_action}" /> -->
-											<p:outputLabel value="#{messages.label_action}" />
-										</f:facet>
-										<p:commandButton id="modifier" styleClass="btn btn-success"
-											title="#{messages.label_modifier}"
-											action="#{citySearchServiceBean.initDualList('1')}"
-											update="@([id$=updatcity])"
-											oncomplete="PF('updatecity').show()"
-											value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil">
-											<f:setPropertyActionListener value="#{cities}"
-												target="#{citySearchServiceBean.citiesDto}" />
-										</p:commandButton>
-
-										<p:commandButton id="supprimer" styleClass="btn btn-danger"
-											title="#{messages.label_supprimer1}"
-											onclick="PF('confirmation').show()"
-											value="#{messages.label_supprimer1}"
-											icon="fa fa-fw fa-remove">
-											<f:setPropertyActionListener value="#{cities}"
-												target="#{citySearchServiceBean.citiesDto}" />
-										</p:commandButton>
-										<p:blockUI block="listcities"
-											trigger="listcities:supprimer,listcities:modifier">
-											#{messages.label_loading}<br />
-											<p:graphicImage value="/resources/images/loadingpics.gif" />
-										</p:blockUI>
-										<p:confirmDialog
-											message="#{messages.label_msg_alerte_supression}"
-											header="Confirmation" widgetVar="confirmation">
-											<p:commandButton value="#{messages.label_msg_confirmOui}"
-												onclick="PF('confirmation').hide()"
-												action="#{citySearchServiceBean.supprimerCity()}"
-												update="forme growl" />
-											<p:commandButton value="#{messages.label_msg_confirmNon}"
-												onclick="PF('confirmation').hide()" type="button" />
-										</p:confirmDialog>
-									</p:column>
 								</p:dataTable>
-
-
+								<p:confirmDialog
+									message="#{messages.label_msg_alerte_supression}"
+									header="Confirmation" widgetVar="confirmation">
+									<p:commandButton value="#{messages.label_msg_confirmOui}"
+										onclick="PF('confirmation').hide()"
+										action="#{citySearchServiceBean.supprimerCity()}"
+										update="forme growl" />
+									<p:commandButton value="#{messages.label_msg_confirmNon}"
+										onclick="PF('confirmation').hide()" type="button" />
+								</p:confirmDialog>
 								<p:contextMenu for="listcities">
 									<p:menuitem value="Modifier" icon="ui-icon-search" />
 									<p:menuitem value="Supprimer" icon="ui-icon-search" />

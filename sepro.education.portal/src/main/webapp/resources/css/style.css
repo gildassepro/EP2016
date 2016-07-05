@@ -10012,7 +10012,7 @@ tr.ui-widget-content.ui-datatable-even.ui-datatable-selectable.ui-state-highligh
 /* line 455, ../scss/layouts/_hooks.scss */
 .ui-paginator.ui-paginator-bottom {
   border: 1px solid #ccc;
-  float: right;
+  /*float: right;*/
 }
 
 /* line 460, ../scss/layouts/_hooks.scss */
@@ -10451,9 +10451,9 @@ label {
 }
 
 /* line 55, ../scss/modules/_form.scss */
-select {
+/*select {
   width: 100%;
-}
+}*/
 
 /* line 59, ../scss/modules/_form.scss */
 .form-control-phone {

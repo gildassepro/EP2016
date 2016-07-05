@@ -23,8 +23,8 @@
 						<div class="ui-grid ui-grid-responsive wrap class">
 							<div class="col-xs-12">
 								<div class="row">
-									<div class="col-lg-2 col-md-3 col-sm-3 label-input">
-										<p:outputLabel value="#{messages.label_nom_sall}" />
+									<div class="col-lg-3 col-md-3 col-sm-3 label-input">
+										<p:outputLabel value="#{messages.label_nom_sall}" /><span class="requireds">(*)</span>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
 										<p:inputText styleClass="form-control" id="nomsall"
@@ -37,7 +37,7 @@
 									</div>
 									<div
 										class="col-lg-offset-1 col-lg-2 col-md-3 col-sm-3 label-input">
-										<p:outputLabel value="#{messages.label_typedeclasse}" />
+										<p:outputLabel value="#{messages.label_typedeclasse}" /><span class="requireds">(*)</span>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
 										<p:selectOneMenu styleClass="form-text" id="typeclas"
@@ -56,8 +56,8 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-lg-2 col-md-3 col-sm-3 label-input">
-										<p:outputLabel value="#{messages.label_sousetablissement}" />
+									<div class="col-lg-3 col-md-3 col-sm-3 label-input">
+										<p:outputLabel value="#{messages.label_sousetablissement}" /><span class="requireds">(*)</span>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
 										<p:selectOneMenu styleClass="form-text" id="subetab"
@@ -77,7 +77,7 @@
 									</div>
 									<div
 										class="col-lg-offset-1 col-lg-2 col-md-3 col-sm-3 label-input">
-										<p:outputLabel value="#{messages.label_batiment}" />
+										<p:outputLabel value="#{messages.label_batiment}" /><span class="requireds">(*)</span>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
 										<p:selectOneMenu styleClass="form-text" id="bat"
@@ -97,13 +97,10 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-										<div class="lnp">
-											<div class="row">
-												<div class="col-lg-4 col-md-3 col-sm-3 label-input">
-													<p:outputLabel value="#{messages.label_position}" />
+									<div class="col-lg-3 col-md-3 col-sm-3 label-input">
+													<p:outputLabel value="#{messages.label_position}" /><span class="requireds">(*)</span>
 												</div>
-												<div class="col-lg-6 col-md-3 col-sm-3">
+												<div class="col-lg-3 col-md-3 col-sm-3">
 													<p:inputText styleClass="form-control" id="location"
 														value="#{classeSearchServiceBean.classeDto.location}"
 														 required="true" immediate="true"
@@ -112,13 +109,12 @@
 														<p:ajax event="keyup" />
 													</p:inputText>
 												</div>
-											</div>
-											<div class="row">
-												<div class="col-lg-4 col-md-3 col-sm-3 label-input">
-													<p:outputLabel value="#{messages.label_numtelephone}" />
+												<div class="col-lg-3 col-md-3 col-sm-3 label-input">
+													<p:outputLabel value="#{messages.label_numtelephone}" /><span class="requireds">(*)</span>
 												</div>
-												<div class="col-lg-6 col-md-3 col-sm-3">
+												<div class="col-lg-3 col-md-3 col-sm-3">
 													<p:inputText styleClass="form-control" id="telephone"
+								
 														value="#{classeSearchServiceBean.classeDto.telephoneNumber}"
 														required="true" immediate="true"
 												         requiredMessage="#{messages.label_telephoneNumber_requeried}"
@@ -128,29 +124,12 @@
 												</div>
 											</div>
 											<div class="row">
-												<div class="col-lg-4 col-md-3 col-sm-3 label-input">
-													<p:outputLabel value="#{messages.labelnbreplace}" />
-												</div>
-												<div class="col-lg-6 col-md-3 col-sm-3">
-													<p:inputText styleClass="form-control" id="place"
-														value="#{classeSearchServiceBean.classeDto.numberOfSeats}"
-														required="true" immediate="true"
-												         requiredMessage="#{messages.label_numberOfSeats_requeried}"
-														placeholder="#{messages.label_nbreplace}">
-														<p:ajax event="keyup" />
-													</p:inputText>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-										<div class="heure-dispo">
-											<p:fieldset legend="#{messages.labelheuredispo}">
-												<div class="row">
-													<div class="col-lg-6 col-md-6 col-sm-12 label-input">
-														<p:outputLabel styleClass="col-xs-12 label-input"
-															value="#{messages.labelheuredemarrage}" />
-														<p:inputText styleClass="col-xs-12 form-control"
+												<div class="col-lg-3 col-md-3 col-sm-3 label-input">
+														<p:outputLabel 
+															value="#{messages.labelheuredemarrage}" /><span class="requireds">(*)</span>
+												     </div>
+												     <div class="col-lg-3 col-md-3 col-sm-3">
+														<p:inputText styleClass="form-control"
 															id="heurdem"
 															value="#{classeSearchServiceBean.classeDto.startingHour}"
 															placeholder="#{messages.label_heuredemarrage}"
@@ -159,10 +138,12 @@
 												         <p:ajax event="keyup" />
 														</p:inputText>
 													</div>
-													<div class="col-lg-6 col-md-6 col-sm-12 label-input">
-														<p:outputLabel styleClass="col-xs-12 label-input"
-															value="#{messages.labelheuresorti}" />
-														<p:inputText styleClass="col-xs-12 form-control"
+													<div class="col-lg-3 col-md-3 col-sm-3 label-input">
+														<p:outputLabel 
+															value="#{messages.labelheuresorti}" /><span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:inputText styleClass="form-control"
 															id="heuresor"
 															value="#{classeSearchServiceBean.classeDto.endingHour}"
 															placeholder="#{messages.label_heuresorti}"
@@ -171,12 +152,35 @@
 												         <p:ajax event="keyup" />
 														</p:inputText>
 													</div>
+													</div>
+<!-- 												<div class="col-lg-4 col-md-3 col-sm-3 label-input"> -->
+<!-- 												<p:outputLabel value="#{messages.labeljourdispo}" /> -->
+<!-- 											</div> -->
+<!-- 											<div class="col-lg-6 col-md-3 col-sm-3"> -->
+<!-- 												<p:selectCheckboxMenu id="jourdispon" -->
+<!-- 													value="#{classeSearchServiceBean.listjourdestination}" -->
+<!-- 													filter="true" filterMatchMode="startsWith" -->
+<!-- 													converter="entityConverter" panelStyle="width:250px" -->
+<!-- 													label="#{messages.label_choix_des_jours}"> -->
+<!-- 													<f:selectItems -->
+<!-- 														value="#{classeSearchServiceBean.listjoursource}" -->
+<!-- 														var="dayofweek" itemValue="#{dayofweek}" -->
+<!-- 														itemLabel="#{dayofweek.days}" /> -->
+<!-- 												</p:selectCheckboxMenu> -->
+<!-- 											</div> -->
+                                             <div class="row">
+								<div class="col-lg-3 col-md-3 col-sm-3 label-input">
+													<p:outputLabel value="#{messages.labelnbreplace}" /><span class="requireds">(*)</span>
 												</div>
-											</p:fieldset>
-										</div>
-									</div>
-								</div>
-								<div class="row">
+												<div class="col-lg-3 col-md-3 col-sm-3">
+													<p:inputText styleClass="form-control" id="placen"
+														value="#{classeSearchServiceBean.classeDto.numberOfSeats}"
+														required="true" immediate="true"
+												         requiredMessage="#{messages.label_numberOfSeats_requeried}"
+														placeholder="#{messages.label_nbreplace}">
+														<p:ajax event="keyup" />
+													</p:inputText>
+												</div>
 									<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 											<div class="col-lg-4 col-md-3 col-sm-3 label-input">
 												<p:outputLabel value="#{messages.labeljourdispo}" />
@@ -193,10 +197,17 @@
 														itemLabel="#{dayofweek.days}" />
 												</p:selectCheckboxMenu>
 											</div>
+											</div>
+												</div>
 										</div>
 									</div>
-								</div>
-							</div>
+									
+								
+											
+											
+												
+								
+							
 						<div class="button-wrapper">
 							<p:commandButton value="#{messages.label_modifier}"
 								styleClass="btn btn-primary"
@@ -239,7 +250,7 @@
 										</p:inputText>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-										<p:outputLabel value="#{messages.labelmatériels}" />
+										<p:outputLabel value="#{messages.labelmatériels}" /><span class="requireds">(*)</span>
 										<p:inputText styleClass="form-control" id="namematerial"
 											value="#{classeSearchServiceBean.roominventorydto.material}"
 											required="true" 
@@ -247,7 +258,7 @@
 										</p:inputText>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-										<p:outputLabel value="#{messages.label_quantite}" />
+										<p:outputLabel value="#{messages.label_quantite}" /><span class="requireds">(*)</span>
 										<p:inputText styleClass="form-control" id="quantity"
 											value="#{classeSearchServiceBean.roominventorydto.quantity}">
 										</p:inputText>

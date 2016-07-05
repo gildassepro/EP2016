@@ -50,6 +50,27 @@ public class CitySearchServiceBean implements Serializable {
 	private List<RegionDto> listRegion = new ArrayList<RegionDto>();
 
 	private boolean action = false;
+	private boolean action2 = false;
+	private boolean action3 = true;
+	
+	
+	
+
+	public boolean isAction2() {
+		return action2;
+	}
+
+	public void setAction2(boolean action2) {
+		this.action2 = action2;
+	}
+
+	public boolean isAction3() {
+		return action3;
+	}
+
+	public void setAction3(boolean action3) {
+		this.action3 = action3;
+	}
 
 	public CityDto getCityDto() {
 		return cityDto;
@@ -169,10 +190,14 @@ public class CitySearchServiceBean implements Serializable {
 		if (baction.equals("1")) {
 			cityDto = citiesDto;
 			listRegion = new ArrayList<RegionDto>();
+			action2 = true;
+			action3= false;
 			initUpdate();
 		} else {
 			cityDto = new CityDto();
 			listRegion = new ArrayList<RegionDto>();
+			action2 = true;
+			action3= false;
 			initCreate();
 		}
 		logger.debug("DEBUT initDualList +++++++++++++");

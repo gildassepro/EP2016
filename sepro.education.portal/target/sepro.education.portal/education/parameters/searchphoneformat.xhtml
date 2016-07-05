@@ -25,7 +25,7 @@
 								<div class="col-xs-12">
 									<div class="row">
 										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<p:outputLabel value="#{messages.label_indicatif}" />
+											<p:outputLabel value="#{messages.label_indicatif}" /><span class="requireds">(*)</span>
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 											<p:inputText styleClass="form-control" id="indicatif"
@@ -45,9 +45,7 @@
 											<p:inputText styleClass="form-control" id="description"
 												maxlength="64"
 												value="#{phoneFormatSearchServiceBean.phoneformatDto.description}"
-												placeholder="#{messages.label_descriptionphone}"
-												required="true"
-												requiredMessage="#{messages.label_descphone_requeried}">
+												placeholder="#{messages.label_descriptionphone}">
 												<f:validateLength minimum="3" maximum="64" />
 												<p:ajax event="keyup" />
 											</p:inputText>
@@ -55,7 +53,7 @@
 									</div>
 									<div class="row">
 										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<p:outputLabel value="#{messages.label_bloc1}" />
+											<p:outputLabel value="#{messages.label_bloc1}" /><span class="requireds">(*)</span>
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 											<b:inputText id="bloc1" maxlength="11"
@@ -67,7 +65,7 @@
 											</b:inputText>
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<p:outputLabel value="#{messages.label_bloc2}" />
+											<p:outputLabel value="#{messages.label_bloc2}" /><span class="requireds">(*)</span>
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 											<b:inputText id="bloc2" maxlength="11"
@@ -81,7 +79,7 @@
 									</div>
 									<div class="row">
 										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<p:outputLabel value="#{messages.label_bloc3}" />
+											<p:outputLabel value="#{messages.label_bloc3}" /><span class="requireds">(*)</span>
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 											<b:inputText id="bloc3" maxlength="11"
@@ -93,7 +91,7 @@
 											</b:inputText>
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<p:outputLabel value="#{messages.label_bloc4}" />
+											<p:outputLabel value="#{messages.label_bloc4}" /><span class="requireds">(*)</span>
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 											<b:inputText id="bloc4" maxlength="11"
@@ -106,7 +104,7 @@
 									</div>
 									<div class="row">
 										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<p:outputLabel value="#{messages.label_bloc5}" />
+											<p:outputLabel value="#{messages.label_bloc5}" /><span class="requireds">(*)</span>
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 											<b:inputText id="bloc5" maxlength="11"
@@ -118,7 +116,7 @@
 											</b:inputText>
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<p:outputLabel value="#{messages.label_bloc6}" />
+											<p:outputLabel value="#{messages.label_bloc6}" /><span class="requireds">(*)</span>
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 											<b:inputText id="bloc6" maxlength="11"
@@ -132,7 +130,7 @@
 									</div>
 									<div class="row">
 										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<p:outputLabel value="#{messages.label_bloc7}" />
+											<p:outputLabel value="#{messages.label_bloc7}" /><span class="requireds">(*)</span>
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 											<b:inputText id="bloc7" maxlength="11"
@@ -144,7 +142,7 @@
 											</b:inputText>
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<p:outputLabel value="#{messages.label_bloc8}" />
+											<p:outputLabel value="#{messages.label_bloc8}" /><span class="requireds">(*)</span>
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 											<b:inputText id="bloc8" maxlength="11"
@@ -158,7 +156,7 @@
 									</div>
 									<div class="row">
 										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<p:outputLabel value="#{messages.label_bloc9}" />
+											<p:outputLabel value="#{messages.label_bloc9}" /><span class="requireds">(*)</span>
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 											<b:inputText id="bloc9" maxlength="11"
@@ -170,7 +168,7 @@
 											</b:inputText>
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<p:outputLabel value="#{messages.label_bloc10}" />
+											<p:outputLabel value="#{messages.label_bloc10}" /><span class="requireds">(*)</span>
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 											<b:inputText id="bloc10" maxlength="11"
