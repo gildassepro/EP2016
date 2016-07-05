@@ -60,9 +60,25 @@
 										<p:separator />
 										<p:menuitem value="Homepage" icon="ui-icon-extlink" />
 									</p:splitButton>
+
+									<p:commandButton value="#{messages.label_modifier}"
+										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
+										rendered="#{!regionSearchServiceBean.isAction()}"
+										action="#{regionSearchServiceBean.updateRegion()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateregion').hide()"
+										update="forme fdial growl" />
+									<p:commandButton value="#{messages.label_create}"
+										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
+										rendered="#{regionSearchServiceBean.isAction()}"
+										action="#{regionSearchServiceBean.createRegion()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateregion').hide()"
+										update="forme fdial growl" />
+
 									<p:commandButton id="past"
 										styleClass="btn btn-primary submit-button"
-										onclick="window.history.back();" icon="fa fa-fw fa-arrow-left">
+										onclick="window.history.back();"
+										update="@([id$=updatregion]) forme fdial"
+										icon="fa fa-fw fa-arrow-left">
 									</p:commandButton>
 								</div>
 
