@@ -17,7 +17,9 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.sepro.parameterweb.serviceapi.AcademicModuleDto;
 import org.sepro.parameterweb.serviceapi.CourseSubjectDto;
+import org.sepro.parameterweb.serviceapi.CourseSubjectDto.Academicmodules;
 import org.sepro.parameterweb.serviceapi.PopuplistDto;
+import org.sepro.parameterweb.serviceapi.ProgrammeDto.Academicmodule;
 import org.sepro.parameterweb.serviceimpl.AcademicModuleDtoServicews;
 import org.sepro.parameterweb.serviceimpl.AcademicModuleDtoServicewsEndpoint;
 import org.sepro.parameterweb.serviceimpl.CourseSubjectDtoServicews;
@@ -49,13 +51,33 @@ public class MatiereSearchServiceBean implements Serializable {
 	private List<PopuplistDto> listtypedeclasse = new ArrayList<PopuplistDto>();
 
 	private AcademicModuleDtoServicews moduleacademiqueServicews = new AcademicModuleDtoServicews();
+	private List<AcademicModuleDto> listDesModuleAcademicSource = new ArrayList<AcademicModuleDto>();
 	private AcademicModuleDtoServicewsEndpoint moduleacademiqueServicewsEndpoint;
 	private List<AcademicModuleDto> listmoduleacademique = new ArrayList<AcademicModuleDto>();
+	private List<AcademicModuleDto> selectedAcademicmodule = new ArrayList<AcademicModuleDto>();
 
 	private List<AcademicModuleDto> selectedacademiquemodule = new ArrayList<AcademicModuleDto>();
 	private AcademicModuleDto selectedacademiquemodules;
 
 	private boolean action = false;
+
+	public List<AcademicModuleDto> getSelectedAcademicmodule() {
+		return selectedAcademicmodule;
+	}
+
+	public void setSelectedAcademicmodule(
+			List<AcademicModuleDto> selectedAcademicmodule) {
+		this.selectedAcademicmodule = selectedAcademicmodule;
+	}
+
+	public List<AcademicModuleDto> getListDesModuleAcademicSource() {
+		return listDesModuleAcademicSource;
+	}
+
+	public void setListDesModuleAcademicSource(
+			List<AcademicModuleDto> listDesModuleAcademicSource) {
+		this.listDesModuleAcademicSource = listDesModuleAcademicSource;
+	}
 
 	public List<CourseSubjectDto> getListmatiere() {
 		return listmatiere;
@@ -140,37 +162,60 @@ public class MatiereSearchServiceBean implements Serializable {
 		this.action = action;
 	}
 
-	public void initDualList(String baction) {
+	public String initDualList(String baction) {
 		if (baction.equals("1")) {
 			matiereDto = matierDto;
+			listDesModuleAcademicSource = new ArrayList<AcademicModuleDto>();
+			selectedAcademicmodule = new ArrayList<AcademicModuleDto>();
 			listanneeacademique = new ArrayList<PopuplistDto>();
 			listfiliere = new ArrayList<PopuplistDto>();
 			listtypedeclasse = new ArrayList<PopuplistDto>();
+
 			initUpdate();
+			return null;
 		} else {
 			matiereDto = new CourseSubjectDto();
 			listanneeacademique = new ArrayList<PopuplistDto>();
+			selectedAcademicmodule = new ArrayList<AcademicModuleDto>();
 			listfiliere = new ArrayList<PopuplistDto>();
 			listtypedeclasse = new ArrayList<PopuplistDto>();
 			initCreate();
 		}
+		return null;
 	}
 
 	public void initUpdate() {
+
+		action = false;
 		try {
-			action = false;
-			
-			popuplistDtoServicewsEndpoint = popuplistDtoServicews
-					.getPopuplistDtoServicewsImplPort();
-			
-			listanneeacademique = popuplistDtoServicewsEndpoint
-					.searchPopuplistDtoServicews("academic_years");
-			
-			listfiliere = popuplistDtoServicewsEndpoint
-					.searchPopuplistDtoServicews("filiere");
-			
-			listtypedeclasse = popuplistDtoServicewsEndpoint
-					.searchPopuplistDtoServicews("typeclasse");
+			logger.debug("BEGIN initUpdate");
+
+			if (matiereDto != null) {
+				matiereServicewsEndpoint = matiereServicews
+						.getCourseSubjectDtoServicewsImplPort();
+
+				moduleacademiqueServicewsEndpoint = moduleacademiqueServicews
+						.getAcademicModuleDtoServicewsImplPort();
+				listDesModuleAcademicSource = moduleacademiqueServicewsEndpoint.getAllAcademicModuleServicews();
+				
+				if (matiereDto != null) {
+					for (AcademicModuleDto module : matiereDto
+							.getAcademicmodules().getAcademicmodule()) {
+						for (AcademicModuleDto modules : listDesModuleAcademicSource) {
+							if (modules.getIdAcademicModule() == module
+									.getIdAcademicModule()) {
+								selectedAcademicmodule.add(modules);
+								break;
+							}
+						}
+					}
+				}
+
+			}
+
+			logger.debug("fin dual");
+
+			logger.debug("END init initUpdate");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -182,21 +227,20 @@ public class MatiereSearchServiceBean implements Serializable {
 			action = true;
 			popuplistDtoServicewsEndpoint = popuplistDtoServicews
 					.getPopuplistDtoServicewsImplPort();
-			
+			moduleacademiqueServicewsEndpoint = moduleacademiqueServicews
+					.getAcademicModuleDtoServicewsImplPort();
+
 			listanneeacademique = popuplistDtoServicewsEndpoint
 					.searchPopuplistDtoServicews("academic_years");
 
-			
 			listfiliere = popuplistDtoServicewsEndpoint
 					.searchPopuplistDtoServicews("filiere");
-			
 
-			
 			listtypedeclasse = popuplistDtoServicewsEndpoint
 					.searchPopuplistDtoServicews("typeclasse");
-			
+			listDesModuleAcademicSource = moduleacademiqueServicewsEndpoint
+					.getAllAcademicModuleServicews();
 
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -218,9 +262,14 @@ public class MatiereSearchServiceBean implements Serializable {
 	}
 
 	public void createMatiere() {
+
 		CourseSubjectDto creatematiere = new CourseSubjectDto();
+
+		Academicmodules academicmodules = new Academicmodules();
+		academicmodules.getAcademicmodule().addAll(selectedAcademicmodule);
+
 		creatematiere.setAcademicGrade(matiereDto.getAcademicGrade());
-		creatematiere.setAcademicmodules(matiereDto.getAcademicmodules());
+		creatematiere.setAcademicmodules(academicmodules);
 		creatematiere.setAcademiqueYear(matiereDto.getAcademiqueYear());
 		creatematiere.setNumberOfAttendentMax(matiereDto
 				.getNumberOfAttendentMax());
@@ -230,6 +279,7 @@ public class MatiereSearchServiceBean implements Serializable {
 		creatematiere.setSubjectName(matiereDto.getSubjectName());
 		creatematiere.setTeacheRate(matiereDto.getTeacheRate());
 		creatematiere.setTypeOfClasse(matiereDto.getTypeOfClasse());
+
 		matiereServicewsEndpoint = matiereServicews
 				.getCourseSubjectDtoServicewsImplPort();
 		creatematiere = matiereServicewsEndpoint
@@ -241,36 +291,35 @@ public class MatiereSearchServiceBean implements Serializable {
 						.getString("label_msg_create_matiere")));
 	}
 
-	public String updateMatiere() {
+	public void updateMatiere() {
 		CourseSubjectDto modifmatiere = new CourseSubjectDto();
-		try {
-			modifmatiere.setAcademicGrade(matiereDto.getAcademicGrade());
-			modifmatiere.setAcademicmodules(matiereDto.getAcademicmodules());
-			modifmatiere.setAcademiqueYear(matiereDto.getAcademiqueYear());
-			modifmatiere.setNumberOfAttendentMax(matiereDto
-					.getNumberOfAttendentMax());
-			modifmatiere.setNumberOfAttendentMin(matiereDto
-					.getNumberOfAttendentMin());
-			modifmatiere.setNumberOfHours(matiereDto.getNumberOfHours());
-			modifmatiere.setSubjectName(matiereDto.getSubjectName());
-			modifmatiere.setTeacheRate(matiereDto.getTeacheRate());
-			modifmatiere.setTypeOfClasse(matiereDto.getTypeOfClasse());
+		Academicmodules academicmodule = new Academicmodules();
 
-			matiereServicewsEndpoint = matiereServicews
-					.getCourseSubjectDtoServicewsImplPort();
-			modifmatiere.setIdCourseSubject(matiereDto.getIdCourseSubject());
-			modifmatiere = matiereServicewsEndpoint
-					.updateCourseSubjectServicews(modifmatiere);
-			init();
-		} catch (Exception ex) {
+		academicmodule.getAcademicmodule().removeAll(selectedAcademicmodule);
+		academicmodule.getAcademicmodule().addAll(selectedAcademicmodule);
 
-			return null;
-		}
+		modifmatiere.setAcademicGrade(matiereDto.getAcademicGrade());
+		modifmatiere.setAcademicmodules(academicmodule);
+		modifmatiere.setAcademiqueYear(matiereDto.getAcademiqueYear());
+		modifmatiere.setNumberOfAttendentMax(matiereDto
+				.getNumberOfAttendentMax());
+		modifmatiere.setNumberOfAttendentMin(matiereDto
+				.getNumberOfAttendentMin());
+		modifmatiere.setNumberOfHours(matiereDto.getNumberOfHours());
+		modifmatiere.setSubjectName(matiereDto.getSubjectName());
+		modifmatiere.setTeacheRate(matiereDto.getTeacheRate());
+		modifmatiere.setTypeOfClasse(matiereDto.getTypeOfClasse());
+
+		matiereServicewsEndpoint = matiereServicews
+				.getCourseSubjectDtoServicewsImplPort();
+		modifmatiere.setIdCourseSubject(matiereDto.getIdCourseSubject());
+		modifmatiere = matiereServicewsEndpoint
+				.updateCourseSubjectServicews(modifmatiere);
+		init();
 		FacesContext.getCurrentInstance().addMessage(
 				"mesagesalert2",
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", rb
 						.getString("label_msg_update_matieres")));
-		return null;
 
 	}
 

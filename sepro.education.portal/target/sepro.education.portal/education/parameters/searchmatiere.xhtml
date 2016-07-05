@@ -68,12 +68,12 @@
 											requiredMessage="#{messages.label_academicGrade_requeried}">
 											<f:selectItem
 												itemLabel="#{matiereSearchServiceBean.matiereDto.academicGrade.value}"
-												itemValue="#{matiereSearchServiceBean.matiereDto.academicGrade}"/>
+												itemValue="#{matiereSearchServiceBean.matiereDto.academicGrade}" />
 											<f:selectItems
 												value="#{matiereSearchServiceBean.listfiliere}"
 												var="academicGrade" itemValue="#{academicGrade}"
 												itemLabel="#{academicGrade.value}" />
-												<f:ajax event="blur" render="" />
+											<f:ajax event="blur" render="" />
 										</p:selectOneMenu>
 									</div>
 									<div class="col-lg-offset-1 col-lg-2 col-md-3 col-sm-3">
@@ -91,10 +91,10 @@
 												value="#{matiereSearchServiceBean.listtypedeclasse}"
 												var="typeofclasse" itemValue="#{typeofclasse}"
 												itemLabel="#{typeofclasse.value}" />
-												<f:ajax event="blur" render="" />
+											<f:ajax event="blur" render="" />
 										</p:selectOneMenu>
 									</div>
-									
+
 								</div>
 								<div class="row">
 									<div class="col-lg-2 col-md-3 col-sm-3">
@@ -107,7 +107,7 @@
 											placeholder="#{messages.labeltarif}" required="true"
 											immediate="true"
 											requiredMessage="#{messages.label_teacheRate_requeried}">
-											<f:validateLength  maximum="11" />
+											<f:validateLength maximum="11" />
 											<f:ajax event="blur" render="" />
 										</p:inputText>
 									</div>
@@ -121,7 +121,7 @@
 											placeholder="#{messages.labelnbremax}" required="true"
 											immediate="true"
 											requiredMessage="#{messages.label_numberOfAttendentMax_requeried}">
-											<f:validateLength  maximum="11" />
+											<f:validateLength maximum="11" />
 											<p:ajax event="keyup" />
 										</p:inputText>
 									</div>
@@ -137,7 +137,7 @@
 											placeholder="#{messages.labelnbremin}" required="true"
 											immediate="true"
 											requiredMessage="#{messages.label_numberOfAttendentMin_requeried}">
-											<f:validateLength  maximum="11" />
+											<f:validateLength maximum="11" />
 											<p:ajax event="keyup" />
 										</p:inputText>
 									</div>
@@ -179,17 +179,23 @@
 							</p:commandButton>
 						</div>
 
-						<p:dataTable id="modulepresrequis" var="module"
-							value="#{moduleAcademiqueSearchServiceBean.listmoduleacademique}"
-							selection="#{matiereSearchServiceBean.selectedacademiquemodule}"
-							rowKey="#{module.idAcademicModule}"
-							emptyMessage="#{messages.label_empty}" style="margin-bottom:0">
-							<p:column selectionMode="multiple"
-								style="width:16px;text-align:center" />
-							<p:column headerText="#{messages.label_modulelist}">
-								<h:outputText value="#{module.moduleName}" />
-							</p:column>
-						</p:dataTable>
+						<div class="ui-grid ui-grid-responsive">
+							<p:dataTable id="checkboxmodule"
+								value="#{matiereSearchServiceBean.listDesModuleAcademicSource}"
+								var="module"
+								selection="#{matiereSearchServiceBean.selectedAcademicmodule}"
+								rowKey="#{module.idAcademicModule}"
+								style="margin-bottom:0">
+								<f:facet name="header">
+						            #{messages.label_list_module}
+						        </f:facet>
+								<p:column selectionMode="multiple"
+									style="width:50px;text-align:center" />
+								<p:column headerText="#{messages.label_modulelist}">
+									<h:outputText value="#{module.moduleName}" />
+								</p:column>
+							</p:dataTable>
+						</div>
 					</h:form>
 				</p:overlayPanel>
 
@@ -244,7 +250,8 @@
 									<p:column priority="1" filterBy="#{matiere.academiqueYear}"
 										filterMatchMode="contains">
 										<f:facet name="header">
-											<p:outputLabel value="#{messages.label_anneeacademiquesession}" />
+											<p:outputLabel
+												value="#{messages.label_anneeacademiquesession}" />
 										</f:facet>
 										<h:outputText value="#{matiere.academiqueYear.value}"></h:outputText>
 									</p:column>
@@ -256,7 +263,7 @@
 										</f:facet>
 										<h:outputText value="#{matiere.academicGrade.value}"></h:outputText>
 									</p:column>
-									
+
 									<p:column priority="3" filterBy="#{matiere.typeOfClasse.value}"
 										filterMatchMode="contains">
 										<f:facet name="header">
