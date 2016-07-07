@@ -359,24 +359,24 @@ public class ProgrammeSearchServiceBean implements Serializable {
 	}
 	
 	
-	private List<ModuleCalendarDto> getListModuleCalendarSelected(){
-		listModuleCalendarSelected = new ArrayList<ModuleCalendarDto>();
-		
-		if(programmeCalendarDto.getProgramme() != null){
-			ModuleCalendarDto modCal = new ModuleCalendarDto();
-			modCal.setProgrammeCalendar(programmeCalendarDto);
-			
-			List<ModuleCalendarDto> listModuleP = moduleCalendarDtoServicewsEndpoint.getAllModuleCalendarServicews();
-			
-			for(ModuleCalendarDto m : listModuleP) {
-				if(m.getProgrammeCalendar().getIdProgrammeCalendar() == programmeCalendarDto.getIdProgrammeCalendar()){
-					listModuleCalendarSelected.add(m);
-				}
-			}
-		}
-		return listModuleCalendarSelected;
-		
-	}
+//	private List<ModuleCalendarDto> getListModuleCalendarSelected(){
+//		listModuleCalendarSelected = new ArrayList<ModuleCalendarDto>();
+//		
+//		if(programmeCalendarDto.getProgramme() != null){
+//			ModuleCalendarDto modCal = new ModuleCalendarDto();
+//			modCal.setProgrammeCalendar(programmeCalendarDto);
+//			
+//			List<ModuleCalendarDto> listModuleP = moduleCalendarDtoServicewsEndpoint.getAllModuleCalendarServicews();
+//			
+//			for(ModuleCalendarDto m : listModuleP) {
+//				if(m.getProgrammeCalendar().getIdProgrammeCalendar() == programmeCalendarDto.getIdProgrammeCalendar()){
+//					listModuleCalendarSelected.add(m);
+//				}
+//			}
+//		}
+//		return listModuleCalendarSelected;
+//		
+//	}
 			
 	
 	public void updateProgramme() {
