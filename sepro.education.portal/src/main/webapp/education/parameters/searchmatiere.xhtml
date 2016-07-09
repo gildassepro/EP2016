@@ -15,20 +15,20 @@
 					showCloseIcon="true">
 					<h:form id="fdial">
 						<h3 style="margin-top: 0">
-							<p:outputLabel value="#{messages.label_modifier_Matiere}"
-								rendered="#{!matiereSearchServiceBean.isAction()}" />
 							<p:outputLabel value="#{messages.label_creer_matiere}"
 								rendered="#{matiereSearchServiceBean.isAction()}" />
+							<p:outputLabel value="#{messages.label_modifier_Matiere}"
+								rendered="#{!matiereSearchServiceBean.isAction()}" />
 						</h3>
-
 						<div class="ui-grid ui-grid-responsive wrap class">
 							<div class="col-xs-12">
 								<div class="row">
 									<div class="col-lg-2 col-md-3 col-sm-3">
 										<p:outputLabel value="#{messages.label_nommatiere}" />
+										<span class="requireds">(*)</span>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:inputText styleClass="form-control" id="nommatiere"
+										<p:inputText id="nommatiere" styleClass="form-control"
 											maxlength="64"
 											value="#{matiereSearchServiceBean.matiereDto.subjectName}"
 											placeholder="#{messages.labelnommatiere}" required="true"
@@ -40,31 +40,33 @@
 									</div>
 									<div class="col-lg-offset-1 col-lg-2 col-md-3 col-sm-3">
 										<p:outputLabel value="#{messages.label_academic_years}" />
+										<span class="requireds">(*)</span>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:selectOneMenu styleClass="form-text" id="anneeacademiques"
+										<p:selectOneMenu id="anneeacademiques" styleClass="form-text"
 											value="#{matiereSearchServiceBean.matiereDto.academiqueYear}"
-											converter="entityConverter" required="true" immediate="true"
+											converter="entityConverter" required="true"
 											requiredMessage="#{messages.label_anneeacademiques_requeried}">
 											<f:selectItem
 												itemLabel="#{matiereSearchServiceBean.matiereDto.academiqueYear.value}"
-												itemValue="#{matiereSearchServiceBean.matiereDto.academiqueYear}" />
+												itemValue="#{matiereSearchServiceBean.matiereDto.academiqueYear}"
+												label="#{messages.label_anneeacademiques_requeried}" />
 											<f:selectItems
 												value="#{matiereSearchServiceBean.listanneeacademique}"
 												var="academiqueYear" itemValue="#{academiqueYear}"
 												itemLabel="#{academiqueYear.value}" />
-											<f:ajax event="blur" render="" />
 										</p:selectOneMenu>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-2 col-md-3 col-sm-3">
 										<p:outputLabel value="#{messages.label_filiere}" />
+										<span class="requireds">(*)</span>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:selectOneMenu styleClass="form-text" id="filiere"
+										<p:selectOneMenu id="filiere" styleClass="form-text"
 											value="#{matiereSearchServiceBean.matiereDto.academicGrade}"
-											converter="entityConverter" required="true" immediate="true"
+											converter="entityConverter" required="true"
 											requiredMessage="#{messages.label_academicGrade_requeried}">
 											<f:selectItem
 												itemLabel="#{matiereSearchServiceBean.matiereDto.academicGrade.value}"
@@ -73,16 +75,16 @@
 												value="#{matiereSearchServiceBean.listfiliere}"
 												var="academicGrade" itemValue="#{academicGrade}"
 												itemLabel="#{academicGrade.value}" />
-											<f:ajax event="blur" render="" />
 										</p:selectOneMenu>
 									</div>
 									<div class="col-lg-offset-1 col-lg-2 col-md-3 col-sm-3">
 										<p:outputLabel value="#{messages.label_typedeclasse}" />
+										<span class="requireds">(*)</span>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:selectOneMenu styleClass="form-text" id="typeclas"
+										<p:selectOneMenu id="typeclas" styleClass="form-text"
 											value="#{matiereSearchServiceBean.matiereDto.typeOfClasse}"
-											converter="entityConverter" required="true" immediate="true"
+											converter="entityConverter" required="true"
 											requiredMessage="#{messages.label_typeOfClasse_requeried}">
 											<f:selectItem
 												itemLabel="#{matiereSearchServiceBean.matiereDto.typeOfClasse.value}"
@@ -91,7 +93,6 @@
 												value="#{matiereSearchServiceBean.listtypedeclasse}"
 												var="typeofclasse" itemValue="#{typeofclasse}"
 												itemLabel="#{typeofclasse.value}" />
-											<f:ajax event="blur" render="" />
 										</p:selectOneMenu>
 									</div>
 
@@ -101,21 +102,19 @@
 										<p:outputLabel value="#{messages.label_tarif}" />
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:inputText styleClass="form-control" id="tarif"
+										<p:inputText id="tarif" styleClass="form-control"
 											maxlength="11"
 											value="#{matiereSearchServiceBean.matiereDto.teacheRate}"
 											placeholder="#{messages.labeltarif}" required="true"
-											immediate="true"
 											requiredMessage="#{messages.label_teacheRate_requeried}">
 											<f:validateLength maximum="11" />
-											<f:ajax event="blur" render="" />
 										</p:inputText>
 									</div>
 									<div class="col-lg-offset-1 col-lg-2 col-md-3 col-sm-3">
 										<p:outputLabel value="#{messages.label_nbremax}" />
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:inputText styleClass="form-control" id="nbremax"
+										<p:inputText id="nbremax" styleClass="form-control"
 											maxlength="11"
 											value="#{matiereSearchServiceBean.matiereDto.numberOfAttendentMax}"
 											placeholder="#{messages.labelnbremax}" required="true"
@@ -131,7 +130,7 @@
 										<p:outputLabel value="#{messages.label_nbremin}" />
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:inputText styleClass="form-control" id="nbremin"
+										<p:inputText id="nbremin" styleClass="form-control"
 											maxlength="11"
 											value="#{matiereSearchServiceBean.matiereDto.numberOfAttendentMin}"
 											placeholder="#{messages.labelnbremin}" required="true"
@@ -145,7 +144,7 @@
 										<p:outputLabel value="#{messages.label_volumehoraire}" />
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:inputText styleClass="form-control" id="volume"
+										<p:inputText id="volume" styleClass="form-control"
 											maxlength="11"
 											value="#{matiereSearchServiceBean.matiereDto.numberOfHours}"
 											placeholder="#{messages.labelvolumehoraire}" required="true"
@@ -182,9 +181,9 @@
 						<div class="ui-grid ui-grid-responsive">
 							<p:dataTable id="checkboxmodule"
 								value="#{matiereSearchServiceBean.listDesModuleAcademicSource}"
-								var="module"
+								var="modulematiere"
 								selection="#{matiereSearchServiceBean.selectedAcademicmodule}"
-								rowKey="#{module.idAcademicModule}"
+								rowKey="#{modulematiere.idAcademicModule}"
 								style="margin-bottom:0">
 								<f:facet name="header">
 						            #{messages.label_list_module}
@@ -192,10 +191,11 @@
 								<p:column selectionMode="multiple"
 									style="width:50px;text-align:center" />
 								<p:column headerText="#{messages.label_modulelist}">
-									<h:outputText value="#{module.moduleName}" />
+									<h:outputText value="#{modulematiere.moduleName}" />
 								</p:column>
 							</p:dataTable>
 						</div>
+
 					</h:form>
 				</p:overlayPanel>
 
@@ -285,7 +285,7 @@
 											oncomplete="PF('updatematiere').show()"
 											value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil">
 											<f:setPropertyActionListener value="#{matiere}"
-												target="#{matiereSearchServiceBean.matierDto}" />
+												target="#{matiereSearchServiceBean.matiereDtos}" />
 										</p:commandButton>
 
 										<p:commandButton id="supprimer" styleClass="btn btn-danger"
@@ -294,7 +294,7 @@
 											value="#{messages.label_supprimer1}"
 											icon="fa fa-fw fa-remove">
 											<f:setPropertyActionListener value="#{matiere}"
-												target="#{matiereSearchServiceBean.matierDto}" />
+												target="#{matiereSearchServiceBean.matiereDtos}" />
 										</p:commandButton>
 
 										<p:blockUI block="listmatieres"

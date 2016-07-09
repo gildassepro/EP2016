@@ -14,93 +14,6 @@
 					<p:messages for="citycode" id="ccode"></p:messages>
 					<p:messages for="selectregion" id="listeregion"></p:messages>
 				</div>
-				
-				<p:panel id="updatcity" widgetVar="updatecity">
-
-					<h:form id="fdial">
-						<h3 style="margin-top: 0">
-							<p:outputLabel value="#{messages.label_createville}"
-								rendered="#{citySearchServiceBean.isAction()}" />
-							<p:outputLabel value="#{messages.label_modifier_Ville}"
-								rendered="#{!citySearchServiceBean.isAction()}" />
-						</h3>
-
-						<div class="ui-grid ui-grid-responsive">
-							<div class="row">
-								<div class="col-md-4 col-sm-4 label-input">
-									<p:outputLabel value="#{messages.label_region}:" />
-									<span class="requireds">(*)</span>
-								</div>
-								<div class="col-md-8 col-sm-8">
-									<p:selectOneMenu id="selectregion" styleClass="form-text"
-										value="#{citySearchServiceBean.cityDto.region}"
-										converter="entityConverter"
-										placeholder="#{messages.label_region}" required="true"
-										immediate="true"
-										requiredMessage="#{messages.label_choix_region}">
-										<f:selectItem
-											itemLabel="#{citySearchServiceBean.cityDto.region.regionName}"
-											itemValue="#{citySearchServiceBean.cityDto.region}"
-											label="#{messages.label_city}" />
-										<f:selectItems value="#{citySearchServiceBean.listRegion}"
-											var="region" itemValue="#{region}"
-											itemLabel="#{region.regionName}" />
-									</p:selectOneMenu>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-md-4 col-sm-4 label-input">
-									<p:outputLabel value="#{messages.label_citycode}" />
-									<span class="requireds">(*)</span>
-								</div>
-								<div class="col-md-8 col-sm-8">
-									<p:inputText id="citycode" styleClass="form-text"
-										value="#{citySearchServiceBean.cityDto.cityCode}"
-										placeholder="#{messages.label_citycode}">
-										<f:validateLength minimum="3" maximum="3" />
-										<p:ajax update="ccode" event="keyup" />
-									</p:inputText>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-md-4 col-sm-4 label-input">
-									<p:outputLabel value="#{messages.label_cityname}" />
-									<span class="requireds">(*)</span>
-								</div>
-								<div class="col-md-8 col-sm-8">
-									<p:inputText id="cityname" styleClass="form-text"
-										value="#{citySearchServiceBean.cityDto.cityName}"
-										placeholder="#{messages.label_cityname}" required="true"
-										requiredMessage="#{messages.label_cityname_requeried}">
-										<f:validateLength maximum="128" />
-										<p:ajax update="cname" event="keyup" />
-									</p:inputText>
-								</div>
-								<div class="col-md-3 col-sm-3"></div>
-							</div>
-
-							<div class="button-wrapper">
-								<p:commandButton value="#{messages.label_modifier}"
-									styleClass="btn btn-primary"
-									rendered="#{!citySearchServiceBean.isAction()}"
-									action="#{citySearchServiceBean.updateCity()}"
-									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatecity').hide()"
-									update="forme fdial growl" />
-								<p:commandButton value="#{messages.label_create}"
-									styleClass="btn btn-primary"
-									rendered="#{citySearchServiceBean.isAction()}"
-									action="#{citySearchServiceBean.createCity()}"
-									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatecity').hide()"
-									update="forme fdial growl" />
-								<p:commandButton value="#{messages.label_button_annuler}"
-									type="reset" onclick="PF('updatecity').hide()" update="forme"
-									styleClass="btn btn-default btn-sm offset" id="annulerButton" />
-							</div>
-						</div>
-					</h:form>
-				</p:panel>
 
 				<h:form id="forme">
 					<p:accordionPanel>
@@ -122,13 +35,13 @@
 										oncomplete="PF('updatecity').show()" icon="fa fa-fw fa-pencil"
 										action="#{citySearchServiceBean.initDualList('1')}">
 									</p:commandButton>
-									<p:commandButton id="delete" process="listcities"
+									<p:commandButton id="delete" process="@([id$=listcities])"
 										styleClass="btn btn-primary submit-button"
 										value="#{messages.label_supprimer1}"
 										title="#{messages.label_supprimer1}"
 										onclick="PF('confirmation').show()" icon="fa fa-fw fa-remove">
 									</p:commandButton>
-									<p:commandButton id="print" process="listcities"
+									<p:commandButton id="print" process="@([id$=listcities])"
 										styleClass="btn btn-primary submit-button"
 										title="#{messages.label_print}"
 										value="#{messages.label_print}"
@@ -145,77 +58,170 @@
 										<p:separator />
 										<p:menuitem value="Homepage" icon="ui-icon-extlink" />
 									</p:splitButton>
+									<p:commandButton id="past"
+										styleClass="btn btn-primary submit-button" ajax="false"
+										action="searchcity.xhtml?faces-redirect=true"
+										update="@([id$=listcities]) forme fdial"
+										icon="fa fa-fw fa-arrow-left">
+									</p:commandButton>
+
+									<p:commandButton value="#{messages.label_modifier}"
+										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
+										rendered="#{!citySearchServiceBean.isAction()}"
+										action="#{citySearchServiceBean.updateCity()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatecity').hide()"
+										update="forme fdial growl" />
+									<p:commandButton value="#{messages.label_create}"
+										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
+										rendered="#{citySearchServiceBean.isAction()}"
+										action="#{citySearchServiceBean.createCity()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatecity').hide()"
+										update="forme fdial growl" />
 								</div>
-								<p:dataTable id="listcities"
-								rendered="#{!citySearchServiceBean.isAction2()}"
-									value="#{citySearchServiceBean.listCity}" var="cities"
-									widgetVar="cityTable" emptyMessage="#{messages.label_empty}"
-									styleClass="listeTable table-responsive filterable"
-									tableStyleClass="table table-striped table-condensed table-hover"
-									rowKey="#{cities.idCity}" selectionMode="single"
-									selection="#{citySearchServiceBean.citiesDto}"
-									rowsPerPageTemplate="5,10,15"
-									paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-									rows="10" filterBy="#{cities.cityName}">
 
-									<p:column priority="3" width="40" filterBy="#{cities.idCity}"
-										filterMatchMode="contains">
-										<f:facet name="header">
-											<p:outputLabel value="#{messages.label_id}" />
-										</f:facet>
-										<h:outputText value="#{cities.idCity}"></h:outputText>
-									</p:column>
+								<p:panel id="updatcity" widgetVar="updatecity"
+									rendered="#{!citySearchServiceBean.isAction3()}">
 
-									<p:column priority="2"
-										filterBy="#{cities.region.country.countryName}"
-										filterMatchMode="contains">
-										<f:facet name="header">
-											<p:outputLabel value="#{messages.label_countryname}" />
-										</f:facet>
-										<h:outputText value="#{cities.region.country.countryName}"></h:outputText>
-									</p:column>
+									<h:form id="fdial">
+										<h3 style="margin-top: 0">
+											<p:outputLabel value="#{messages.label_createville}"
+												rendered="#{citySearchServiceBean.isAction()}" />
+											<p:outputLabel value="#{messages.label_modifier_Ville}"
+												rendered="#{!citySearchServiceBean.isAction()}" />
+										</h3>
 
-									<p:column priority="2" filterBy="#{cities.region.regionName}"
-										filterMatchMode="contains">
-										<f:facet name="header">
-											<p:outputLabel value="#{messages.label_regionname}" />
-										</f:facet>
-										<h:outputText value="#{cities.region.regionName}"></h:outputText>
-									</p:column>
+										<div class="ui-grid ui-grid-responsive">
+											<div class="row">
+												<div class="col-md-4 col-sm-4 label-input">
+													<p:outputLabel value="#{messages.label_region}:" />
+													<span class="requireds">(*)</span>
+												</div>
+												<div class="col-md-8 col-sm-8">
+													<p:selectOneMenu id="selectregion" styleClass="form-text"
+														value="#{citySearchServiceBean.cityDto.region}"
+														converter="entityConverter"
+														placeholder="#{messages.label_region}" required="true"
+														immediate="true"
+														requiredMessage="#{messages.label_choix_region}">
+														<f:selectItem
+															itemLabel="#{citySearchServiceBean.cityDto.region.regionName}"
+															itemValue="#{citySearchServiceBean.cityDto.region}"
+															label="#{messages.label_city}" />
+														<f:selectItems value="#{citySearchServiceBean.listRegion}"
+															var="region" itemValue="#{region}"
+															itemLabel="#{region.regionName}" />
+													</p:selectOneMenu>
+												</div>
+											</div>
 
-									<p:column priority="3" filterBy="#{cities.cityCode}"
-										filterMatchMode="contains">
-										<f:facet name="header">
-											<p:outputLabel value="#{messages.label_citycode}" />
-										</f:facet>
-										<h:outputText value="#{cities.cityCode}"></h:outputText>
-									</p:column>
+											<div class="row">
+												<div class="col-md-4 col-sm-4 label-input">
+													<p:outputLabel value="#{messages.label_citycode}" />
+													<span class="requireds">(*)</span>
+												</div>
+												<div class="col-md-8 col-sm-8">
+													<p:inputText id="citycode" styleClass="form-text"
+														value="#{citySearchServiceBean.cityDto.cityCode}"
+														placeholder="#{messages.label_citycode}">
+														<f:validateLength minimum="3" maximum="3" />
+														<p:ajax update="ccode" event="keyup" />
+													</p:inputText>
+												</div>
+											</div>
 
-									<p:column priority="1" filterBy="#{cities.cityName}"
-										filterMatchMode="contains">
-										<f:facet name="header">
-											<p:outputLabel value="#{messages.label_cityname}" />
-										</f:facet>
-										<h:outputText value="#{cities.cityName}"></h:outputText>
-									</p:column>
+											<div class="row">
+												<div class="col-md-4 col-sm-4 label-input">
+													<p:outputLabel value="#{messages.label_cityname}" />
+													<span class="requireds">(*)</span>
+												</div>
+												<div class="col-md-8 col-sm-8">
+													<p:inputText id="cityname" styleClass="form-text"
+														value="#{citySearchServiceBean.cityDto.cityName}"
+														placeholder="#{messages.label_cityname}" required="true"
+														requiredMessage="#{messages.label_cityname_requeried}">
+														<f:validateLength maximum="128" />
+														<p:ajax update="cname" event="keyup" />
+													</p:inputText>
+												</div>
+												<div class="col-md-3 col-sm-3"></div>
+											</div>
 
-								</p:dataTable>
-								<p:confirmDialog
-									message="#{messages.label_msg_alerte_supression}"
-									header="Confirmation" widgetVar="confirmation">
-									<p:commandButton value="#{messages.label_msg_confirmOui}"
-										onclick="PF('confirmation').hide()"
-										action="#{citySearchServiceBean.supprimerCity()}"
-										update="forme growl" />
-									<p:commandButton value="#{messages.label_msg_confirmNon}"
-										onclick="PF('confirmation').hide()" type="button" />
-								</p:confirmDialog>
-								<p:contextMenu for="listcities">
-									<p:menuitem value="Modifier" icon="ui-icon-search" />
-									<p:menuitem value="Supprimer" icon="ui-icon-search" />
-									<p:separator />
-									<p:menuitem value="Détails" icon="ui-icon-close" />
-								</p:contextMenu>
+										</div>
+									</h:form>
+								</p:panel>
+
+								<h:form id="forme2">
+									<p:dataTable id="listcities"
+										rendered="#{!citySearchServiceBean.isAction2()}"
+										value="#{citySearchServiceBean.listCity}" var="cities"
+										widgetVar="cityTable" emptyMessage="#{messages.label_empty}"
+										styleClass="listeTable table-responsive filterable"
+										tableStyleClass="table table-striped table-condensed table-hover"
+										rowKey="#{cities.idCity}" selectionMode="single"
+										selection="#{citySearchServiceBean.citiesDto}"
+										rowsPerPageTemplate="5,10,15"
+										paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+										rows="10" filterBy="#{cities.cityName}">
+
+										<p:column priority="3" width="40" filterBy="#{cities.idCity}"
+											filterMatchMode="contains">
+											<f:facet name="header">
+												<p:outputLabel value="#{messages.label_id}" />
+											</f:facet>
+											<h:outputText value="#{cities.idCity}"></h:outputText>
+										</p:column>
+
+										<p:column priority="2"
+											filterBy="#{cities.region.country.countryName}"
+											filterMatchMode="contains">
+											<f:facet name="header">
+												<p:outputLabel value="#{messages.label_countryname}" />
+											</f:facet>
+											<h:outputText value="#{cities.region.country.countryName}"></h:outputText>
+										</p:column>
+
+										<p:column priority="2" filterBy="#{cities.region.regionName}"
+											filterMatchMode="contains">
+											<f:facet name="header">
+												<p:outputLabel value="#{messages.label_regionname}" />
+											</f:facet>
+											<h:outputText value="#{cities.region.regionName}"></h:outputText>
+										</p:column>
+
+										<p:column priority="3" filterBy="#{cities.cityCode}"
+											filterMatchMode="contains">
+											<f:facet name="header">
+												<p:outputLabel value="#{messages.label_citycode}" />
+											</f:facet>
+											<h:outputText value="#{cities.cityCode}"></h:outputText>
+										</p:column>
+
+										<p:column priority="1" filterBy="#{cities.cityName}"
+											filterMatchMode="contains">
+											<f:facet name="header">
+												<p:outputLabel value="#{messages.label_cityname}" />
+											</f:facet>
+											<h:outputText value="#{cities.cityName}"></h:outputText>
+										</p:column>
+
+									</p:dataTable>
+									<p:confirmDialog
+										message="#{messages.label_msg_alerte_supression}"
+										header="Confirmation" widgetVar="confirmation">
+										<p:commandButton value="#{messages.label_msg_confirmOui}"
+											onclick="PF('confirmation').hide()"
+											action="#{citySearchServiceBean.supprimerCity()}"
+											update="forme growl" />
+										<p:commandButton value="#{messages.label_msg_confirmNon}"
+											onclick="PF('confirmation').hide()" type="button" />
+									</p:confirmDialog>
+									<p:contextMenu for="listcities">
+										<p:menuitem value="Modifier" icon="ui-icon-search" />
+										<p:menuitem value="Supprimer" icon="ui-icon-search" />
+										<p:separator />
+										<p:menuitem value="Détails" icon="ui-icon-close" />
+									</p:contextMenu>
+								</h:form>
 							</b:row>
 						</p:tab>
 					</p:accordionPanel>
