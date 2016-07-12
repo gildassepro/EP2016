@@ -9,175 +9,206 @@
 		<p:growl id="growl" showDetail="true" sticky="false" />
 		<div class="container-fluid">
 			<b:row>
-				<p:overlayPanel id="updatprogramm" widgetVar="updateprogramm"
-					showEffect="fade" hideEffect="fade" dismissable="false"
-					showCloseIcon="true">
-					<div class="messages">
-						<p:messages for="programmename" id="programmname"></p:messages>
-					</div>
-					<h:form id="fdial">
-						<h3 style="margin-top: 0">
-							<p:outputLabel value="#{messages.label_createprogramme}"
-								rendered="#{programmeSearchServiceBean.isAction()}" />
-							<p:outputLabel value="#{messages.label_modifier_programme}"
-								rendered="#{!programmeSearchServiceBean.isAction()}" />
-						</h3>
-
-						<div class="ui-grid ui-grid-responsive wrap class">
-							<div class="col-xs-12">
-								<div class="row">
-									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:outputLabel value="#{messages.label_programm_name}" /><span class="requireds">(*)</span>
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:inputText id="programmename" styleClass="form-text"
-											value="#{programmeSearchServiceBean.programmeDto.nameProgramme}"
-											placeholder="#{messages.label_programm_name}" required="true"
-											requiredMessage="#{messages.label_programmename_requeried}">
-											<p:ajax update="programmname" event="keyup" />
-										</p:inputText>
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:outputLabel value="#{messages.label_academic_years}:" /><span class="requireds">(*)</span>
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:selectOneMenu id="selectacademicyears"
-											styleClass="form-text"
-											value="#{programmeSearchServiceBean.programmeDto.academiqueYear}"
-											converter="entityConverter"
-											placeholder="#{messages.label_academic_years}"
-											required="true"
-											requiredMessage="#{messages.label_academic_years_requeried}">
-											<f:selectItem
-												itemLabel="#{programmeSearchServiceBean.programmeDto.academiqueYear.value}"
-												itemValue="#{programmeSearchServiceBean.programmeDto.academiqueYear}"
-												label="#{messages.labelestablishment}" />
-											<f:selectItems
-												value="#{programmeSearchServiceBean.listPopuplistAY}"
-												var="academiqueYear" itemValue="#{academiqueYear}"
-												itemLabel="#{academiqueYear.value}" />
-										</p:selectOneMenu>
-									</div>
-								</div>
-
-
-								<div class="row">
-									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:outputLabel value="#{messages.label_curriculum}:" /><span class="requireds">(*)</span>
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:selectOneMenu id="selectcurriculum" styleClass="form-text"
-											value="#{programmeSearchServiceBean.programmeDto.academicGrade}"
-											converter="entityConverter"
-											placeholder="#{messages.label_subestablishment}"
-											required="true"
-											requiredMessage="#{messages.label_curriculum_requeried}">
-											<f:selectItem
-												itemLabel="#{programmeSearchServiceBean.programmeDto.academicGrade.value}"
-												itemValue="#{programmeSearchServiceBean.programmeDto.academicGrade}"
-												label="#{messages.label_curriculum}" />
-											<f:selectItems
-												value="#{programmeSearchServiceBean.listPopuplistFIL}"
-												var="academicGrade" itemValue="#{academicGrade}"
-												itemLabel="#{academicGrade.value}" />
-										</p:selectOneMenu>
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:outputLabel value="#{messages.label_cursus}:" /><span class="requireds">(*)</span>
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:selectOneMenu id="selectprogrammecursus"
-											styleClass="form-text"
-											value="#{programmeSearchServiceBean.programmeDto.curriculum}"
-											converter="entityConverter"
-											placeholder="#{messages.label_programme_status}"
-											required="true"
-											requiredMessage="#{messages.label_cursusname_requeried}">
-											<f:selectItem
-												itemLabel="#{programmeSearchServiceBean.programmeDto.curriculum.nameCurriculum}"
-												itemValue="#{programmeSearchServiceBean.programmeDto.curriculum}"
-												label="#{messages.label_cursus}" />
-											<f:selectItems
-												value="#{programmeSearchServiceBean.listCurriculum}"
-												var="curriculum" itemValue="#{curriculum}"
-												itemLabel="#{curriculum.nameCurriculum}" />
-										</p:selectOneMenu>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="button-wrapper">
-							<p:commandButton value="#{messages.label_modifier}"
-								styleClass="btn btn-primary"
-								rendered="#{!programmeSearchServiceBean.isAction()}"
-								action="#{programmeSearchServiceBean.updateProgramme()}"
-								oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprogramm').hide()"
-								update="forme fdial growl" />
-							<p:commandButton value="#{messages.label_create}"
-								styleClass="btn btn-primary"
-								rendered="#{programmeSearchServiceBean.isAction()}"
-								action="#{programmeSearchServiceBean.createProgramme()}"
-								oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprogramm').hide()"
-								update="forme fdial growl" />
-							<p:commandButton value="#{messages.label_button_annuler}"
-								type="reset" onclick="PF('updateprogramm').hide()"
-								update="forme" styleClass="btn btn-default btn-sm offset">
-							</p:commandButton>
-						</div>
-
-						<div class="ui-grid ui-grid-responsive">
-							<p:dataTable id="checkboxmodule"
-								value="#{programmeSearchServiceBean.listDesModuleAcademicSource}"
-								var="moduleprogramme"
-								selection="#{programmeSearchServiceBean.selectedAcademicmodule}"
-								rowKey="#{moduleprogramme.idAcademicModule}"
-								style="margin-bottom:0">
-								<f:facet name="header">
-						            #{messages.label_list_module}
-						        </f:facet>
-								<p:column selectionMode="multiple"
-									style="width:50px;text-align:center" />
-								<p:column headerText="#{messages.label_modulename}">
-									<h:outputText value="#{moduleprogramme.moduleName}" />
-								</p:column>
-							</p:dataTable>
-						</div>
-					</h:form>
-				</p:overlayPanel>
-
-
-
+				<div class="messages">
+					<p:messages for="programmename" id="programmname"></p:messages>
+				</div>
 
 				<h:form id="forme">
 					<p:accordionPanel>
 						<p:tab title="#{messages.label_programm}">
 							<b:row styleClass="listPage">
-								<div class="table-header">
-									<p:commandButton id="add" title="#{messages.label_add}"
-										action="#{programmeSearchServiceBean.initDualList('2')}"
-										update="@([id$=updatprogramm])"
-										oncomplete="PF('updateprogramm').show()"
-										value="#{messages.label_add}"
-										styleClass="btn btn-primary submit-button"
-										icon="fa fa-fw fa-plus">
-									</p:commandButton>
-									<p:commandButton id="print" title="#{messages.label_add}"
-										actionlistener="#{programmeSearchServiceBean.print}"
-										value="#{messages.label_add}" styleClass="btn btn-success"
-										icon="fa fa-fw fa-print">
-									</p:commandButton>
-									<p:blockUI block="add" trigger="add,print">
-											#{messages.label_loading}<br />
 
-										<p:graphicImage value="/resources/images/loadingpics.gif" />
-									</p:blockUI>
+								<div id="menubutton">
+									<p:commandButton id="adde"
+										styleClass="btn btn-primary submit-button"
+										value="#{messages.label_new}" title="#{messages.label_new}"
+										action="#{programmeSearchServiceBean.initDualList('2')}"
+										update="@([id$=updatprogramm]) forme fdial"
+										onclick="PF('updateprogramm').show()" icon="fa fa-fw fa-plus">
+									</p:commandButton>
+									<p:commandButton id="modifse"
+										styleClass="btn btn-primary submit-button"
+										value="#{messages.label_modifier}"
+										update="@([id$=updatprogramm]) forme fdial"
+										onclick="PF('updateprogramm').show()"
+										icon="fa fa-fw fa-pencil"
+										action="#{programmeSearchServiceBean.initDualList('1')}">
+									</p:commandButton>
+									<p:commandButton id="deletee" process="@([id$=listprogramm])"
+										styleClass="btn btn-primary submit-button"
+										value="#{messages.label_supprimer1}"
+										title="#{messages.label_supprimer1}"
+										onclick="PF('confirmation').show()" icon="fa fa-fw fa-remove">
+									</p:commandButton>
+									<p:commandButton id="printe"
+										update="@([id$=listprogramm]) forme fdial"
+										styleClass="btn btn-primary submit-button"
+										title="#{messages.label_print}"
+										value="#{messages.label_print}"
+										onclick="PF('confirmation').show()" icon="fa fa-fw fa-print">
+									</p:commandButton>
+									<p:splitButton value="#{messages.label_options}"
+										actionListener="#{buttonView.save}" icon="ui-icon-gear">
+										<p:menuitem value="Update"
+											actionListener="#{buttonView.update}"
+											icon="ui-icon-arrowrefresh-1-w" />
+										<p:menuitem value="Delete"
+											actionListener="#{buttonView.delete}" ajax="false"
+											icon="ui-icon-close" />
+										<p:separator />
+										<p:menuitem value="Homepage" icon="ui-icon-extlink" />
+									</p:splitButton>
+
+									<p:commandButton id="past"
+										styleClass="btn btn-primary submit-button" ajax="false"
+										action="searchprogramme.xhtml?faces-redirect=true"
+										update="@([id$=listprogramm]) forme fdial"
+										icon="fa fa-fw fa-arrow-left">
+									</p:commandButton>
+
+									<p:commandButton value="#{messages.label_modifier}"
+										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
+										rendered="#{!programmeSearchServiceBean.isAction()}"
+										action="#{programmeSearchServiceBean.updateProgramme()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprogramm').hide()"
+										update="forme fdial growl" />
+									<p:commandButton value="#{messages.label_create}"
+										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
+										rendered="#{programmeSearchServiceBean.isAction()}"
+										action="#{programmeSearchServiceBean.createProgramme()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprogramm').hide()"
+										update="forme fdial growl" />
+
 								</div>
+
+								<p:panel id="updatprogramm" widgetVar="updateprogramm"
+									rendered="#{!programmeSearchServiceBean.isAction3()}">
+
+									<h:form id="fdial">
+										<h3 style="margin-top: 0">
+											<p:outputLabel value="#{messages.label_createprogramme}"
+												rendered="#{programmeSearchServiceBean.isAction()}" />
+											<p:outputLabel value="#{messages.label_modifier_programme}"
+												rendered="#{!programmeSearchServiceBean.isAction()}" />
+										</h3>
+
+										<div class="ui-grid ui-grid-responsive wrap class">
+											<div class="col-xs-12">
+												<div class="row">
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_programm_name}" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:inputText id="programmename" styleClass="form-text"
+															value="#{programmeSearchServiceBean.programmeDto.nameProgramme}"
+															placeholder="#{messages.label_programm_name}"
+															required="true"
+															requiredMessage="#{messages.label_programmename_requeried}">
+															<p:ajax update="programmname" event="keyup" />
+														</p:inputText>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_academic_years}:" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:selectOneMenu id="selectacademicyears"
+															styleClass="form-text"
+															value="#{programmeSearchServiceBean.programmeDto.academiqueYear}"
+															converter="entityConverter"
+															placeholder="#{messages.label_academic_years}"
+															required="true"
+															requiredMessage="#{messages.label_academic_years_requeried}">
+															<f:selectItem
+																itemLabel="#{programmeSearchServiceBean.programmeDto.academiqueYear.value}"
+																itemValue="#{programmeSearchServiceBean.programmeDto.academiqueYear}"
+																label="#{messages.labelestablishment}" />
+															<f:selectItems
+																value="#{programmeSearchServiceBean.listPopuplistAY}"
+																var="academiqueYear" itemValue="#{academiqueYear}"
+																itemLabel="#{academiqueYear.value}" />
+														</p:selectOneMenu>
+													</div>
+												</div>
+
+
+												<div class="row">
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_curriculum}:" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:selectOneMenu id="selectcurriculum"
+															styleClass="form-text"
+															value="#{programmeSearchServiceBean.programmeDto.academicGrade}"
+															converter="entityConverter"
+															placeholder="#{messages.label_subestablishment}"
+															required="true"
+															requiredMessage="#{messages.label_curriculum_requeried}">
+															<f:selectItem
+																itemLabel="#{programmeSearchServiceBean.programmeDto.academicGrade.value}"
+																itemValue="#{programmeSearchServiceBean.programmeDto.academicGrade}"
+																label="#{messages.label_curriculum}" />
+															<f:selectItems
+																value="#{programmeSearchServiceBean.listPopuplistFIL}"
+																var="academicGrade" itemValue="#{academicGrade}"
+																itemLabel="#{academicGrade.value}" />
+														</p:selectOneMenu>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_cursus}:" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:selectOneMenu id="selectprogrammecursus"
+															styleClass="form-text"
+															value="#{programmeSearchServiceBean.programmeDto.curriculum}"
+															converter="entityConverter"
+															placeholder="#{messages.label_programme_status}"
+															required="true"
+															requiredMessage="#{messages.label_cursusname_requeried}">
+															<f:selectItem
+																itemLabel="#{programmeSearchServiceBean.programmeDto.curriculum.nameCurriculum}"
+																itemValue="#{programmeSearchServiceBean.programmeDto.curriculum}"
+																label="#{messages.label_cursus}" />
+															<f:selectItems
+																value="#{programmeSearchServiceBean.listCurriculum}"
+																var="curriculum" itemValue="#{curriculum}"
+																itemLabel="#{curriculum.nameCurriculum}" />
+														</p:selectOneMenu>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="ui-grid ui-grid-responsive">
+											<p:dataTable id="checkboxmodule"
+												value="#{programmeSearchServiceBean.listDesModuleAcademicSource}"
+												var="moduleprogramme"
+												selection="#{programmeSearchServiceBean.selectedAcademicmodule}"
+												rowKey="#{moduleprogramme.idAcademicModule}"
+												style="margin-bottom:0">
+												<f:facet name="header">
+						            #{messages.label_list_module}
+						        </f:facet>
+												<p:column selectionMode="multiple"
+													style="width:50px;text-align:center" />
+												<p:column headerText="#{messages.label_modulename}">
+													<h:outputText value="#{moduleprogramme.moduleName}" />
+												</p:column>
+											</p:dataTable>
+										</div>
+									</h:form>
+								</p:panel>
+
 								<p:dataTable id="listprogramm"
 									value="#{programmeSearchServiceBean.listProgramme}"
+									rendered="#{!programmeSearchServiceBean.isAction2()}"
 									var="programmes" widgetVar="programmesTable"
 									emptyMessage="#{messages.label_empty}"
 									styleClass="listeTable table-responsive filterable"
+									selection="#{programmeSearchServiceBean.programmeDtos}"
 									tableStyleClass="table table-striped table-condensed table-hover"
 									rowKey="#{programmes.idProgramme}" selectionMode="single"
 									paginator="true" paginatorPosition="bottom"
@@ -186,22 +217,26 @@
 									<f:facet name="{Exporters}">
 										<h:commandLink>
 											<p:graphicImage name="/resources/images/excel.png" width="24" />
-											<p:dataExporter type="xls" target="listprogramm" fileName="listProgramme" />
+											<p:dataExporter type="xls" target="listprogramm"
+												fileName="listProgramme" />
 										</h:commandLink>
 
 										<h:commandLink>
 											<p:graphicImage name="/resources/images/pdf.png" width="24" />
-											<p:dataExporter type="pdf" target="listprogramm" fileName="listProgramme" />
+											<p:dataExporter type="pdf" target="listprogramm"
+												fileName="listProgramme" />
 										</h:commandLink>
 
 										<h:commandLink>
 											<p:graphicImage name="/resources/images/csv.png" width="24" />
-											<p:dataExporter type="csv" target="listprogramm" fileName="listProgramme" />
+											<p:dataExporter type="csv" target="listprogramm"
+												fileName="listProgramme" />
 										</h:commandLink>
 
 										<h:commandLink>
 											<p:graphicImage name="/resources/images/xml.png" width="24" />
-											<p:dataExporter type="xml" target="listprogramm" fileName="listProgramme" />
+											<p:dataExporter type="xml" target="listprogramm"
+												fileName="listProgramme" />
 										</h:commandLink>
 									</f:facet>
 									<p:column priority="3" filterBy="#{programmes.nameProgramme}"
@@ -239,35 +274,6 @@
 										<h:outputText value="#{programmes.curriculum.nameCurriculum}"></h:outputText>
 									</p:column>
 
-									<p:column priority="1" width="121" filterMatchMode="contains">
-										<f:facet name="header">
-											<!-- 		 <p:outputLabel value="#{messages.label_action}" /> -->
-											<p:outputLabel value="#{messages.label_action}" />
-										</f:facet>
-										<p:commandButton id="modifier" styleClass="btn btn-success"
-											title="#{messages.label_modifier}"
-											action="#{programmeSearchServiceBean.initDualList('1')}"
-											update="@([id$=updatprogramm])"
-											oncomplete="PF('updateprogramm').show()"
-											value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil">
-											<f:setPropertyActionListener value="#{programmes}"
-												target="#{programmeSearchServiceBean.programmeDtos}" />
-										</p:commandButton>
-										<p:commandButton id="supprimer" styleClass="btn btn-danger"
-											title="#{messages.label_supprimer1}"
-											onclick="PF('confirmation').show()"
-											value="#{messages.label_supprimer1}"
-											icon="fa fa-fw fa-remove">
-											<f:setPropertyActionListener value="#{programmes}"
-												target="#{programmeSearchServiceBean.programmeDtos}" />
-										</p:commandButton>
-
-										<p:blockUI block="listprogramm"
-											trigger="listprogramm:supprimer,listprogramm:modifier">
-											#{messages.label_loading}<br />
-											<p:graphicImage value="/resources/images/loadingpics.gif" />
-										</p:blockUI>
-									</p:column>
 								</p:dataTable>
 								<p:confirmDialog
 									message="#{messages.label_msg_alerte_supression}"

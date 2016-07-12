@@ -7,12 +7,14 @@
 	template="/templates/template.xhtml">
 	<ui:define name="content">
 		<p:growl id="growl" showDetail="true" sticky="false" />
-
 		<div class="container-fluid">
 			<b:row>
 				<p:overlayPanel id="updatmatiere" widgetVar="updatematiere"
 					showEffect="fade" hideEffect="fade" dismissable="false"
 					showCloseIcon="true">
+					<div class="messages">
+<!-- 						<p:messages for="matierename" id="matierename"></p:messages> -->
+					</div>
 					<h:form id="fdial">
 						<h3 style="margin-top: 0">
 							<p:outputLabel value="#{messages.label_creer_matiere}"
@@ -20,137 +22,136 @@
 							<p:outputLabel value="#{messages.label_modifier_Matiere}"
 								rendered="#{!matiereSearchServiceBean.isAction()}" />
 						</h3>
+
 						<div class="ui-grid ui-grid-responsive wrap class">
 							<div class="col-xs-12">
 								<div class="row">
-									<div class="col-lg-2 col-md-3 col-sm-3">
+									<div class="col-lg-3 col-md-3 col-sm-3">
 										<p:outputLabel value="#{messages.label_nommatiere}" />
 										<span class="requireds">(*)</span>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:inputText id="nommatiere" styleClass="form-control"
-											maxlength="64"
+										<p:inputText id="matierename" styleClass="form-text"
 											value="#{matiereSearchServiceBean.matiereDto.subjectName}"
 											placeholder="#{messages.labelnommatiere}" required="true"
-											immediate="true"
 											requiredMessage="#{messages.label_nommatiere_requeried}">
-											<f:validateLength minimum="5" maximum="64" />
-											<p:ajax event="keyup" />
+<!-- 											<p:ajax update="matierename" event="keyup" /> -->
 										</p:inputText>
 									</div>
-									<div class="col-lg-offset-1 col-lg-2 col-md-3 col-sm-3">
-										<p:outputLabel value="#{messages.label_academic_years}" />
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_academic_years}:" />
 										<span class="requireds">(*)</span>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:selectOneMenu id="anneeacademiques" styleClass="form-text"
+										<p:selectOneMenu id="selectacademicyears"
+											styleClass="form-text"
 											value="#{matiereSearchServiceBean.matiereDto.academiqueYear}"
-											converter="entityConverter" required="true"
-											requiredMessage="#{messages.label_anneeacademiques_requeried}">
+											converter="entityConverter"
+											placeholder="#{messages.label_academic_years}"
+											required="true"
+											requiredMessage="#{messages.label_academic_years_requeried}">
 											<f:selectItem
 												itemLabel="#{matiereSearchServiceBean.matiereDto.academiqueYear.value}"
 												itemValue="#{matiereSearchServiceBean.matiereDto.academiqueYear}"
-												label="#{messages.label_anneeacademiques_requeried}" />
+												label="#{messages.labelestablishment}" />
 											<f:selectItems
-												value="#{matiereSearchServiceBean.listanneeacademique}"
+												value="#{matiereSearchServiceBean.listPopuplistAY}"
 												var="academiqueYear" itemValue="#{academiqueYear}"
 												itemLabel="#{academiqueYear.value}" />
 										</p:selectOneMenu>
 									</div>
 								</div>
+
 								<div class="row">
-									<div class="col-lg-2 col-md-3 col-sm-3">
-										<p:outputLabel value="#{messages.label_filiere}" />
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_filiere}:" />
 										<span class="requireds">(*)</span>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:selectOneMenu id="filiere" styleClass="form-text"
+										<p:selectOneMenu id="selectfil" styleClass="form-text"
 											value="#{matiereSearchServiceBean.matiereDto.academicGrade}"
-											converter="entityConverter" required="true"
-											requiredMessage="#{messages.label_academicGrade_requeried}">
+											converter="entityConverter"
+											placeholder="#{messages.label_filiere}" required="true"
+											requiredMessage="#{messages.label_curriculum_requeried}">
 											<f:selectItem
 												itemLabel="#{matiereSearchServiceBean.matiereDto.academicGrade.value}"
-												itemValue="#{matiereSearchServiceBean.matiereDto.academicGrade}" />
+												itemValue="#{matiereSearchServiceBean.matiereDto.academicGrade}"
+												label="#{messages.label_filiere}" />
 											<f:selectItems
-												value="#{matiereSearchServiceBean.listfiliere}"
+												value="#{matiereSearchServiceBean.listPopuplistFIL}"
 												var="academicGrade" itemValue="#{academicGrade}"
 												itemLabel="#{academicGrade.value}" />
 										</p:selectOneMenu>
 									</div>
-									<div class="col-lg-offset-1 col-lg-2 col-md-3 col-sm-3">
-										<p:outputLabel value="#{messages.label_typedeclasse}" />
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_typedeclasse}:" />
 										<span class="requireds">(*)</span>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:selectOneMenu id="typeclas" styleClass="form-text"
+										<p:selectOneMenu id="selectmatieretype" styleClass="form-text"
 											value="#{matiereSearchServiceBean.matiereDto.typeOfClasse}"
-											converter="entityConverter" required="true"
-											requiredMessage="#{messages.label_typeOfClasse_requeried}">
+											converter="entityConverter"
+											placeholder="#{messages.label_typedeclasse}" required="true"
+											requiredMessage="#{messages.label_cursusname_requeried}">
 											<f:selectItem
 												itemLabel="#{matiereSearchServiceBean.matiereDto.typeOfClasse.value}"
-												itemValue="#{matiereSearchServiceBean.matiereDto.typeOfClasse}" />
+												itemValue="#{matiereSearchServiceBean.matiereDto.typeOfClasse}"
+												label="#{messages.label_typedeclasse}" />
 											<f:selectItems
-												value="#{matiereSearchServiceBean.listtypedeclasse}"
+												value="#{matiereSearchServiceBean.listPopuplistTYPECLASSE}"
 												var="typeofclasse" itemValue="#{typeofclasse}"
 												itemLabel="#{typeofclasse.value}" />
 										</p:selectOneMenu>
 									</div>
-
 								</div>
+
+
 								<div class="row">
-									<div class="col-lg-2 col-md-3 col-sm-3">
-										<p:outputLabel value="#{messages.label_tarif}" />
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_tarif}:" />
+										<span class="requireds">(*)</span>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:inputText id="tarif" styleClass="form-control"
-											maxlength="11"
+										<p:inputText id="matieretarif" styleClass="form-text"
 											value="#{matiereSearchServiceBean.matiereDto.teacheRate}"
-											placeholder="#{messages.labeltarif}" required="true"
-											requiredMessage="#{messages.label_teacheRate_requeried}">
-											<f:validateLength maximum="11" />
+											placeholder="#{messages.label_tarif}" required="true"
+											requiredMessage="#{messages.label_teacheRate_required}">
 										</p:inputText>
 									</div>
-									<div class="col-lg-offset-1 col-lg-2 col-md-3 col-sm-3">
-										<p:outputLabel value="#{messages.label_nbremax}" />
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_nbremax}:" />
+										<span class="requireds">(*)</span>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:inputText id="nbremax" styleClass="form-control"
-											maxlength="11"
+										<p:inputText id="nbremax" styleClass="form-text"
 											value="#{matiereSearchServiceBean.matiereDto.numberOfAttendentMax}"
 											placeholder="#{messages.labelnbremax}" required="true"
-											immediate="true"
-											requiredMessage="#{messages.label_numberOfAttendentMax_requeried}">
-											<f:validateLength maximum="11" />
-											<p:ajax event="keyup" />
+											requiredMessage="#{messages.label_numberOfAttendentMax_required}">
 										</p:inputText>
 									</div>
 								</div>
+
 								<div class="row">
-									<div class="col-lg-2 col-md-3 col-sm-3">
-										<p:outputLabel value="#{messages.label_nbremin}" />
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_nbremin}:" />
+										<span class="requireds">(*)</span>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:inputText id="nbremin" styleClass="form-control"
-											maxlength="11"
+										<p:inputText id="nbremin" styleClass="form-text"
 											value="#{matiereSearchServiceBean.matiereDto.numberOfAttendentMin}"
-											placeholder="#{messages.labelnbremin}" required="true"
-											immediate="true"
-											requiredMessage="#{messages.label_numberOfAttendentMin_requeried}">
-											<f:validateLength maximum="11" />
-											<p:ajax event="keyup" />
+											placeholder="#{messages.label_nbremin}" required="true"
+											requiredMessage="#{messages.label_numberOfAttendentMin_required}">
 										</p:inputText>
 									</div>
-									<div class="col-lg-offset-1 col-lg-2 col-md-3 col-sm-3">
-										<p:outputLabel value="#{messages.label_volumehoraire}" />
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_volumehoraire}:" />
+										<span class="requireds">(*)</span>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:inputText id="volume" styleClass="form-control"
-											maxlength="11"
+										<p:inputText id="volumehoraire" styleClass="form-text"
 											value="#{matiereSearchServiceBean.matiereDto.numberOfHours}"
-											placeholder="#{messages.labelvolumehoraire}" required="true"
-											immediate="true"
-											requiredMessage="#{messages.label_numberOfHours_requeried}">
-											<f:validateLength maximum="11" />
+											placeholder="#{messages.label_volumehoraire}" required="true"
+											requiredMessage="#{messages.label_numberOfAttendentMax_required}">
 										</p:inputText>
 									</div>
 								</div>
@@ -163,18 +164,16 @@
 								rendered="#{!matiereSearchServiceBean.isAction()}"
 								action="#{matiereSearchServiceBean.updateMatiere()}"
 								oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatematiere').hide()"
-								update="forme fdial growl">
-							</p:commandButton>
+								update="forme fdial growl" />
 							<p:commandButton value="#{messages.label_create}"
 								styleClass="btn btn-primary"
 								rendered="#{matiereSearchServiceBean.isAction()}"
 								action="#{matiereSearchServiceBean.createMatiere()}"
 								oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatematiere').hide()"
-								update="forme fdial growl">
-							</p:commandButton>
+								update="forme fdial growl" />
 							<p:commandButton value="#{messages.label_button_annuler}"
-								type="reset" onclick="PF('updatematiere').hide()" update="fdial"
-								styleClass="btn btn-default btn-sm offset" id="annulerButton">
+								type="reset" onclick="PF('updatematiere').hide()" update="forme"
+								styleClass="btn btn-default btn-sm offset">
 							</p:commandButton>
 						</div>
 
@@ -190,12 +189,11 @@
 						        </f:facet>
 								<p:column selectionMode="multiple"
 									style="width:50px;text-align:center" />
-								<p:column headerText="#{messages.label_modulelist}">
+								<p:column headerText="#{messages.label_modulename}">
 									<h:outputText value="#{modulematiere.moduleName}" />
 								</p:column>
 							</p:dataTable>
 						</div>
-
 					</h:form>
 				</p:overlayPanel>
 
@@ -204,125 +202,119 @@
 						<p:tab title="#{messages.label_Recherche_Matiere}">
 							<b:row styleClass="listPage">
 								<div class="table-header">
-
 									<p:commandButton id="add" title="#{messages.label_add}"
 										action="#{matiereSearchServiceBean.initDualList('2')}"
 										update="@([id$=updatmatiere])"
 										oncomplete="PF('updatematiere').show()"
-										value="#{messages.label_modifier}"
+										value="#{messages.label_add}"
 										styleClass="btn btn-primary submit-button"
 										icon="fa fa-fw fa-plus">
 									</p:commandButton>
-
-									<p:blockUI block="add" trigger="add">
+									<p:commandButton id="print" title="#{messages.label_add}"
+										actionlistener="#{matiereSearchServiceBean.print}"
+										value="#{messages.label_add}" styleClass="btn btn-success"
+										icon="fa fa-fw fa-print">
+									</p:commandButton>
+									<p:blockUI block="add" trigger="add,print">
 											#{messages.label_loading}<br />
+
 										<p:graphicImage value="/resources/images/loadingpics.gif" />
 									</p:blockUI>
 								</div>
 
-								<p:dataTable id="listmatieres"
-									value="#{matiereSearchServiceBean.listmatiere}" var="matiere"
-									widgetVar="menuTable" emptyMessage="#{messages.label_empty}"
+								<p:dataTable id="listmatiere"
+									value="#{matiereSearchServiceBean.listmatiere}" var="matieres"
+									widgetVar="matieresTable"
+									emptyMessage="#{messages.label_empty}"
 									styleClass="listeTable table-responsive filterable"
 									tableStyleClass="table table-striped table-condensed table-hover"
-									rowKey="#{matiere.idCourseSubject}" selectionMode="single"
+									rowKey="#{matieres.idCourseSubject}" selectionMode="single"
 									paginator="true" paginatorPosition="bottom"
 									paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
-									rows="10" filterBy="#{matiere.idCourseSubject}">
+									rows="10" filterBy="#{matieres.subjectName}">
 
-									<p:column priority="3" width="40"
-										filterBy="#{matiere.idCourseSubject}"
-										filterMatchMode="contains">
-										<f:facet name="header">
-											<p:outputLabel value="#{messages.label_id}" />
-										</f:facet>
-										<h:outputText value="#{matiere.idCourseSubject}"></h:outputText>
-									</p:column>
-
-									<p:column priority="1" filterBy="#{matiere.subjectName}"
+									<p:column priority="3" filterBy="#{matieres.subjectName}"
 										filterMatchMode="contains">
 										<f:facet name="header">
 											<p:outputLabel value="#{messages.label_matiere}" />
 										</f:facet>
-										<h:outputText value="#{matiere.subjectName}"></h:outputText>
+										<h:outputText value="#{matieres.subjectName}"></h:outputText>
 									</p:column>
 
-									<p:column priority="1" filterBy="#{matiere.academiqueYear}"
+									<p:column priority="2"
+										filterBy="#{matieres.academiqueYear.value}"
 										filterMatchMode="contains">
 										<f:facet name="header">
-											<p:outputLabel
-												value="#{messages.label_anneeacademiquesession}" />
+											<p:outputLabel value="#{messages.label_academic_years}" />
 										</f:facet>
-										<h:outputText value="#{matiere.academiqueYear.value}"></h:outputText>
+										<h:outputText value="#{matieres.academiqueYear.value}"></h:outputText>
 									</p:column>
 
-									<p:column priority="3" filterBy="#{matiere.academicGrade}"
+									<p:column priority="4"
+										filterBy="#{matieres.academicGrade.value}"
 										filterMatchMode="contains">
 										<f:facet name="header">
-											<p:outputLabel value="#{messages.label_filiereacademic}" />
+											<p:outputLabel value="#{messages.label_curriculum}" />
 										</f:facet>
-										<h:outputText value="#{matiere.academicGrade.value}"></h:outputText>
+										<h:outputText value="#{matieres.academicGrade.value}"></h:outputText>
 									</p:column>
 
-									<p:column priority="3" filterBy="#{matiere.typeOfClasse.value}"
+									<p:column priority="1"
+										filterBy="#{matieres.typeOfClasse.value}"
 										filterMatchMode="contains">
 										<f:facet name="header">
 											<p:outputLabel value="#{messages.label_typeofclasse}" />
 										</f:facet>
-										<h:outputText value="#{matiere.typeOfClasse.value}"></h:outputText>
+										<h:outputText value="#{matieres.typeOfClasse.value}"></h:outputText>
 									</p:column>
 
-									<p:column priority="1" width="100" filterMatchMode="contains">
-
+									<p:column priority="1" width="121" filterMatchMode="contains">
 										<f:facet name="header">
+											<!-- 		 <p:outputLabel value="#{messages.label_action}" /> -->
 											<p:outputLabel value="#{messages.label_action}" />
 										</f:facet>
-
 										<p:commandButton id="modifier" styleClass="btn btn-success"
 											title="#{messages.label_modifier}"
 											action="#{matiereSearchServiceBean.initDualList('1')}"
 											update="@([id$=updatmatiere])"
 											oncomplete="PF('updatematiere').show()"
 											value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil">
-											<f:setPropertyActionListener value="#{matiere}"
+											<f:setPropertyActionListener value="#{matieres}"
 												target="#{matiereSearchServiceBean.matiereDtos}" />
 										</p:commandButton>
-
 										<p:commandButton id="supprimer" styleClass="btn btn-danger"
 											title="#{messages.label_supprimer1}"
 											onclick="PF('confirmation').show()"
 											value="#{messages.label_supprimer1}"
 											icon="fa fa-fw fa-remove">
-											<f:setPropertyActionListener value="#{matiere}"
+											<f:setPropertyActionListener value="#{matieres}"
 												target="#{matiereSearchServiceBean.matiereDtos}" />
 										</p:commandButton>
 
-										<p:blockUI block="listmatieres"
-											trigger="listmatieres:supprimer,listmatieres:modifier">
-										#{messages.label_loading}<br />
+										<p:blockUI block="listmatiere"
+											trigger="listmatiere:supprimer,listmatiere:modifier">
+											#{messages.label_loading}<br />
 											<p:graphicImage value="/resources/images/loadingpics.gif" />
 										</p:blockUI>
-
-										<p:confirmDialog
-											message="#{messages.label_msg_alerte_supression}"
-											header="Confirmation" widgetVar="confirmation">
-											<p:commandButton value="#{messages.label_msg_confirmOui}"
-												onclick="PF('confirmation').hide()"
-												action="#{matiereSearchServiceBean.supprimerMatiere()}"
-												update="forme growl" />
-											<p:commandButton value="#{messages.label_msg_confirmNon}"
-												onclick="PF('confirmation').hide()" type="button" />
-										</p:confirmDialog>
 									</p:column>
 								</p:dataTable>
+								<p:confirmDialog
+									message="#{messages.label_msg_alerte_supression}"
+									header="Confirmation" widgetVar="confirmation">
+									<p:commandButton value="#{messages.label_msg_confirmOui}"
+										onclick="PF('confirmation').hide()"
+										action="#{matiereSearchServiceBean.deleteMatiere()}"
+										update="forme growl" />
+									<p:commandButton value="#{messages.label_msg_confirmNon}"
+										onclick="PF('confirmation').hide()" type="button" />
+								</p:confirmDialog>
 
-								<p:contextMenu for="listmatieres">
+								<p:contextMenu for="listmatiere">
 									<p:menuitem value="Modifier" icon="ui-icon-search" />
 									<p:menuitem value="Supprimer" icon="ui-icon-search" />
 									<p:separator />
 									<p:menuitem value="Détails" icon="ui-icon-close" />
 								</p:contextMenu>
-
 							</b:row>
 						</p:tab>
 					</p:accordionPanel>

@@ -43,9 +43,27 @@ public class InventaireSearchServiceBean implements Serializable {
 	private List<ClasseDto> listclasse = new ArrayList<ClasseDto>();
 
 	private boolean action = false;
+	private boolean action2 = false;
+	private boolean action3 = true;
 
 	
 	
+	public boolean isAction2() {
+		return action2;
+	}
+
+	public void setAction2(boolean action2) {
+		this.action2 = action2;
+	}
+
+	public boolean isAction3() {
+		return action3;
+	}
+
+	public void setAction3(boolean action3) {
+		this.action3 = action3;
+	}
+
 	public List<ClasseDto> getListclasse() {
 		return listclasse;
 	}
@@ -91,10 +109,14 @@ public class InventaireSearchServiceBean implements Serializable {
 		if (baction.equals("1")) {
 			roominventorydto = roominventorrydto;
 			listclasse = new ArrayList<ClasseDto>();
+			action2 = true;
+			action3= false;
 			initUpdate();
 		} else {
 			roominventorydto = new RoomInventoryDto();
 			listclasse = new ArrayList<ClasseDto>();
+			action2 = true;
+			action3= false;
 			initCreate();
 		}
 		logger.debug("DEBUT initDualList +++++++++++++");

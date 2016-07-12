@@ -41,6 +41,26 @@ public class SessionSearchServiceBean implements Serializable {
 	private List<PopuplistDto> liststatut = new ArrayList<PopuplistDto>();
 
 	private boolean action = false;
+	private boolean action2 = false;
+	private boolean action3 = true;
+
+	
+	
+	public boolean isAction2() {
+		return action2;
+	}
+
+	public void setAction2(boolean action2) {
+		this.action2 = action2;
+	}
+
+	public boolean isAction3() {
+		return action3;
+	}
+
+	public void setAction3(boolean action3) {
+		this.action3 = action3;
+	}
 
 	public List<SessionDto> getListsession() {
 		return listsession;
@@ -95,11 +115,15 @@ public class SessionSearchServiceBean implements Serializable {
 			sessionDto = sesionDto;
 			listanneeacademique = new ArrayList<PopuplistDto>();
 			liststatut = new ArrayList<PopuplistDto>();
+			action2 = true;
+			action3= false;
 			initUpdate();
 		} else {
 			sessionDto = new SessionDto();
 			listanneeacademique = new ArrayList<PopuplistDto>();
 			liststatut = new ArrayList<PopuplistDto>();
+			action2 = true;
+			action3= false;
 			initCreate();
 		}
 	}

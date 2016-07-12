@@ -172,20 +172,6 @@
 										paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
 										rows="10" filterBy="#{regions.regionName}">
 
-										<!-- 									<f:facet name="header" style="margin-left:30%"> -->
-										<!-- 										<p:commandButton id="modifs" process="listregions" -->
-										<!-- 											styleClass="btn btn-primary submit-button" -->
-										<!-- 											value="#{messages.label_modifier}" -->
-										<!-- 											update="@([id$=updatregion])" -->
-										<!-- 											oncomplete="PF('updateregion').show()" -->
-										<!-- 											icon="fa fa-fw fa-pencil" -->
-										<!-- 											action="#{regionSearchServiceBean.initDualList('1')}"> -->
-										<!-- 										</p:commandButton> -->
-										<!-- 										<p:blockUI block="listregions" trigger="listregions:modifs"> -->
-										<!-- 											#{messages.label_loading}<br /> -->
-										<!-- 											<p:graphicImage value="/resources/images/loadingpics.gif" /> -->
-										<!-- 										</p:blockUI> -->
-										<!-- 									</f:facet> -->
 										<p:column priority="3" width="40"
 											filterBy="#{regions.idRegion}" filterMatchMode="contains">
 											<f:facet name="header">

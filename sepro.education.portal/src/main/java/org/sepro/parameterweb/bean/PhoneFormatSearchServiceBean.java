@@ -37,6 +37,25 @@ public class PhoneFormatSearchServiceBean implements Serializable {
 	private PhoneFormatDto phoneformaDto = new PhoneFormatDto();
 
 	private boolean action = false;
+	private boolean action2 = false;
+	private boolean action3 = true;
+
+	
+	public boolean isAction2() {
+		return action2;
+	}
+
+	public void setAction2(boolean action2) {
+		this.action2 = action2;
+	}
+
+	public boolean isAction3() {
+		return action3;
+	}
+
+	public void setAction3(boolean action3) {
+		this.action3 = action3;
+	}
 
 	public List<PhoneFormatDto> getListphoneformat() {
 		return listphoneformat;
@@ -73,9 +92,13 @@ public class PhoneFormatSearchServiceBean implements Serializable {
 	public void initDualList(String baction) {
 		if (baction.equals("1")) {
 			phoneformatDto = phoneformaDto;
+			action2 = true;
+			action3= false;
 			initUpdate();
 		} else {
 			phoneformatDto = new PhoneFormatDto();
+			action2 = true;
+			action3= false;
 			initCreate();
 		}
 	}

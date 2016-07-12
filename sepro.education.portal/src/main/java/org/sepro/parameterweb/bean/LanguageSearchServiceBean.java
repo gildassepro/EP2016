@@ -35,6 +35,25 @@ public class LanguageSearchServiceBean implements Serializable {
 	private LanguageDto languageDto = new LanguageDto();
 
 	private boolean action = false;
+	private boolean action2 = false;
+	private boolean action3 = true;
+
+	
+	public boolean isAction2() {
+		return action2;
+	}
+
+	public void setAction2(boolean action2) {
+		this.action2 = action2;
+	}
+
+	public boolean isAction3() {
+		return action3;
+	}
+
+	public void setAction3(boolean action3) {
+		this.action3 = action3;
+	}
 
 	public List<LanguageDto> getListlanguage() {
 		return listlanguage;
@@ -71,9 +90,13 @@ public class LanguageSearchServiceBean implements Serializable {
 	public void initDualList(String baction) {
 		if (baction.equals("1")) {
 			languageDto = languagesDto;
+			action2 = true;
+			action3= false;
 			initUpdate();
 		} else {
 			languageDto = new LanguageDto();
+			action2 = true;
+			action3= false;
 			initCreate();
 		}
 	}

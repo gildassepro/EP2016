@@ -61,6 +61,8 @@ public class BuildingSearchServiceBean implements Serializable {
 	private List<EstablishmentDto> listEstablishment = new ArrayList<EstablishmentDto>();
 
 	private boolean action = false;
+	private boolean action2 = false;
+	private boolean action3 = true;
 	private List<BuildingDto> listBuilding = new ArrayList<BuildingDto>();
 	private BuildingDto buildingDto = new BuildingDto();
 	private List<CleanHoursDto> listCleanHours = new ArrayList<CleanHoursDto>();
@@ -72,6 +74,22 @@ public class BuildingSearchServiceBean implements Serializable {
 	
 	
 	
+	public boolean isAction2() {
+		return action2;
+	}
+
+	public void setAction2(boolean action2) {
+		this.action2 = action2;
+	}
+
+	public boolean isAction3() {
+		return action3;
+	}
+
+	public void setAction3(boolean action3) {
+		this.action3 = action3;
+	}
+
 	public List<CleanHoursDto> getListCleanHoursSource() {
 		return listCleanHoursSource;
 	}
@@ -257,6 +275,8 @@ public class BuildingSearchServiceBean implements Serializable {
 			listSubEstablishment = new ArrayList<SubEstablishmentDto>();
 			listCleanHoursSource = new ArrayList<CleanHoursDto>();
 			listCleanHoursDestination = new ArrayList<CleanHoursDto>();
+			action2 = true;
+			action3= false;
 			initUpdate();
 		} else {
 			buildingDto = new BuildingDto();
@@ -264,6 +284,8 @@ public class BuildingSearchServiceBean implements Serializable {
 			listSubEstablishment = new ArrayList<SubEstablishmentDto>();
 			listCleanHoursSource = new ArrayList<CleanHoursDto>();
 			listCleanHoursDestination = new ArrayList<CleanHoursDto>();
+			action2 = true;
+			action3= false;
 			initCreate();
 		}
 		logger.debug("FIN initDualList +++++++++++++");

@@ -70,11 +70,31 @@ public class EtablissementCreateServiceBean implements Serializable {
 	private List<ZipcodeDto> listzipcode = new ArrayList<ZipcodeDto>();
 
 	private boolean action = false;
+	private boolean action2 = false;
+	private boolean action3 = true;
 
 	private String maskphonformatetablishment;
 	private String maskphonformatgerant;
 	private String maskphonformatproprietaire;
 	private String maskphonformatcontact;
+
+	
+	
+	public boolean isAction2() {
+		return action2;
+	}
+
+	public void setAction2(boolean action2) {
+		this.action2 = action2;
+	}
+
+	public boolean isAction3() {
+		return action3;
+	}
+
+	public void setAction3(boolean action3) {
+		this.action3 = action3;
+	}
 
 	public String getMaskphonformatetablishment() {
 		return maskphonformatetablishment;
@@ -187,6 +207,8 @@ public class EtablissementCreateServiceBean implements Serializable {
 			listcountry = new ArrayList<CountryDto>();
 			listregion = new ArrayList<RegionDto>();
 			listzipcode = new ArrayList<ZipcodeDto>();
+			action2 = true;
+			action3= false;
 			initUpdate();
 		} else {
 			establishmentServicewsEndpoint = establishmentServicews
@@ -197,6 +219,8 @@ public class EtablissementCreateServiceBean implements Serializable {
 			listcountry = new ArrayList<CountryDto>();
 			listregion = new ArrayList<RegionDto>();
 			listzipcode = new ArrayList<ZipcodeDto>();
+			action2 = true;
+			action3= false;
 			initCreate();
 		}
 	}

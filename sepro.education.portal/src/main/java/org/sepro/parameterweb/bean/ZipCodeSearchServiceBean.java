@@ -54,6 +54,27 @@ public class ZipCodeSearchServiceBean implements Serializable {
 	private List<CityDto> listCity = new ArrayList<CityDto>();
 
 	private boolean action = false;
+	
+	private boolean action2 = false;
+	private boolean action3 = true;
+
+	
+	
+	public boolean isAction2() {
+		return action2;
+	}
+
+	public void setAction2(boolean action2) {
+		this.action2 = action2;
+	}
+
+	public boolean isAction3() {
+		return action3;
+	}
+
+	public void setAction3(boolean action3) {
+		this.action3 = action3;
+	}
 
 	public ZipcodeDto getZipcodeDto() {
 		return zipcodeDto;
@@ -178,10 +199,14 @@ public class ZipCodeSearchServiceBean implements Serializable {
 		if (baction.equals("1")) {
 			zipcodeDto = zipscodeDto;
 			listCity = new ArrayList<CityDto>();
+			action2 = true;
+			action3= false;
 			initUpdate();
 		} else {
 			zipcodeDto = new ZipcodeDto();
 			listCity = new ArrayList<CityDto>();
+			action2 = true;
+			action3= false;
 			initCreate();
 		}
 		logger.debug("DEBUT initDualList +++++++++++++");

@@ -58,7 +58,27 @@ public class CursusSearchServiceBean implements Serializable {
 	private PopuplistDto popuplistDto = new PopuplistDto();
 
 	private boolean action = false;
+	private boolean action2 = false;
+	private boolean action3 = true;
 	private boolean typeOfCourse;
+
+	
+	
+	public boolean isAction2() {
+		return action2;
+	}
+
+	public void setAction2(boolean action2) {
+		this.action2 = action2;
+	}
+
+	public boolean isAction3() {
+		return action3;
+	}
+
+	public void setAction3(boolean action3) {
+		this.action3 = action3;
+	}
 
 	public boolean isAction() {
 		return action;
@@ -208,13 +228,16 @@ public class CursusSearchServiceBean implements Serializable {
 			listPopulistAY = new ArrayList<PopuplistDto>();
 			listPopulistFIL = new ArrayList<PopuplistDto>();
 			listPopulistEtat = new ArrayList<PopuplistDto>();
+			action2 = true;
+			action3= false;
 			initUpdate();
 		} else {
 			curriculumDto = new CurriculumDto();
 			listPopulistAY = new ArrayList<PopuplistDto>();
 			listPopulistFIL = new ArrayList<PopuplistDto>();
 			listPopulistEtat = new ArrayList<PopuplistDto>();
-
+			action2 = true;
+			action3= false;
 			initCreate();
 		}
 		logger.debug("FIN initDualList +++++++++++++");

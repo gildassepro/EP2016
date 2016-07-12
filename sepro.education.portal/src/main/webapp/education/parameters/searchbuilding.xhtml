@@ -9,212 +9,253 @@
 		<p:growl id="growl" showDetail="true" sticky="false" />
 		<div class="container-fluid">
 			<b:row>
-				<p:overlayPanel id="updatbuilding" widgetVar="updatebuilding"
-					showEffect="fade" hideEffect="fade" dismissable="false"
-					showCloseIcon="true">
-					<div class="messages">
-						<p:messages for="buildingname" id="rbuildingname"></p:messages>
-						<p:messages for="buildingnames" id="buildingname"></p:messages>
-						<p:messages for="selectestablishment" id="listest"></p:messages>
-						<p:messages for="selectsubestablishment" id="listsubest"></p:messages>
-						<p:messages for="selectcountry" id="listecountry"></p:messages>
-					</div>
-					<h:form id="fdial">
-						<h3 style="margin-top: 0">
-							<p:outputLabel value="#{messages.label_createbuilding}"
-								rendered="#{buildingSearchServiceBean.isAction()}" />
-							<p:outputLabel value="#{messages.label_modifier_Building}"
-								rendered="#{!buildingSearchServiceBean.isAction()}" />
-						</h3>
-
-						<div class="ui-grid ui-grid-responsive">
-							<div class="col-xs-12">
-								<div class="row row-school">
-									<div class="col-sm-6">
-										<p:outputLabel styleClass="col-sm-6 col-xs-12"
-											value="#{messages.label_name_building}" /><span class="requireds">(*)</span>
-										<p:inputText styleClass="col-sm-6 col-xs-12"
-											id="buildingnames"
-											value="#{buildingSearchServiceBean.buildingDto.nameBuilding}"
-											placeholder="#{messages.label_name_building}" required="true"
-											requiredMessage="#{messages.label_buildingname_requeried}">
-											<p:ajax update="buildingname" event="keyup" />
-										</p:inputText>
-									</div>
-									<div class="col-sm-6">
-										<p:outputLabel styleClass="col-sm-6 col-xs-12"
-											value="#{messages.label_establishment}:" /><span class="requireds">(*)</span>
-										<p:selectOneMenu styleClass="col-sm-6 col-xs-12"
-											id="selectestablishment"
-											value="#{buildingSearchServiceBean.buildingDto.establishment}"
-											converter="entityConverter"
-											placeholder="#{messages.label_establishment}" required="true"
-											requiredMessage="#{messages.label_establishment_requeried}">
-											<f:selectItem
-												itemLabel="#{buildingSearchServiceBean.buildingDto.establishment.nameEstablishment}"
-												itemValue="#{buildingSearchServiceBean.buildingDto.establishment}"
-												label="#{messages.labelestablishment}" />
-											<f:selectItems
-												value="#{buildingSearchServiceBean.listEstablishment}"
-												var="establishment" itemValue="#{establishment}"
-												itemLabel="#{establishment.nameEstablishment}" />
-										</p:selectOneMenu>
-									</div>
-								</div>
-								<div class="row row-school">
-									<div class="col-sm-6">
-										<p:outputLabel styleClass="col-sm-6 col-xs-12"
-											value="#{messages.label_subestablishment}:" />
-										<p:selectOneMenu styleClass="col-sm-6 col-xs-12"
-											id="selectsubestablishment"
-											value="#{buildingSearchServiceBean.buildingDto.subestablishment}"
-											converter="entityConverter"
-											placeholder="#{messages.label_subestablishment}"
-											required="true"
-											requiredMessage="#{messages.label_subestablishment_requeried}">
-											<f:selectItem
-												itemLabel="#{buildingSearchServiceBean.buildingDto.subestablishment.nameSubestablishment}"
-												itemValue="#{buildingSearchServiceBean.buildingDto.subestablishment}"
-												label="#{messages.label_subestablishment}" />
-											<f:selectItems
-												value="#{buildingSearchServiceBean.listSubEstablishment}"
-												var="subestablishment" itemValue="#{subestablishment}"
-												itemLabel="#{subestablishment.nameSubestablishment}" />
-										</p:selectOneMenu>
-									</div>
-									<div class="col-sm-6">
-
-										<h:panelGrid columns="2" cellpadding="5">
-										<p:outputLabel styleClass="col-sm-6 col-xs-12"
-											value="#{messages.label_time_cleaning}" />
-											<p:selectCheckboxMenu style="width:50px" id="cleanhrs"
-												value="#{buildingSearchServiceBean.listCleanHoursDestination}"
-												filter="true" filterMatchMode="startsWith"
-												converter="entityConverter" panelStyle="width:250px"
-												label="#{messages.label_time_cleaning}">
-												<f:selectItems
-													value="#{buildingSearchServiceBean.listCleanHoursSource}"
-													var="cleaningHours" itemValue="#{cleaningHours}"
-													itemLabel="#{cleaningHours.hours}" />
-											</p:selectCheckboxMenu>
-										</h:panelGrid>
-									</div>
-
-								</div>
-								<div class="row row-school">
-									<div class="col-sm-6">
-										<p:outputLabel styleClass="col-sm-6 col-xs-12"
-											value="#{messages.label_situation_geographique}" /><span class="requireds">(*)</span>
-										<p:inputText styleClass="col-sm-6 col-xs-12" id="gps"
-											value="#{buildingSearchServiceBean.buildingDto.geographicalLocation}"
-											placeholder="#{messages.label_situation_geographique}">
-										</p:inputText>
-									</div>
-								</div>
-								<div class="row row-school">
-									<div class="col-sm-6">
-										<p:outputLabel styleClass="col-sm-6 col-xs-12"
-											value="#{messages.label_nombre_etage}" />
-										<p:inputText styleClass="col-sm-6 col-xs-12" id="nbreetages"
-											value="#{buildingSearchServiceBean.buildingDto.numberOfFloors}"
-											placeholder="#{messages.label_nombre_etage}">
-										</p:inputText>
-									</div>
-									<div class="col-sm-6">
-										<p:outputLabel styleClass="col-sm-6 col-xs-12"
-											value="#{messages.label_nombre_bloc}" />
-										<p:inputText styleClass="col-sm-6 col-xs-12" id="nmbreblocs"
-											value="#{buildingSearchServiceBean.buildingDto.numberOfBlocks}"
-											placeholder="#{messages.label_nombre_bloc}">
-										</p:inputText>
-									</div>
-								</div>
-								<div class="row row-school">
-									<div class="col-sm-6">
-										<p:outputLabel styleClass="col-sm-6 col-xs-12"
-											value="#{messages.label_nombre_salle}" />
-										<p:inputText styleClass="col-sm-6 col-xs-12" id="nbreclasse"
-											value="#{buildingSearchServiceBean.buildingDto.numberOfClassrooms}"
-											placeholder="#{messages.label_nombre_salle}" required="true"
-											requiredMessage="#{messages.label_nombreclasse_requeried}">
-										</p:inputText>
-									</div>
-									<div class="col-sm-6">
-										<p:outputLabel styleClass="col-sm-6 col-xs-12"
-											value="#{messages.label_nombre_salle_machine}" />
-										<p:inputText styleClass="col-sm-6 col-xs-12"
-											id="nbresallemachine"
-											value="#{buildingSearchServiceBean.buildingDto.numberOfMachinerooms}"
-											placeholder="#{messages.label_nombre_salle_machine}">
-										</p:inputText>
-									</div>
-								</div>
-								<div class="row row-school">
-									<div class="col-sm-6">
-										<p:outputLabel styleClass="col-sm-6 col-xs-12"
-											value="#{messages.label_nombre_bureaux}" />
-										<p:inputText styleClass="col-sm-6 col-xs-12" id="nbrbureaux"
-											value="#{buildingSearchServiceBean.buildingDto.numberOfOffices}"
-											placeholder="#{messages.label_nombre_bureaux}">
-										</p:inputText>
-									</div>
-									<div class="col-sm-6">
-										<p:outputLabel styleClass="col-sm-6 col-xs-12"
-											value="#{messages.label_nombre_laboratoire}" />
-										<p:inputText styleClass="col-sm-6 col-xs-12"
-											id="nbrelaboratoire"
-											value="#{buildingSearchServiceBean.buildingDto.numberOfLaboratories}"
-											placeholder="#{messages.label_nombre_laboratoire}">
-										</p:inputText>
-									</div>
-								</div>
-							</div>
-
-							<div class="button-wrapper">
-								<p:commandButton value="#{messages.label_modifier}"
-									styleClass="btn btn-primary"
-									rendered="#{!buildingSearchServiceBean.isAction()}"
-									action="#{buildingSearchServiceBean.updateBuilding()}"
-									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatebuilding').hide()"
-									update="forme fdial growl" />
-								<p:commandButton value="#{messages.label_create}"
-									styleClass="btn btn-primary"
-									rendered="#{buildingSearchServiceBean.isAction()}"
-									action="#{buildingSearchServiceBean.createBuilding()}"
-									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatebuilding').hide()"
-									update="forme fdial growl" />
-								<p:commandButton value="#{messages.label_button_annuler}"
-									type="reset" onclick="PF('updatebuilding').hide()"
-									update="forme" styleClass="btn btn-default btn-sm offset">
-								</p:commandButton>
-							</div>
-						</div>
-					</h:form>
-				</p:overlayPanel>
-
+				<div class="messages">
+					<p:messages for="buildingname" id="rbuildingname"></p:messages>
+					<p:messages for="buildingnames" id="buildingname"></p:messages>
+					<p:messages for="selectestablishment" id="listest"></p:messages>
+					<p:messages for="selectsubestablishment" id="listsubest"></p:messages>
+					<p:messages for="selectcountry" id="listecountry"></p:messages>
+				</div>
 				<h:form id="forme">
 					<p:accordionPanel>
 						<p:tab title="#{messages.label_building}">
 							<b:row styleClass="listPage">
-								<div class="table-header">
-									<p:commandButton id="add" title="#{messages.label_add}"
-										action="#{buildingSearchServiceBean.initDualList('2')}"
-										update="@([id$=updatbuilding])"
-										oncomplete="PF('updatebuilding').show()"
-										value="#{messages.label_modifier}"
+								<div id="menubutton">
+									<p:commandButton id="adde"
 										styleClass="btn btn-primary submit-button"
-										icon="fa fa-fw fa-plus">
+										value="#{messages.label_new}" title="#{messages.label_new}"
+										action="#{buildingSearchServiceBean.initDualList('2')}"
+										update="@([id$=updatbuilding]) forme fdial"
+										onclick="PF('updatebuilding').show()" icon="fa fa-fw fa-plus">
 									</p:commandButton>
-									<p:blockUI block="add" trigger="add">
-											#{messages.label_loading}<br />
-										<p:graphicImage value="/resources/images/loadingpics.gif" />
-									</p:blockUI>
+									<p:commandButton id="modifse"
+										styleClass="btn btn-primary submit-button"
+										value="#{messages.label_modifier}"
+										update="@([id$=updatbuilding]) forme fdial"
+										onclick="PF('updatebuilding').show()"
+										icon="fa fa-fw fa-pencil"
+										action="#{buildingSearchServiceBean.initDualList('1')}">
+									</p:commandButton>
+									<p:commandButton id="deletee" process="@([id$=listbatiments])"
+										styleClass="btn btn-primary submit-button"
+										value="#{messages.label_supprimer1}"
+										title="#{messages.label_supprimer1}"
+										onclick="PF('confirmation').show()" icon="fa fa-fw fa-remove">
+									</p:commandButton>
+									<p:commandButton id="printe"
+										update="@([id$=listbatiments]) forme fdial"
+										styleClass="btn btn-primary submit-button"
+										title="#{messages.label_print}"
+										value="#{messages.label_print}"
+										onclick="PF('confirmation').show()" icon="fa fa-fw fa-print">
+									</p:commandButton>
+									<p:splitButton value="#{messages.label_options}"
+										actionListener="#{buttonView.save}" icon="ui-icon-gear">
+										<p:menuitem value="Update"
+											actionListener="#{buttonView.update}"
+											icon="ui-icon-arrowrefresh-1-w" />
+										<p:menuitem value="Delete"
+											actionListener="#{buttonView.delete}" ajax="false"
+											icon="ui-icon-close" />
+										<p:separator />
+										<p:menuitem value="Homepage" icon="ui-icon-extlink" />
+									</p:splitButton>
+
+									<p:commandButton id="past"
+										styleClass="btn btn-primary submit-button" ajax="false"
+										action="searchbuilding.xhtml?faces-redirect=true"
+										update="@([id$=listbatiments]) forme fdial"
+										icon="fa fa-fw fa-arrow-left">
+									</p:commandButton>
+
+									<p:commandButton value="#{messages.label_modifier}"
+										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
+										rendered="#{!regionSearchServiceBean.isAction()}"
+										action="#{buildingSearchServiceBean.updateBuilding()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatebuilding').hide()"
+										update="forme fdial growl" />
+									<p:commandButton value="#{messages.label_create}"
+										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
+										rendered="#{buildingSearchServiceBean.isAction()}"
+										action="#{buildingSearchServiceBean.createBuilding()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatebuilding').hide()"
+										update="forme fdial growl" />
 								</div>
+
+								<p:panel id="updatbuilding" widgetVar="updatebuilding"
+									rendered="#{!buildingSearchServiceBean.isAction3()}">
+
+									<h:form id="fdial">
+										<h3 style="margin-top: 0">
+											<p:outputLabel value="#{messages.label_createbuilding}"
+												rendered="#{buildingSearchServiceBean.isAction()}" />
+											<p:outputLabel value="#{messages.label_modifier_Building}"
+												rendered="#{!buildingSearchServiceBean.isAction()}" />
+										</h3>
+
+										<div class="ui-grid ui-grid-responsive">
+											<div class="col-xs-12">
+												<div class="row row-school">
+													<div class="col-sm-6">
+														<p:outputLabel styleClass="col-sm-6 col-xs-12"
+															value="#{messages.label_name_building}" />
+														<span class="requireds">(*)</span>
+														<p:inputText styleClass="col-sm-6 col-xs-12"
+															id="buildingnames"
+															value="#{buildingSearchServiceBean.buildingDto.nameBuilding}"
+															placeholder="#{messages.label_name_building}"
+															required="true"
+															requiredMessage="#{messages.label_buildingname_requeried}">
+															<p:ajax update="buildingname" event="keyup" />
+														</p:inputText>
+													</div>
+													<div class="col-sm-6">
+														<p:outputLabel styleClass="col-sm-6 col-xs-12"
+															value="#{messages.label_establishment}:" />
+														<span class="requireds">(*)</span>
+														<p:selectOneMenu styleClass="col-sm-6 col-xs-12"
+															id="selectestablishment"
+															value="#{buildingSearchServiceBean.buildingDto.establishment}"
+															converter="entityConverter"
+															placeholder="#{messages.label_establishment}"
+															required="true"
+															requiredMessage="#{messages.label_establishment_requeried}">
+															<f:selectItem
+																itemLabel="#{buildingSearchServiceBean.buildingDto.establishment.nameEstablishment}"
+																itemValue="#{buildingSearchServiceBean.buildingDto.establishment}"
+																label="#{messages.labelestablishment}" />
+															<f:selectItems
+																value="#{buildingSearchServiceBean.listEstablishment}"
+																var="establishment" itemValue="#{establishment}"
+																itemLabel="#{establishment.nameEstablishment}" />
+														</p:selectOneMenu>
+													</div>
+												</div>
+												<div class="row row-school">
+													<div class="col-sm-6">
+														<p:outputLabel styleClass="col-sm-6 col-xs-12"
+															value="#{messages.label_subestablishment}:" />
+														<p:selectOneMenu styleClass="col-sm-6 col-xs-12"
+															id="selectsubestablishment"
+															value="#{buildingSearchServiceBean.buildingDto.subestablishment}"
+															converter="entityConverter"
+															placeholder="#{messages.label_subestablishment}"
+															required="true"
+															requiredMessage="#{messages.label_subestablishment_requeried}">
+															<f:selectItem
+																itemLabel="#{buildingSearchServiceBean.buildingDto.subestablishment.nameSubestablishment}"
+																itemValue="#{buildingSearchServiceBean.buildingDto.subestablishment}"
+																label="#{messages.label_subestablishment}" />
+															<f:selectItems
+																value="#{buildingSearchServiceBean.listSubEstablishment}"
+																var="subestablishment" itemValue="#{subestablishment}"
+																itemLabel="#{subestablishment.nameSubestablishment}" />
+														</p:selectOneMenu>
+													</div>
+													<div class="col-sm-6">
+
+														<h:panelGrid columns="2" cellpadding="5">
+															<p:outputLabel styleClass="col-sm-6 col-xs-12"
+																value="#{messages.label_time_cleaning}" />
+															<p:selectCheckboxMenu style="width:50px" id="cleanhrs"
+																value="#{buildingSearchServiceBean.listCleanHoursDestination}"
+																filter="true" filterMatchMode="startsWith"
+																converter="entityConverter" panelStyle="width:250px"
+																label="#{messages.label_time_cleaning}">
+																<f:selectItems
+																	value="#{buildingSearchServiceBean.listCleanHoursSource}"
+																	var="cleaningHours" itemValue="#{cleaningHours}"
+																	itemLabel="#{cleaningHours.hours}" />
+															</p:selectCheckboxMenu>
+														</h:panelGrid>
+													</div>
+
+												</div>
+												<div class="row row-school">
+													<div class="col-sm-6">
+														<p:outputLabel styleClass="col-sm-6 col-xs-12"
+															value="#{messages.label_situation_geographique}" />
+														<span class="requireds">(*)</span>
+														<p:inputText styleClass="col-sm-6 col-xs-12" id="gps"
+															value="#{buildingSearchServiceBean.buildingDto.geographicalLocation}"
+															placeholder="#{messages.label_situation_geographique}">
+														</p:inputText>
+													</div>
+												</div>
+												<div class="row row-school">
+													<div class="col-sm-6">
+														<p:outputLabel styleClass="col-sm-6 col-xs-12"
+															value="#{messages.label_nombre_etage}" />
+														<p:inputText styleClass="col-sm-6 col-xs-12"
+															id="nbreetages"
+															value="#{buildingSearchServiceBean.buildingDto.numberOfFloors}"
+															placeholder="#{messages.label_nombre_etage}">
+														</p:inputText>
+													</div>
+													<div class="col-sm-6">
+														<p:outputLabel styleClass="col-sm-6 col-xs-12"
+															value="#{messages.label_nombre_bloc}" />
+														<p:inputText styleClass="col-sm-6 col-xs-12"
+															id="nmbreblocs"
+															value="#{buildingSearchServiceBean.buildingDto.numberOfBlocks}"
+															placeholder="#{messages.label_nombre_bloc}">
+														</p:inputText>
+													</div>
+												</div>
+												<div class="row row-school">
+													<div class="col-sm-6">
+														<p:outputLabel styleClass="col-sm-6 col-xs-12"
+															value="#{messages.label_nombre_salle}" />
+														<p:inputText styleClass="col-sm-6 col-xs-12"
+															id="nbreclasse"
+															value="#{buildingSearchServiceBean.buildingDto.numberOfClassrooms}"
+															placeholder="#{messages.label_nombre_salle}"
+															required="true"
+															requiredMessage="#{messages.label_nombreclasse_requeried}">
+														</p:inputText>
+													</div>
+													<div class="col-sm-6">
+														<p:outputLabel styleClass="col-sm-6 col-xs-12"
+															value="#{messages.label_nombre_salle_machine}" />
+														<p:inputText styleClass="col-sm-6 col-xs-12"
+															id="nbresallemachine"
+															value="#{buildingSearchServiceBean.buildingDto.numberOfMachinerooms}"
+															placeholder="#{messages.label_nombre_salle_machine}">
+														</p:inputText>
+													</div>
+												</div>
+												<div class="row row-school">
+													<div class="col-sm-6">
+														<p:outputLabel styleClass="col-sm-6 col-xs-12"
+															value="#{messages.label_nombre_bureaux}" />
+														<p:inputText styleClass="col-sm-6 col-xs-12"
+															id="nbrbureaux"
+															value="#{buildingSearchServiceBean.buildingDto.numberOfOffices}"
+															placeholder="#{messages.label_nombre_bureaux}">
+														</p:inputText>
+													</div>
+													<div class="col-sm-6">
+														<p:outputLabel styleClass="col-sm-6 col-xs-12"
+															value="#{messages.label_nombre_laboratoire}" />
+														<p:inputText styleClass="col-sm-6 col-xs-12"
+															id="nbrelaboratoire"
+															value="#{buildingSearchServiceBean.buildingDto.numberOfLaboratories}"
+															placeholder="#{messages.label_nombre_laboratoire}">
+														</p:inputText>
+													</div>
+												</div>
+											</div>
+
+										</div>
+									</h:form>
+								</p:panel>
 								<p:dataTable id="listbatiments"
 									value="#{buildingSearchServiceBean.listBuilding}"
+									rendered="#{!buildingSearchServiceBean.isAction2()}"
 									var="buildings" widgetVar="buildingTable"
 									emptyMessage="#{messages.label_empty}"
 									styleClass="listeTable table-responsive filterable"
+									selection="#{buildingSearchServiceBean.buildingsDto}"
 									tableStyleClass="table table-striped table-condensed table-hover"
 									rowKey="#{buildings.idBuilding}" selectionMode="single"
 									paginator="true" paginatorPosition="bottom"
@@ -258,35 +299,6 @@
 										<h:outputText value="#{buildings.numberOfClassrooms}"></h:outputText>
 									</p:column>
 
-									<p:column priority="1" width="100" filterMatchMode="contains">
-										<f:facet name="header">
-											<!-- 		 <p:outputLabel value="#{messages.label_action}" /> -->
-											<p:outputLabel value="#{messages.label_action}" />
-										</f:facet>
-										<p:commandButton id="modifier" styleClass="btn btn-success"
-											title="#{messages.label_modifier}"
-											action="#{buildingSearchServiceBean.initDualList('1')}"
-											update="@([id$=updatbuilding])"
-											oncomplete="PF('updatebuilding').show()"
-											value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil">
-											<f:setPropertyActionListener value="#{buildings}"
-												target="#{buildingSearchServiceBean.buildingsDto}" />
-										</p:commandButton>
-
-										<p:commandButton id="supprimer" styleClass="btn btn-danger"
-											title="#{messages.label_supprimer1}"
-											onclick="PF('confirmation').show()"
-											value="#{messages.label_supprimer1}"
-											icon="fa fa-fw fa-remove">
-											<f:setPropertyActionListener value="#{buildings}"
-												target="#{buildingSearchServiceBean.buildingsDto}" />
-										</p:commandButton>
-										<p:blockUI block="listbatiments"
-											trigger="listbatiments:supprimer,listbatiments:modifier">
-											#{messages.label_loading}<br />
-											<p:graphicImage value="/resources/images/loadingpics.gif" />
-										</p:blockUI>
-									</p:column>
 								</p:dataTable>
 
 								<p:confirmDialog

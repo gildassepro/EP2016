@@ -9,229 +9,300 @@
 		<p:growl id="growl" showDetail="true" sticky="false" />
 		<div class="container-fluid">
 			<b:row>
-				<p:overlayPanel id="updatphoneformat" widgetVar="updatephoneformat"
-					showEffect="fade" hideEffect="fade" dismissable="false"
-					showCloseIcon="true">
-					<h:form id="fdial">
-						<h3 style="margin-top: 0">
-							<p:outputLabel value="#{messages.label_modifier_Phoneformat}"
-								rendered="#{!phoneFormatSearchServiceBean.isAction()}" />
-							<p:outputLabel value="#{messages.label_creer_phoneformat}"
-								rendered="#{phoneFormatSearchServiceBean.isAction()}" />
-						</h3>
-
-						<p:outputPanel id="updatphoneformatDetail">
-							<div class="ui-grid ui-grid-responsive wrap class">
-								<div class="col-xs-12">
-									<div class="row">
-										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<p:outputLabel value="#{messages.label_indicatif}" /><span class="requireds">(*)</span>
-										</div>
-										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<p:inputText styleClass="form-control" id="indicatif"
-												maxlength="4"
-												value="#{phoneFormatSearchServiceBean.phoneformatDto.indicatif}"
-												placeholder="#{messages.label_indicatifphone}"
-												required="true"
-												requiredMessage="#{messages.label_indicatif_requeried}">
-												<f:validateLength minimum="3" maximum="4" />
-												<p:ajax event="keyup" />
-											</p:inputText>
-										</div>
-										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<p:outputLabel value="#{messages.label_description1}" />
-										</div>
-										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<p:inputText styleClass="form-control" id="description"
-												maxlength="64"
-												value="#{phoneFormatSearchServiceBean.phoneformatDto.description}"
-												placeholder="#{messages.label_descriptionphone}">
-												<f:validateLength minimum="3" maximum="64" />
-												<p:ajax event="keyup" />
-											</p:inputText>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<p:outputLabel value="#{messages.label_bloc1}" /><span class="requireds">(*)</span>
-										</div>
-										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<b:inputText id="bloc1" maxlength="11"
-												value="#{phoneFormatSearchServiceBean.phoneformatDto.nbrOfDigitBloc1}"
-												placeholder="#{messages.label_menu_name}" required="true"
-												requiredMessage="#{messages.label_bloc1_requeried}">
-												<f:validateLength minimum="1" maximum="11" />
-												<p:ajax event="keyup" />
-											</b:inputText>
-										</div>
-										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<p:outputLabel value="#{messages.label_bloc2}" /><span class="requireds">(*)</span>
-										</div>
-										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<b:inputText id="bloc2" maxlength="11"
-												value="#{phoneFormatSearchServiceBean.phoneformatDto.nbrOfDigitBloc2}"
-												placeholder="#{messages.label_menu_name}" required="true"
-												requiredMessage="#{messages.label_bloc2_requeried}">
-												<f:validateLength minimum="1" maximum="11" />
-												<p:ajax event="keyup" />
-											</b:inputText>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<p:outputLabel value="#{messages.label_bloc3}" /><span class="requireds">(*)</span>
-										</div>
-										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<b:inputText id="bloc3" maxlength="11"
-												value="#{phoneFormatSearchServiceBean.phoneformatDto.nbrOfDigitBloc3}"
-												placeholder="#{messages.label_menu_name}" required="true"
-												requiredMessage="#{messages.label_bloc3_requeried}">
-												<f:validateLength minimum="1" maximum="11" />
-												<p:ajax event="keyup" />
-											</b:inputText>
-										</div>
-										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<p:outputLabel value="#{messages.label_bloc4}" /><span class="requireds">(*)</span>
-										</div>
-										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<b:inputText id="bloc4" maxlength="11"
-												value="#{phoneFormatSearchServiceBean.phoneformatDto.nbrOfDigitBloc4}"
-												placeholder="#{messages.label_menu_name}" required="true"
-												requiredMessage="#{messages.label_bloc4_requeried}">
-												<p:ajax event="keyup" />
-											</b:inputText>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<p:outputLabel value="#{messages.label_bloc5}" /><span class="requireds">(*)</span>
-										</div>
-										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<b:inputText id="bloc5" maxlength="11"
-												value="#{phoneFormatSearchServiceBean.phoneformatDto.nbrOfDigitBloc5}"
-												placeholder="#{messages.label_menu_name}" required="true"
-												requiredMessage="#{messages.label_bloc5_requeried}">
-												<f:validateLength minimum="1" maximum="11" />
-												<p:ajax event="keyup" />
-											</b:inputText>
-										</div>
-										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<p:outputLabel value="#{messages.label_bloc6}" /><span class="requireds">(*)</span>
-										</div>
-										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<b:inputText id="bloc6" maxlength="11"
-												value="#{phoneFormatSearchServiceBean.phoneformatDto.nbrOfDigitBloc6}"
-												placeholder="#{messages.label_menu_name}" required="true"
-												requiredMessage="#{messages.label_bloc6_requeried}">
-												<f:validateLength minimum="1" maximum="11" />
-												<p:ajax event="keyup" />
-											</b:inputText>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<p:outputLabel value="#{messages.label_bloc7}" /><span class="requireds">(*)</span>
-										</div>
-										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<b:inputText id="bloc7" maxlength="11"
-												value="#{phoneFormatSearchServiceBean.phoneformatDto.nbrOfDigitBloc7}"
-												placeholder="#{messages.label_menu_name}" required="true"
-												requiredMessage="#{messages.label_bloc7_requeried}">
-												<f:validateLength minimum="1" maximum="11" />
-												<p:ajax event="keyup" />
-											</b:inputText>
-										</div>
-										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<p:outputLabel value="#{messages.label_bloc8}" /><span class="requireds">(*)</span>
-										</div>
-										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<b:inputText id="bloc8" maxlength="11"
-												value="#{phoneFormatSearchServiceBean.phoneformatDto.nbrOfDigitBloc8}"
-												placeholder="#{messages.label_menu_name}" required="true"
-												requiredMessage="#{messages.label_bloc8_requeried}">
-												<f:validateLength minimum="1" maximum="11" />
-												<p:ajax event="keyup" />
-											</b:inputText>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<p:outputLabel value="#{messages.label_bloc9}" /><span class="requireds">(*)</span>
-										</div>
-										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<b:inputText id="bloc9" maxlength="11"
-												value="#{phoneFormatSearchServiceBean.phoneformatDto.nbrOfDigitBloc9}"
-												placeholder="#{messages.label_menu_name}" required="true"
-												requiredMessage="#{messages.label_bloc9_requeried}">
-												<f:validateLength minimum="1" maximum="11" />
-												<p:ajax event="keyup" />
-											</b:inputText>
-										</div>
-										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<p:outputLabel value="#{messages.label_bloc10}" /><span class="requireds">(*)</span>
-										</div>
-										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-											<b:inputText id="bloc10" maxlength="11"
-												value="#{phoneFormatSearchServiceBean.phoneformatDto.nbrOfDigitBloc10}"
-												placeholder="#{messages.label_menu_name}" required="true"
-												requiredMessage="#{messages.label_bloc10_requeried}">
-												<p:ajax event="keyup" />
-											</b:inputText>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="button-wrapper">
-								<p:commandButton value="#{messages.label_modifier}"
-									styleClass="btn btn-primary"
-									rendered="#{!phoneFormatSearchServiceBean.isAction()}"
-									action="#{phoneFormatSearchServiceBean.updatePhone()}"
-									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatephoneformat').hide()"
-									update="forme fdial growl">
-								</p:commandButton>
-								<p:commandButton value="#{messages.label_create}"
-									styleClass="btn btn-primary"
-									rendered="#{phoneFormatSearchServiceBean.isAction()}"
-									action="#{phoneFormatSearchServiceBean.createPhone()}"
-									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatephoneformat').hide()"
-									update="forme fdial growl">
-								</p:commandButton>
-								<p:commandButton value="#{messages.label_button_annuler}"
-									type="reset" onclick="PF('updatephoneformat').hide()"
-									update="fdial" styleClass="btn btn-default btn-sm offset"
-									id="annulerButton">
-								</p:commandButton>
-							</div>
-						</p:outputPanel>
-					</h:form>
-				</p:overlayPanel>
 
 				<h:form id="forme">
 					<p:accordionPanel>
 						<p:tab title="#{messages.label_Recherche_Phone_Format}">
 							<b:row styleClass="listPage">
-								<div class="table-header">
 
-									<p:commandButton id="add" title="#{messages.label_add}"
-										action="#{phoneFormatSearchServiceBean.initDualList('2')}"
-										update="@([id$=updatphoneformat])"
-										oncomplete="PF('updatephoneformat').show()"
-										value="#{messages.label_modifier}"
+								<div id="menubutton">
+									<p:commandButton id="adde"
 										styleClass="btn btn-primary submit-button"
+										value="#{messages.label_new}" title="#{messages.label_new}"
+										action="#{phoneFormatSearchServiceBean.initDualList('2')}"
+										update="@([id$=updatphoneformat]) forme fdial"
+										onclick="PF('updatephoneformat').show()"
 										icon="fa fa-fw fa-plus">
 									</p:commandButton>
+									<p:commandButton id="modifse"
+										styleClass="btn btn-primary submit-button"
+										value="#{messages.label_modifier}"
+										update="@([id$=updatphoneformat]) forme fdial"
+										onclick="PF('updatephoneformat').show()"
+										icon="fa fa-fw fa-pencil"
+										action="#{phoneFormatSearchServiceBean.initDualList('1')}">
+									</p:commandButton>
+									<p:commandButton id="deletee"
+										process="@([id$=listphoneformats])"
+										styleClass="btn btn-primary submit-button"
+										value="#{messages.label_supprimer1}"
+										title="#{messages.label_supprimer1}"
+										onclick="PF('confirmation').show()" icon="fa fa-fw fa-remove">
+									</p:commandButton>
+									<p:commandButton id="printe"
+										update="@([id$=listphoneformats]) forme fdial"
+										styleClass="btn btn-primary submit-button"
+										title="#{messages.label_print}"
+										value="#{messages.label_print}"
+										onclick="PF('confirmation').show()" icon="fa fa-fw fa-print">
+									</p:commandButton>
+									<p:splitButton value="#{messages.label_options}"
+										actionListener="#{buttonView.save}" icon="ui-icon-gear">
+										<p:menuitem value="Update"
+											actionListener="#{buttonView.update}"
+											icon="ui-icon-arrowrefresh-1-w" />
+										<p:menuitem value="Delete"
+											actionListener="#{buttonView.delete}" ajax="false"
+											icon="ui-icon-close" />
+										<p:separator />
+										<p:menuitem value="Homepage" icon="ui-icon-extlink" />
+									</p:splitButton>
 
-									<p:blockUI block="add" trigger="add">
-											#{messages.label_loading}<br />
-										<p:graphicImage value="/resources/images/loadingpics.gif" />
-									</p:blockUI>
+									<p:commandButton id="past"
+										styleClass="btn btn-primary submit-button" ajax="false"
+										action="searchphoneformat.xhtml?faces-redirect=true"
+										update="@([id$=listphoneformats]) forme fdial"
+										icon="fa fa-fw fa-arrow-left">
+									</p:commandButton>
+
+									<p:commandButton value="#{messages.label_modifier}"
+										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
+										rendered="#{!phoneFormatSearchServiceBean.isAction()}"
+										action="#{phoneFormatSearchServiceBean.updatePhone()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatephoneformat').hide()"
+										update="forme fdial growl" />
+									<p:commandButton value="#{messages.label_create}"
+										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
+										rendered="#{phoneFormatSearchServiceBean.isAction()}"
+										action="#{phoneFormatSearchServiceBean.createPhone()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatephoneformat').hide()"
+										update="forme fdial growl" />
+
 								</div>
+								<p:panel id="updatphoneformat" widgetVar="updatephoneformat"
+									rendered="#{!phoneFormatSearchServiceBean.isAction3()}">
+									<h:form id="fdial">
+										<h3 style="margin-top: 0">
+											<p:outputLabel value="#{messages.label_modifier_Phoneformat}"
+												rendered="#{!phoneFormatSearchServiceBean.isAction()}" />
+											<p:outputLabel value="#{messages.label_creer_phoneformat}"
+												rendered="#{phoneFormatSearchServiceBean.isAction()}" />
+										</h3>
 
+										<p:outputPanel id="updatphoneformatDetail">
+											<div class="ui-grid ui-grid-responsive wrap class">
+												<div class="col-xs-12">
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+															<p:outputLabel value="#{messages.label_indicatif}" />
+															<span class="requireds">(*)</span>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+															<p:inputText styleClass="form-control" id="indicatif"
+																maxlength="4"
+																value="#{phoneFormatSearchServiceBean.phoneformatDto.indicatif}"
+																placeholder="#{messages.label_indicatifphone}"
+																required="true"
+																requiredMessage="#{messages.label_indicatif_requeried}">
+																<f:validateLength minimum="1" maximum="4" />
+																<p:ajax event="keyup" />
+															</p:inputText>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+															<p:outputLabel value="#{messages.label_description1}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+															<p:inputText styleClass="form-control" id="description"
+																maxlength="64"
+																value="#{phoneFormatSearchServiceBean.phoneformatDto.description}"
+																placeholder="#{messages.label_descriptionphone}">
+																<f:validateLength minimum="3" maximum="64" />
+																<p:ajax event="keyup" />
+															</p:inputText>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+															<p:outputLabel value="#{messages.label_bloc1}" />
+															<span class="requireds">(*)</span>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+															<b:inputText id="bloc1" maxlength="11"
+																value="#{phoneFormatSearchServiceBean.phoneformatDto.nbrOfDigitBloc1}"
+																placeholder="#{messages.label_menu_name}"
+																required="true"
+																requiredMessage="#{messages.label_bloc1_requeried}">
+																<f:validateLength minimum="1" maximum="11" />
+																<p:ajax event="keyup" />
+															</b:inputText>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+															<p:outputLabel value="#{messages.label_bloc2}" />
+															<span class="requireds">(*)</span>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+															<b:inputText id="bloc2" maxlength="11"
+																value="#{phoneFormatSearchServiceBean.phoneformatDto.nbrOfDigitBloc2}"
+																placeholder="#{messages.label_menu_name}"
+																required="true"
+																requiredMessage="#{messages.label_bloc2_requeried}">
+																<f:validateLength minimum="1" maximum="11" />
+																<p:ajax event="keyup" />
+															</b:inputText>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+															<p:outputLabel value="#{messages.label_bloc3}" />
+															<span class="requireds">(*)</span>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+															<b:inputText id="bloc3" maxlength="11"
+																value="#{phoneFormatSearchServiceBean.phoneformatDto.nbrOfDigitBloc3}"
+																placeholder="#{messages.label_menu_name}"
+																required="true"
+																requiredMessage="#{messages.label_bloc3_requeried}">
+																<f:validateLength minimum="1" maximum="11" />
+																<p:ajax event="keyup" />
+															</b:inputText>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+															<p:outputLabel value="#{messages.label_bloc4}" />
+															<span class="requireds">(*)</span>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+															<b:inputText id="bloc4" maxlength="11"
+																value="#{phoneFormatSearchServiceBean.phoneformatDto.nbrOfDigitBloc4}"
+																placeholder="#{messages.label_menu_name}"
+																required="true"
+																requiredMessage="#{messages.label_bloc4_requeried}">
+																<p:ajax event="keyup" />
+															</b:inputText>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+															<p:outputLabel value="#{messages.label_bloc5}" />
+															<span class="requireds">(*)</span>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+															<b:inputText id="bloc5" maxlength="11"
+																value="#{phoneFormatSearchServiceBean.phoneformatDto.nbrOfDigitBloc5}"
+																placeholder="#{messages.label_menu_name}"
+																required="true"
+																requiredMessage="#{messages.label_bloc5_requeried}">
+																<f:validateLength minimum="1" maximum="11" />
+																<p:ajax event="keyup" />
+															</b:inputText>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+															<p:outputLabel value="#{messages.label_bloc6}" />
+															<span class="requireds">(*)</span>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+															<b:inputText id="bloc6" maxlength="11"
+																value="#{phoneFormatSearchServiceBean.phoneformatDto.nbrOfDigitBloc6}"
+																placeholder="#{messages.label_menu_name}"
+																required="true"
+																requiredMessage="#{messages.label_bloc6_requeried}">
+																<f:validateLength minimum="1" maximum="11" />
+																<p:ajax event="keyup" />
+															</b:inputText>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+															<p:outputLabel value="#{messages.label_bloc7}" />
+															<span class="requireds">(*)</span>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+															<b:inputText id="bloc7" maxlength="11"
+																value="#{phoneFormatSearchServiceBean.phoneformatDto.nbrOfDigitBloc7}"
+																placeholder="#{messages.label_menu_name}"
+																required="true"
+																requiredMessage="#{messages.label_bloc7_requeried}">
+																<f:validateLength minimum="1" maximum="11" />
+																<p:ajax event="keyup" />
+															</b:inputText>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+															<p:outputLabel value="#{messages.label_bloc8}" />
+															<span class="requireds">(*)</span>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+															<b:inputText id="bloc8" maxlength="11"
+																value="#{phoneFormatSearchServiceBean.phoneformatDto.nbrOfDigitBloc8}"
+																placeholder="#{messages.label_menu_name}"
+																required="true"
+																requiredMessage="#{messages.label_bloc8_requeried}">
+																<f:validateLength minimum="1" maximum="11" />
+																<p:ajax event="keyup" />
+															</b:inputText>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+															<p:outputLabel value="#{messages.label_bloc9}" />
+															<span class="requireds">(*)</span>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+															<b:inputText id="bloc9" maxlength="11"
+																value="#{phoneFormatSearchServiceBean.phoneformatDto.nbrOfDigitBloc9}"
+																placeholder="#{messages.label_menu_name}"
+																required="true"
+																requiredMessage="#{messages.label_bloc9_requeried}">
+																<f:validateLength minimum="1" maximum="11" />
+																<p:ajax event="keyup" />
+															</b:inputText>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+															<p:outputLabel value="#{messages.label_bloc10}" />
+															<span class="requireds">(*)</span>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+															<b:inputText id="bloc10" maxlength="11"
+																value="#{phoneFormatSearchServiceBean.phoneformatDto.nbrOfDigitBloc10}"
+																placeholder="#{messages.label_menu_name}"
+																required="true"
+																requiredMessage="#{messages.label_bloc10_requeried}">
+																<p:ajax event="keyup" />
+															</b:inputText>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="button-wrapper">
+												<p:commandButton value="#{messages.label_modifier}"
+													styleClass="btn btn-primary"
+													rendered="#{!phoneFormatSearchServiceBean.isAction()}"
+													action="#{phoneFormatSearchServiceBean.updatePhone()}"
+													oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatephoneformat').hide()"
+													update="forme fdial growl">
+												</p:commandButton>
+												<p:commandButton value="#{messages.label_create}"
+													styleClass="btn btn-primary"
+													rendered="#{phoneFormatSearchServiceBean.isAction()}"
+													action="#{phoneFormatSearchServiceBean.createPhone()}"
+													oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatephoneformat').hide()"
+													update="forme fdial growl">
+												</p:commandButton>
+												<p:commandButton value="#{messages.label_button_annuler}"
+													type="reset" onclick="PF('updatephoneformat').hide()"
+													update="fdial" styleClass="btn btn-default btn-sm offset"
+													id="annulerButton">
+												</p:commandButton>
+											</div>
+										</p:outputPanel>
+									</h:form>
+								</p:panel>
+							
 								<p:dataTable id="listphoneformats"
 									value="#{phoneFormatSearchServiceBean.listphoneformat}"
 									var="phoneformat" widgetVar="menuTable"
+									rendered="#{!phoneFormatSearchServiceBean.isAction2()}"
 									emptyMessage="#{messages.label_empty}"
 									styleClass="listeTable table-responsive filterable"
+									selection="#{phoneFormatSearchServiceBean.phoneformaDto}"
 									tableStyleClass="table table-striped table-condensed table-hover"
 									rowKey="#{phoneformat.idPhoneFormat}" selectionMode="single"
 									paginator="true" paginatorPosition="bottom"
@@ -352,51 +423,19 @@
 										</f:facet>
 										<p:outputLabel value="#{phoneformat.nbrOfDigitBloc10}"></p:outputLabel>
 									</p:column>
-
-									<p:column priority="1" width="100" filterMatchMode="contains">
-
-										<f:facet name="header">
-											<p:outputLabel value="#{messages.label_action}" />
-										</f:facet>
-
-										<p:commandButton id="modifier" styleClass="btn btn-success"
-											title="#{messages.label_modifier}"
-											action="#{phoneFormatSearchServiceBean.initDualList('1')}"
-											update="@([id$=updatphoneformat])"
-											oncomplete="PF('updatephoneformat').show()"
-											value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil">
-											<f:setPropertyActionListener value="#{phoneformat}"
-												target="#{phoneFormatSearchServiceBean.phoneformaDto}" />
-										</p:commandButton>
-
-										<p:commandButton id="supprimer" styleClass="btn btn-danger"
-											title="#{messages.label_supprimer1}"
-											onclick="PF('confirmation').show()"
-											value="#{messages.label_supprimer1}"
-											icon="fa fa-fw fa-remove">
-											<f:setPropertyActionListener value="#{phoneformat}"
-												target="#{phoneFormatSearchServiceBean.phoneformaDto}" />
-										</p:commandButton>
-
-										<p:blockUI block="listphoneformats"
-											trigger="listphoneformats:supprimer,listphoneformats:modifier">
-										#{messages.label_loading}<br />
-											<p:graphicImage value="/resources/images/loadingpics.gif" />
-										</p:blockUI>
-
-										<p:confirmDialog
-											message="#{messages.label_msg_alerte_supression}"
-											header="Confirmation" widgetVar="confirmation">
-											<p:commandButton value="#{messages.label_msg_confirmOui}"
-												onclick="PF('confirmation').hide()"
-												action="#{phoneFormatSearchServiceBean.supprimerPhone()}"
-												update="forme growl" />
-											<p:commandButton value="#{messages.label_msg_confirmNon}"
-												onclick="PF('confirmation').hide()" type="button" />
-										</p:confirmDialog>
-									</p:column>
+									
 								</p:dataTable>
 
+								<p:confirmDialog
+									message="#{messages.label_msg_alerte_supression}"
+									header="Confirmation" widgetVar="confirmation">
+									<p:commandButton value="#{messages.label_msg_confirmOui}"
+										onclick="PF('confirmation').hide()"
+										action="#{phoneFormatSearchServiceBean.supprimerPhone()}"
+										update="forme growl" />
+									<p:commandButton value="#{messages.label_msg_confirmNon}"
+										onclick="PF('confirmation').hide()" type="button" />
+								</p:confirmDialog>
 								<p:contextMenu for="listphoneformats">
 									<p:menuitem value="Modifier" icon="ui-icon-search" />
 									<p:menuitem value="Supprimer" icon="ui-icon-search" />

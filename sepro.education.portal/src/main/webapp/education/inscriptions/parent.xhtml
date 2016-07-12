@@ -23,7 +23,7 @@
 			<br></br> <br></br>
 
 			<p:tab id="parent" title="#{messages.label_declaration}">
-				<p:panel id="pan1" header="#{messages.label_identite}">
+				<p:panel id="pan1" header="#{messages.label_parent_tuteur}">
 					<h:form id="forme">
 						<div class="ui-grid ui-grid-responsive wrap class">
 							<div class="col-xs-12">
@@ -31,6 +31,7 @@
 									<div class="col-lg-3 col-md-3 col-sm-3">
 										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
 											value="#{messages.label_name}" />
+										<span class="requireds">(*)</span>
 									</div>
 
 									<div class="col-lg-3 col-md-3 col-sm-3">
@@ -45,6 +46,7 @@
 									<div class="col-lg-3 col-md-3 col-sm-3">
 										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
 											value="#{messages.label_firstname}" />
+										<span class="requireds">(*)</span>
 									</div>
 
 									<div class="col-lg-3 col-md-3 col-sm-3">
@@ -63,6 +65,7 @@
 									<div class="col-lg-3 col-md-3 col-sm-3">
 										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
 											value="#{messages.label_adresseemail}" />
+										<span class="requireds">(*)</span>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
 										<p:inputText styleClass="form-control" id="email2"
@@ -76,9 +79,10 @@
 												update=":formbuttons:enregistrer :formbuttons:suivant" />
 										</p:inputText>
 									</div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3">
+									<div class="col-lg-3 col-md-3 col-sm-3">
 										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
 											value="#{messages.label_relationship}" />
+										<span class="requireds">(*)</span>
 									</div>
 
 									<div class="col-lg-3 col-md-3 col-sm-3">
@@ -102,6 +106,7 @@
 									<div class="col-lg-3 col-md-3 col-sm-3">
 										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
 											value="#{messages.label_countrys}" />
+										<span class="requireds">(*)</span>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
 										<p:selectOneMenu styleClass="form-text" id="gerantcountry"
@@ -121,74 +126,78 @@
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
 										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
-											value="#{messages.label_regions}"  />
+											value="#{messages.label_regions}" />
+										<span class="requireds">(*)</span>
 									</div>
 
 									<div class="col-lg-3 col-md-3 col-sm-3">
 										<p:selectOneMenu styleClass="form-text" id="region2"
-										value="#{inscriptionSearchServiceBean.inscription2Dto.regionAddress}"
-										converter="entityConverter">
-										<f:selectItem
-											itemLabel="#{inscriptionSearchServiceBean.inscription2Dto.regionAddress.regionName}"
-											itemValue="#{inscriptionSearchServiceBean.inscription2Dto.regionAddress}" />
-										<f:selectItems
-											value="#{inscriptionSearchServiceBean.listregion}"
-											var="regionAddress" itemValue="#{regionAddress}"
-											itemLabel="#{regionAddress.regionName}" />
-										<p:ajax event="valueChange"
-											listener="#{inscriptionSearchServiceBean.updateListvilleparent()}"
-											update=":formbuttons:enregistrer :formbuttons:suivant city2" />
-									</p:selectOneMenu>
+											value="#{inscriptionSearchServiceBean.inscription2Dto.regionAddress}"
+											converter="entityConverter">
+											<f:selectItem
+												itemLabel="#{inscriptionSearchServiceBean.inscription2Dto.regionAddress.regionName}"
+												itemValue="#{inscriptionSearchServiceBean.inscription2Dto.regionAddress}" />
+											<f:selectItems
+												value="#{inscriptionSearchServiceBean.listregion}"
+												var="regionAddress" itemValue="#{regionAddress}"
+												itemLabel="#{regionAddress.regionName}" />
+											<p:ajax event="valueChange"
+												listener="#{inscriptionSearchServiceBean.updateListvilleparent()}"
+												update=":formbuttons:enregistrer :formbuttons:suivant city2" />
+										</p:selectOneMenu>
 									</div>
 								</div>
 								<div class="row">
-								<div class="col-lg-3 col-md-3 col-sm-3">
+									<div class="col-lg-3 col-md-3 col-sm-3">
 										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
-											value="#{messages.label_citys}"  />
+											value="#{messages.label_citys}" />
+										<span class="requireds">(*)</span>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
 										<p:selectOneMenu styleClass="form-text" id="city2"
-										value="#{inscriptionSearchServiceBean.inscription2Dto.cityAddress}"
-										converter="entityConverter">
-										<f:selectItem
-											itemLabel="#{inscriptionSearchServiceBean.inscription2Dto.cityAddress.cityName}"
-											itemValue="#{inscriptionSearchServiceBean.inscription2Dto.cityAddress}" />
-										<f:selectItems
-											value="#{inscriptionSearchServiceBean.listcity}"
-											var="cityAddress" itemValue="#{cityAddress}"
-											itemLabel="#{cityAddress.cityName}" />
-										<p:ajax event="valueChange"
-											listener="#{inscriptionSearchServiceBean.updateListzipcodeparent()}"
-											update=":formbuttons:enregistrer :formbuttons:suivant zipcode2" />
-									</p:selectOneMenu>
+											value="#{inscriptionSearchServiceBean.inscription2Dto.cityAddress}"
+											converter="entityConverter">
+											<f:selectItem
+												itemLabel="#{inscriptionSearchServiceBean.inscription2Dto.cityAddress.cityName}"
+												itemValue="#{inscriptionSearchServiceBean.inscription2Dto.cityAddress}" />
+											<f:selectItems
+												value="#{inscriptionSearchServiceBean.listcity}"
+												var="cityAddress" itemValue="#{cityAddress}"
+												itemLabel="#{cityAddress.cityName}" />
+											<p:ajax event="valueChange"
+												listener="#{inscriptionSearchServiceBean.updateListzipcodeparent()}"
+												update=":formbuttons:enregistrer :formbuttons:suivant zipcode2" />
+										</p:selectOneMenu>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
 										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
 											value="#{messages.label_zipcodes}" />
+										<span class="requireds">(*)</span>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
 										<p:selectOneMenu styleClass="form-text" id="zipcode2"
-										value="#{inscriptionSearchServiceBean.inscription2Dto.zipcodeAddress}"
-										converter="entityConverter">
-										<f:selectItem
-											itemLabel="#{inscriptionSearchServiceBean.inscription2Dto.zipcodeAddress.zipCode}"
-											itemValue="#{inscriptionSearchServiceBean.inscription2Dto.zipcodeAddress}"
-											label="#{messages.label_region}" />
-										<f:selectItems
-											value="#{inscriptionSearchServiceBean.listzipcode}"
-											var="zipcodeAddress" itemValue="#{zipcodeAddress}"
-											itemLabel="#{zipcodeAddress.zipCode}" />
-										<p:ajax event="valueChange"
-											listener="#{inscriptionSearchServiceBean.testformparent()}"
-											update=":formbuttons:enregistrer :formbuttons:suivant" />
-									</p:selectOneMenu>
-									</div>   
+											value="#{inscriptionSearchServiceBean.inscription2Dto.zipcodeAddress}"
+											converter="entityConverter">
+											<f:selectItem
+												itemLabel="#{inscriptionSearchServiceBean.inscription2Dto.zipcodeAddress.zipCode}"
+												itemValue="#{inscriptionSearchServiceBean.inscription2Dto.zipcodeAddress}"
+												label="#{messages.label_region}" />
+											<f:selectItems
+												value="#{inscriptionSearchServiceBean.listzipcode}"
+												var="zipcodeAddress" itemValue="#{zipcodeAddress}"
+												itemLabel="#{zipcodeAddress.zipCode}" />
+											<p:ajax event="valueChange"
+												listener="#{inscriptionSearchServiceBean.testformparent()}"
+												update=":formbuttons:enregistrer :formbuttons:suivant" />
+										</p:selectOneMenu>
+									</div>
 								</div>
-								
+
 								<div class="row">
-								<div class="col-lg-3 col-md-3 col-sm-3">
+									<div class="col-lg-3 col-md-3 col-sm-3">
 										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
 											value="#{messages.label_phoneNumber}" />
+										<span class="requireds">(*)</span>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
 										<p:inputMask styleClass="form-control" id="phone2"
@@ -203,75 +212,73 @@
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
 										<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
-											value="#{messages.label_typeOfContact}"  />
+											value="#{messages.label_typeOfContact}" />
+										<span class="requireds">(*)</span>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
 										<p:selectOneMenu styleClass="form-text" id="contact"
-										value="#{inscriptionSearchServiceBean.inscription2Dto.typeOfContact}"
-										converter="entityConverter">
-										<f:selectItem
-											itemLabel="#{inscriptionSearchServiceBean.inscription2Dto.typeOfContact.value}"
-											itemValue="#{inscriptionSearchServiceBean.inscription2Dto.typeOfContact}" />
-										<f:selectItems
-											value="#{inscriptionSearchServiceBean.listtypedecontact}"
-											var="typeOfContact" itemValue="#{typeOfContact}"
-											itemLabel="#{typeOfContact.value}" />
-										<p:ajax event="valueChange"
-											listener="#{inscriptionSearchServiceBean.testformparent()}"
-											update=":formbuttons:enregistrer :formbuttons:suivant" />
-									</p:selectOneMenu>
+											value="#{inscriptionSearchServiceBean.inscription2Dto.typeOfContact}"
+											converter="entityConverter">
+											<f:selectItem
+												itemLabel="#{inscriptionSearchServiceBean.inscription2Dto.typeOfContact.value}"
+												itemValue="#{inscriptionSearchServiceBean.inscription2Dto.typeOfContact}" />
+											<f:selectItems
+												value="#{inscriptionSearchServiceBean.listtypedecontact}"
+												var="typeOfContact" itemValue="#{typeOfContact}"
+												itemLabel="#{typeOfContact.value}" />
+											<p:ajax event="valueChange"
+												listener="#{inscriptionSearchServiceBean.testformparent()}"
+												update=":formbuttons:enregistrer :formbuttons:suivant" />
+										</p:selectOneMenu>
 									</div>
 								</div>
 							</div>
-							</div>
+						</div>
 					</h:form>
 					<br />
 					<h:form id="formbuttons">
-				<div class="row">
-					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-						<p:commandButton id="precedent"
-							action="#{inscriptionSearchServiceBean.redirectionprecedent('/sepro.education.portal/education/inscriptions/declaration.xhtml')}"
-							value="#{messages.label_precedent}" styleClass="btn btn-primary">
-						</p:commandButton>
-					</div>
+						<div class="row">
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+								<p:commandButton id="precedent"
+									action="#{inscriptionSearchServiceBean.redirectionprecedent('/sepro.education.portal/education/inscriptions/declaration.xhtml')}"
+									value="#{messages.label_precedent}"
+									styleClass="btn btn-primary">
+								</p:commandButton>
+							</div>
 
-					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-						<p:commandButton id="enregistrerbrouillon"
-							styleClass="btn btn-primary submit-button"
-							action="#{inscriptionSearchServiceBean.enregistrerInscriptionSteptwobrouillon()}"
-							value="#{messages.label_enregistrerbrouillon}"
-							update="formdatatable forme enregistrer">
-						</p:commandButton>
-					</div>
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+								<p:commandButton id="enregistrerbrouillon"
+									styleClass="btn btn-primary submit-button"
+									action="#{inscriptionSearchServiceBean.enregistrerInscriptionSteptwobrouillon()}"
+									value="#{messages.label_enregistrerbrouillon}"
+									update="formdatatable forme enregistrer">
+								</p:commandButton>
+							</div>
 
-					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-						<p:commandButton id="enregistrer"
-							styleClass="btn btn-primary submit-button"
-							value="#{messages.label_enregistrer}"
-							action="#{inscriptionSearchServiceBean.enregistrerInscriptionsteptwo()}"
-							disabled="#{inscriptionSearchServiceBean.testparent}"
-							update="formdatatable forme enregistrer">
-						</p:commandButton>
-					</div>
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+								<p:commandButton id="enregistrer"
+									styleClass="btn btn-primary submit-button"
+									value="#{messages.label_enregistrer}"
+									action="#{inscriptionSearchServiceBean.enregistrerInscriptionsteptwo()}"
+									disabled="#{inscriptionSearchServiceBean.testparent}"
+									update="formdatatable forme enregistrer">
+								</p:commandButton>
+							</div>
 
-					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-						<p:commandButton value="#{messages.label_suivant}" id="suivant"
-							action="#{inscriptionSearchServiceBean.redirectionsuivant('/sepro.education.portal/education/inscriptions/listecurriculum.xhtml')}"
-							disabled="#{inscriptionSearchServiceBean.testparent}"
-							styleClass="btn btn-primary">
-						</p:commandButton>
-					</div>
-				</div>
-			</h:form>
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+								<p:commandButton value="#{messages.label_suivant}" id="suivant"
+									action="#{inscriptionSearchServiceBean.redirectionsuivant('/sepro.education.portal/education/inscriptions/listecurriculum.xhtml')}"
+									disabled="#{inscriptionSearchServiceBean.testparent}"
+									styleClass="btn btn-primary">
+								</p:commandButton>
+							</div>
+						</div>
+					</h:form>
 				</p:panel>
 			</p:tab>
 
 
-
-
 			<br></br> <br></br>
-
-
 
 			<h:form id="formdatatable">
 				<p:dataTable id="listpar"

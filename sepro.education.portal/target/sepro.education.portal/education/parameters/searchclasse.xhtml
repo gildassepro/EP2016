@@ -9,415 +9,434 @@
 		<p:growl id="growl" showDetail="true" sticky="false" />
 		<div class="container-fluid">
 			<b:row>
-				<p:overlayPanel id="updatclasse" widgetVar="updateclasse"
-					showEffect="fade" hideEffect="fade" dismissable="false"
-					showCloseIcon="true">
-					<h:form id="fdial">
-						<h3 style="margin-top: 0">
-							<p:outputLabel value="#{messages.label_modifier_Classe}"
-								rendered="#{!classeSearchServiceBean.isAction()}" />
-							<p:outputLabel value="#{messages.label_creer_classe}"
-								rendered="#{classeSearchServiceBean.isAction()}" />
-						</h3>
-
-						<div class="ui-grid ui-grid-responsive wrap class">
-							<div class="col-xs-12">
-								<div class="row">
-									<div class="col-lg-3 col-md-3 col-sm-3 label-input">
-										<p:outputLabel value="#{messages.label_nom_sall}" /><span class="requireds">(*)</span>
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:inputText styleClass="form-control" id="nomsall"
-											value="#{classeSearchServiceBean.classeDto.nameOfClass}"
-											placeholder="#{messages.labelnomsall}" required="true"
-											immediate="true"
-											requiredMessage="#{messages.label_nameOfClass_requeried}">
-											<p:ajax event="keyup" />
-										</p:inputText>
-									</div>
-									<div
-										class="col-lg-offset-1 col-lg-2 col-md-3 col-sm-3 label-input">
-										<p:outputLabel value="#{messages.label_typedeclasse}" /><span class="requireds">(*)</span>
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:selectOneMenu styleClass="form-text" id="typeclas"
-											value="#{classeSearchServiceBean.classeDto.typeOfClass}"
-											converter="entityConverter" required="true" immediate="true"
-											requiredMessage="#{messages.label_typeclas_requeried}">
-											<f:selectItem
-												itemLabel="#{classeSearchServiceBean.classeDto.typeOfClass.typeclass}"
-												itemValue="#{classeSearchServiceBean.classeDto.typeOfClass}" />
-											<f:selectItems
-												value="#{classeSearchServiceBean.listtypedeclasse}"
-												var="typeofclass" itemValue="#{typeofclass}"
-												itemLabel="#{typeofclass.typeclass}" />
-											<f:ajax event="blur" render="" />
-										</p:selectOneMenu>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-lg-3 col-md-3 col-sm-3 label-input">
-										<p:outputLabel value="#{messages.label_sousetablissement}" /><span class="requireds">(*)</span>
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:selectOneMenu styleClass="form-text" id="subetab"
-											value="#{classeSearchServiceBean.classeDto.subestablishment}"
-											converter="entityConverter" required="true" immediate="true"
-											requiredMessage="#{messages.label_sousetablissement_requeried}"
-											placeholder="#{messages.label_country}">
-											<f:selectItem
-												itemLabel="#{classeSearchServiceBean.classeDto.subestablishment.nameSubestablishment}"
-												itemValue="#{classeSearchServiceBean.classeDto.subestablishment}" />
-											<f:selectItems
-												value="#{classeSearchServiceBean.listsousetablissement}"
-												var="subestablishment" itemValue="#{subestablishment}"
-												itemLabel="#{subestablishment.nameSubestablishment}" />
-												<f:ajax event="blur" render="" />
-										</p:selectOneMenu>
-									</div>
-									<div
-										class="col-lg-offset-1 col-lg-2 col-md-3 col-sm-3 label-input">
-										<p:outputLabel value="#{messages.label_batiment}" /><span class="requireds">(*)</span>
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:selectOneMenu styleClass="form-text" id="bat"
-											value="#{classeSearchServiceBean.classeDto.buildiing}"
-											converter="entityConverter" required="true" immediate="true"
-											requiredMessage="#{messages.label_buildiing_requeried}"
-											placeholder="#{messages.label_country}">
-											<f:selectItem
-												itemLabel="#{classeSearchServiceBean.classeDto.buildiing.nameBuilding}"
-												itemValue="#{classeSearchServiceBean.classeDto.buildiing}" />
-											<f:selectItems
-												value="#{classeSearchServiceBean.listbatiment}"
-												var="buildiing" itemValue="#{buildiing}"
-												itemLabel="#{buildiing.nameBuilding}" />
-												<f:ajax event="blur" render="" />
-										</p:selectOneMenu>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-lg-3 col-md-3 col-sm-3 label-input">
-													<p:outputLabel value="#{messages.label_position}" /><span class="requireds">(*)</span>
-												</div>
-												<div class="col-lg-3 col-md-3 col-sm-3">
-													<p:inputText styleClass="form-control" id="location"
-														value="#{classeSearchServiceBean.classeDto.location}"
-														 required="true" immediate="true"
-												         requiredMessage="#{messages.label_location_requeried}"
-														placeholder="#{messages.labelposition}">
-														<p:ajax event="keyup" />
-													</p:inputText>
-												</div>
-												<div class="col-lg-3 col-md-3 col-sm-3 label-input">
-													<p:outputLabel value="#{messages.label_numtelephone}" /><span class="requireds">(*)</span>
-												</div>
-												<div class="col-lg-3 col-md-3 col-sm-3">
-													<p:inputText styleClass="form-control" id="telephone"
-								
-														value="#{classeSearchServiceBean.classeDto.telephoneNumber}"
-														required="true" immediate="true"
-												         requiredMessage="#{messages.label_telephoneNumber_requeried}"
-														placeholder="#{messages.labelnumtelephone}">
-														<p:ajax event="keyup" />
-													</p:inputText>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-lg-3 col-md-3 col-sm-3 label-input">
-														<p:outputLabel 
-															value="#{messages.labelheuredemarrage}" /><span class="requireds">(*)</span>
-												     </div>
-												     <div class="col-lg-3 col-md-3 col-sm-3">
-														<p:inputText styleClass="form-control"
-															id="heurdem"
-															value="#{classeSearchServiceBean.classeDto.startingHour}"
-															placeholder="#{messages.label_heuredemarrage}"
-															required="true" immediate="true"
-												         requiredMessage="#{messages.label_startingHour_requeried}">
-												         <p:ajax event="keyup" />
-														</p:inputText>
-													</div>
-													<div class="col-lg-3 col-md-3 col-sm-3 label-input">
-														<p:outputLabel 
-															value="#{messages.labelheuresorti}" /><span class="requireds">(*)</span>
-													</div>
-													<div class="col-lg-3 col-md-3 col-sm-3">
-														<p:inputText styleClass="form-control"
-															id="heuresor"
-															value="#{classeSearchServiceBean.classeDto.endingHour}"
-															placeholder="#{messages.label_heuresorti}"
-															required="true" immediate="true"
-												         requiredMessage="#{messages.label_endingHour_requeried}">
-												         <p:ajax event="keyup" />
-														</p:inputText>
-													</div>
-													</div>
-<!-- 												<div class="col-lg-4 col-md-3 col-sm-3 label-input"> -->
-<!-- 												<p:outputLabel value="#{messages.labeljourdispo}" /> -->
-<!-- 											</div> -->
-<!-- 											<div class="col-lg-6 col-md-3 col-sm-3"> -->
-<!-- 												<p:selectCheckboxMenu id="jourdispon" -->
-<!-- 													value="#{classeSearchServiceBean.listjourdestination}" -->
-<!-- 													filter="true" filterMatchMode="startsWith" -->
-<!-- 													converter="entityConverter" panelStyle="width:250px" -->
-<!-- 													label="#{messages.label_choix_des_jours}"> -->
-<!-- 													<f:selectItems -->
-<!-- 														value="#{classeSearchServiceBean.listjoursource}" -->
-<!-- 														var="dayofweek" itemValue="#{dayofweek}" -->
-<!-- 														itemLabel="#{dayofweek.days}" /> -->
-<!-- 												</p:selectCheckboxMenu> -->
-<!-- 											</div> -->
-                                             <div class="row">
-								<div class="col-lg-3 col-md-3 col-sm-3 label-input">
-													<p:outputLabel value="#{messages.labelnbreplace}" /><span class="requireds">(*)</span>
-												</div>
-												<div class="col-lg-3 col-md-3 col-sm-3">
-													<p:inputText styleClass="form-control" id="placen"
-														value="#{classeSearchServiceBean.classeDto.numberOfSeats}"
-														required="true" immediate="true"
-												         requiredMessage="#{messages.label_numberOfSeats_requeried}"
-														placeholder="#{messages.label_nbreplace}">
-														<p:ajax event="keyup" />
-													</p:inputText>
-												</div>
-									<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-											<div class="col-lg-4 col-md-3 col-sm-3 label-input">
-												<p:outputLabel value="#{messages.labeljourdispo}" />
-											</div>
-											<div class="col-lg-6 col-md-3 col-sm-3">
-												<p:selectCheckboxMenu id="jourdispo"
-													value="#{classeSearchServiceBean.listjourdestination}"
-													filter="true" filterMatchMode="startsWith"
-													converter="entityConverter" panelStyle="width:250px"
-													label="#{messages.label_choix_des_jours}">
-													<f:selectItems
-														value="#{classeSearchServiceBean.listjoursource}"
-														var="dayofweek" itemValue="#{dayofweek}"
-														itemLabel="#{dayofweek.days}" />
-												</p:selectCheckboxMenu>
-											</div>
-											</div>
-												</div>
-										</div>
-									</div>
-									
-								
-											
-											
-												
-								
-							
-						<div class="button-wrapper">
-							<p:commandButton value="#{messages.label_modifier}"
-								styleClass="btn btn-primary"
-								rendered="#{!classeSearchServiceBean.isAction()}"
-								action="#{classeSearchServiceBean.updateClasse()}"
-								oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateclasse').hide()"
-								update="forme fdial growl">
-							</p:commandButton>
-
-							<p:commandButton value="#{messages.label_create}"
-								styleClass="btn btn-primary"
-								rendered="#{classeSearchServiceBean.isAction()}"
-								action="#{classeSearchServiceBean.createClasse()}"
-								oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateclasse').hide()"
-								update="forme fdial growl">
-							</p:commandButton>
-
-							<p:commandButton value="#{messages.label_button_annuler}"
-								type="reset" onclick="PF('updateclasse').hide()" update="forme"
-								styleClass="btn btn-default btn-sm offset" id="annulerButton">
-							</p:commandButton>
-						</div>
-
-					</h:form>
-				</p:overlayPanel>
-
-				<p:overlayPanel id="updatinventoryclasse"
-					widgetVar="updateinventoryclasse" showEffect="fade"
-					hideEffect="fade" dismissable="false" showCloseIcon="true">
-					<h:form id="fdialinventaire">
-
-						<div class="ui-grid ui-grid-responsive wrap class">
-							<div class="col-xs-12">
-								<div class="row">
-									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-										<p:outputLabel value="#{messages.label_nom_sallinv}" />
-										<p:inputText styleClass="form-control" id="nomsallinventory"
-											value="#{classeSearchServiceBean.selectedclasse.nameOfClass}"
-											readonly="true">
-										</p:inputText>
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-										<p:outputLabel value="#{messages.labelmatériels}" /><span class="requireds">(*)</span>
-										<p:inputText styleClass="form-control" id="namematerial"
-											value="#{classeSearchServiceBean.roominventorydto.material}"
-											required="true" 
-										    requiredMessage="#{messages.label_designation_required}">
-										</p:inputText>
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-										<p:outputLabel value="#{messages.label_quantite}" /><span class="requireds">(*)</span>
-										<p:inputText styleClass="form-control" id="quantity"
-											value="#{classeSearchServiceBean.roominventorydto.quantity}">
-										</p:inputText>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-										<p:outputLabel value="#{messages.labeldateenregistrement}"
-											for="dateenregistrement" />
-										<p:calendar id="dateenregistrement"
-											value="#{classeSearchServiceBean.roominventorydto.commissioningDate}"
-											showOn="button">
-											<f:converter converterId="dateConverter" />
-										</p:calendar>
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-										<p:outputLabel value="#{messages.label_ref}" />
-										<p:inputText styleClass="form-control" id="ref"
-											value="#{classeSearchServiceBean.roominventorydto.ref}">
-										</p:inputText>
-									</div>
-								</div>
-							</div>
-							<div class="col-xs-2">
-								<div class="button-wrapper">
-									<p:commandButton value="#{messages.label_create}"
-										styleClass="btn btn-primary"
-										rendered="#{classeSearchServiceBean.isTest()}"
-										action="#{classeSearchServiceBean.createInventaire()}"
-										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateinventoryclasse').show()"
-										update="fdialinventaire listMateriels growl">
-									</p:commandButton>
-									<p:commandButton value="#{messages.label_modifier}"
-										styleClass="btn btn-primary"
-										rendered="#{!classeSearchServiceBean.isTest()}"
-										action="#{classeSearchServiceBean.updateInventaire()}"
-										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateinventoryclasse').show()"
-										update="fdialinventaire listMateriels growl">
-									</p:commandButton>
-								</div>
-							</div>
-						</div>
-
-						<b:row styleClass="listPage">
-							<p:dataTable id="listMateriels"
-								value="#{classeSearchServiceBean.listinventaire}"
-								var="inventairecl" widgetVar="menuTables"
-								emptyMessage="#{messages.label_empty}"
-								styleClass="listeTable table-responsive filterable"
-								tableStyleClass="table table-striped table-condensed table-hover"
-								rowKey="#{inventairecl.idRoomInventory}" selectionMode="single"
-								paginator="true" paginatorPosition="bottom"
-								paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
-								rows="10" filterBy="#{inventairecl.material}">
-
-								<p:column priority="3" width="40"
-									filterBy="#{inventairecl.idRoomInventory}"
-									filterMatchMode="contains">
-									<f:facet name="header">
-										<p:outputLabel value="#{messages.label_id}" />
-									</f:facet>
-									<h:outputText value="#{inventairecl.idRoomInventory}"></h:outputText>
-								</p:column>
-
-								<p:column priority="2" filterBy="#{inventairecl.material}"
-									filterMatchMode="contains">
-									<f:facet name="header">
-										<p:outputLabel value="#{messages.labelmatériel}" />
-									</f:facet>
-									<h:outputText value="#{inventairecl.material}"></h:outputText>
-								</p:column>
-
-								<p:column priority="2" filterBy="#{inventairecl.quantity}"
-									filterMatchMode="contains">
-									<f:facet name="header">
-										<p:outputLabel value="#{messages.label_quantites}" />
-									</f:facet>
-									<h:outputText value="#{inventairecl.quantity}"></h:outputText>
-								</p:column>
-
-								<p:column priority="1" width="100" filterMatchMode="contains">
-
-									<f:facet name="header">
-										<p:outputLabel value="#{messages.label_action}" />
-									</f:facet>
-
-									<p:commandButton id="modifier" styleClass="btn btn-success"
-										title="#{messages.label_modifier}"
-										action="#{classeSearchServiceBean.initDualListInventaire('1')}"
-										update="@([id$=updatinventoryclasse])"
-										oncomplete="PF('updateinventoryclasse').show()"
-										value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil">
-										<f:setPropertyActionListener value="#{inventairecl}"
-											target="#{classeSearchServiceBean.selectedinventaire}" />
-									</p:commandButton>
-
-									<p:commandButton id="supprimer" styleClass="btn btn-danger"
-										title="#{messages.label_supprimer1}"
-										onclick="PF('confirmationinv').show()"
-										value="#{messages.label_supprimer1}" icon="fa fa-fw fa-remove">
-										<f:setPropertyActionListener value="#{inventairecl}"
-											target="#{classeSearchServiceBean.roominventorrydto}" />
-									</p:commandButton>
-
-									<p:blockUI block="listMateriels"
-										trigger="listMateriels:supprimer,listMateriels:modifier">
-										#{messages.label_loading}<br />
-										<p:graphicImage value="/resources/images/loadingpics.gif" />
-									</p:blockUI>
-
-									<p:confirmDialog appendToBody="true"
-										message="#{messages.label_msg_alerte_supression}"
-										header="Confirmation" widgetVar="confirmationinv">
-										<p:commandButton value="#{messages.label_msg_confirmOui}"
-											onclick="PF('confirmationinv').hide()"
-											action="#{classeSearchServiceBean.supprimerInventaire()}"
-											update="listMateriels growl" />
-										<p:commandButton value="#{messages.label_msg_confirmNon}"
-											onclick="PF('confirmationinv').hide()" type="button" />
-									</p:confirmDialog>
-								</p:column>
-							</p:dataTable>
-
-							<p:contextMenu for="listMateriels">
-								<p:menuitem value="Modifier" icon="ui-icon-search" />
-								<p:menuitem value="Supprimer" icon="ui-icon-search" />
-								<p:separator />
-								<p:menuitem value="Détails" icon="ui-icon-close" />
-							</p:contextMenu>
-						</b:row>
-					</h:form>
-				</p:overlayPanel>
 
 				<h:form id="forme">
 					<p:accordionPanel>
 						<p:tab title="#{messages.label_Recherche_Classe}">
 							<b:row styleClass="listPage">
-								<div class="table-header">
-									<p:commandButton id="add" title="#{messages.label_add}"
-										action="#{classeSearchServiceBean.initDualList('2')}"
-										update="@([id$=updatclasse])"
-										oncomplete="PF('updateclasse').show()"
-										value="#{messages.label_modifier}"
+								<div id="menubutton">
+									<p:commandButton id="adde"
 										styleClass="btn btn-primary submit-button"
-										icon="fa fa-fw fa-plus">
+										value="#{messages.label_new}" title="#{messages.label_new}"
+										action="#{classeSearchServiceBean.initDualList('2')}"
+										update="@([id$=updatclasse]) forme fdial"
+										onclick="PF('updateclasse').show()" icon="fa fa-fw fa-plus">
+									</p:commandButton>
+									<p:commandButton id="modifse"
+										styleClass="btn btn-primary submit-button"
+										value="#{messages.label_modifier}"
+										update="@([id$=updatclasse]) forme fdial"
+										onclick="PF('updateclasse').show()" icon="fa fa-fw fa-pencil"
+										action="#{classeSearchServiceBean.initDualList('1')}">
+									</p:commandButton>
+									<p:commandButton id="deletee" process="@([id$=listclasses])"
+										styleClass="btn btn-primary submit-button"
+										value="#{messages.label_supprimer1}"
+										title="#{messages.label_supprimer1}"
+										onclick="PF('confirmation').show()" icon="fa fa-fw fa-remove">
+									</p:commandButton>
+									<p:commandButton id="printe"
+										update="@([id$=updatclasse]) forme fdial"
+										styleClass="btn btn-primary submit-button"
+										title="#{messages.label_print}"
+										value="#{messages.label_print}"
+										onclick="PF('confirmation').show()" icon="fa fa-fw fa-print">
+									</p:commandButton>
+									<p:splitButton value="#{messages.label_options}"
+										actionListener="#{buttonView.save}" icon="ui-icon-gear">
+										<p:menuitem value="Update"
+											actionListener="#{buttonView.update}"
+											icon="ui-icon-arrowrefresh-1-w" />
+										<p:menuitem value="Delete"
+											actionListener="#{buttonView.delete}" ajax="false"
+											icon="ui-icon-close" />
+										<p:separator />
+										<p:menuitem value="Homepage" icon="ui-icon-extlink" />
+									</p:splitButton>
+
+									<p:commandButton id="past"
+										styleClass="btn btn-primary submit-button" ajax="false"
+										action="searchclasse.xhtml?faces-redirect=true"
+										update="@([id$=listclasses]) forme fdial"
+										icon="fa fa-fw fa-arrow-left">
 									</p:commandButton>
 
-									<p:blockUI block="add" trigger="add">
-											#{messages.label_loading}<br />
-										<p:graphicImage value="/resources/images/loadingpics.gif" />
-									</p:blockUI>
+									<p:commandButton value="#{messages.label_modifier}"
+										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
+										rendered="#{!classeSearchServiceBean.isAction()}"
+										action="#{classeSearchServiceBean.updateClasse()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateclasse').hide()"
+										update="forme fdial growl" />
+									<p:commandButton value="#{messages.label_create}"
+										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
+										rendered="#{classeSearchServiceBean.isAction()}"
+										action="#{classeSearchServiceBean.createClasse()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateclasse').hide()"
+										update="forme fdial growl" />
+
 								</div>
 
+								<p:panel id="updatclasse" widgetVar="updateclasse"
+									rendered="#{!regionSearchServiceBean.isAction3()}">
+
+									<h:form id="fdial">
+										<h3 style="margin-top: 0">
+											<p:outputLabel value="#{messages.label_modifier_Classe}"
+												rendered="#{!classeSearchServiceBean.isAction()}" />
+											<p:outputLabel value="#{messages.label_creer_classe}"
+												rendered="#{classeSearchServiceBean.isAction()}" />
+										</h3>
+
+										<div class="ui-grid ui-grid-responsive wrap class">
+											<div class="col-xs-12">
+												<div class="row">
+													<div class="col-lg-3 col-md-3 col-sm-3 label-input">
+														<p:outputLabel value="#{messages.label_nom_sall}" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:inputText styleClass="form-control" id="nomsall"
+															value="#{classeSearchServiceBean.classeDto.nameOfClass}"
+															placeholder="#{messages.labelnomsall}" required="true"
+															immediate="true"
+															requiredMessage="#{messages.label_nameOfClass_requeried}">
+															<p:ajax event="keyup" />
+														</p:inputText>
+													</div>
+													<div
+														class="col-lg-offset-1 col-lg-2 col-md-3 col-sm-3 label-input">
+														<p:outputLabel value="#{messages.label_typedeclasse}" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:selectOneMenu styleClass="form-text" id="typeclas"
+															value="#{classeSearchServiceBean.classeDto.typeOfClass}"
+															converter="entityConverter" required="true"
+															immediate="true"
+															requiredMessage="#{messages.label_typeclas_requeried}">
+															<f:selectItem
+																itemLabel="#{classeSearchServiceBean.classeDto.typeOfClass.typeclass}"
+																itemValue="#{classeSearchServiceBean.classeDto.typeOfClass}" />
+															<f:selectItems
+																value="#{classeSearchServiceBean.listtypedeclasse}"
+																var="typeofclass" itemValue="#{typeofclass}"
+																itemLabel="#{typeofclass.typeclass}" />
+															<f:ajax event="blur" render="" />
+														</p:selectOneMenu>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-lg-3 col-md-3 col-sm-3 label-input">
+														<p:outputLabel value="#{messages.label_sousetablissement}" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:selectOneMenu styleClass="form-text" id="subetab"
+															value="#{classeSearchServiceBean.classeDto.subestablishment}"
+															converter="entityConverter" required="true"
+															immediate="true"
+															requiredMessage="#{messages.label_sousetablissement_requeried}"
+															placeholder="#{messages.label_country}">
+															<f:selectItem
+																itemLabel="#{classeSearchServiceBean.classeDto.subestablishment.nameSubestablishment}"
+																itemValue="#{classeSearchServiceBean.classeDto.subestablishment}" />
+															<f:selectItems
+																value="#{classeSearchServiceBean.listsousetablissement}"
+																var="subestablishment" itemValue="#{subestablishment}"
+																itemLabel="#{subestablishment.nameSubestablishment}" />
+															<f:ajax event="blur" render="" />
+														</p:selectOneMenu>
+													</div>
+													<div
+														class="col-lg-offset-1 col-lg-2 col-md-3 col-sm-3 label-input">
+														<p:outputLabel value="#{messages.label_batiment}" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:selectOneMenu styleClass="form-text" id="bat"
+															value="#{classeSearchServiceBean.classeDto.buildiing}"
+															converter="entityConverter" required="true"
+															immediate="true"
+															requiredMessage="#{messages.label_buildiing_requeried}"
+															placeholder="#{messages.label_country}">
+															<f:selectItem
+																itemLabel="#{classeSearchServiceBean.classeDto.buildiing.nameBuilding}"
+																itemValue="#{classeSearchServiceBean.classeDto.buildiing}" />
+															<f:selectItems
+																value="#{classeSearchServiceBean.listbatiment}"
+																var="buildiing" itemValue="#{buildiing}"
+																itemLabel="#{buildiing.nameBuilding}" />
+															<f:ajax event="blur" render="" />
+														</p:selectOneMenu>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-lg-3 col-md-3 col-sm-3 label-input">
+														<p:outputLabel value="#{messages.label_position}" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:inputText styleClass="form-control" id="location"
+															value="#{classeSearchServiceBean.classeDto.location}"
+															required="true" immediate="true"
+															requiredMessage="#{messages.label_location_requeried}"
+															placeholder="#{messages.labelposition}">
+															<p:ajax event="keyup" />
+														</p:inputText>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3 label-input">
+														<p:outputLabel value="#{messages.label_numtelephone}" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:inputText styleClass="form-control" id="telephone"
+															value="#{classeSearchServiceBean.classeDto.telephoneNumber}"
+															required="true" immediate="true"
+															requiredMessage="#{messages.label_telephoneNumber_requeried}"
+															placeholder="#{messages.labelnumtelephone}">
+															<p:ajax event="keyup" />
+														</p:inputText>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-lg-3 col-md-3 col-sm-3 label-input">
+														<p:outputLabel value="#{messages.labelheuredemarrage}" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:inputText styleClass="form-control" id="heurdem"
+															value="#{classeSearchServiceBean.classeDto.startingHour}"
+															placeholder="#{messages.label_heuredemarrage}"
+															required="true" immediate="true"
+															requiredMessage="#{messages.label_startingHour_requeried}">
+															<p:ajax event="keyup" />
+														</p:inputText>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3 label-input">
+														<p:outputLabel value="#{messages.labelheuresorti}" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:inputText styleClass="form-control" id="heuresor"
+															value="#{classeSearchServiceBean.classeDto.endingHour}"
+															placeholder="#{messages.label_heuresorti}"
+															required="true" immediate="true"
+															requiredMessage="#{messages.label_endingHour_requeried}">
+															<p:ajax event="keyup" />
+														</p:inputText>
+													</div>
+												</div>
+
+												<div class="row">
+													<div class="col-lg-3 col-md-3 col-sm-3 label-input">
+														<p:outputLabel value="#{messages.labelnbreplace}" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:inputText styleClass="form-control" id="placen"
+															value="#{classeSearchServiceBean.classeDto.numberOfSeats}"
+															required="true" immediate="true"
+															requiredMessage="#{messages.label_numberOfSeats_requeried}"
+															placeholder="#{messages.label_nbreplace}">
+															<p:ajax event="keyup" />
+														</p:inputText>
+													</div>
+													<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+														<div class="col-lg-4 col-md-3 col-sm-3 label-input">
+															<p:outputLabel value="#{messages.labeljourdispo}" />
+														</div>
+														<div class="col-lg-6 col-md-3 col-sm-3">
+															<p:selectCheckboxMenu id="jourdispo"
+																value="#{classeSearchServiceBean.listjourdestination}"
+																filter="true" filterMatchMode="startsWith"
+																converter="entityConverter" panelStyle="width:250px"
+																label="#{messages.label_choix_des_jours}">
+																<f:selectItems
+																	value="#{classeSearchServiceBean.listjoursource}"
+																	var="dayofweek" itemValue="#{dayofweek}"
+																	itemLabel="#{dayofweek.days}" />
+															</p:selectCheckboxMenu>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+									</h:form>
+								</p:panel>
+
+								<p:panel id="updatinventoryclasse"
+									widgetVar="updateinventoryclasse"
+									rendered="#{!classeSearchServiceBean.isAction3()}">
+									<h:form id="fdialinventaire">
+
+										<div class="ui-grid ui-grid-responsive wrap class">
+											<div class="col-xs-12">
+												<div class="row">
+													<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+														<p:outputLabel value="#{messages.label_nom_sallinv}" />
+														<p:inputText styleClass="form-control"
+															id="nomsallinventory"
+															value="#{classeSearchServiceBean.selectedclasse.nameOfClass}"
+															readonly="true">
+														</p:inputText>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+														<p:outputLabel value="#{messages.labelmatériels}" />
+														<span class="requireds">(*)</span>
+														<p:inputText styleClass="form-control" id="namematerial"
+															value="#{classeSearchServiceBean.roominventorydto.material}"
+															required="true"
+															requiredMessage="#{messages.label_designation_required}">
+														</p:inputText>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+														<p:outputLabel value="#{messages.label_quantite}" />
+														<span class="requireds">(*)</span>
+														<p:inputText styleClass="form-control" id="quantity"
+															value="#{classeSearchServiceBean.roominventorydto.quantity}">
+														</p:inputText>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+														<p:outputLabel value="#{messages.labeldateenregistrement}"
+															for="dateenregistrement" />
+														<p:calendar id="dateenregistrement"
+															value="#{classeSearchServiceBean.roominventorydto.commissioningDate}"
+															showOn="button">
+															<f:converter converterId="dateConverter" />
+														</p:calendar>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+														<p:outputLabel value="#{messages.label_ref}" />
+														<p:inputText styleClass="form-control" id="ref"
+															value="#{classeSearchServiceBean.roominventorydto.ref}">
+														</p:inputText>
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-2">
+												<div class="button-wrapper">
+													<p:commandButton value="#{messages.label_create}"
+														styleClass="btn btn-primary"
+														rendered="#{classeSearchServiceBean.isTest()}"
+														action="#{classeSearchServiceBean.createInventaire()}"
+														oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateinventoryclasse').show()"
+														update="fdialinventaire listMateriels growl">
+													</p:commandButton>
+													<p:commandButton value="#{messages.label_modifier}"
+														styleClass="btn btn-primary"
+														rendered="#{!classeSearchServiceBean.isTest()}"
+														action="#{classeSearchServiceBean.updateInventaire()}"
+														oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateinventoryclasse').show()"
+														update="fdialinventaire listMateriels growl">
+													</p:commandButton>
+												</div>
+											</div>
+										</div>
+
+										<b:row styleClass="listPage">
+											<p:dataTable id="listMateriels"
+												value="#{classeSearchServiceBean.listinventaire}"
+												var="inventairecl" widgetVar="menuTables"
+												emptyMessage="#{messages.label_empty}"
+												styleClass="listeTable table-responsive filterable"
+												tableStyleClass="table table-striped table-condensed table-hover"
+												rowKey="#{inventairecl.idRoomInventory}"
+												selectionMode="single" paginator="true"
+												paginatorPosition="bottom"
+												paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
+												rows="10" filterBy="#{inventairecl.material}">
+
+												<p:column priority="3" width="40"
+													filterBy="#{inventairecl.idRoomInventory}"
+													filterMatchMode="contains">
+													<f:facet name="header">
+														<p:outputLabel value="#{messages.label_id}" />
+													</f:facet>
+													<h:outputText value="#{inventairecl.idRoomInventory}"></h:outputText>
+												</p:column>
+
+												<p:column priority="2" filterBy="#{inventairecl.material}"
+													filterMatchMode="contains">
+													<f:facet name="header">
+														<p:outputLabel value="#{messages.labelmatériel}" />
+													</f:facet>
+													<h:outputText value="#{inventairecl.material}"></h:outputText>
+												</p:column>
+
+												<p:column priority="2" filterBy="#{inventairecl.quantity}"
+													filterMatchMode="contains">
+													<f:facet name="header">
+														<p:outputLabel value="#{messages.label_quantites}" />
+													</f:facet>
+													<h:outputText value="#{inventairecl.quantity}"></h:outputText>
+												</p:column>
+
+												<p:column priority="1" width="100"
+													filterMatchMode="contains">
+
+													<f:facet name="header">
+														<p:outputLabel value="#{messages.label_action}" />
+													</f:facet>
+
+													<p:commandButton id="modifier" styleClass="btn btn-success"
+														title="#{messages.label_modifier}"
+														action="#{classeSearchServiceBean.initDualListInventaire('1')}"
+														update="@([id$=updatinventoryclasse])"
+														oncomplete="PF('updateinventoryclasse').show()"
+														value="#{messages.label_modifier}"
+														icon="fa fa-fw fa-pencil">
+														<f:setPropertyActionListener value="#{inventairecl}"
+															target="#{classeSearchServiceBean.selectedinventaire}" />
+													</p:commandButton>
+
+													<p:commandButton id="supprimer" styleClass="btn btn-danger"
+														title="#{messages.label_supprimer1}"
+														onclick="PF('confirmationinv').show()"
+														value="#{messages.label_supprimer1}"
+														icon="fa fa-fw fa-remove">
+														<f:setPropertyActionListener value="#{inventairecl}"
+															target="#{classeSearchServiceBean.roominventorrydto}" />
+													</p:commandButton>
+
+													<p:blockUI block="listMateriels"
+														trigger="listMateriels:supprimer,listMateriels:modifier">
+										#{messages.label_loading}<br />
+														<p:graphicImage value="/resources/images/loadingpics.gif" />
+													</p:blockUI>
+
+												</p:column>
+											</p:dataTable>
+											<p:confirmDialog appendToBody="true"
+												message="#{messages.label_msg_alerte_supression}"
+												header="Confirmation" widgetVar="confirmationinv">
+												<p:commandButton value="#{messages.label_msg_confirmOui}"
+													onclick="PF('confirmationinv').hide()"
+													action="#{classeSearchServiceBean.supprimerInventaire()}"
+													update="listMateriels growl" />
+												<p:commandButton value="#{messages.label_msg_confirmNon}"
+													onclick="PF('confirmationinv').hide()" type="button" />
+											</p:confirmDialog>
+											<p:contextMenu for="listMateriels">
+												<p:menuitem value="Modifier" icon="ui-icon-search" />
+												<p:menuitem value="Supprimer" icon="ui-icon-search" />
+												<p:separator />
+												<p:menuitem value="Détails" icon="ui-icon-close" />
+											</p:contextMenu>
+										</b:row>
+									</h:form>
+								</p:panel>
+
 								<p:dataTable id="listclasses"
+									rendered="#{!classeSearchServiceBean.isAction2()}"
 									value="#{classeSearchServiceBean.listclasse}" var="classe"
 									widgetVar="menuTable" emptyMessage="#{messages.label_empty}"
 									styleClass="listeTable table-responsive filterable"
 									tableStyleClass="table table-striped table-condensed table-hover"
 									rowKey="#{classe.idClass}" selectionMode="single"
+									selection="#{classeSearchServiceBean.classDto}"
 									paginator="true" paginatorPosition="bottom"
 									paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
 									rows="10" filterBy="#{classe.nameOfClass}">

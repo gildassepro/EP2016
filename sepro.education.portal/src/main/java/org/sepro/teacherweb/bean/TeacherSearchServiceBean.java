@@ -153,6 +153,8 @@ public class TeacherSearchServiceBean implements Serializable {
 	private boolean action = false;
 	private boolean action1 = false;
 	private boolean action2 = false;
+	private boolean action4 = false;
+	private boolean action3 = true;
 	private boolean testdetail = true;
 	private String maskphonformatteacher;
 
@@ -167,6 +169,30 @@ public class TeacherSearchServiceBean implements Serializable {
 	
 	
 	
+	public boolean isAction4() {
+		return action4;
+	}
+
+
+
+	public void setAction4(boolean action4) {
+		this.action4 = action4;
+	}
+
+
+
+	public boolean isAction3() {
+		return action3;
+	}
+
+
+
+	public void setAction3(boolean action3) {
+		this.action3 = action3;
+	}
+
+
+
 	public boolean isTestdetail() {
 		return testdetail;
 	}
@@ -1228,6 +1254,8 @@ public void onchangeZipCode(){
 			listRegion = new ArrayList<RegionDto>();
 			listspecialite = new ArrayList<PopuplistDto>();
 			listsexe = new ArrayList<PopuplistDto>();
+			action4 = true;
+			action3= false;
 
 			initUpdate();
 		} else {
@@ -1242,6 +1270,8 @@ public void onchangeZipCode(){
 			listRegion = new ArrayList<RegionDto>();
 			listspecialite = new ArrayList<PopuplistDto>();
 			listsexe = new ArrayList<PopuplistDto>();
+			action4 = true;
+			action3= false;
 
 			initCreate();
 		}

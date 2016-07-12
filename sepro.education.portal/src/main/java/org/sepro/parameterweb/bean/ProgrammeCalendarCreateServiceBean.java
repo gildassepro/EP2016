@@ -93,9 +93,27 @@ public class ProgrammeCalendarCreateServiceBean implements Serializable {
 	private boolean test = true;
 
 	private boolean action = false;
+	private boolean action2 = false;
+	private boolean action3 = true;
 
 	
 	
+	public boolean isAction2() {
+		return action2;
+	}
+
+	public void setAction2(boolean action2) {
+		this.action2 = action2;
+	}
+
+	public boolean isAction3() {
+		return action3;
+	}
+
+	public void setAction3(boolean action3) {
+		this.action3 = action3;
+	}
+
 	public boolean isTest() {
 		return test;
 	}
@@ -355,6 +373,8 @@ public class ProgrammeCalendarCreateServiceBean implements Serializable {
 			listProgramme = new ArrayList<ProgrammeDto>();
 			test = false;
 			selectedlistemodulecalendar = new ArrayList<ModuleCalendarDto>();
+			action2 = true;
+			action3= false;
 			initUpdateProgrammeCalendar();
 
 		} else {
@@ -367,6 +387,8 @@ public class ProgrammeCalendarCreateServiceBean implements Serializable {
 			listProgramme = new ArrayList<ProgrammeDto>();
 			test = true;
 			selectedlistemodulecalendar = new ArrayList<ModuleCalendarDto>();
+			action2 = true;
+			action3= false;
 			initCreate();
 
 		}

@@ -73,6 +73,9 @@ public class SubEstablishmentSearchServiceBean implements Serializable {
 	private RegionDto regionDto = new RegionDto();
 
 	private boolean action = false;
+	private boolean action2 = false;
+	private boolean action3 = true;
+	
 	public boolean status;
 	private String maskphonformatadresse;
 	private String maskphonformatgerant;
@@ -81,6 +84,25 @@ public class SubEstablishmentSearchServiceBean implements Serializable {
 	private EstablishmentServicews establishmentServicews = new EstablishmentServicews();
 	private EstablishmentServicewsEndpoint establishmentServicewsEndpoint;
 	private List<EstablishmentDto> listetablissement = new ArrayList<EstablishmentDto>();
+
+	
+	
+	
+	public boolean isAction2() {
+		return action2;
+	}
+
+	public void setAction2(boolean action2) {
+		this.action2 = action2;
+	}
+
+	public boolean isAction3() {
+		return action3;
+	}
+
+	public void setAction3(boolean action3) {
+		this.action3 = action3;
+	}
 
 	public String getMaskphonformatadresse() {
 		return maskphonformatadresse;
@@ -724,6 +746,8 @@ public class SubEstablishmentSearchServiceBean implements Serializable {
 			listCountry = new ArrayList<CountryDto>();
 			listRegion = new ArrayList<RegionDto>();
 			listZipCode = new ArrayList<ZipcodeDto>();
+			action2 = true;
+			action3= false;
 			initUpdate();
 		} else {
 			establishmentServicewsEndpoint = establishmentServicews
@@ -736,6 +760,8 @@ public class SubEstablishmentSearchServiceBean implements Serializable {
 			listCountry = new ArrayList<CountryDto>();
 			listRegion = new ArrayList<RegionDto>();
 			listZipCode = new ArrayList<ZipcodeDto>();
+			action2 = true;
+			action3= false;
 			initCreate();
 		}
 		logger.debug("FIN initDualList +++++++++++++");

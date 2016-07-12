@@ -16,6 +16,7 @@ import javax.faces.context.FacesContext;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.sepro.parameterweb.serviceapi.AcademicModuleDto;
+import org.sepro.parameterweb.serviceapi.AcademicModuleDto.RequiredModules;
 import org.sepro.parameterweb.serviceapi.PopuplistDto;
 import org.sepro.parameterweb.serviceimpl.AcademicModuleDtoServicews;
 import org.sepro.parameterweb.serviceimpl.AcademicModuleDtoServicewsEndpoint;
@@ -38,12 +39,14 @@ public class ModuleAcademiqueSearchServiceBean implements Serializable {
 
 	private PopuplistDtoServicews popuplistDtoServicews = new PopuplistDtoServicews();
 	private PopuplistDtoServicewsEndpoint popuplistDtoServicewsEndpoint;
+
+	private AcademicModuleDtoServicews academicModuleDtoServicews = new AcademicModuleDtoServicews();
+	private AcademicModuleDtoServicewsEndpoint academicModuleDtoServicewsEndpoint;
+
 	private List<PopuplistDto> listanneeacademique = new ArrayList<PopuplistDto>();
 	private List<PopuplistDto> listniveau = new ArrayList<PopuplistDto>();
 	private List<PopuplistDto> listfiliere = new ArrayList<PopuplistDto>();
 
-	private AcademicModuleDtoServicews moduleacademiqueServicews = new AcademicModuleDtoServicews();
-	private AcademicModuleDtoServicewsEndpoint moduleacademiqueServicewsEndpoint;
 	private List<AcademicModuleDto> listmoduleacademique = new ArrayList<AcademicModuleDto>();
 	private AcademicModuleDto moduleacademiqueDto = new AcademicModuleDto();
 	private AcademicModuleDto moduleacademiquDto = new AcademicModuleDto();
@@ -128,34 +131,68 @@ public class ModuleAcademiqueSearchServiceBean implements Serializable {
 		this.action = action;
 	}
 
-	public void initDualList(String baction) {
+	public String initDualList(String baction) {
 		if (baction.equals("1")) {
 			moduleacademiqueDto = moduleacademiquDto;
+			listmoduleacademique = new ArrayList<AcademicModuleDto>();
+			selectedacademiquemodule = new ArrayList<AcademicModuleDto>();
 			listanneeacademique = new ArrayList<PopuplistDto>();
 			listfiliere = new ArrayList<PopuplistDto>();
 			listniveau = new ArrayList<PopuplistDto>();
 			initUpdate();
+			return null;
 		} else {
 			moduleacademiqueDto = new AcademicModuleDto();
+			selectedacademiquemodule = new ArrayList<AcademicModuleDto>();
 			listanneeacademique = new ArrayList<PopuplistDto>();
 			listniveau = new ArrayList<PopuplistDto>();
 			listfiliere = new ArrayList<PopuplistDto>();
 			initCreate();
 		}
+		return null;
 	}
 
 	public void initUpdate() {
+		action = false;
 		try {
-			action = false;
-			popuplistDtoServicewsEndpoint = popuplistDtoServicews
-					.getPopuplistDtoServicewsImplPort();
-			listanneeacademique = popuplistDtoServicewsEndpoint
-					.searchPopuplistDtoServicews("academic_years");
 
-			listfiliere = popuplistDtoServicewsEndpoint
-					.searchPopuplistDtoServicews("filiere");
-			listniveau = popuplistDtoServicewsEndpoint
-					.searchPopuplistDtoServicews("niveau");
+			if (moduleacademiqueDto != null) {
+				logger.debug("JE SUIS ICI ZONE 1********");
+				popuplistDtoServicewsEndpoint = popuplistDtoServicews
+						.getPopuplistDtoServicewsImplPort();
+
+				academicModuleDtoServicewsEndpoint = academicModuleDtoServicews
+						.getAcademicModuleDtoServicewsImplPort();
+				listanneeacademique = popuplistDtoServicewsEndpoint
+						.searchPopuplistDtoServicews("academic_years");
+
+				listfiliere = popuplistDtoServicewsEndpoint
+						.searchPopuplistDtoServicews("filiere");
+				listniveau = popuplistDtoServicewsEndpoint
+						.searchPopuplistDtoServicews("niveau");
+
+				listmoduleacademique = academicModuleDtoServicewsEndpoint
+						.getAllAcademicModuleServicews();
+				logger.debug("JE SUIS EN FIN DE ZONE 1******"
+						+ moduleacademiqueDto.getRequiredModules()
+								.getRequiredModule().size());
+				if (moduleacademiqueDto != null) {
+					logger.debug("JE SUIS DANS LA ZONE 2 ****"
+							+ moduleacademiqueDto.getRequiredModules()
+									.getRequiredModule().size());
+					for (AcademicModuleDto requiredmodule : moduleacademiqueDto
+							.getRequiredModules().getRequiredModule()) {
+						for (AcademicModuleDto mod : listmoduleacademique) {
+							if (mod.getIdAcademicModule() == requiredmodule
+									.getIdAcademicModule()) {
+								selectedacademiquemodule.add(mod);
+							}
+						}
+
+					}
+				}
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -163,10 +200,12 @@ public class ModuleAcademiqueSearchServiceBean implements Serializable {
 	}
 
 	public void initCreate() {
+		action = true;
 		try {
-			action = true;
 			popuplistDtoServicewsEndpoint = popuplistDtoServicews
 					.getPopuplistDtoServicewsImplPort();
+			academicModuleDtoServicewsEndpoint = academicModuleDtoServicews
+					.getAcademicModuleDtoServicewsImplPort();
 
 			listanneeacademique = popuplistDtoServicewsEndpoint
 					.searchPopuplistDtoServicews("academic_years");
@@ -175,6 +214,8 @@ public class ModuleAcademiqueSearchServiceBean implements Serializable {
 					.searchPopuplistDtoServicews("filiere");
 			listniveau = popuplistDtoServicewsEndpoint
 					.searchPopuplistDtoServicews("niveau");
+			listmoduleacademique = academicModuleDtoServicewsEndpoint
+					.getAllAcademicModuleServicews();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -184,10 +225,14 @@ public class ModuleAcademiqueSearchServiceBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
+		logger.setLevel(Level.DEBUG);
 		try {
-			moduleacademiqueServicewsEndpoint = moduleacademiqueServicews
+			logger.debug("JE SUIS DANS LE INIT ZONE START");
+			academicModuleDtoServicewsEndpoint = academicModuleDtoServicews
 					.getAcademicModuleDtoServicewsImplPort();
-			listmoduleacademique = moduleacademiqueServicewsEndpoint
+			popuplistDtoServicewsEndpoint = popuplistDtoServicews
+					.getPopuplistDtoServicewsImplPort();
+			listmoduleacademique = academicModuleDtoServicewsEndpoint
 					.getAllAcademicModuleServicews();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -196,18 +241,31 @@ public class ModuleAcademiqueSearchServiceBean implements Serializable {
 	}
 
 	public void createModule() {
+		FacesMessage msg = null;
+		logger.debug("JE SUIS DANS LA ZONE CREATION *********");
 		AcademicModuleDto moduleacademique = new AcademicModuleDto();
+
+		RequiredModules requiredmodule = new RequiredModules();
+		requiredmodule.getRequiredModule().addAll(selectedacademiquemodule);
 		moduleacademique.setAcademicGrade(moduleacademiqueDto
 				.getAcademicGrade());
+		logger.debug("***GRADE ACADEMIQUE****"+moduleacademiqueDto.getAcademicGrade().getValue());
 		moduleacademique.setAcademicSector(moduleacademiqueDto
 				.getAcademicSector());
+		logger.debug("*****SECTEUR ACADEMIQUE*********"+moduleacademiqueDto.getAcademicSector().getValue());
 		moduleacademique.setAcademiqueYear(moduleacademiqueDto
 				.getAcademiqueYear());
+		logger.debug("*** ANNEE ACADEMIQUE *******"+moduleacademiqueDto.getAcademiqueYear().getValue());
+		
+		moduleacademique.setRequiredModules(requiredmodule);
+		logger.debug("*******AFFICHAGE MODULE ACADEMIQUE*******"+requiredmodule.getRequiredModule().size());
+		
 		moduleacademique.setGradeEliminatory(moduleacademiqueDto
 				.getGradeEliminatory());
 		moduleacademique.setGradeRattrapage(moduleacademiqueDto
 				.getGradeRattrapage());
 		moduleacademique.setGradeSuccess(moduleacademiqueDto.getGradeSuccess());
+		
 		moduleacademique.setModuleDescription(moduleacademiqueDto
 				.getModuleDescription());
 		moduleacademique.setModuleName(moduleacademiqueDto.getModuleName());
@@ -215,69 +273,79 @@ public class ModuleAcademiqueSearchServiceBean implements Serializable {
 		moduleacademique.setObjectives(moduleacademiqueDto.getObjectives());
 		moduleacademique.setRateOfSuccess(moduleacademiqueDto
 				.getRateOfSuccess());
+
 		moduleacademique.setOnEntreprise(moduleacademiqueDto.getOnEntreprise());
 
-		moduleacademiqueServicewsEndpoint = moduleacademiqueServicews
+		academicModuleDtoServicewsEndpoint = academicModuleDtoServicews
 				.getAcademicModuleDtoServicewsImplPort();
-		moduleacademique = moduleacademiqueServicewsEndpoint
+
+		moduleacademique = academicModuleDtoServicewsEndpoint
 				.createAcademicModuleServicews(moduleacademique);
 
 		init();
-		FacesContext.getCurrentInstance().addMessage(
-				"mesagesalert2",
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", rb
-						.getString("label_msg_create_MODULE_ACADEMIQUE")));
+
+		msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+				rb.getString("label_succesful"),
+				rb.getString("label_msg_create_MODULE_ACADEMIQUE"));
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, msg);
+
 	}
 
-	public String updateModule() {
-		AcademicModuleDto modifmoduleacademique = new AcademicModuleDto();
-		try {
-			modifmoduleacademique.setAcademicGrade(moduleacademiqueDto
-					.getAcademicGrade());
-			modifmoduleacademique.setAcademicSector(moduleacademiqueDto
-					.getAcademicSector());
-			modifmoduleacademique.setAcademiqueYear(moduleacademiqueDto
-					.getAcademiqueYear());
-			modifmoduleacademique.setGradeEliminatory(moduleacademiqueDto
-					.getGradeEliminatory());
-			modifmoduleacademique.setGradeRattrapage(moduleacademiqueDto
-					.getGradeRattrapage());
-			modifmoduleacademique.setGradeSuccess(moduleacademiqueDto
-					.getGradeSuccess());
-			modifmoduleacademique.setModuleDescription(moduleacademiqueDto
-					.getModuleDescription());
-			modifmoduleacademique.setModuleName(moduleacademiqueDto
-					.getModuleName());
-			modifmoduleacademique.setModulePrice(moduleacademiqueDto
-					.getModulePrice());
-			modifmoduleacademique.setObjectives(moduleacademiqueDto
-					.getObjectives());
-			modifmoduleacademique.setRateOfSuccess(moduleacademiqueDto
-					.getRateOfSuccess());
-			modifmoduleacademique.setOnEntreprise(moduleacademiqueDto
-					.getOnEntreprise());
-			moduleacademiqueServicewsEndpoint = moduleacademiqueServicews
-					.getAcademicModuleDtoServicewsImplPort();
-			modifmoduleacademique.setIdAcademicModule(moduleacademiqueDto
-					.getIdAcademicModule());
-			modifmoduleacademique = moduleacademiqueServicewsEndpoint
-					.updateAcademicModuleServicews(modifmoduleacademique);
-			init();
-		} catch (Exception ex) {
+	public void updateModule() {
 
-			return null;
-		}
+		logger.debug("JE SUIS DANS LA ZONE MODIFICATION *********");
+
+		AcademicModuleDto modifmoduleacademique = new AcademicModuleDto();
+		RequiredModules requiredmodule = new RequiredModules();
+
+		requiredmodule.getRequiredModule().removeAll(selectedacademiquemodule);
+		requiredmodule.getRequiredModule().addAll(selectedacademiquemodule);
+
+		modifmoduleacademique.setRequiredModules(requiredmodule);
+		modifmoduleacademique.setAcademicGrade(moduleacademiqueDto
+				.getAcademicGrade());
+		modifmoduleacademique.setAcademicSector(moduleacademiqueDto
+				.getAcademicSector());
+		modifmoduleacademique.setAcademiqueYear(moduleacademiqueDto
+				.getAcademiqueYear());
+		modifmoduleacademique.setGradeEliminatory(moduleacademiqueDto
+				.getGradeEliminatory());
+		modifmoduleacademique.setGradeRattrapage(moduleacademiqueDto
+				.getGradeRattrapage());
+		modifmoduleacademique.setGradeSuccess(moduleacademiqueDto
+				.getGradeSuccess());
+		modifmoduleacademique.setModuleDescription(moduleacademiqueDto
+				.getModuleDescription());
+		modifmoduleacademique
+				.setModuleName(moduleacademiqueDto.getModuleName());
+		modifmoduleacademique.setModulePrice(moduleacademiqueDto
+				.getModulePrice());
+		modifmoduleacademique
+				.setObjectives(moduleacademiqueDto.getObjectives());
+		modifmoduleacademique.setRateOfSuccess(moduleacademiqueDto
+				.getRateOfSuccess());
+		modifmoduleacademique.setOnEntreprise(moduleacademiqueDto
+				.getOnEntreprise());
+
+		academicModuleDtoServicewsEndpoint = academicModuleDtoServicews
+				.getAcademicModuleDtoServicewsImplPort();
+		modifmoduleacademique.setIdAcademicModule(moduleacademiqueDto
+				.getIdAcademicModule());
+		modifmoduleacademique = academicModuleDtoServicewsEndpoint
+				.updateAcademicModuleServicews(modifmoduleacademique);
+		init();
+
 		FacesContext.getCurrentInstance().addMessage(
 				"mesagesalert2",
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", rb
 						.getString("label_msg_update_module_académique")));
-		return null;
 
 	}
 
 	public String supprimerModule() {
 		try {
-			moduleacademiqueServicewsEndpoint
+			academicModuleDtoServicewsEndpoint
 					.deleteAcademicModuleServicews(moduleacademiquDto);
 			init();
 		} catch (Exception e) {

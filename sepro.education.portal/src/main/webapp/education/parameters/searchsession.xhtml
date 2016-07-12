@@ -20,26 +20,29 @@
 							<p:outputLabel value="#{messages.label_creer_session}"
 								rendered="#{sessionSearchServiceBean.isAction()}" />
 						</h3>
-						
+
 						<div class="ui-grid ui-grid-responsive session">
 							<div class="row">
 								<div class="col-md-6 col-sm-6 label-input">
-									<p:outputLabel value="#{messages.label_nom_session}" /><span class="requireds">(*)</span>
+									<p:outputLabel value="#{messages.label_nom_session}" />
+									<span class="requireds">(*)</span>
 								</div>
 								<div class="col-md-6 col-sm-6">
-									<p:inputText styleClass="form-control" id="nomsession" maxlength="128"
+									<p:inputText styleClass="form-control" id="nomsession"
+										maxlength="128"
 										value="#{sessionSearchServiceBean.sessionDto.sessionName}"
 										placeholder="#{messages.labelnomsession}" required="true"
 										immediate="true"
 										requiredMessage="#{messages.label_nomsession_requeried}">
-									<f:validateLength minimum="5" maximum="128" />
+										<f:validateLength minimum="5" maximum="128" />
 										<p:ajax event="keyup" />
 									</p:inputText>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-6 col-sm-6 label-input">
-									<p:outputLabel value="#{messages.label_anneeacademique}" /><span class="requireds">(*)</span>
+									<p:outputLabel value="#{messages.label_anneeacademique}" />
+									<span class="requireds">(*)</span>
 								</div>
 								<div class="col-md-6 col-sm-6">
 									<p:selectOneMenu styleClass="form-text" id="anneeacademique"
@@ -60,13 +63,13 @@
 							<div class="row">
 								<div class="col-md-6 col-sm-6 label-input">
 									<p:outputLabel value="#{messages.labeldatedebut}"
-										for="datedebut" /><span class="requireds">(*)</span>
+										for="buttonstart" />
+									<span class="requireds">(*)</span>
 								</div>
 								<div class="col-md-6 col-sm-6">
-									<p:calendar id="datedebut"
+									<p:calendar id="buttonstart"
 										value="#{sessionSearchServiceBean.sessionDto.startDate}"
-										showOn="button" pattern="MM/dd/yyyy"
-										required="true"
+										showOn="button" pattern="MM/dd/yyyy" required="true"
 										requiredMessage="#{messages.label_startDate_requeried}"
 										placeholder="#{messages.label_labeldatedebut}">
 										<f:converter converterId="dateConverter" />
@@ -76,14 +79,14 @@
 							</div>
 							<div class="row">
 								<div class="col-md-6 col-sm-6 label-input">
-									<p:outputLabel value="#{messages.labeldatefin}" for="datefin" /><span class="requireds">(*)</span>
+									<p:outputLabel value="#{messages.labeldatefin}" for="buttonend" />
+									<span class="requireds">(*)</span>
 								</div>
 								<div class="col-md-6 col-sm-6">
-									<p:calendar id="datefin"
+									<p:calendar id="buttonend"
 										value="#{sessionSearchServiceBean.sessionDto.endDate}"
-										showOn="button" pattern="MM/dd/yyyy"
-										required="true"
-										requiredMessage="#{messages.label_endDate_requeried}"
+										showOn="button" pattern="MM/dd/yyyy" required="true"
+										requiredMessage="#{messages.label_enDate_requeried}"
 										placeholder="#{messages.label_labeldatefin}">
 										<f:converter converterId="dateConverter" />
 										<p:ajax event="dateSelect" />
@@ -92,13 +95,13 @@
 							</div>
 							<div class="row">
 								<div class="col-md-6 col-sm-6 label-input">
-									<p:outputLabel value="#{messages.labelstatus}" /><span class="requireds">(*)</span>
+									<p:outputLabel value="#{messages.labelstatus}" />
+									<span class="requireds">(*)</span>
 								</div>
 								<div class="col-md-6 col-sm-6">
 									<p:selectOneMenu styleClass="form-text" id="statut"
 										value="#{sessionSearchServiceBean.sessionDto.statusSession}"
-										converter="entityConverter"
-										required="true" immediate="true"
+										converter="entityConverter" required="true" immediate="true"
 										requiredMessage="#{messages.label_statusSession_requeried}"
 										placeholder="#{messages.label_country}">
 										<f:selectItem
@@ -107,7 +110,7 @@
 										<f:selectItems value="#{sessionSearchServiceBean.liststatut}"
 											var="statusSession" itemValue="#{statusSession}"
 											itemLabel="#{statusSession.value}" />
-											<f:ajax event="blur" render="" />
+										<f:ajax event="blur" render="" />
 									</p:selectOneMenu>
 								</div>
 							</div>
@@ -131,7 +134,8 @@
 
 								<p:commandButton value="#{messages.label_button_annuler}"
 									type="reset" onclick="PF('updatesession').hide()"
-									update="fdial" styleClass="btn btn-default btn-sm offset" id="annulerButton">
+									update="fdial" styleClass="btn btn-default btn-sm offset"
+									id="annulerButton">
 								</p:commandButton>
 							</div>
 						</div>
@@ -182,7 +186,8 @@
 									<p:column priority="1" filterBy="#{sess.academiqueYear}"
 										filterMatchMode="contains">
 										<f:facet name="header">
-											<p:outputLabel value="#{messages.label_anneeacademiquesession}" />
+											<p:outputLabel
+												value="#{messages.label_anneeacademiquesession}" />
 										</f:facet>
 										<h:outputText value="#{sess.academiqueYear.value}"></h:outputText>
 									</p:column>

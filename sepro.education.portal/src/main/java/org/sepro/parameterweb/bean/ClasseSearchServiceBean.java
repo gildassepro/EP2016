@@ -82,7 +82,27 @@ public class ClasseSearchServiceBean implements Serializable {
 	
 
 	private boolean action = false;
+	private boolean action2 = false;
+	private boolean action3 = true;
 	private boolean test = false;
+
+	
+	
+	public boolean isAction2() {
+		return action2;
+	}
+
+	public void setAction2(boolean action2) {
+		this.action2 = action2;
+	}
+
+	public boolean isAction3() {
+		return action3;
+	}
+
+	public void setAction3(boolean action3) {
+		this.action3 = action3;
+	}
 
 	public List<RoomInventoryDto> getListinventaire() {
 		listinventaire = new ArrayList<RoomInventoryDto>();
@@ -312,6 +332,8 @@ public class ClasseSearchServiceBean implements Serializable {
 			listtypedeclasse = new ArrayList<TypeofClassDto>();
 			listjoursource = new ArrayList<DaysofWeekDto>();
 			listjourdestination = new ArrayList<DaysofWeekDto>();
+			action2 = true;
+			action3= false;
 			initUpdate();
 		} else {
 			classeDto = new ClasseDto();
@@ -320,6 +342,8 @@ public class ClasseSearchServiceBean implements Serializable {
 			listtypedeclasse = new ArrayList<TypeofClassDto>();
 			listjoursource = new ArrayList<DaysofWeekDto>();
 			listjourdestination = new ArrayList<DaysofWeekDto>();
+			action2 = true;
+			action3= false;
 			initCreate();
 		}
 	}

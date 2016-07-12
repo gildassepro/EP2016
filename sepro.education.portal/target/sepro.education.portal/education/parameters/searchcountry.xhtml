@@ -10,204 +10,232 @@
 
 		<div class="container-fluid">
 			<b:row>
-				<p:overlayPanel id="updatcountry" widgetVar="updatecountry"
-					showEffect="fade" hideEffect="fade" dismissable="false"
-					showCloseIcon="true">
-
-					<h:form id="fdial">
-
-						<h3 style="margin-top: 0">
-							<p:outputLabel value="#{messages.label_creationcountry}"
-								rendered="#{countrySearchServiceBean.isAction()}" />
-							<p:outputLabel value="#{messages.label_modifier_Country}"
-								rendered="#{!countrySearchServiceBean.isAction()}" />
-						</h3>
-
-
-
-
-						<div class="ui-grid ui-grid-responsive">
-							<div class="row">
-								<div class="col-md-6 col-sm-6 label-input">
-									<p:outputLabel value="#{messages.label_iso_country_code}" />
-									<span class="requireds">(*)</span>
-								</div>
-								<div class="col-md-6 col-sm-6">
-									<p:inputText id="iso" maxlength="3" styleClass="form-text"
-										value="#{countrySearchServiceBean.countryDto.isoCountryCode}"
-										placeholder="#{messages.label_iso_country_code1}"
-										required="true"
-										requiredMessage="#{messages.label_iso_requeried}">
-										<f:validateLength minimum="3" maximum="3" />
-										<p:ajax event="keyup" />
-									</p:inputText>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-md-6 col-sm-6 label-input">
-									<p:outputLabel value="#{messages.labelalpha3}" />
-									<span class="requireds">(*)</span>
-								</div>
-								<div class="col-md-6 col-sm-6">
-									<p:inputText id="alpha3" maxlength="3" styleClass="form-text"
-										value="#{countrySearchServiceBean.countryDto.alpha3}"
-										placeholder="#{messages.labelalpha31}" required="true"
-										requiredMessage="#{messages.label_alpha3_requeried}">
-										<f:validateLength minimum="3" maximum="3" />
-										<p:ajax event="keyup" />
-									</p:inputText>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-md-6 col-sm-6 label-input">
-									<p:outputLabel value="#{messages.labelalpha2}" />
-									<span class="requireds">(*)</span>
-								</div>
-								<div class="col-md-6 col-sm-6">
-									<p:inputText id="alpha2" maxlength="2" styleClass="form-text"
-										value="#{countrySearchServiceBean.countryDto.alpha2}"
-										placeholder="#{messages.labelalpha21}" required="true"
-										requiredMessage="#{messages.label_alpha2_requeried}">
-										<f:validateLength minimum="2" maximum="2" />
-										<p:ajax event="keyup" />
-									</p:inputText>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-md-6 col-sm-6 label-input">
-									<p:outputLabel value="#{messages.label_country_name}" />
-									<span class="requireds">(*)</span>
-								</div>
-								<div class="col-md-6 col-sm-6">
-									<p:inputText id="countryname" maxlength="128"
-										styleClass="form-text"
-										value="#{countrySearchServiceBean.countryDto.countryName}"
-										placeholder="#{messages.label_country_name1}" required="true"
-										requiredMessage="#{messages.label_countryname_requeried}">
-										<f:validateLength maximum="128" />
-										<p:ajax event="keyup" />
-									</p:inputText>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-md-6 col-sm-6 label-input">
-									<p:outputLabel value="#{messages.label_choix_language}" />
-									<span class="requireds">(*)</span>
-								</div>
-								<div class="col-md-6 col-sm-6">
-									<p:selectOneMenu styleClass="form-text" id="lg"
-										value="#{countrySearchServiceBean.countryDto.language}"
-										converter="entityConverter"
-										placeholder="#{messages.label_country}" required="true"
-										requiredMessage="#{messages.label_choixlangue_requeried}">
-										<f:selectItem
-											itemLabel="#{countrySearchServiceBean.countryDto.language.languageName}"
-											itemValue="#{countrySearchServiceBean.countryDto.language}" />
-										<f:selectItems
-											value="#{countrySearchServiceBean.listlanguage}"
-											var="language" itemValue="#{language}"
-											itemLabel="#{language.languageName}" />
-										<f:ajax event="blur" render="" />
-									</p:selectOneMenu>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-md-6 col-sm-6 label-input">
-									<p:outputLabel
-										value="#{messages.label_choix_mobilephoneformat}" />
-								</div>
-								<div class="col-md-6 col-sm-6">
-									<p:selectOneMenu styleClass="form-text" id="mobileph"
-										value="#{countrySearchServiceBean.countryDto.mobilePhoneFormat}"
-										converter="entityConverter"
-										placeholder="#{messages.label_country}">
-										<f:selectItem
-											itemLabel="#{countrySearchServiceBean.countryDto.mobilePhoneFormat.description}"
-											itemValue="#{countrySearchServiceBean.countryDto.mobilePhoneFormat}" />
-										<f:selectItems
-											value="#{countrySearchServiceBean.listmobilephoneformat}"
-											var="mobilePhoneFormat" itemValue="#{mobilePhoneFormat}"
-											itemLabel="#{mobilePhoneFormat.description}" />
-									</p:selectOneMenu>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-md-6 col-sm-6 label-input">
-									<p:outputLabel value="#{messages.label_choix_lanphoneformat}" />
-								</div>
-								<div class="col-md-6 col-sm-6">
-									<p:selectOneMenu styleClass="form-text" id="lanph"
-										value="#{countrySearchServiceBean.countryDto.lanPhoneFormat}"
-										converter="entityConverter"
-										placeholder="#{messages.label_country}">
-										<f:selectItem
-											itemLabel="#{countrySearchServiceBean.countryDto.lanPhoneFormat.description}"
-											itemValue="#{countrySearchServiceBean.countryDto.lanPhoneFormat}" />
-										<f:selectItems
-											value="#{countrySearchServiceBean.listlanphoneformat}"
-											var="lanPhoneFormat" itemValue="#{lanePhoneFormat}"
-											itemLabel="#{lanPhoneFormat.description}" />
-									</p:selectOneMenu>
-								</div>
-							</div>
-
-							<div class="button-wrapper">
-								<p:commandButton value="#{messages.label_modifier}"
-									styleClass="btn btn-primary"
-									rendered="#{!countrySearchServiceBean.isAction()}"
-									action="#{countrySearchServiceBean.updateCountry()}"
-									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatecountry').hide()"
-									update="forme fdial growl">
-								</p:commandButton>
-								<p:commandButton value="#{messages.label_create}"
-									styleClass="btn btn-primary"
-									rendered="#{countrySearchServiceBean.isAction()}"
-									action="#{countrySearchServiceBean.createCountry()}"
-									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatecountry').hide()"
-									update="forme fdial growl">
-								</p:commandButton>
-								<p:commandButton value="#{messages.label_button_annuler}"
-									type="reset" onclick="PF('updatecountry').hide()"
-									update="fdial" styleClass="btn btn-default btn-sm offset"
-									id="annulerButton" />
-							</div>
-						</div>
-					</h:form>
-				</p:overlayPanel>
 
 				<h:form id="forme">
 					<p:accordionPanel>
 						<p:tab title="#{messages.label_Recherche_Country}">
 							<b:row styleClass="listPage">
-								<div class="table-header">
-									<p:commandButton id="add" title="#{messages.label_add}"
-										action="#{countrySearchServiceBean.initDualList('2')}"
-										update="@([id$=updatcountry])"
-										oncomplete="PF('updatecountry').show()"
-										value="#{messages.label_modifier}"
+								<div id="menubutton">
+									<p:commandButton id="adde"
 										styleClass="btn btn-primary submit-button"
-										icon="fa fa-fw fa-plus">
+										value="#{messages.label_new}" title="#{messages.label_new}"
+										action="#{countrySearchServiceBean.initDualList('2')}"
+										update="@([id$=updatcountry]) forme fdial"
+										onclick="PF('updatecountry').show()" icon="fa fa-fw fa-plus">
+									</p:commandButton>
+									<p:commandButton id="modifse"
+										styleClass="btn btn-primary submit-button"
+										value="#{messages.label_modifier}"
+										update="@([id$=updatcountry]) forme fdial"
+										onclick="PF('updatecountry').show()" icon="fa fa-fw fa-pencil"
+										action="#{countrySearchServiceBean.initDualList('1')}">
+									</p:commandButton>
+									<p:commandButton id="deletee" process="@([id$=listcountrys])"
+										styleClass="btn btn-primary submit-button"
+										value="#{messages.label_supprimer1}"
+										title="#{messages.label_supprimer1}"
+										onclick="PF('confirmation').show()" icon="fa fa-fw fa-remove">
+									</p:commandButton>
+									<p:commandButton id="printe"
+										update="@([id$=listcountrys]) forme fdial"
+										styleClass="btn btn-primary submit-button"
+										title="#{messages.label_print}"
+										value="#{messages.label_print}"
+										onclick="PF('confirmation').show()" icon="fa fa-fw fa-print">
+									</p:commandButton>
+									<p:splitButton value="#{messages.label_options}"
+										actionListener="#{buttonView.save}" icon="ui-icon-gear">
+										<p:menuitem value="Update"
+											actionListener="#{buttonView.update}"
+											icon="ui-icon-arrowrefresh-1-w" />
+										<p:menuitem value="Delete"
+											actionListener="#{buttonView.delete}" ajax="false"
+											icon="ui-icon-close" />
+										<p:separator />
+										<p:menuitem value="Homepage" icon="ui-icon-extlink" />
+									</p:splitButton>
+
+									<p:commandButton id="past"
+										styleClass="btn btn-primary submit-button" ajax="false"
+										action="searchcountry.xhtml?faces-redirect=true"
+										update="@([id$=listcountrys]) forme fdial"
+										icon="fa fa-fw fa-arrow-left">
 									</p:commandButton>
 
-									<p:blockUI block="add" trigger="add">
-											#{messages.label_loading}<br />
-										<p:graphicImage value="/resources/images/loadingpics.gif" />
-									</p:blockUI>
+									<p:commandButton value="#{messages.label_modifier}"
+										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
+										rendered="#{!countrySearchServiceBean.isAction()}"
+										action="#{countrySearchServiceBean.updateCountry()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatecountry').hide()"
+										update="forme fdial growl" />
+									<p:commandButton value="#{messages.label_create}"
+										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
+										rendered="#{countrySearchServiceBean.isAction()}"
+										action="#{countrySearchServiceBean.createCountry()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatecountry').hide()"
+										update="forme fdial growl" />
 								</div>
+
+								<p:panel id="updatcountry" widgetVar="updatecountry"
+									rendered="#{!countrySearchServiceBean.isAction3()}">
+									
+									<h:form id="fdial">
+
+										<h3 style="margin-top: 0">
+											<p:outputLabel value="#{messages.label_creationcountry}"
+												rendered="#{countrySearchServiceBean.isAction()}" />
+											<p:outputLabel value="#{messages.label_modifier_Country}"
+												rendered="#{!countrySearchServiceBean.isAction()}" />
+										</h3>
+
+
+										<div class="ui-grid ui-grid-responsive">
+											<div class="row">
+												<div class="col-md-6 col-sm-6 label-input">
+													<p:outputLabel value="#{messages.label_iso_country_code}" />
+													<span class="requireds">(*)</span>
+												</div>
+												<div class="col-md-6 col-sm-6">
+													<p:inputText id="iso" maxlength="3" styleClass="form-text"
+														value="#{countrySearchServiceBean.countryDto.isoCountryCode}"
+														placeholder="#{messages.label_iso_country_code1}"
+														required="true"
+														requiredMessage="#{messages.label_iso_requeried}">
+														<f:validateLength minimum="3" maximum="3" />
+														<p:ajax event="keyup" />
+													</p:inputText>
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-md-6 col-sm-6 label-input">
+													<p:outputLabel value="#{messages.labelalpha3}" />
+													<span class="requireds">(*)</span>
+												</div>
+												<div class="col-md-6 col-sm-6">
+													<p:inputText id="alpha3" maxlength="3"
+														styleClass="form-text"
+														value="#{countrySearchServiceBean.countryDto.alpha3}"
+														placeholder="#{messages.labelalpha31}" required="true"
+														requiredMessage="#{messages.label_alpha3_requeried}">
+														<f:validateLength minimum="2"/>
+														<p:ajax event="keyup" />
+													</p:inputText>
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-md-6 col-sm-6 label-input">
+													<p:outputLabel value="#{messages.labelalpha2}" />
+													<span class="requireds">(*)</span>
+												</div>
+												<div class="col-md-6 col-sm-6">
+													<p:inputText id="alpha2" maxlength="2"
+														styleClass="form-text"
+														value="#{countrySearchServiceBean.countryDto.alpha2}"
+														placeholder="#{messages.labelalpha21}" required="true"
+														requiredMessage="#{messages.label_alpha2_requeried}">
+														<f:validateLength minimum="2" maximum="2" />
+														<p:ajax event="keyup" />
+													</p:inputText>
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-md-6 col-sm-6 label-input">
+													<p:outputLabel value="#{messages.label_country_name}" />
+													<span class="requireds">(*)</span>
+												</div>
+												<div class="col-md-6 col-sm-6">
+													<p:inputText id="countryname" maxlength="128"
+														styleClass="form-text"
+														value="#{countrySearchServiceBean.countryDto.countryName}"
+														placeholder="#{messages.label_country_name1}"
+														required="true"
+														requiredMessage="#{messages.label_countryname_requeried}">
+														<f:validateLength maximum="128" />
+														<p:ajax event="keyup" />
+													</p:inputText>
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-md-6 col-sm-6 label-input">
+													<p:outputLabel value="#{messages.label_choix_language}" />
+													<span class="requireds">(*)</span>
+												</div>
+												<div class="col-md-6 col-sm-6">
+													<p:selectOneMenu styleClass="form-text" id="lg"
+														value="#{countrySearchServiceBean.countryDto.language}"
+														converter="entityConverter"
+														placeholder="#{messages.label_country}" required="true"
+														requiredMessage="#{messages.label_choixlangue_requeried}">
+														<f:selectItem
+															itemLabel="#{countrySearchServiceBean.countryDto.language.languageName}"
+															itemValue="#{countrySearchServiceBean.countryDto.language}" />
+														<f:selectItems
+															value="#{countrySearchServiceBean.listlanguage}"
+															var="language" itemValue="#{language}"
+															itemLabel="#{language.languageName}" />
+														<f:ajax event="blur" render="" />
+													</p:selectOneMenu>
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-md-6 col-sm-6 label-input">
+													<p:outputLabel
+														value="#{messages.label_choix_mobilephoneformat}" />
+												</div>
+												<div class="col-md-6 col-sm-6">
+													<p:selectOneMenu styleClass="form-text" id="mobileph"
+														value="#{countrySearchServiceBean.countryDto.mobilePhoneFormat}"
+														converter="entityConverter"
+														placeholder="#{messages.label_country}">
+														<f:selectItem
+															itemLabel="#{countrySearchServiceBean.countryDto.mobilePhoneFormat.description}"
+															itemValue="#{countrySearchServiceBean.countryDto.mobilePhoneFormat}" />
+														<f:selectItems
+															value="#{countrySearchServiceBean.listmobilephoneformat}"
+															var="mobilePhoneFormat" itemValue="#{mobilePhoneFormat}"
+															itemLabel="#{mobilePhoneFormat.description}" />
+													</p:selectOneMenu>
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-md-6 col-sm-6 label-input">
+													<p:outputLabel
+														value="#{messages.label_choix_lanphoneformat}" />
+												</div>
+												<div class="col-md-6 col-sm-6">
+													<p:selectOneMenu styleClass="form-text" id="lanph"
+														value="#{countrySearchServiceBean.countryDto.lanPhoneFormat}"
+														converter="entityConverter"
+														placeholder="#{messages.label_country}">
+														<f:selectItem
+															itemLabel="#{countrySearchServiceBean.countryDto.lanPhoneFormat.description}"
+															itemValue="#{countrySearchServiceBean.countryDto.lanPhoneFormat}" />
+														<f:selectItems
+															value="#{countrySearchServiceBean.listlanphoneformat}"
+															var="lanPhoneFormat" itemValue="#{lanePhoneFormat}"
+															itemLabel="#{lanPhoneFormat.description}" />
+													</p:selectOneMenu>
+												</div>
+											</div>
+										</div>
+									</h:form>
+								</p:panel>
 
 								<p:dataTable id="listcountrys"
 									value="#{countrySearchServiceBean.listcountry}" var="country"
+									rendered="#{!countrySearchServiceBean.isAction2()}"
 									widgetVar="menuTable" emptyMessage="#{messages.label_empty}"
 									styleClass="listeTable table-responsive filterable"
 									tableStyleClass="table table-striped table-condensed table-hover"
 									rowKey="#{country.idCountry}" selectionMode="single"
 									paginator="true" paginatorPosition="bottom"
+									selection="#{countrySearchServiceBean.contryDto}"
 									paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
 									rows="10" filterBy="#{country.countryName}">
 
@@ -297,20 +325,19 @@
 										#{messages.label_loading}<br />
 											<p:graphicImage value="/resources/images/loadingpics.gif" />
 										</p:blockUI>
-
-										<p:confirmDialog
-											message="#{messages.label_msg_alerte_supression}"
-											header="Confirmation" widgetVar="confirmation">
-											<p:commandButton value="#{messages.label_msg_confirmOui}"
-												onclick="PF('confirmation').hide()"
-												action="#{countrySearchServiceBean.supprimerCountry()}"
-												update="forme growl" />
-											<p:commandButton value="#{messages.label_msg_confirmNon}"
-												onclick="PF('confirmation').hide()" type="button" />
-										</p:confirmDialog>
 									</p:column>
 								</p:dataTable>
 
+								<p:confirmDialog
+									message="#{messages.label_msg_alerte_supression}"
+									header="Confirmation" widgetVar="confirmation">
+									<p:commandButton value="#{messages.label_msg_confirmOui}"
+										onclick="PF('confirmation').hide()"
+										action="#{countrySearchServiceBean.supprimerCountry()}"
+										update="forme growl" />
+									<p:commandButton value="#{messages.label_msg_confirmNon}"
+										onclick="PF('confirmation').hide()" type="button" />
+								</p:confirmDialog>
 								<p:contextMenu for="listcountrys">
 									<p:menuitem value="Modifier" icon="ui-icon-search" />
 									<p:menuitem value="Supprimer" icon="ui-icon-search" />
