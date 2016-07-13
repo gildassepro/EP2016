@@ -10,122 +10,149 @@
 
 		<div class="container-fluid">
 			<b:row>
-				<p:overlayPanel id="updatmodule" widgetVar="updatemodule"
-					showEffect="fade" hideEffect="fade" dismissable="false"
-					showCloseIcon="true">
-					<h:form id="fdial">
-
-						<h3 style="margin-top: 0">
-							<p:outputLabel value="#{messages.label_Dupliquer_Module}"
-								rendered="#{moduleSearchServiceBean.isAction()}" />
-							<p:outputLabel value="#{messages.label_Modification_Module}"
-								rendered="#{!moduleSearchServiceBean.isAction()}" />
-						</h3>
-
-						<div class="ui-grid ui-grid-responsive">
-
-							<div class="row">
-								<div class="col-md-3 col-sm-3 label-input">
-									<p:outputLabel value="#{messages.label_module_name}" />
-								</div>
-								<div class="col-md-4 col-sm-4">
-									<p:inputText styleClass="form-text form-control" id="modulenamelabel"
-										value="#{moduleSearchServiceBean.moduleDto.moduleName}"
-										readonly="true">
-									</p:inputText>
-								</div>
-								<div class="col-md-4 col-sm-4">
-									<p:inputText styleClass="form-text form-control" id="modulename"
-										value="#{moduleSearchServiceBean.moduleDto.moduleName}"
-										readonly="true">
-									</p:inputText>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-md-3 col-sm-3 label-input">
-									<p:outputLabel value="#{messages.label_description1}" /><span class="requireds">(*)</span>
-								</div>
-								<div class="col-md-4 col-sm-4">
-									<p:inputText styleClass="form-text form-control" id="descriptionlabel"
-										value="#{moduleSearchServiceBean.moduleDto.description}"
-										readonly="true">
-									</p:inputText>
-								</div>
-								<div class="col-md-4 col-sm-4">
-									<p:inputText styleClass="form-text form-control" id="description" maxlength="128"
-										value="#{moduleSearchServiceBean.description}"
-										placeholder="#{messages.label_description_name}"
-										rendered="#{moduleSearchServiceBean.isAction()}"
-										required="true"
-										requiredMessage="#{messages.label_module_description_requeried}">
-										<f:validateLength minimum="3" maximum="128" />
-										<p:ajax event="keyup" />
-									</p:inputText>
-									<p:inputText styleClass="form-text form-control" id="description1" 
-										value="#{moduleSearchServiceBean.moduleDto.description}"
-										rendered="#{!moduleSearchServiceBean.isAction()}"
-										readonly="true">
-									</p:inputText>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-md-3 col-sm-3 label-input">
-									<p:outputLabel value="#{messages.label_menuname1}" />
-								</div>
-								<div class="col-md-4 col-sm-4">
-									<p:selectCheckboxMenu id="menulist"
-										value="#{moduleSearchServiceBean.listMenuDestination}"
-										filter="true" filterMatchMode="startsWith"
-										converter="entityConverter" panelStyle="width:250px"
-										label="#{messages.label_choix_du_menu}">
-										<f:selectItems
-											value="#{moduleSearchServiceBean.listMenuSource}" var="menu"
-											itemValue="#{menu}"
-											itemLabel="#{menu.menuName} #{menu.description}" />
-									</p:selectCheckboxMenu>
-								</div>
-							</div>
-
-							<div class="button-wrapper">
-								<p:commandButton id="dupliquer"
-									styleClass="btn btn-primary submit-button"
-									action="#{moduleSearchServiceBean.dupliquerModule()}"
-									rendered="#{moduleSearchServiceBean.isAction()}"
-									value="#{messages.label_dupliquer}"
-									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatemodule').hide()"
-									update="forme fdial growl">
-								</p:commandButton>
-								<p:commandButton id="modifier"
-									styleClass="btn btn-primary submit-button"
-									action="#{moduleSearchServiceBean.dupliquerModule()}"
-									rendered="#{!moduleSearchServiceBean.isAction()}"
-									value="#{messages.label_modifier}"
-									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatemodule').hide()"
-									update="forme fdial growl">
-								</p:commandButton>
-								<p:commandButton id="annulerButton" type="reset"
-									onclick="PF('updatemodule').hide()" update="fdial"
-									styleClass="btn btn-default btn-sm offset"
-									value="#{messages.label_button_annuler}">
-								</p:commandButton>
-							</div>
-
-						</div>
-					</h:form>
-				</p:overlayPanel>
 
 				<h:form id="forme">
 					<p:accordionPanel>
 						<p:tab title="#{messages.label_Recherche_Module}">
 							<b:row styleClass="listPage">
+
+								<div id="menubutton">
+									<p:commandButton id="dupliquer" styleClass="btn btn-info"
+										title="#{messages.label_dupliquer}"
+										action="#{moduleSearchServiceBean.initDualList('1')}"
+										update="@([id$=updatmodule])"
+										onclick="PF('updatemodule').show()"
+										rendered="#{module.isIsSystem()}"
+										value="#{messages.label_dupliquer}" icon="fa fa-fw fa-copy">
+
+									</p:commandButton>
+									<p:commandButton id="modifier" styleClass="btn btn-success"
+										title="#{messages.label_modifier}"
+										action="#{moduleSearchServiceBean.initDualList('2')}"
+										update="@([id$=updatmodule])"
+										onclick="PF('updatemodule').show()"
+										rendered="#{!module.isIsSystem()}"
+										value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil">
+									</p:commandButton>
+									<p:commandButton id="supprimer" styleClass="btn btn-danger"
+										title="#{messages.label_supprimer1}"
+										rendered="#{!module.isIsSystem()}"
+										onclick="PF('confirmation').show()"
+										value="#{messages.label_supprimer1}" icon="fa fa-fw fa-remove">
+									</p:commandButton>
+
+									<p:commandButton id="dupliquer"
+										styleClass="btn btn-primary submit-button"
+										action="#{moduleSearchServiceBean.dupliquerModule()}"
+										rendered="#{moduleSearchServiceBean.isAction()}"
+										value="#{messages.label_dupliquer}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatemodule').hide()"
+										update="forme fdial growl">
+									</p:commandButton>
+									<p:commandButton id="modifier"
+										styleClass="btn btn-primary submit-button"
+										action="#{moduleSearchServiceBean.dupliquerModule()}"
+										rendered="#{!moduleSearchServiceBean.isAction()}"
+										value="#{messages.label_modifier}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatemodule').hide()"
+										update="forme fdial growl">
+									</p:commandButton>
+
+								</div>
+								<p:panel id="updatmodule" widgetVar="updatemodule"
+									rendered="#{!moduleSearchServiceBean.isAction3()}">
+									<h:form id="fdial">
+
+										<h3 style="margin-top: 0">
+											<p:outputLabel value="#{messages.label_Dupliquer_Module}"
+												rendered="#{moduleSearchServiceBean.isAction()}" />
+											<p:outputLabel value="#{messages.label_Modification_Module}"
+												rendered="#{!moduleSearchServiceBean.isAction()}" />
+										</h3>
+
+										<div class="ui-grid ui-grid-responsive">
+
+											<div class="row">
+												<div class="col-md-3 col-sm-3 label-input">
+													<p:outputLabel value="#{messages.label_module_name}" />
+												</div>
+												<div class="col-md-4 col-sm-4">
+													<p:inputText styleClass="form-text form-control"
+														id="modulenamelabel"
+														value="#{moduleSearchServiceBean.moduleDto.moduleName}"
+														readonly="true">
+													</p:inputText>
+												</div>
+												<div class="col-md-4 col-sm-4">
+													<p:inputText styleClass="form-text form-control"
+														id="modulename"
+														value="#{moduleSearchServiceBean.moduleDto.moduleName}"
+														readonly="true">
+													</p:inputText>
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-md-3 col-sm-3 label-input">
+													<p:outputLabel value="#{messages.label_description1}" />
+													<span class="requireds">(*)</span>
+												</div>
+												<div class="col-md-4 col-sm-4">
+													<p:inputText styleClass="form-text form-control"
+														id="descriptionlabel"
+														value="#{moduleSearchServiceBean.moduleDto.description}"
+														readonly="true">
+													</p:inputText>
+												</div>
+												<div class="col-md-4 col-sm-4">
+													<p:inputText styleClass="form-text form-control"
+														id="description" maxlength="128"
+														value="#{moduleSearchServiceBean.description}"
+														placeholder="#{messages.label_description_name}"
+														rendered="#{moduleSearchServiceBean.isAction()}"
+														required="true"
+														requiredMessage="#{messages.label_module_description_requeried}">
+														<f:validateLength minimum="3" maximum="128" />
+														<p:ajax event="keyup" />
+													</p:inputText>
+													<p:inputText styleClass="form-text form-control"
+														id="description1"
+														value="#{moduleSearchServiceBean.moduleDto.description}"
+														rendered="#{!moduleSearchServiceBean.isAction()}"
+														readonly="true">
+													</p:inputText>
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-md-3 col-sm-3 label-input">
+													<p:outputLabel value="#{messages.label_menuname1}" />
+												</div>
+												<div class="col-md-4 col-sm-4">
+													<p:selectCheckboxMenu id="menulist"
+														value="#{moduleSearchServiceBean.listMenuDestination}"
+														filter="true" filterMatchMode="startsWith"
+														converter="entityConverter" panelStyle="width:250px"
+														label="#{messages.label_choix_du_menu}">
+														<f:selectItems
+															value="#{moduleSearchServiceBean.listMenuSource}"
+															var="menu" itemValue="#{menu}"
+															itemLabel="#{menu.menuName} #{menu.description}" />
+													</p:selectCheckboxMenu>
+												</div>
+											</div>
+
+										</div>
+									</h:form>
+								</p:panel>
 								<p:dataTable id="listmodule"
+									rendered="#{!moduleSearchServiceBean.isAction2()}"
 									value="#{moduleSearchServiceBean.listmodule}" var="module"
 									widgetVar="menuTable" emptyMessage="#{messages.label_empty}"
 									styleClass="listeTable table-responsive filterable"
 									tableStyleClass="table table-striped table-condensed table-hover"
 									rowKey="#{module.idModule}" selectionMode="single"
+									selection="#{moduleSearchServiceBean.moduleDto}"
 									paginator="true" paginatorPosition="bottom"
 									paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
 									rows="10" filterBy="#{module.moduleName}">
@@ -161,62 +188,25 @@
 										</f:facet>
 										<p:outputLabel value="#{module.moduleClass}"></p:outputLabel>
 									</p:column>
-
-									<p:column priority="1" width="100" filterMatchMode="contains">
-
-										<f:facet name="header">
-											<p:outputLabel value="#{messages.label_action}" />
-										</f:facet>
-
-										<p:commandButton id="dupliquer" styleClass="btn btn-info"
-											title="#{messages.label_dupliquer}"
-											action="#{moduleSearchServiceBean.initDualList('1')}"
-											update="@([id$=updatmodule])"
-											oncomplete="PF('updatemodule').show()"
-											rendered="#{module.isIsSystem()}"
-											value="#{messages.label_dupliquer}" icon="fa fa-fw fa-copy">
-											<f:setPropertyActionListener value="#{module}"
-												target="#{moduleSearchServiceBean.moduleDto}" />
-										</p:commandButton>
-										<p:commandButton id="modifier" styleClass="btn btn-success"
-											title="#{messages.label_modifier}"
-											action="#{moduleSearchServiceBean.initDualList('2')}"
-											update="@([id$=updatmodule])"
-											oncomplete="PF('updatemodule').show()"
-											rendered="#{!module.isIsSystem()}"
-											value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil">
-											<f:setPropertyActionListener value="#{module}"
-												target="#{moduleSearchServiceBean.moduleDto}" />
-										</p:commandButton>
-										<p:commandButton id="supprimer" styleClass="btn btn-danger"
-											title="#{messages.label_supprimer1}"
-											rendered="#{!module.isIsSystem()}"
-											onclick="PF('confirmation').show()"
-											value="#{messages.label_supprimer1}"
-											icon="fa fa-fw fa-remove">
-											<f:setPropertyActionListener value="#{module}"
-												target="#{moduleSearchServiceBean.moduleDto}" />
-										</p:commandButton>
-
-										<p:blockUI block="listmodule"
-											trigger="listmodule:supprimer,listmodule:modifier,listmodule:dupliquer">
-										#{messages.label_loading}<br />
-											<p:graphicImage value="/resources/images/loadingpics.gif" />
-										</p:blockUI>
-
-										<p:confirmDialog message="#{messages.label_supprimer}"
-											header="Confirmation" widgetVar="confirmation">
-											<p:commandButton value="Oui"
-												onclick="PF('confirmation').hide()"
-												action="#{moduleSearchServiceBean.supprimerModule()}"
-												update="forme growl" />
-											<p:commandButton value="Non"
-												onclick="PF('confirmation').hide()" type="button" />
-										</p:confirmDialog>
-
-									</p:column>
 								</p:dataTable>
-
+								<p:confirmDialog message="#{messages.label_supprimer}"
+									header="Confirmation" widgetVar="confirmation">
+									<p:commandButton value="Oui"
+										onclick="PF('confirmation').hide()"
+										action="#{moduleSearchServiceBean.supprimerModule()}"
+										update="forme growl" />
+									<p:commandButton value="Non"
+										onclick="PF('confirmation').hide()" type="button" />
+								</p:confirmDialog>
+								<p:confirmDialog message="#{messages.label_supprimer}"
+									header="Confirmation" widgetVar="confirmation">
+									<p:commandButton value="Oui"
+										onclick="PF('confirmation').hide()"
+										action="#{moduleSearchServiceBean.supprimerModule()}"
+										update="forme growl" />
+									<p:commandButton value="Non"
+										onclick="PF('confirmation').hide()" type="button" />
+								</p:confirmDialog>
 								<p:contextMenu for="listmodule">
 									<p:menuitem value="Modifier" icon="ui-icon-search" />
 									<p:menuitem value="Supprimer" icon="ui-icon-search" />

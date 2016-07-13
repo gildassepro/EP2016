@@ -10,174 +10,215 @@
 
 		<div class="container-fluid">
 			<b:row>
-				<p:overlayPanel id="updatuser" widgetVar="updateuser"
-					showEffect="fade" hideEffect="fade" dismissable="false"
-					showCloseIcon="true">
-					<h:form id="fdial">
-
-						<h3 style="margin-top: 0">
-							<p:outputLabel value="#{messages.label_modifier_user}"
-								rendered="#{!userSearchServiceBean.isAction()}" />
-							<p:outputLabel value="#{messages.label_createuser}"
-								rendered="#{userSearchServiceBean.isAction()}" />
-						</h3>
-
-						<div class="ui-grid ui-grid-responsive">
-
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-6 label-input">
-									<p:outputLabel value="#{messages.label_login_name}"
-										rendered="#{userSearchServiceBean.isAction()}" /><span class="requireds">(*)</span>
-								</div>
-
-								<div class="ui-grid-col-6">
-									<b:inputText styleClass="form-text form-control" id="login" maxlength="25"
-										value="#{userSearchServiceBean.userDto.userlogin}"
-										placeholder="#{messages.label_login_name1}" required="true"
-										immediate="true"
-										requiredMessage="#{messages.label_login_requeried}"
-										rendered="#{userSearchServiceBean.isAction()}">
-										<f:validateLength minimum="3" maximum="25" />
-										<p:ajax event="keyup" />
-									</b:inputText>
-								</div>
-							</div>
-
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-6 label-input">
-									<p:outputLabel value="#{messages.label_password_name}"
-										for="pwd" rendered="#{userSearchServiceBean.isAction()}" /><span class="requireds">(*)</span>
-								</div>
-								<div class="ui-grid-col-6">
-									<p:password styleClass="form-text form-control" id="pwd"
-										match="confirmpassword" 
-										value="#{userSearchServiceBean.userDto.password}"
-										placeholder="#{messages.label_password_watermark}"
-										feedback="true" rendered="#{userSearchServiceBean.isAction()}"
-										required="true"
-										requiredMessage="#{messages.label_password_requeried}" />	
-									<p:ajax event="keyup" />
-								</div>
-							</div>
-
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-6 label-input">
-									<p:outputLabel value="#{messages.label_confirmpassword_name}"
-										for="confirmpassword"
-										rendered="#{userSearchServiceBean.isAction()}" /><span class="requireds">(*)</span>
-								</div>
-								<div class="ui-grid-col-6">
-									<p:password styleClass="form-text form-control" id="confirmpassword"
-										value="#{userSearchServiceBean.userDto.password}"
-										placeholder="#{messages.label_password_watermark}"
-										required="true" rendered="#{userSearchServiceBean.isAction()}"
-										validatorMessage="#{messages.label_match_password}"
-										requiredMessage="#{messages.label_confirmpassword_requeried}">
-										<p:ajax event="keyup" />
-									</p:password>
-								</div>
-							</div>
-
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-6 label-input">
-									<p:outputLabel value="#{messages.label_email_name}" /><span class="requireds">(*)</span>
-								</div>
-								<div class="ui-grid-col-6">
-									<p:inputText styleClass="form-text form-control" id="emailadd" maxlength="64"
-										value="#{userSearchServiceBean.userDto.emailAdd}"
-										placeholder="#{messages.label_emailadd_watermark}"
-										required="true" immediate="true"
-										requiredMessage="#{messages.label_emailadd_requeried}"
-										validatorMessage="#{messages.label_emailadd}">
-										<f:validateLength minimum="12" maximum="64" />
-										<f:validateRegex
-											pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
-										<p:ajax event="keyup" />
-									</p:inputText>
-								</div>
-							</div>
-
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-6 label-input">
-									<p:outputLabel value="#{messages.label_profile}" /><span class="requireds">(*)</span>
-								</div>
-								<div class="ui-grid-col-6">
-									<p:selectOneMenu styleClass="form-text" id="profil"
-										value="#{userSearchServiceBean.userDto.profile}"
-										converter="entityConverter"
-										placeholder="#{messages.label_profile}"
-										required="true"
-										requiredMessage="#{messages.label_profil_requeried}">
-										<f:selectItem
-											itemLabel="#{userSearchServiceBean.userDto.profile.profilName}"
-											itemValue="#{userSearchServiceBean.userDto.profile}" />
-										<f:selectItems value="#{userSearchServiceBean.listProfile}"
-											var="profile" itemValue="#{profile}"
-											itemLabel="#{profile.profilName}" />
-										<f:ajax event="blur" render="" />
-									</p:selectOneMenu>
-								</div>
-							</div>
-
-							<div class="ui-grid-row">
-								<div class="ui-grid-col-6 label-input">
-									<p:outputLabel value="#{messages.label_statut_name}" />
-								</div>
-								<div class="ui-grid-col-6">
-									<h:selectOneRadio id="statuser" styleClass="table-radio"
-										value="#{userSearchServiceBean.userDto.enabled}">
-										<f:converter converterId="javax.faces.Boolean" />
-										<f:selectItem itemLabel="Activé" itemValue="true" />
-										<f:selectItem itemLabel="Desactivé" itemValue="false" />
-									</h:selectOneRadio>
-								</div>
-							</div>
-
-							<div class="button-wrapper">
-								<p:commandButton value="#{messages.label_modifier}"
-									styleClass="btn btn-primary"
-									rendered="#{!userSearchServiceBean.isAction()}"
-									action="#{userSearchServiceBean.modifierUser()}"
-									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateuser').hide()"
-									update="forme fdial growl" />
-								<p:commandButton value="#{messages.label_create}"
-									styleClass="btn btn-primary"
-									action="#{userSearchServiceBean.createUser()}"
-									rendered="#{userSearchServiceBean.isAction()}"
-									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateuser').hide()"
-									update="forme fdial growl" />
-								<p:commandButton id="annulerButton" type="reset"
-									onclick="PF('updateuser').hide()" update="forme"
-									styleClass="btn btn-default btn-sm offset"
-									value="#{messages.label_button_annuler}">
-								</p:commandButton>
-							</div>
-						</div>
-					</h:form>
-				</p:overlayPanel>
 
 				<h:form id="forme">
 					<p:accordionPanel>
 						<p:tab title="#{messages.label_Recherche_User}">
 							<b:row styleClass="listPage">
-								<div class="table-header">
-									<p:commandButton id="add" title="#{messages.label_add}"
-										action="#{userSearchServiceBean.initUser('2')}"
-										update="@([id$=updatuser])"
-										oncomplete="PF('updateuser').show()"
-										value="#{messages.label_modifier}"
+
+								<div id="menubutton">
+									<p:commandButton id="adde"
 										styleClass="btn btn-primary submit-button"
-										icon="fa fa-fw fa-plus">
+										value="#{messages.label_new}" title="#{messages.label_new}"
+										action="#{userSearchServiceBean.initUser('2')}"
+										update="@([id$=updatuser]) forme fdial"
+										onclick="PF('updateuser').show()" icon="fa fa-fw fa-plus">
+
+									</p:commandButton>
+									<p:commandButton id="modifse"
+										styleClass="btn btn-primary submit-button"
+										value="#{messages.label_modifier}"
+										update="@([id$=updatuser]) forme fdial"
+										onclick="PF('updateuser').show()" icon="fa fa-fw fa-pencil"
+										action="#{userSearchServiceBean.initUser('1')}">
+									</p:commandButton>
+									<p:commandButton id="deletee" process="@([id$=listuser])"
+										styleClass="btn btn-primary submit-button"
+										value="#{messages.label_supprimer1}"
+										title="#{messages.label_supprimer1}"
+										onclick="PF('confirmation').show()" icon="fa fa-fw fa-remove">
+									</p:commandButton>
+									<p:commandButton id="printe"
+										update="@([id$=listuser]) forme fdial"
+										styleClass="btn btn-primary submit-button"
+										title="#{messages.label_print}"
+										value="#{messages.label_print}"
+										onclick="PF('confirmation').show()" icon="fa fa-fw fa-print">
+									</p:commandButton>
+									<p:splitButton value="#{messages.label_options}"
+										actionListener="#{buttonView.save}" icon="ui-icon-gear">
+										<p:menuitem value="Update"
+											actionListener="#{buttonView.update}"
+											icon="ui-icon-arrowrefresh-1-w" />
+										<p:menuitem value="Delete"
+											actionListener="#{buttonView.delete}" ajax="false"
+											icon="ui-icon-close" />
+										<p:separator />
+										<p:menuitem value="Homepage" icon="ui-icon-extlink" />
+									</p:splitButton>
+
+									<p:commandButton id="past"
+										styleClass="btn btn-primary submit-button" ajax="false"
+										action="searchuser.xhtml?faces-redirect=true"
+										update="@([id$=listuser]) forme fdial"
+										icon="fa fa-fw fa-arrow-left">
 									</p:commandButton>
 
-									<p:blockUI block="add" trigger="add">
-											#{messages.label_loading}<br />
-										<p:graphicImage value="/resources/images/loadingpics.gif" />
-									</p:blockUI>
-
+									<p:commandButton value="#{messages.label_modifier}"
+										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
+										rendered="#{!userSearchServiceBean.isAction()}"
+										action="#{userSearchServiceBean.modifierUser()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateuser').hide()"
+										update="forme fdial growl" />
+									<p:commandButton value="#{messages.label_create}"
+										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
+										rendered="#{userSearchServiceBean.isAction()}"
+										action="#{userSearchServiceBean.createUser()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateuser').hide()"
+										update="forme fdial growl" />
 								</div>
+
+								<p:panel id="updatuser" widgetVar="updateuser"
+									rendered="#{!userSearchServiceBean.isAction3()}">
+									<h:form id="fdial">
+
+										<h3 style="margin-top: 0">
+											<p:outputLabel value="#{messages.label_modifier_user}"
+												rendered="#{!userSearchServiceBean.isAction()}" />
+											<p:outputLabel value="#{messages.label_createuser}"
+												rendered="#{userSearchServiceBean.isAction()}" />
+										</h3>
+
+										<div class="ui-grid ui-grid-responsive">
+
+											<div class="ui-grid-row">
+												<div class="ui-grid-col-6 label-input">
+													<p:outputLabel value="#{messages.label_login_name}"
+														rendered="#{userSearchServiceBean.isAction()}" />
+													<span class="requireds">(*)</span>
+												</div>
+
+												<div class="ui-grid-col-6">
+													<b:inputText styleClass="form-text form-control" id="login"
+														maxlength="25"
+														value="#{userSearchServiceBean.userDto.userlogin}"
+														placeholder="#{messages.label_login_name1}"
+														required="true" immediate="true"
+														requiredMessage="#{messages.label_login_requeried}"
+														rendered="#{userSearchServiceBean.isAction()}">
+														<f:validateLength minimum="3" maximum="25" />
+														<p:ajax event="keyup" />
+													</b:inputText>
+												</div>
+											</div>
+
+											<div class="ui-grid-row">
+												<div class="ui-grid-col-6 label-input">
+													<p:outputLabel value="#{messages.label_password_name}"
+														for="pwd" rendered="#{userSearchServiceBean.isAction()}" />
+													<span class="requireds">(*)</span>
+												</div>
+												<div class="ui-grid-col-6">
+													<p:password styleClass="form-text form-control" id="pwd"
+														match="confirmpassword"
+														value="#{userSearchServiceBean.userDto.password}"
+														placeholder="#{messages.label_password_watermark}"
+														feedback="true"
+														rendered="#{userSearchServiceBean.isAction()}"
+														required="true"
+														requiredMessage="#{messages.label_password_requeried}" />
+													<p:ajax event="keyup" />
+												</div>
+											</div>
+
+											<div class="ui-grid-row">
+												<div class="ui-grid-col-6 label-input">
+													<p:outputLabel
+														value="#{messages.label_confirmpassword_name}"
+														for="confirmpassword"
+														rendered="#{userSearchServiceBean.isAction()}" />
+													<span class="requireds">(*)</span>
+												</div>
+												<div class="ui-grid-col-6">
+													<p:password styleClass="form-text form-control"
+														id="confirmpassword"
+														value="#{userSearchServiceBean.userDto.password}"
+														placeholder="#{messages.label_password_watermark}"
+														required="true"
+														rendered="#{userSearchServiceBean.isAction()}"
+														validatorMessage="#{messages.label_match_password}"
+														requiredMessage="#{messages.label_confirmpassword_requeried}">
+														<p:ajax event="keyup" />
+													</p:password>
+												</div>
+											</div>
+
+											<div class="ui-grid-row">
+												<div class="ui-grid-col-6 label-input">
+													<p:outputLabel value="#{messages.label_email_name}" />
+													<span class="requireds">(*)</span>
+												</div>
+												<div class="ui-grid-col-6">
+													<p:inputText styleClass="form-text form-control"
+														id="emailadd" maxlength="64"
+														value="#{userSearchServiceBean.userDto.emailAdd}"
+														placeholder="#{messages.label_emailadd_watermark}"
+														required="true" immediate="true"
+														requiredMessage="#{messages.label_emailadd_requeried}"
+														validatorMessage="#{messages.label_emailadd}">
+														<f:validateLength minimum="12" maximum="64" />
+														<f:validateRegex
+															pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+														<p:ajax event="keyup" />
+													</p:inputText>
+												</div>
+											</div>
+
+											<div class="ui-grid-row">
+												<div class="ui-grid-col-6 label-input">
+													<p:outputLabel value="#{messages.label_profile}" />
+													<span class="requireds">(*)</span>
+												</div>
+												<div class="ui-grid-col-6">
+													<p:selectOneMenu styleClass="form-text" id="profil"
+														value="#{userSearchServiceBean.userDto.profile}"
+														converter="entityConverter"
+														placeholder="#{messages.label_profile}" required="true"
+														requiredMessage="#{messages.label_profil_requeried}">
+														<f:selectItem
+															itemLabel="#{userSearchServiceBean.userDto.profile.profilName}"
+															itemValue="#{userSearchServiceBean.userDto.profile}" />
+														<f:selectItems
+															value="#{userSearchServiceBean.listProfile}"
+															var="profile" itemValue="#{profile}"
+															itemLabel="#{profile.profilName}" />
+														<f:ajax event="blur" render="" />
+													</p:selectOneMenu>
+												</div>
+											</div>
+
+											<div class="ui-grid-row">
+												<div class="ui-grid-col-6 label-input">
+													<p:outputLabel value="#{messages.label_statut_name}" />
+												</div>
+												<div class="ui-grid-col-6">
+													<h:selectOneRadio id="statuser" styleClass="table-radio"
+														value="#{userSearchServiceBean.userDto.enabled}">
+														<f:converter converterId="javax.faces.Boolean" />
+														<f:selectItem itemLabel="Activé" itemValue="true" />
+														<f:selectItem itemLabel="Desactivé" itemValue="false" />
+													</h:selectOneRadio>
+												</div>
+											</div>
+
+										</div>
+									</h:form>
+								</p:panel>
+
 								<p:dataTable id="listuser"
 									value="#{userSearchServiceBean.listuser}" var="user"
+									rendered="#{!userSearchServiceBean.isAction2()}"
+									selection="#{userSearchServiceBean.usersDto}"
 									widgetVar="menuTable" emptyMessage="#{messages.label_empty}"
 									styleClass="listeTable table-responsive filterable"
 									tableStyleClass="table table-striped table-condensed table-hover"
@@ -232,22 +273,6 @@
 										<f:facet name="header" styleClass="filters">
 											<p:outputLabel value="#{messages.label_action}" />
 										</f:facet>
-
-										<p:commandButton id="modifier" styleClass="btn btn-success"
-											title="#{messages.label_modifier}"
-											action="#{userSearchServiceBean.initUser('1')}"
-											update="@([id$=updatuser])"
-											oncomplete="PF('updateuser').show()"
-											value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil">
-											<f:setPropertyActionListener value="#{user}"
-												target="#{userSearchServiceBean.usersDto}" />
-										</p:commandButton>
-
-										<p:blockUI block="listuser" trigger="listuser:modifier">
-										#{messages.label_loading}<br />
-											<p:graphicImage value="/resources/images/loadingpics.gif" />
-										</p:blockUI>
-
 									</p:column>
 								</p:dataTable>
 

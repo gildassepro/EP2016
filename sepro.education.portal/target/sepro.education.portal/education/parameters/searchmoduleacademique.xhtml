@@ -9,282 +9,330 @@
 		<p:growl id="growl" showDetail="true" sticky="false" />
 		<div class="container-fluid">
 			<b:row>
-				<p:overlayPanel id="updatmoduleacademique"
-					widgetVar="updatemoduleacademique" showEffect="fade"
-					hideEffect="fade" dismissable="false" showCloseIcon="true">
-					<h:form id="fdial">
-						<h3 style="margin-top: 0">
-							<p:outputLabel
-								value="#{messages.label_modifier_Moduleacademique}"
-								rendered="#{!moduleAcademiqueSearchServiceBean.isAction()}" />
-							<p:outputLabel value="#{messages.label_creer_moduleacademique}"
-								rendered="#{moduleAcademiqueSearchServiceBean.isAction()}" />
-						</h3>
-
-						<div class="ui-grid ui-grid-responsive wrap class">
-							<div class="col-xs-12">
-								<div class="row">
-									<div class="col-lg-2 col-md-3 col-sm-3">
-										<p:outputLabel value="#{messages.label_nommodule}" />
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:inputText styleClass="form-control" id="nommodule"
-											maxlength="64"
-											value="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.moduleName}"
-											placeholder="#{messages.labelnommodule}" required="true"
-											immediate="true"
-											requiredMessage="#{messages.label_nommodule_requeried}">
-											<f:validateLength minimum="5" maximum="64" />
-											<p:ajax event="keyup" />
-										</p:inputText>
-									</div>
-									<div class="col-lg-2 col-md-3 col-sm-3">
-										<p:outputLabel value="#{messages.label_filiere}" />
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:selectOneMenu styleClass="form-text" id="filiere"
-											value="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.academicGrade}"
-											converter="entityConverter" required="true" immediate="true"
-											requiredMessage="#{messages.label_filiere_requeried}">
-											<f:selectItem
-												itemLabel="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.academicGrade.value}"
-												itemValue="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.academicGrade}" />
-											<f:selectItems
-												value="#{moduleAcademiqueSearchServiceBean.listfiliere}"
-												var="academicGrade" itemValue="#{academicGrade}"
-												itemLabel="#{academicGrade.value}" />
-										</p:selectOneMenu>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-lg-2 col-md-3 col-sm-3">
-										<p:outputLabel value="#{messages.label_academic_years}" />
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:selectOneMenu styleClass="form-text" id="anneeacademiques"
-											value="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.academiqueYear}"
-											converter="entityConverter"
-											placeholder="#{messages.label_country}"
-											required="true" immediate="true"
-											requiredMessage="#{messages.label_academiqueYear_requeried}">
-											<f:selectItem
-												itemLabel="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.academiqueYear.value}"
-												itemValue="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.academiqueYear}" />
-											<f:selectItems
-												value="#{moduleAcademiqueSearchServiceBean.listanneeacademique}"
-												var="academiqueYear" itemValue="#{academiqueYear}"
-												itemLabel="#{academiqueYear.value}" />
-										</p:selectOneMenu>
-									</div>
-									<div class="col-lg-2 col-md-3 col-sm-3">
-										<p:outputLabel value="#{messages.label_academic_grade}" />
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:selectOneMenu styleClass="form-text" id="gradeacademiques"
-											value="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.academicSector}"
-											converter="entityConverter"
-											required="true" immediate="true"
-											requiredMessage="#{messages.label_academicSector_requeried}"
-											placeholder="#{messages.label_country}">
-											<f:selectItem
-												itemLabel="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.academicSector.value}"
-												itemValue="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.academicSector}" />
-											<f:selectItems
-												value="#{moduleAcademiqueSearchServiceBean.listniveau}"
-												var="academicSector" itemValue="#{academicSector}"
-												itemLabel="#{academicSector.value}" />
-										</p:selectOneMenu>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-lg-2 col-md-3 col-sm-3">
-										<h:outputLabel 
-											value="#{messages.label_onentreprise}" />
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-3">
-										<h:selectOneRadio id="typecourse"
-											value="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.onEntreprise}">
-											<f:converter converterId="javax.faces.Boolean" />
-											<f:selectItem itemLabel="Activé" itemValue="true" />
-											<f:selectItem itemLabel="Désactivé" itemValue="false" />
-										</h:selectOneRadio>
-									</div>
-									<div class="col-lg-2 col-md-3 col-sm-3">
-										<p:outputLabel value="#{messages.label_noterattrapage}" />
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:inputText styleClass="form-control" id="note"
-											maxlength="11"
-											value="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.gradeRattrapage}"
-											placeholder="#{messages.labelnoterattrapage}"
-											required="true" immediate="true"
-											requiredMessage="#{messages.label_gradeRattrapage_requeried}">
-											<f:validateLength minimum="1" maximum="11" />
-										</p:inputText>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-lg-2 col-md-3 col-sm-3">
-										<p:outputLabel value="#{messages.label_volumehoraire}" />
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:inputText styleClass="form-control" id="volume"
-											maxlength="11"
-											value="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.teachingHours}"
-											placeholder="#{messages.labelvolumehoraire}"
-											required="true" immediate="true"
-											requiredMessage="#{messages.label_teachingHours_requeried}">
-											<f:validateLength  maximum="11" />
-										</p:inputText>
-									</div>
-									<div class="col-lg-2 col-md-3 col-sm-3">
-										<p:outputLabel value="#{messages.label_taux}" />
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:inputText styleClass="form-text" id="taux"
-											maxlength="11"
-											value="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.rateOfSuccess}"
-											placeholder="#{messages.labeltaux}"
-											required="true" immediate="true"
-											requiredMessage="#{messages.label_rateOfSuccess_requeried}">
-											<f:validateLength  maximum="11" />
-										</p:inputText>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-lg-2 col-md-3 col-sm-3">
-										<p:outputLabel value="#{messages.label_noteeliminatoire}" />
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:inputText styleClass="form-control" id="eliminatoire"
-											maxlength="11"
-											value="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.gradeEliminatory}"
-											placeholder="#{messages.label_eliminatoire}"
-											required="true" immediate="true"
-											requiredMessage="#{messages.label_gradeEliminatory_requeried}">
-											<f:validateLength maximum="11" />
-										</p:inputText>
-									</div>
-									<div class="col-lg-2 col-md-3 col-sm-3">
-										<p:outputLabel value="#{messages.label_notepassage}" />
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:inputText styleClass="form-control" id="passage"
-											maxlength="11"
-											value="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.gradeSuccess}"
-											placeholder="#{messages.labelnotepassage}"
-											required="true" immediate="true"
-											requiredMessage="#{messages.label_gradeSuccess_requeried}">
-											<f:validateLength  maximum="11" />
-										</p:inputText>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-lg-2 col-md-3 col-sm-3">
-										<p:outputLabel value="#{messages.label_objectif}" />
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:inputTextarea rows="10" cols="50" id="objectif"
-											maxlength="256"
-											value="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.objectives}"
-											placeholder="#{messages.labelobjectif}"
-											required="true" immediate="true"
-											requiredMessage="#{messages.label_objectives_requeried}">
-											<f:validateLength maximum="256" />
-											</p:inputTextarea>
-									</div>
-									<div class="col-lg-2 col-md-3 col-sm-3">
-										<p:outputLabel value="#{messages.label_moduledesc}" />
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:inputTextarea rows="10" cols="50" id="description"
-											maxlength="256"
-											value="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.moduleDescription}"
-											placeholder="#{messages.labelmoduledesc}"
-											required="true" immediate="true"
-											requiredMessage="#{messages.label_moduleDescription_requeried}">
-											<f:validateLength  maximum="256" />
-											</p:inputTextarea>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-lg-2 col-md-3 col-sm-3">
-										<p:outputLabel value="#{messages.label_prixmodule}" />
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:inputText styleClass="form-control" id="prix"
-											maxlength="11"
-											value="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.modulePrice}"
-											placeholder="#{messages.labelprixmodule}"
-											required="true" immediate="true"
-											requiredMessage="#{messages.label_modulePrice_requeried}">
-											<f:validateLength  maximum="11" />
-										</p:inputText>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="button-wrapper">
-							<p:commandButton value="#{messages.label_modifier}"
-								styleClass="btn btn-primary"
-								rendered="#{!moduleAcademiqueSearchServiceBean.isAction()}"
-								action="#{moduleAcademiqueSearchServiceBean.updateModule()}"
-								oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatemoduleacademique').hide()"
-								update="forme fdial growl">
-							</p:commandButton>
-							<p:commandButton value="#{messages.label_create}"
-								styleClass="btn btn-primary"
-								rendered="#{moduleAcademiqueSearchServiceBean.isAction()}"
-								action="#{moduleAcademiqueSearchServiceBean.createModule()}"
-								oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatemoduleacademique').hide()"
-								update="forme fdial growl">
-							</p:commandButton>
-							<p:commandButton value="#{messages.label_button_annuler}"
-								type="reset" onclick="PF('updatemoduleacademique').hide()"
-								update="fdial" styleClass="btn btn-default btn-sm offset"
-								id="annulerButton">
-							</p:commandButton>
-						</div>
-
-						<p:dataTable id="modulepresrequis" var="module"
-							value="#{moduleAcademiqueSearchServiceBean.listmoduleacademique}"
-							selection="#{moduleAcademiqueSearchServiceBean.selectedacademiquemodule}"
-							rowKey="#{module.idAcademicModule}"
-							emptyMessage="#{messages.label_empty}" style="margin-bottom:0">
-
-							<p:column selectionMode="multiple"
-								style="width:16px;text-align:center" />
-
-							<p:column headerText="#{messages.label_moduleprerequis}">
-								<h:outputText value="#{module.moduleName}" />
-							</p:column>
-						</p:dataTable>
-					</h:form>
-				</p:overlayPanel>
 
 				<h:form id="forme">
 					<p:accordionPanel>
 						<p:tab title="#{messages.label_Recherche_Module_academique}">
 							<b:row styleClass="listPage">
-								<div class="table-header">
-									<p:commandButton id="add" title="#{messages.label_add}"
-										action="#{moduleAcademiqueSearchServiceBean.initDualList('2')}"
-										update="@([id$=updatmoduleacademique])"
-										oncomplete="PF('updatemoduleacademique').show()"
-										value="#{messages.label_modifier}"
+								<div id="menubutton">
+									<p:commandButton id="adde"
 										styleClass="btn btn-primary submit-button"
+										value="#{messages.label_new}" title="#{messages.label_new}"
+										action="#{moduleAcademiqueSearchServiceBean.initDualList('2')}"
+										update="@([id$=updatmoduleacademique]) forme fdial"
+										onclick="PF('updatemoduleacademique').show()"
 										icon="fa fa-fw fa-plus">
 									</p:commandButton>
-									<p:blockUI block="add" trigger="add">
-											#{messages.label_loading}<br />
-										<p:graphicImage value="/resources/images/loadingpics.gif" />
-									</p:blockUI>
+									<p:commandButton id="modifse"
+										styleClass="btn btn-primary submit-button"
+										value="#{messages.label_modifier}"
+										update="@([id$=updatmoduleacademique]) forme fdial"
+										onclick="PF('updatemoduleacademique').show()"
+										icon="fa fa-fw fa-pencil"
+										action="#{moduleAcademiqueSearchServiceBean.initDualList('1')}">
+									</p:commandButton>
+									<p:commandButton id="deletee" process="@([id$=listregions])"
+										styleClass="btn btn-primary submit-button"
+										value="#{messages.label_supprimer1}"
+										title="#{messages.label_supprimer1}"
+										onclick="PF('confirmation').show()" icon="fa fa-fw fa-remove">
+									</p:commandButton>
+									<p:commandButton id="printe"
+										update="@([id$=listmoduleacademiques]) forme fdial"
+										styleClass="btn btn-primary submit-button"
+										title="#{messages.label_print}"
+										value="#{messages.label_print}"
+										onclick="PF('confirmation').show()" icon="fa fa-fw fa-print">
+									</p:commandButton>
+									<p:splitButton value="#{messages.label_options}"
+										actionListener="#{buttonView.save}" icon="ui-icon-gear">
+										<p:menuitem value="Update"
+											actionListener="#{buttonView.update}"
+											icon="ui-icon-arrowrefresh-1-w" />
+										<p:menuitem value="Delete"
+											actionListener="#{buttonView.delete}" ajax="false"
+											icon="ui-icon-close" />
+										<p:separator />
+										<p:menuitem value="Homepage" icon="ui-icon-extlink" />
+									</p:splitButton>
+
+									<p:commandButton id="past"
+										styleClass="btn btn-primary submit-button" ajax="false"
+										action="searchmoduleacademique.xhtml?faces-redirect=true"
+										update="@([id$=listmoduleacademiques]) forme fdial"
+										icon="fa fa-fw fa-arrow-left">
+									</p:commandButton>
+
+									<p:commandButton value="#{messages.label_modifier}"
+										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
+										rendered="#{!regionSearchServiceBean.isAction()}"
+										action="#{moduleAcademiqueSearchServiceBean.updateModule()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatemoduleacademique').hide()"
+										update="forme fdial growl" />
+									<p:commandButton value="#{messages.label_create}"
+										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
+										rendered="#{moduleAcademiqueSearchServiceBean.isAction()}"
+										action="#{moduleAcademiqueSearchServiceBean.createModule()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatemoduleacademique').hide()"
+										update="forme fdial growl" />
+
 								</div>
+								<p:panel id="updatmoduleacademique"
+									widgetVar="updatemoduleacademique"
+									rendered="#{!moduleAcademiqueSearchServiceBean.isAction3()}">
+									<h:form id="fdial">
+										<h3 style="margin-top: 0">
+											<p:outputLabel
+												value="#{messages.label_modifier_Moduleacademique}"
+												rendered="#{!moduleAcademiqueSearchServiceBean.isAction()}" />
+											<p:outputLabel
+												value="#{messages.label_creer_moduleacademique}"
+												rendered="#{moduleAcademiqueSearchServiceBean.isAction()}" />
+										</h3>
+
+										<div class="ui-grid ui-grid-responsive wrap class">
+											<div class="col-xs-12">
+												<div class="row">
+													<div class="col-lg-2 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_nommodule}" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:inputText styleClass="form-control" id="nommodule"
+															maxlength="64"
+															value="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.moduleName}"
+															placeholder="#{messages.labelnommodule}" required="true"
+															immediate="true"
+															requiredMessage="#{messages.label_nommodule_requeried}">
+															<f:validateLength minimum="5" maximum="64" />
+															<p:ajax event="keyup" />
+														</p:inputText>
+													</div>
+													<div class="col-lg-2 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_filiere}" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:selectOneMenu styleClass="form-text" id="filiere"
+															value="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.academicGrade}"
+															converter="entityConverter" required="true"
+															immediate="true"
+															requiredMessage="#{messages.label_filiere_requeried}">
+															<f:selectItem
+																itemLabel="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.academicGrade.value}"
+																itemValue="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.academicGrade}" />
+															<f:selectItems
+																value="#{moduleAcademiqueSearchServiceBean.listfiliere}"
+																var="academicGrade" itemValue="#{academicGrade}"
+																itemLabel="#{academicGrade.value}" />
+														</p:selectOneMenu>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-lg-2 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_academic_years}" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:selectOneMenu styleClass="form-text"
+															id="anneeacademiques"
+															value="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.academiqueYear}"
+															converter="entityConverter"
+															placeholder="#{messages.label_country}" required="true"
+															immediate="true"
+															requiredMessage="#{messages.label_academiqueYear_requeried}">
+															<f:selectItem
+																itemLabel="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.academiqueYear.value}"
+																itemValue="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.academiqueYear}" />
+															<f:selectItems
+																value="#{moduleAcademiqueSearchServiceBean.listanneeacademique}"
+																var="academiqueYear" itemValue="#{academiqueYear}"
+																itemLabel="#{academiqueYear.value}" />
+														</p:selectOneMenu>
+													</div>
+													<div class="col-lg-2 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_academic_grade}" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:selectOneMenu styleClass="form-text"
+															id="gradeacademiques"
+															value="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.academicSector}"
+															converter="entityConverter" required="true"
+															immediate="true"
+															requiredMessage="#{messages.label_academicSector_requeried}"
+															placeholder="#{messages.label_country}">
+															<f:selectItem
+																itemLabel="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.academicSector.value}"
+																itemValue="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.academicSector}" />
+															<f:selectItems
+																value="#{moduleAcademiqueSearchServiceBean.listniveau}"
+																var="academicSector" itemValue="#{academicSector}"
+																itemLabel="#{academicSector.value}" />
+														</p:selectOneMenu>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-lg-2 col-md-3 col-sm-3">
+														<h:outputLabel value="#{messages.label_onentreprise}" />
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<h:selectOneRadio id="typecourse"
+															value="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.onEntreprise}">
+															<f:converter converterId="javax.faces.Boolean" />
+															<f:selectItem itemLabel="Activé" itemValue="true" />
+															<f:selectItem itemLabel="Désactivé" itemValue="false" />
+														</h:selectOneRadio>
+													</div>
+													<div class="col-lg-2 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_noterattrapage}" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:inputText styleClass="form-control" id="note"
+															maxlength="11"
+															value="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.gradeRattrapage}"
+															placeholder="#{messages.labelnoterattrapage}"
+															required="true" immediate="true"
+															requiredMessage="#{messages.label_gradeRattrapage_requeried}">
+															<f:validateLength minimum="1" maximum="11" />
+														</p:inputText>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-lg-2 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_volumehoraire}" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:inputText styleClass="form-control" id="volume"
+															maxlength="11"
+															value="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.teachingHours}"
+															placeholder="#{messages.labelvolumehoraire}"
+															required="true" immediate="true"
+															requiredMessage="#{messages.label_teachingHours_requeried}">
+															<f:validateLength maximum="11" />
+														</p:inputText>
+													</div>
+													<div class="col-lg-2 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_taux}" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:inputText styleClass="form-text" id="taux"
+															maxlength="11"
+															value="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.rateOfSuccess}"
+															placeholder="#{messages.labeltaux}" required="true"
+															immediate="true"
+															requiredMessage="#{messages.label_rateOfSuccess_requeried}">
+															<f:validateLength maximum="11" />
+														</p:inputText>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-lg-2 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_noteeliminatoire}" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:inputText styleClass="form-control" id="eliminatoire"
+															maxlength="11"
+															value="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.gradeEliminatory}"
+															placeholder="#{messages.label_eliminatoire}"
+															required="true" immediate="true"
+															requiredMessage="#{messages.label_gradeEliminatory_requeried}">
+															<f:validateLength maximum="11" />
+														</p:inputText>
+													</div>
+													<div class="col-lg-2 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_notepassage}" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:inputText styleClass="form-control" id="passage"
+															maxlength="11"
+															value="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.gradeSuccess}"
+															placeholder="#{messages.labelnotepassage}"
+															required="true" immediate="true"
+															requiredMessage="#{messages.label_gradeSuccess_requeried}">
+															<f:validateLength maximum="11" />
+														</p:inputText>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-lg-2 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_objectif}" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:inputTextarea rows="10" cols="50" id="objectif"
+															maxlength="256"
+															value="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.objectives}"
+															placeholder="#{messages.labelobjectif}" required="true"
+															immediate="true"
+															requiredMessage="#{messages.label_objectives_requeried}">
+															<f:validateLength maximum="256" />
+														</p:inputTextarea>
+													</div>
+													<div class="col-lg-2 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_moduledesc}" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:inputTextarea rows="10" cols="50" id="description"
+															maxlength="256"
+															value="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.moduleDescription}"
+															placeholder="#{messages.labelmoduledesc}" required="true"
+															immediate="true"
+															requiredMessage="#{messages.label_moduleDescription_requeried}">
+															<f:validateLength maximum="256" />
+														</p:inputTextarea>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-lg-2 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_prixmodule}" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:inputText styleClass="form-control" id="prix"
+															maxlength="11"
+															value="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.modulePrice}"
+															placeholder="#{messages.labelprixmodule}" required="true"
+															immediate="true"
+															requiredMessage="#{messages.label_modulePrice_requeried}">
+															<f:validateLength maximum="11" />
+														</p:inputText>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="ui-grid ui-grid-responsive">
+											<p:dataTable id="checkboxmodule"
+												filterBy="#{module.moduleName}"
+												value="#{moduleAcademiqueSearchServiceBean.listmoduleacademique}"
+												var="module"
+												selection="#{moduleAcademiqueSearchServiceBean.selectedacademiquemodule}"
+												rowKey="#{module.idAcademicModule}"
+												emptyMessage="#{messages.label_empty}"
+												style="margin-bottom:0">
+
+												<p:column selectionMode="multiple"
+													style="width:16px;text-align:center" />
+												<p:column headerText="#{messages.label_moduleprerequis}"
+													filterBy="#{module.moduleName}" filterMatchMode="contains">
+													<h:outputText value="#{module.moduleName}" />
+												</p:column>
+											</p:dataTable>
+										</div>
+									</h:form>
+								</p:panel>
 								<p:dataTable id="listmoduleacademiques"
 									value="#{moduleAcademiqueSearchServiceBean.listmoduleacademique}"
+									rendered="#{!moduleAcademiqueSearchServiceBean.isAction2()}"
 									var="moduleacademique" widgetVar="menuTable"
 									emptyMessage="#{messages.label_empty}"
+									selection="#{moduleAcademiqueSearchServiceBean.moduleacademiquDto}"
 									styleClass="listeTable table-responsive filterable"
 									tableStyleClass="table table-striped table-condensed table-hover"
 									rowKey="#{moduleacademique.idAcademicModule}"
@@ -336,45 +384,6 @@
 											<p:outputLabel value="#{messages.label_academic_grades}" />
 										</f:facet>
 										<h:outputText value="#{moduleacademique.academicSector.value}"></h:outputText>
-									</p:column>
-
-									<p:column priority="1" width="100" filterMatchMode="contains">
-										<f:facet name="header">
-											<p:outputLabel value="#{messages.label_action}" />
-										</f:facet>
-										<p:commandButton id="modifier" styleClass="btn btn-success"
-											title="#{messages.label_modifier}"
-											action="#{moduleAcademiqueSearchServiceBean.initDualList('1')}"
-											update="@([id$=updatmoduleacademique])"
-											oncomplete="PF('updatemoduleacademique').show()"
-											value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil">
-											<f:setPropertyActionListener value="#{moduleacademique}"
-												target="#{moduleAcademiqueSearchServiceBean.moduleacademiquDto}" />
-										</p:commandButton>
-
-										<p:commandButton id="supprimer" styleClass="btn btn-danger"
-											title="#{messages.label_supprimer1}"
-											onclick="PF('confirmation').show()"
-											value="#{messages.label_supprimer1}"
-											icon="fa fa-fw fa-remove">
-											<f:setPropertyActionListener value="#{moduleacademique}"
-												target="#{moduleAcademiqueSearchServiceBean.moduleacademiquDto}" />
-										</p:commandButton>
-										<p:blockUI block="listmoduleacademiques"
-											trigger="listmoduleacademiques:supprimer,listmoduleacademiques:modifier">
-										#{messages.label_loading}<br />
-											<p:graphicImage value="/resources/images/loadingpics.gif" />
-										</p:blockUI>
-										<p:confirmDialog
-											message="#{messages.label_msg_alerte_supression}"
-											header="Confirmation" widgetVar="confirmation">
-											<p:commandButton value="#{messages.label_msg_confirmOui}"
-												onclick="PF('confirmation').hide()"
-												action="#{moduleAcademiqueSearchServiceBean.supprimerModule()}"
-												update="forme growl" />
-											<p:commandButton value="#{messages.label_msg_confirmNon}"
-												onclick="PF('confirmation').hide()" type="button" />
-										</p:confirmDialog>
 									</p:column>
 								</p:dataTable>
 								<p:contextMenu for="listmoduleacademiques">

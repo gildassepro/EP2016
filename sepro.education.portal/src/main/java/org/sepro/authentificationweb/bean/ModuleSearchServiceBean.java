@@ -41,7 +41,27 @@ public class ModuleSearchServiceBean implements Serializable {
 	private List<MenuDto> listMenuSource = new ArrayList<MenuDto>();
 	private List<MenuDto> listMenuDestination = new ArrayList<MenuDto>();
 	private boolean action = false;
+	private boolean action2 = false;
+	private boolean action3 = true;
 	private String description = new String();
+
+	
+	
+	public boolean isAction2() {
+		return action2;
+	}
+
+	public void setAction2(boolean action2) {
+		this.action2 = action2;
+	}
+
+	public boolean isAction3() {
+		return action3;
+	}
+
+	public void setAction3(boolean action3) {
+		this.action3 = action3;
+	}
 
 	public List<MenuDto> getListMenuSource() {
 		return listMenuSource;
@@ -147,8 +167,12 @@ public class ModuleSearchServiceBean implements Serializable {
 		listMenuSource = new ArrayList<MenuDto>();
 		listMenuDestination = new ArrayList<MenuDto>();
 		if (baction.equals("1")) {
+			action2 = true;
+			action3= false;
 			action = true;
 		} else {
+			action2 = true;
+			action3= false;
 			action = false;
 		}
 		initUpdate();

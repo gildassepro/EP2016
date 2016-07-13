@@ -35,6 +35,14 @@
 										title="#{messages.label_supprimer1}"
 										onclick="PF('confirmation').show()" icon="fa fa-fw fa-remove">
 									</p:commandButton>
+									<p:commandButton id="detail"
+										styleClass="btn btn-primary submit-button"
+										value="#{messages.label_detail}" title="#{messages.label_new}"
+										action="#{classeSearchServiceBean.initDualListInventaire('2')}"
+										update="@([id$=updatinventoryclasse]) forme fdial"
+										onclick="PF('updateinventoryclasse').show()"
+										icon="fa fa-fw fa-list-alt">
+									</p:commandButton>
 									<p:commandButton id="printe"
 										update="@([id$=updatclasse]) forme fdial"
 										styleClass="btn btn-primary submit-button"
@@ -511,18 +519,6 @@
 										#{messages.label_loading}<br />
 											<p:graphicImage value="/resources/images/loadingpics.gif" />
 										</p:blockUI>
-
-										<p:confirmDialog
-											message="#{messages.label_msg_alerte_supression}"
-											header="Confirmation" widgetVar="confirmation">
-											<p:commandButton value="#{messages.label_msg_confirmOui}"
-												onclick="PF('confirmation').hide()"
-												action="#{classeSearchServiceBean.supprimerClasse()}"
-												update="forme growl" />
-											<p:commandButton value="#{messages.label_msg_confirmNon}"
-												onclick="PF('confirmation').hide()" type="button" />
-										</p:confirmDialog>
-
 										<p:commandButton id="detail" styleClass="btn btn-primary"
 											title="#{messages.label_detail}"
 											action="#{classeSearchServiceBean.initDualListInventaire('2')}"
@@ -535,7 +531,16 @@
 
 									</p:column>
 								</p:dataTable>
-
+								<p:confirmDialog
+									message="#{messages.label_msg_alerte_supression}"
+									header="Confirmation" widgetVar="confirmation">
+									<p:commandButton value="#{messages.label_msg_confirmOui}"
+										onclick="PF('confirmation').hide()"
+										action="#{classeSearchServiceBean.supprimerClasse()}"
+										update="forme growl" />
+									<p:commandButton value="#{messages.label_msg_confirmNon}"
+										onclick="PF('confirmation').hide()" type="button" />
+								</p:confirmDialog>
 								<p:contextMenu for="listclasses">
 									<p:menuitem value="Modifier" icon="ui-icon-search" />
 									<p:menuitem value="Supprimer" icon="ui-icon-search" />

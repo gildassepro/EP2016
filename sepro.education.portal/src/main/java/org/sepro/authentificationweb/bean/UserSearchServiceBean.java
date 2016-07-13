@@ -52,6 +52,26 @@ public class UserSearchServiceBean implements Serializable {
 	private UserDto usersDto = new UserDto();
 	private boolean action = false;
 	private boolean enabled;
+	private boolean action2 = false;
+	private boolean action3 = true;
+
+	
+	
+	public boolean isAction2() {
+		return action2;
+	}
+
+	public void setAction2(boolean action2) {
+		this.action2 = action2;
+	}
+
+	public boolean isAction3() {
+		return action3;
+	}
+
+	public void setAction3(boolean action3) {
+		this.action3 = action3;
+	}
 
 	public boolean getEnabled() {
 		return enabled;
@@ -217,10 +237,14 @@ public class UserSearchServiceBean implements Serializable {
 		if (baction.equals("1")) {
 			userDto = usersDto;
 			listProfile = new ArrayList<ProfileDto>();
+			action2 = true;
+			action3= false;
 			initUpdate();
 		} else {
 			userDto = new UserDto();
 			listProfile = new ArrayList<ProfileDto>();
+			action2 = true;
+			action3= false;
 			initCreate();
 
 		}

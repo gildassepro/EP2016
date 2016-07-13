@@ -10,1349 +10,1316 @@
 		<div class="container-fluid">
 
 			<h:form id="fdial">
-				<p:tabView id="tabs"
-					flowListener="#{etablissementCreateServiceBean.onFlowProcess}">
-					<p:tab id="identifiant" title="#{messages.label_identifiant}">
-						<div class="ui-grid ui-grid-responsive">
-							<div class="ui-grid-col-12">
-								<p:panel header="#{messages.label_etablissement_details}">
+				<p:accordionPanel>
+					<p:tab title="#{messages.label_etablissement}">
+						<div id="menubutton">
 
-									<div class="ui-grid ui-grid-responsive wrap class">
-										<div class="col-xs-12">
-											<div class="row">
-											   <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_name_establishment}" /><span class="requireds">(*)</span>
-												</div>
-											    <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="nometablissement" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.nameEstablishment}"
-													placeholder="#{messages.label_name_establishment1}"
-													required="true"
-													requiredMessage="#{messages.label_nometablissement_requeried}"
-													label="Nom">
-													<f:validateLength minimum="3" maximum="128" />
-													<p:ajax event="keyup" />
-												</p:inputText>
-											</div>
+							<p:menubar>
+								<p:menuitem icon="ui-icon-document"
+									value="#{etablissementCreateServiceBean.action?'Enregistrer':'Modifier'}"
+									title="#{messages.label_validate}"
+									action="#{etablissementCreateServiceBean.createEtablissement}"
+									update="fdial growl" />
 
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_pattente}" /><span class="requireds">(*)</span>
-											</div>
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="patente" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.patent}"
-													required="true"
-													requiredMessage="#{messages.label_patente_requeried}"
-													placeholder="#{messages.label_pattente1}" label="Patente">
-													<f:validateLength minimum="3" maximum="128" />
-													<p:ajax event="keyup" />
-												</p:inputText>
-											</div>
-										</div>
+								<p:submenu label="#{messages.label_options}" icon="ui-icon-gear">
+									<p:submenu label="Ajax" icon="ui-icon-refresh">
+										<p:menuitem value="Save" actionListener="#{menuView.save}"
+											icon="ui-icon-disk" />
+										<p:menuitem value="Update" actionListener="#{menuView.update}"
+											icon="ui-icon-arrowrefresh-1-w" />
+									</p:submenu>
+									<p:submenu label="Non-Ajax" icon="ui-icon-newwin">
+										<p:menuitem value="Delete" actionListener="#{menuView.delete}"
+											icon="ui-icon-close" ajax="false" />
+									</p:submenu>
+								</p:submenu>
 
-											<div class="row">
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_annee_creation}" />
-													</div>
-													<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-text"
-													id="anneecreation" maxlength="4"
-													value="#{etablissementCreateServiceBean.establishmentDto.yearOfCreation}"
-													required="true"
-													requiredMessage="#{messages.label_yearOfCreation_requeried}"
-													placeholder="#{messages.label_annee_creation1}"
-													label="annee">
-													<f:validateLength minimum="4" maximum="4" />
-													<p:ajax event="keyup" />
-												</p:inputText>
-											</div>
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel
-													value="#{messages.label_module_description_name}" />
-												</div>
-												<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-text"
-													id="description" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.description}"
-													placeholder="#{messages.label_module_description_watermark}"
-													label="description">
-													<f:validateLength  maximum="128" />
-												</p:inputText>
-											</div>
-											</div>
+								<f:facet name="options">
+									<p:inputText style="margin-right:10px" placeholder="Search" />
+									<p:commandButton type="button" value="Logout"
+										icon="ui-icon-extlink" />
+								</f:facet>
+							</p:menubar>
 
-											<div class="row">
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel
-													value="#{messages.label_cigle}" />
-												</div>
-												<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText id="cigle" styleClass="form-text"
-													maxlength="40"
-													value="#{etablissementCreateServiceBean.establishmentDto.initials}"
-													placeholder="#{messages.label_cigle1}" label="cigle">
-													<f:validateLength maximum="40" />
-												</p:inputText>
-											</div>
 
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_matricule}" />
-											</div>
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-text"
-													id="matricule" maxlength="40"
-													value="#{etablissementCreateServiceBean.establishmentDto.registrationName}"
-													placeholder="#{messages.label_matricule1}"
-													label="Matricule">
-													<f:validateLength maximum="40" />
-												</p:inputText>
-											</div>
-											</div>
-
-											<div class="row">
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel
-													value="#{messages.label_locate_sub}" />
-												</div>
-												<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-text"
-													id="location" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.location}"
-													placeholder="#{messages.label_locate_sub1}"
-													label="localite">
-													<f:validateLength maximum="128" />
-												</p:inputText>
-											</div>
-										<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_mot_bienvenu}" />
-													</div>
-													<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText  rows="10" styleClass="form-text"
-													cols="50" id="mot" maxlength="128"
-													placeholder="#{messages.label_mot_bienvenu1}"
-													value="#{etablissementCreateServiceBean.establishmentDto.welcomeWords}">
-													<f:validateLength  maximum="128" />
-												</p:inputText>
-											</div>
-											</div>
-
-											<div class="row">
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_fondateur}" />
-												</div>
-												<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-text"
-													id="fondateur" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.founder}"
-													placeholder="#{messages.label_fondateur1}"
-													label="fondateur">
-													<f:validateLength maximum="128" />
-												</p:inputText>
-											</div>
-
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
-													value="#{messages.label_facebook}" />
-												</div>
-												<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText  id="face" styleClass="form-text"
-													maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.facebookId}"
-													placeholder="#{messages.label_facebook1}" label="faceboock">
-													<f:validateLength maximum="128" />
-												</p:inputText>
-											</div>
-											</div>
-
-											<div class="row">
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_youtube}" />
-													</div>
-													<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-text"
-													id="youtube" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.youtubechannel}"
-													placeholder="#{messages.label_youtube1}" label="youtube">
-													<f:validateLength maximum="128" />
-												</p:inputText>
-											</div>
-
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_siteweb}" />
-													</div>
-													<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-text"
-													id="website" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.websiteAddress}"
-													placeholder="#{messages.label_siteweb1}" label="siteweb">
-													<f:validateLength maximum="128" />
-												</p:inputText>
-											</div>
-											</div>
-
-											<div class="row">
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_twitter}" />
-												</div>
-												<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-text"
-													id="twitter" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.twitterId}"
-													placeholder="#{messages.label_facebook1}" label="twitter">
-													<f:validateLength maximum="128" />
-												</p:inputText>
-											</div>
-											
-											<div>
-										</div>
-											<div>
-										</div>
-										
-										</div>
-									</div>
-									</div>
-								</p:panel>
-							</div>
 						</div>
-					</p:tab>
+						<p:tabView id="tabs"
+							flowListener="#{etablissementCreateServiceBean.onFlowProcess}">
+							<p:tab id="identifiant" title="#{messages.label_identifiant}">
+								<div class="ui-grid ui-grid-responsive">
+									<div class="ui-grid-col-12">
+										<p:panel header="#{messages.label_etablissement_details}">
 
-					<p:tab id="addresse" title="#{messages.label_addresse}">
-						<div class="ui-grid ui-grid-responsive">
-							<div class="ui-grid-col-12">
-								<p:panel header="#{messages.label_etablissement_adress}">
+											<div class="ui-grid ui-grid-responsive wrap class">
+												<div class="col-xs-12">
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel
+																value="#{messages.label_name_establishment}" />
+															<span class="requireds">(*)</span>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control"
+																id="nometablissement" maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.nameEstablishment}"
+																placeholder="#{messages.label_name_establishment1}"
+																required="true"
+																requiredMessage="#{messages.label_nometablissement_requeried}"
+																label="Nom">
+																<f:validateLength minimum="3" maximum="128" />
+																<p:ajax event="keyup" />
+															</p:inputText>
+														</div>
 
-									<div class="ui-grid ui-grid-responsive wrap class">
-										<div class="col-xs-12">
-											<div class="row">
-											   <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_country}" /><span class="requireds">(*)</span>
-												</div>
-												<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:selectOneMenu styleClass="form-text"
-													id="addcountry"
-													value="#{etablissementCreateServiceBean.establishmentDto.country}"
-													converter="entityConverter"
-													placeholder="#{messages.label_country}" required="true"
-													requiredMessage="#{messages.label_paysetablissement_requeried}">
-													<f:selectItem
-														itemLabel="#{etablissementCreateServiceBean.establishmentDto.country.countryName}"
-														itemValue="#{etablissementCreateServiceBean.establishmentDto.country}"
-														label="#{messages.label_region}" />
-													<f:selectItems
-														value="#{etablissementCreateServiceBean.listcountry}"
-														var="country" itemValue="#{country}"
-														itemLabel="#{country.countryName}" />
-													<p:ajax event="valueChange"
-														listener="#{etablissementCreateServiceBean.maskPhone_etablishment()}"
-														update="addfax addlanphone1 addlanphone2 addregion" />
-												</p:selectOneMenu>
-											</div>
-
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel
-													value="#{messages.label_region}" /><span class="requireds">(*)</span>
-												</div>
-												<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:selectOneMenu styleClass="form-control"
-													id="addregion"
-													value="#{etablissementCreateServiceBean.establishmentDto.region}"
-													converter="entityConverter"
-													placeholder="#{messages.label_country}" required="true"
-													requiredMessage="#{messages.label_regionetablissement_requeried}">
-													<f:selectItem
-														itemLabel="#{etablissementCreateServiceBean.establishmentDto.region.regionName}"
-														itemValue="#{etablissementCreateServiceBean.establishmentDto.region}"
-														label="#{messages.label_region}" />
-													<f:selectItems
-														value="#{etablissementCreateServiceBean.listregion}"
-														var="region" itemValue="#{region}"
-														itemLabel="#{region.regionName}" />
-														<p:ajax event="valueChange"
-														listener="#{etablissementCreateServiceBean.testLieucityestablishment()}"
-														update="addcity" />
-												</p:selectOneMenu>
-											</div>
-											</div>
-
-											<div class="row">
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_city}" /><span class="requireds">(*)</span>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_pattente}" />
+															<span class="requireds">(*)</span>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control" id="patente"
+																maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.patent}"
+																required="true"
+																requiredMessage="#{messages.label_patente_requeried}"
+																placeholder="#{messages.label_pattente1}"
+																label="Patente">
+																<f:validateLength minimum="3" maximum="128" />
+																<p:ajax event="keyup" />
+															</p:inputText>
+														</div>
 													</div>
-													<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:selectOneMenu styleClass="form-control"
-													id="addcity"
-													value="#{etablissementCreateServiceBean.establishmentDto.city}"
-													converter="entityConverter"
-													placeholder="#{messages.label_country}" required="true"
-													requiredMessage="#{messages.label_cityetablissement_requeried}">
-													<f:selectItem
-														itemLabel="#{etablissementCreateServiceBean.establishmentDto.city.cityName}"
-														itemValue="#{etablissementCreateServiceBean.establishmentDto.city}"
-														label="#{messages.label_region}" />
-													<f:selectItems
-														value="#{etablissementCreateServiceBean.listcity}"
-														var="city" itemValue="#{city}"
-														itemLabel="#{city.cityName}" />
-														<p:ajax event="valueChange"
-														listener="#{etablissementCreateServiceBean.testLieuzipcodeestablishment()}"
-														update="addzipcode" />
-												</p:selectOneMenu>
-											</div>
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel
-													value="#{messages.label_zipcode}" /><span class="requireds">(*)</span>
-												</div>
-												<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:selectOneMenu styleClass="form-control"
-													id="addzipcode"
-													value="#{etablissementCreateServiceBean.establishmentDto.zipcode}"
-													converter="entityConverter"
-													placeholder="#{messages.label_country}" required="true"
-													immediate="true"
-													requiredMessage="#{messages.label_zipcodeetablissement_requeried}">
-													<f:selectItem
-														itemLabel="#{etablissementCreateServiceBean.establishmentDto.zipcode.zipCode}"
-														itemValue="#{etablissementCreateServiceBean.establishmentDto.zipcode}"
-														label="#{messages.label_region}" />
-													<f:selectItems
-														value="#{etablissementCreateServiceBean.listzipcode}"
-														var="zipcode" itemValue="#{zipcode}"
-														itemLabel="#{zipcode.zipCode}" />
-												</p:selectOneMenu>
-											</div>
-											</div>
 
-											<div class="row">
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_address_ligne1}" />
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_annee_creation}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-text" id="anneecreation"
+																maxlength="4"
+																value="#{etablissementCreateServiceBean.establishmentDto.yearOfCreation}"
+																required="true"
+																requiredMessage="#{messages.label_yearOfCreation_requeried}"
+																placeholder="#{messages.label_annee_creation1}"
+																label="annee">
+																<f:validateLength minimum="4" maximum="4" />
+																<p:ajax event="keyup" />
+															</p:inputText>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel
+																value="#{messages.label_module_description_name}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-text" id="description"
+																maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.description}"
+																placeholder="#{messages.label_module_description_watermark}"
+																label="description">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
 													</div>
-													<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="addligne1" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.addressLigne1}"
-													placeholder="#{messages.label_address_ligne11}"
-													label="ligne1 addresse">
-													<f:validateLength minimum="5" maximum="128" />
-												</p:inputText>
-											</div>
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_address_ligne2}" />
+
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_cigle}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText id="cigle" styleClass="form-text"
+																maxlength="40"
+																value="#{etablissementCreateServiceBean.establishmentDto.initials}"
+																placeholder="#{messages.label_cigle1}" label="cigle">
+																<f:validateLength maximum="40" />
+															</p:inputText>
+														</div>
+
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_matricule}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-text" id="matricule"
+																maxlength="40"
+																value="#{etablissementCreateServiceBean.establishmentDto.registrationName}"
+																placeholder="#{messages.label_matricule1}"
+																label="Matricule">
+																<f:validateLength maximum="40" />
+															</p:inputText>
+														</div>
 													</div>
-													<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="addligne2" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.addressLigne2}"
-													placeholder="#{messages.label_address_ligne22}"
-													label="ligne2 addresse">
-													<f:validateLength minimum="5" maximum="128" />
-												</p:inputText>
-											</div>
-										</div>
 
-										
-											<div class="row">
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel
-													value="#{messages.label_address_ligne3}" />
-												</div>
-												<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="addligne3" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.addressLigne3}"
-													placeholder="#{messages.label_address_ligne33}"
-													label="ligne3 addresse">
-													<f:validateLength minimum="5" maximum="128" />
-												</p:inputText>
-											</div>
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_alintention}" />
-												</div>
-												<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="addcareof" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.careOf}"
-													placeholder="#{messages.label_alintention1}"
-													label="intention">
-													<f:validateLength minimum="5" maximum="128" />
-												</p:inputText>
-											</div>
-											</div>
-
-											<div class="row">
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_email_namepeople }" />
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_locate_sub}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-text" id="location"
+																maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.location}"
+																placeholder="#{messages.label_locate_sub1}"
+																label="localite">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_mot_bienvenu}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText rows="10" styleClass="form-text" cols="50"
+																id="mot" maxlength="128"
+																placeholder="#{messages.label_mot_bienvenu1}"
+																value="#{etablissementCreateServiceBean.establishmentDto.welcomeWords}">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
 													</div>
-													<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="addemailaddresse" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.emailAddress}"
-													placeholder="#{messages.label_email1}" label="email"
-													required="true"
-													requiredMessage="#{messages.label_emailadd_requeried}"
-													validatorMessage="#{messages.label_emailadd}">
-													<f:validateLength minimum="12" maximum="128" />
-													<f:validateRegex
-														pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
-													<p:ajax event="keyup" />
-												</p:inputText>
-											</div>
 
-								              <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_fax}" />
-												</div>
-												<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputMask styleClass="form-control" id="addfax"
-													maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.faxNumber}"
-													placeholder="#{messages.label_fax1}" label="fax"
-													mask="#{etablissementCreateServiceBean.maskphonformatetablishment}">
-												</p:inputMask>
-											</div>
-											</div>
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_fondateur}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-text" id="fondateur"
+																maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.founder}"
+																placeholder="#{messages.label_fondateur1}"
+																label="fondateur">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
 
-											<div class="row">
-											 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_ligne_tel1 }" />
-												</div>
-												<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputMask styleClass="form-control"
-													id="addlanphone1"
-													value="#{etablissementCreateServiceBean.establishmentDto.lanPhoneNumber1}"
-													placeholder="#{messages.label_ligne_tel11}"
-													label="telephone1"
-													validatorMessage="#{messages.label_telephone1eta}"
-													mask="#{etablissementCreateServiceBean.maskphonformatetablishment}">
-												</p:inputMask>
-											</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
+																value="#{messages.label_facebook}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText id="face" styleClass="form-text"
+																maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.facebookId}"
+																placeholder="#{messages.label_facebook1}"
+																label="faceboock">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
+													</div>
 
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_ligne_tel2 }" />
-												</div>
-												<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputMask styleClass="form-control"
-													id="addlanphone2"
-													value="#{etablissementCreateServiceBean.establishmentDto.lanPhoneNumber2}"
-													placeholder="#{messages.label_ligne_tel11}"
-													label="telephone1"
-													validatorMessage="#{messages.label_telephone1eta}"
-													mask="#{etablissementCreateServiceBean.maskphonformatetablishment}">
-												</p:inputMask>
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_youtube}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-text" id="youtube"
+																maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.youtubechannel}"
+																placeholder="#{messages.label_youtube1}" label="youtube">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
+
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_siteweb}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-text" id="website"
+																maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.websiteAddress}"
+																placeholder="#{messages.label_siteweb1}" label="siteweb">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
+													</div>
+
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_twitter}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-text" id="twitter"
+																maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.twitterId}"
+																placeholder="#{messages.label_facebook1}"
+																label="twitter">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
+
+														<div></div>
+														<div></div>
+
+													</div>
 												</div>
 											</div>
-										</div>
+										</p:panel>
 									</div>
-								</p:panel>
-							</div>
-						</div>
-					</p:tab>
+								</div>
+							</p:tab>
 
-					<p:tab id="gerant" title="#{messages.label_gerant}">
-						<div class="ui-grid ui-grid-responsive">
-							<div class="ui-grid-col-12">
-								<p:panel header="#{messages.label_gerant_details}">
-									<div class="ui-grid ui-grid-responsive wrap class">
-										<div class="col-xs-12">
-											<div class="row">
-											   <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_name}" />
-													</div>
-													 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="gerantname" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.managerFistName}"
-													placeholder="#{messages.label_name_manager1}"
-													label="Nom gerant">
-													<f:validateLength maximum="128" />
-												</p:inputText>
-											</div>
-                                            <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_surname}" />
-													</div>
-													 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="gerantlastname" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.managerLastName}"
-													placeholder="#{messages.label_surname_manager1}"
-													label="prenom gerant">
-													<f:validateLength maximum="128" />
-												</p:inputText>
-											</div>
-											</div>
+							<p:tab id="addresse" title="#{messages.label_addresse}">
+								<div class="ui-grid ui-grid-responsive">
+									<div class="ui-grid-col-12">
+										<p:panel header="#{messages.label_etablissement_adress}">
 
-											<div class="row">
-											 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_secsurname}" />
+											<div class="ui-grid ui-grid-responsive wrap class">
+												<div class="col-xs-12">
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_country}" />
+															<span class="requireds">(*)</span>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:selectOneMenu styleClass="form-text" id="addcountry"
+																value="#{etablissementCreateServiceBean.establishmentDto.country}"
+																converter="entityConverter"
+																placeholder="#{messages.label_country}" required="true"
+																requiredMessage="#{messages.label_paysetablissement_requeried}">
+																<f:selectItem
+																	itemLabel="#{etablissementCreateServiceBean.establishmentDto.country.countryName}"
+																	itemValue="#{etablissementCreateServiceBean.establishmentDto.country}"
+																	label="#{messages.label_region}" />
+																<f:selectItems
+																	value="#{etablissementCreateServiceBean.listcountry}"
+																	var="country" itemValue="#{country}"
+																	itemLabel="#{country.countryName}" />
+																<p:ajax event="valueChange"
+																	listener="#{etablissementCreateServiceBean.maskPhone_etablishment()}"
+																	update="addfax addlanphone1 addlanphone2 addregion" />
+															</p:selectOneMenu>
+														</div>
+
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_region}" />
+															<span class="requireds">(*)</span>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:selectOneMenu styleClass="form-control" id="addregion"
+																value="#{etablissementCreateServiceBean.establishmentDto.region}"
+																converter="entityConverter"
+																placeholder="#{messages.label_country}" required="true"
+																requiredMessage="#{messages.label_regionetablissement_requeried}">
+																<f:selectItem
+																	itemLabel="#{etablissementCreateServiceBean.establishmentDto.region.regionName}"
+																	itemValue="#{etablissementCreateServiceBean.establishmentDto.region}"
+																	label="#{messages.label_region}" />
+																<f:selectItems
+																	value="#{etablissementCreateServiceBean.listregion}"
+																	var="region" itemValue="#{region}"
+																	itemLabel="#{region.regionName}" />
+																<p:ajax event="valueChange"
+																	listener="#{etablissementCreateServiceBean.testLieucityestablishment()}"
+																	update="addcity" />
+															</p:selectOneMenu>
+														</div>
+													</div>
+
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_city}" />
+															<span class="requireds">(*)</span>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:selectOneMenu styleClass="form-control" id="addcity"
+																value="#{etablissementCreateServiceBean.establishmentDto.city}"
+																converter="entityConverter"
+																placeholder="#{messages.label_country}" required="true"
+																requiredMessage="#{messages.label_cityetablissement_requeried}">
+																<f:selectItem
+																	itemLabel="#{etablissementCreateServiceBean.establishmentDto.city.cityName}"
+																	itemValue="#{etablissementCreateServiceBean.establishmentDto.city}"
+																	label="#{messages.label_region}" />
+																<f:selectItems
+																	value="#{etablissementCreateServiceBean.listcity}"
+																	var="city" itemValue="#{city}"
+																	itemLabel="#{city.cityName}" />
+																<p:ajax event="valueChange"
+																	listener="#{etablissementCreateServiceBean.testLieuzipcodeestablishment()}"
+																	update="addzipcode" />
+															</p:selectOneMenu>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_zipcode}" />
+															<span class="requireds">(*)</span>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:selectOneMenu styleClass="form-control"
+																id="addzipcode"
+																value="#{etablissementCreateServiceBean.establishmentDto.zipcode}"
+																converter="entityConverter"
+																placeholder="#{messages.label_country}" required="true"
+																immediate="true"
+																requiredMessage="#{messages.label_zipcodeetablissement_requeried}">
+																<f:selectItem
+																	itemLabel="#{etablissementCreateServiceBean.establishmentDto.zipcode.zipCode}"
+																	itemValue="#{etablissementCreateServiceBean.establishmentDto.zipcode}"
+																	label="#{messages.label_region}" />
+																<f:selectItems
+																	value="#{etablissementCreateServiceBean.listzipcode}"
+																	var="zipcode" itemValue="#{zipcode}"
+																	itemLabel="#{zipcode.zipCode}" />
+															</p:selectOneMenu>
+														</div>
+													</div>
+
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_address_ligne1}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control" id="addligne1"
+																maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.addressLigne1}"
+																placeholder="#{messages.label_address_ligne11}"
+																label="ligne1 addresse">
+																<f:validateLength minimum="5" maximum="128" />
+															</p:inputText>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_address_ligne2}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control" id="addligne2"
+																maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.addressLigne2}"
+																placeholder="#{messages.label_address_ligne22}"
+																label="ligne2 addresse">
+																<f:validateLength minimum="5" maximum="128" />
+															</p:inputText>
+														</div>
+													</div>
+
+
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_address_ligne3}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control" id="addligne3"
+																maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.addressLigne3}"
+																placeholder="#{messages.label_address_ligne33}"
+																label="ligne3 addresse">
+																<f:validateLength minimum="5" maximum="128" />
+															</p:inputText>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_alintention}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control" id="addcareof"
+																maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.careOf}"
+																placeholder="#{messages.label_alintention1}"
+																label="intention">
+																<f:validateLength minimum="5" maximum="128" />
+															</p:inputText>
+														</div>
+													</div>
+
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel
+																value="#{messages.label_email_namepeople }" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control"
+																id="addemailaddresse" maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.emailAddress}"
+																placeholder="#{messages.label_email1}" label="email"
+																required="true"
+																requiredMessage="#{messages.label_emailadd_requeried}"
+																validatorMessage="#{messages.label_emailadd}">
+																<f:validateLength minimum="12" maximum="128" />
+																<f:validateRegex
+																	pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+																<p:ajax event="keyup" />
+															</p:inputText>
+														</div>
+
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_fax}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputMask styleClass="form-control" id="addfax"
+																maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.faxNumber}"
+																placeholder="#{messages.label_fax1}" label="fax"
+																mask="#{etablissementCreateServiceBean.maskphonformatetablishment}">
+															</p:inputMask>
+														</div>
+													</div>
+
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_ligne_tel1 }" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputMask styleClass="form-control" id="addlanphone1"
+																value="#{etablissementCreateServiceBean.establishmentDto.lanPhoneNumber1}"
+																placeholder="#{messages.label_ligne_tel11}"
+																label="telephone1"
+																validatorMessage="#{messages.label_telephone1eta}"
+																mask="#{etablissementCreateServiceBean.maskphonformatetablishment}">
+															</p:inputMask>
+														</div>
+
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_ligne_tel2 }" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputMask styleClass="form-control" id="addlanphone2"
+																value="#{etablissementCreateServiceBean.establishmentDto.lanPhoneNumber2}"
+																placeholder="#{messages.label_ligne_tel11}"
+																label="telephone1"
+																validatorMessage="#{messages.label_telephone1eta}"
+																mask="#{etablissementCreateServiceBean.maskphonformatetablishment}">
+															</p:inputMask>
+														</div>
+													</div>
 												</div>
-												 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="gerantmidellename" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.managerMiddleName}"
-													placeholder="#{messages.label_secsurname_manager1}"
-													label="sec prenom gerant">
-													<f:validateLength maximum="128" />
-												</p:inputText>
 											</div>
-											 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_function}" />
-												</div>
-												 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="gerantposition" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.managerPosition}"
-													placeholder="#{messages.label_function_manager1}"
-													label="sec prenom gerant">
-													<f:validateLength maximum="128" />
-												</p:inputText>
-											</div>
-											</div>
-
-											<div class="row">
-											 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_country}" /><span class="requireds">(*)</span>
-													</div>
-													 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:selectOneMenu styleClass="form-control"
-													id="gerantcountry"
-													value="#{etablissementCreateServiceBean.establishmentDto.managerCountry}"
-													converter="entityConverter"
-													placeholder="#{messages.label_country}" required="true"
-													requiredMessage="#{messages.label_managerCountry_requeried}">
-													<f:selectItem
-														itemLabel="#{etablissementCreateServiceBean.establishmentDto.country.countryName}"
-														itemValue="#{etablissementCreateServiceBean.establishmentDto.country}"
-														label="#{messages.label_region}" />
-													<f:selectItems
-														value="#{etablissementCreateServiceBean.listcountry}"
-														var="country" itemValue="#{country}"
-														itemLabel="#{country.countryName}" />
-														<p:ajax event="valueChange"
-														listener="#{etablissementCreateServiceBean.maskPhone_gerant()}"
-														update="gerantfax gerantlanphone1 gerantlanphone2 gerantregion" />
-												</p:selectOneMenu>
-											</div>
-
-											 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_region}" /><span class="requireds">(*)</span>
-													</div>
-													 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:selectOneMenu styleClass="form-control"
-													id="gerantregion"
-													value="#{etablissementCreateServiceBean.establishmentDto.managerRegion}"
-													converter="entityConverter"
-													placeholder="#{messages.label_country}" required="true"
-													requiredMessage="#{messages.label_managerRegion_requeried}">
-													<f:selectItem
-														itemLabel="#{etablissementCreateServiceBean.establishmentDto.region.regionName}"
-														itemValue="#{etablissementCreateServiceBean.establishmentDto.region}"
-														label="#{messages.label_region}" />
-													<f:selectItems
-														value="#{etablissementCreateServiceBean.listregion}"
-														var="region" itemValue="#{region}"
-														itemLabel="#{region.regionName}" />
-														<p:ajax event="valueChange"
-														listener="#{etablissementCreateServiceBean.testLieucitygerant()}"
-														update="gerantcity" />
-												</p:selectOneMenu>
-											</div>
-											</div>
-
-											<div class="row">
-											 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel
-													value="#{messages.label_city}" /><span class="requireds">(*)</span>
-													</div>
-													 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:selectOneMenu styleClass="form-control"
-													id="gerantcity"
-													value="#{etablissementCreateServiceBean.establishmentDto.managerCity}"
-													converter="entityConverter"
-													placeholder="#{messages.label_country}" required="true"
-													requiredMessage="#{messages.label_managerCity_requeried}">
-													<f:selectItem
-														itemLabel="#{etablissementCreateServiceBean.establishmentDto.city.cityName}"
-														itemValue="#{etablissementCreateServiceBean.establishmentDto.city}"
-														label="#{messages.label_region}" />
-													<f:selectItems
-														value="#{etablissementCreateServiceBean.listcity}"
-														var="city" itemValue="#{city}"
-														itemLabel="#{city.cityName}" />
-														<p:ajax event="valueChange"
-														listener="#{etablissementCreateServiceBean.testLieuzipcodegerant()}"
-														update="gerantzipcode" />
-												</p:selectOneMenu>
-											</div>
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_zipcode}" /><span class="requireds">(*)</span>
-													</div>
-													 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:selectOneMenu  styleClass="form-control"
-													id="gerantzipcode"
-													value="#{etablissementCreateServiceBean.establishmentDto.managerZipcode}"
-													converter="entityConverter"
-													placeholder="#{messages.label_country}" required="true"
-													immediate="true"
-													requiredMessage="#{messages.label_managerZipcode_requeried}">
-													<f:selectItem
-														itemLabel="#{etablissementCreateServiceBean.establishmentDto.zipcode.zipCode}"
-														itemValue="#{etablissementCreateServiceBean.establishmentDto.zipcode}"
-														label="#{messages.label_region}" />
-													<f:selectItems
-														value="#{etablissementCreateServiceBean.listzipcode}"
-														var="zipcode" itemValue="#{zipcode}"
-														itemLabel="#{zipcode.zipCode}" />
-												</p:selectOneMenu>
-											</div>
-											</div>
-
-											<div class="row">
-										 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel
-													value="#{messages.label_address_ligne1}" />
-													</div>
-													 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="gerantaddligne1" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.managerAddressLigne1}"
-													placeholder="#{messages.label_address_ligne1_manager1}"
-													label="addresse ligne 1">
-													<f:validateLength maximum="128" />
-												</p:inputText>
-                                              </div>
-                                               <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_address_ligne2}" />
-													</div>
-													 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="gerantaddligne2" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.managerAddressLigne2}"
-													placeholder="#{messages.label_address_ligne2_manager2}"
-													label="addresse ligne 2">
-													<f:validateLength  maximum="128" />
-												</p:inputText>
-											</div>
-											</div>
-
-											<div class="row">
-											 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_address_ligne3}" />
-													</div>
-													 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="gerantaddligne3" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.managerAddressLigne3}"
-													placeholder="#{messages.label_address_ligne3_manager3}"
-													label="addresse ligne 3">
-													<f:validateLength maximum="128" />
-												</p:inputText>
-											</div>
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_alintention}" />
-													</div>
-													 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="gerantcareof" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.managerCareOf}"
-													placeholder="#{messages.label_alintention_manager1}"
-													label="intention">
-													<f:validateLength  maximum="128" />
-												</p:inputText>
-											</div>
-											</div>
-											<div class="row">
-											 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_email_namepeople}" />
-												</div>
-												 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="gerantemailadd" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.managerEmailAddress}"
-													placeholder="#{messages.label_email_name_manager1}"
-													label="email">
-													<f:validateLength maximum="128" />
-													<f:validateRegex
-														pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
-												</p:inputText>
-											</div>
-											 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel
-													value="#{messages.label_fax}" />
-													</div>
-													 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputMask styleClass="form-control"
-													id="gerantfax" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.managerFaxNumber}"
-													placeholder="#{messages.label_fax_manager1}" label="fax"
-													mask="#{etablissementCreateServiceBean.maskphonformatgerant}">
-												</p:inputMask>
-											</div>
-											</div>
-
-											<div class="row">
-											 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_ligne_tel1}" />
-													</div>
-													 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputMask styleClass="form-control"
-													id="gerantlanphone1"
-													value="#{etablissementCreateServiceBean.establishmentDto.managerLanPhoneNumber1}"
-													placeholder="#{messages.label_ligne_tel1_manager1}"
-													label="telephone1"
-													validatorMessage="#{messages.label_telephone1manager}"
-													mask="#{etablissementCreateServiceBean.maskphonformatgerant}">
-												</p:inputMask>
-											</div>
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_ligne_tel2}" />
-													</div>
-													 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputMask styleClass="form-control"
-													id="gerantlanphone2"
-													value="#{etablissementCreateServiceBean.establishmentDto.managerLanPhoneNumber2}"
-													placeholder="#{messages.label_ligne_tel2_manager1}"
-													label="telephone2"
-													validatorMessage="#{messages.label_telephone2manager}"
-													mask="#{etablissementCreateServiceBean.maskphonformatgerant}">
-												</p:inputMask>
-											</div>
-											</div>
-										</div>
+										</p:panel>
 									</div>
-								</p:panel>
-							</div>
-						</div>
-					</p:tab>
+								</div>
+							</p:tab>
 
-					<p:tab id="proprietaire" title="Propriétaire">
-						<div class="ui-grid ui-grid-responsive">
-							<div class="ui-grid-col-12">
-								<p:panel header="#{messages.label_proprietaire_details}">
-									<div class="ui-grid ui-grid-responsive wrap class">
-										<div class="col-xs-12">
-											<div class="row">
-											   <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_name}" />
+							<p:tab id="gerant" title="#{messages.label_gerant}">
+								<div class="ui-grid ui-grid-responsive">
+									<div class="ui-grid-col-12">
+										<p:panel header="#{messages.label_gerant_details}">
+											<div class="ui-grid ui-grid-responsive wrap class">
+												<div class="col-xs-12">
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_name}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control" id="gerantname"
+																maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.managerFistName}"
+																placeholder="#{messages.label_name_manager1}"
+																label="Nom gerant">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_surname}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control"
+																id="gerantlastname" maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.managerLastName}"
+																placeholder="#{messages.label_surname_manager1}"
+																label="prenom gerant">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
 													</div>
-												 <div class="col-lg-3 col-md-3 col-sm-3">	
-												<p:inputText styleClass="form-control"
-													id="proprietairename" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.ownerFistName}"
-													placeholder="#{messages.label_name_owner1}"
-													label="nom proprietaire">
-													<f:validateLength maximum="128" />
-												</p:inputText>
-											</div>
-                                             <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel
-													value="#{messages.label_surname}" />
-													</div>
-													 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="proprietairelastname" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.ownerLastName}"
-													placeholder="#{messages.label_surname_owner1}"
-													label="prenom proprietaire">
-													<f:validateLength  maximum="128" />
-												</p:inputText>
-											</div>
-											</div>
 
-											<div class="row">
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_secsurname}" />
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_secsurname}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control"
+																id="gerantmidellename" maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.managerMiddleName}"
+																placeholder="#{messages.label_secsurname_manager1}"
+																label="sec prenom gerant">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_function}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control"
+																id="gerantposition" maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.managerPosition}"
+																placeholder="#{messages.label_function_manager1}"
+																label="sec prenom gerant">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
 													</div>
-													 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="proprietairmiddelleename" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.ownerMiddleName}"
-													placeholder="#{messages.label_secsurname_owner1}"
-													label="sec prenom proprietaire">
-													<f:validateLength  maximum="128" />
-												</p:inputText>
-											</div>
-											 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_function}" />
-													</div>
-													 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="proprietaireposition" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.ownerPosition}"
-													placeholder="#{messages.label_function_owner1}"
-													label="sec prenom proprietaire">
-													<f:validateLength  maximum="128" />
-												</p:inputText>
-											</div>
-											</div>
 
-											<div class="row">
-											 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_country}" /><span class="requireds">(*)</span>
-													</div>
-													 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:selectOneMenu styleClass="form-control"
-													id="proprietairecountry"
-													value="#{etablissementCreateServiceBean.establishmentDto.ownerCountry}"
-													converter="entityConverter"
-													placeholder="#{messages.label_country}" required="true"
-													requiredMessage="#{messages.label_ownerCountry_requeried}">
-													<f:selectItem
-														itemLabel="#{etablissementCreateServiceBean.establishmentDto.country.countryName}"
-														itemValue="#{etablissementCreateServiceBean.establishmentDto.country}"
-														label="#{messages.label_region}" />
-													<f:selectItems
-														value="#{etablissementCreateServiceBean.listcountry}"
-														var="country" itemValue="#{country}"
-														itemLabel="#{country.countryName}" />
-														<p:ajax event="valueChange"
-														listener="#{etablissementCreateServiceBean.maskPhone_owner()}"
-														update="proprietairefax proprietairelanphone1 proprietairelanphone2 proprietaireregion" />
-												</p:selectOneMenu>
-											</div>
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_country}" />
+															<span class="requireds">(*)</span>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:selectOneMenu styleClass="form-control"
+																id="gerantcountry"
+																value="#{etablissementCreateServiceBean.establishmentDto.managerCountry}"
+																converter="entityConverter"
+																placeholder="#{messages.label_country}" required="true"
+																requiredMessage="#{messages.label_managerCountry_requeried}">
+																<f:selectItem
+																	itemLabel="#{etablissementCreateServiceBean.establishmentDto.country.countryName}"
+																	itemValue="#{etablissementCreateServiceBean.establishmentDto.country}"
+																	label="#{messages.label_region}" />
+																<f:selectItems
+																	value="#{etablissementCreateServiceBean.listcountry}"
+																	var="country" itemValue="#{country}"
+																	itemLabel="#{country.countryName}" />
+																<p:ajax event="valueChange"
+																	listener="#{etablissementCreateServiceBean.maskPhone_gerant()}"
+																	update="gerantfax gerantlanphone1 gerantlanphone2 gerantregion" />
+															</p:selectOneMenu>
+														</div>
 
-											 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel
-													value="#{messages.label_region}" /><span class="requireds">(*)</span>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_region}" />
+															<span class="requireds">(*)</span>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:selectOneMenu styleClass="form-control"
+																id="gerantregion"
+																value="#{etablissementCreateServiceBean.establishmentDto.managerRegion}"
+																converter="entityConverter"
+																placeholder="#{messages.label_country}" required="true"
+																requiredMessage="#{messages.label_managerRegion_requeried}">
+																<f:selectItem
+																	itemLabel="#{etablissementCreateServiceBean.establishmentDto.region.regionName}"
+																	itemValue="#{etablissementCreateServiceBean.establishmentDto.region}"
+																	label="#{messages.label_region}" />
+																<f:selectItems
+																	value="#{etablissementCreateServiceBean.listregion}"
+																	var="region" itemValue="#{region}"
+																	itemLabel="#{region.regionName}" />
+																<p:ajax event="valueChange"
+																	listener="#{etablissementCreateServiceBean.testLieucitygerant()}"
+																	update="gerantcity" />
+															</p:selectOneMenu>
+														</div>
+													</div>
+
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_city}" />
+															<span class="requireds">(*)</span>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:selectOneMenu styleClass="form-control"
+																id="gerantcity"
+																value="#{etablissementCreateServiceBean.establishmentDto.managerCity}"
+																converter="entityConverter"
+																placeholder="#{messages.label_country}" required="true"
+																requiredMessage="#{messages.label_managerCity_requeried}">
+																<f:selectItem
+																	itemLabel="#{etablissementCreateServiceBean.establishmentDto.city.cityName}"
+																	itemValue="#{etablissementCreateServiceBean.establishmentDto.city}"
+																	label="#{messages.label_region}" />
+																<f:selectItems
+																	value="#{etablissementCreateServiceBean.listcity}"
+																	var="city" itemValue="#{city}"
+																	itemLabel="#{city.cityName}" />
+																<p:ajax event="valueChange"
+																	listener="#{etablissementCreateServiceBean.testLieuzipcodegerant()}"
+																	update="gerantzipcode" />
+															</p:selectOneMenu>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_zipcode}" />
+															<span class="requireds">(*)</span>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:selectOneMenu styleClass="form-control"
+																id="gerantzipcode"
+																value="#{etablissementCreateServiceBean.establishmentDto.managerZipcode}"
+																converter="entityConverter"
+																placeholder="#{messages.label_country}" required="true"
+																immediate="true"
+																requiredMessage="#{messages.label_managerZipcode_requeried}">
+																<f:selectItem
+																	itemLabel="#{etablissementCreateServiceBean.establishmentDto.zipcode.zipCode}"
+																	itemValue="#{etablissementCreateServiceBean.establishmentDto.zipcode}"
+																	label="#{messages.label_region}" />
+																<f:selectItems
+																	value="#{etablissementCreateServiceBean.listzipcode}"
+																	var="zipcode" itemValue="#{zipcode}"
+																	itemLabel="#{zipcode.zipCode}" />
+															</p:selectOneMenu>
+														</div>
+													</div>
+
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_address_ligne1}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control"
+																id="gerantaddligne1" maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.managerAddressLigne1}"
+																placeholder="#{messages.label_address_ligne1_manager1}"
+																label="addresse ligne 1">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_address_ligne2}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control"
+																id="gerantaddligne2" maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.managerAddressLigne2}"
+																placeholder="#{messages.label_address_ligne2_manager2}"
+																label="addresse ligne 2">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
+													</div>
+
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_address_ligne3}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control"
+																id="gerantaddligne3" maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.managerAddressLigne3}"
+																placeholder="#{messages.label_address_ligne3_manager3}"
+																label="addresse ligne 3">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_alintention}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control" id="gerantcareof"
+																maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.managerCareOf}"
+																placeholder="#{messages.label_alintention_manager1}"
+																label="intention">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_email_namepeople}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control"
+																id="gerantemailadd" maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.managerEmailAddress}"
+																placeholder="#{messages.label_email_name_manager1}"
+																label="email">
+																<f:validateLength maximum="128" />
+																<f:validateRegex
+																	pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+															</p:inputText>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_fax}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputMask styleClass="form-control" id="gerantfax"
+																maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.managerFaxNumber}"
+																placeholder="#{messages.label_fax_manager1}" label="fax"
+																mask="#{etablissementCreateServiceBean.maskphonformatgerant}">
+															</p:inputMask>
+														</div>
+													</div>
+
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_ligne_tel1}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputMask styleClass="form-control"
+																id="gerantlanphone1"
+																value="#{etablissementCreateServiceBean.establishmentDto.managerLanPhoneNumber1}"
+																placeholder="#{messages.label_ligne_tel1_manager1}"
+																label="telephone1"
+																validatorMessage="#{messages.label_telephone1manager}"
+																mask="#{etablissementCreateServiceBean.maskphonformatgerant}">
+															</p:inputMask>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_ligne_tel2}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputMask styleClass="form-control"
+																id="gerantlanphone2"
+																value="#{etablissementCreateServiceBean.establishmentDto.managerLanPhoneNumber2}"
+																placeholder="#{messages.label_ligne_tel2_manager1}"
+																label="telephone2"
+																validatorMessage="#{messages.label_telephone2manager}"
+																mask="#{etablissementCreateServiceBean.maskphonformatgerant}">
+															</p:inputMask>
+														</div>
+													</div>
 												</div>
-												 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:selectOneMenu styleClass="form-control"
-													id="proprietaireregion"
-													value="#{etablissementCreateServiceBean.establishmentDto.ownerRegion}"
-													converter="entityConverter"
-													placeholder="#{messages.label_country}" required="true"
-													requiredMessage="#{messages.label_ownerRegion_requeried}">
-													<f:selectItem
-														itemLabel="#{etablissementCreateServiceBean.establishmentDto.region.regionName}"
-														itemValue="#{etablissementCreateServiceBean.establishmentDto.region}"
-														label="#{messages.label_region}" />
-													<f:selectItems
-														value="#{etablissementCreateServiceBean.listregion}"
-														var="region" itemValue="#{region}"
-														itemLabel="#{region.regionName}" />
-														<p:ajax event="valueChange"
-														listener="#{etablissementCreateServiceBean.testLieucityowner()}"
-														update="proprietairecity" />
-												</p:selectOneMenu>
 											</div>
-											</div>
-
-											<div class="row">
-											 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_city}" /><span class="requireds">(*)</span>
-													</div>
-													 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:selectOneMenu styleClass="form-control"
-													id="proprietairecity"
-													value="#{etablissementCreateServiceBean.establishmentDto.ownerCity}"
-													converter="entityConverter"
-													placeholder="#{messages.label_country}" required="true"
-													requiredMessage="#{messages.label_ownerCity_requeried}">
-													<f:selectItem
-														itemLabel="#{etablissementCreateServiceBean.establishmentDto.city.cityName}"
-														itemValue="#{etablissementCreateServiceBean.establishmentDto.city}"
-														label="#{messages.label_region}" />
-													<f:selectItems
-														value="#{etablissementCreateServiceBean.listcity}"
-														var="city" itemValue="#{city}"
-														itemLabel="#{city.cityName}" />
-														<p:ajax event="valueChange"
-														listener="#{etablissementCreateServiceBean.testLieuzipcodeowner()}"
-														update="proprietairezipcode" />
-												</p:selectOneMenu>
-											</div>
-
-											 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_zipcode}" /><span class="requireds">(*)</span>
-													</div>
-													 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:selectOneMenu styleClass="form-control"
-													id="proprietairezipcode"
-													value="#{etablissementCreateServiceBean.establishmentDto.ownerZipcode}"
-													converter="entityConverter"
-													placeholder="#{messages.label_country}" required="true"
-													immediate="true"
-													requiredMessage="#{messages.label_ownerZipcode_requeried}">
-													<f:selectItem
-														itemLabel="#{etablissementCreateServiceBean.establishmentDto.zipcode.zipCode}"
-														itemValue="#{etablissementCreateServiceBean.establishmentDto.zipcode}"
-														label="#{messages.label_region}" />
-													<f:selectItems
-														value="#{etablissementCreateServiceBean.listzipcode}"
-														var="zipcode" itemValue="#{zipcode}"
-														itemLabel="#{zipcode.zipCode}" />
-												</p:selectOneMenu>
-											</div>
-										</div>
-
-										
-											<div class="row">
-											 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_address_ligne1}" />
-												</div>
-												 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="proprietaireaddligne1" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.ownerAddressLigne1}"
-													placeholder="#{messages.label_address_ligne1_owner1}"
-													label="addresse ligne 1">
-													<f:validateLength  maximum="128" />
-												</p:inputText>
-											</div>
-
-											 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_address_ligne2}" />
-												</div>
-												<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="proprietaireaddligne2" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.ownerAddressLigne2}"
-													placeholder="#{messages.label_address_ligne2_owner1}"
-													label="addresse ligne 2">
-													<f:validateLength  maximum="128" />
-												</p:inputText>
-											</div>
-											</div>
-
-											<div class="row">
-											 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_address_ligne3}" />
-												</div>
-												 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="proprietaireaddligne3" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.ownerAddressLigne3}"
-													placeholder="#{messages.label_address_ligne3_owner1}"
-													label="addresse ligne 3">
-													<f:validateLength  maximum="128" />
-												</p:inputText>
-											</div>
-                                            <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_alintention}" />
-													</div>
-												<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="proprietairecareof" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.ownerCareOf}"
-													placeholder="#{messages.label_alintention_owner1}"
-													label="intention">
-													<f:validateLength  maximum="128" />
-												</p:inputText>
-											</div>
-											</div>
-
-											<div class="row">
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_email_namepeople}" />
-													</div>
-													 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="proprietaireemailadd" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.ownerEmailAddress}"
-													placeholder="#{messages.label_email_name_owner1}"
-													label="email">
-													<f:validateLength  maximum="128" />
-													<f:validateRegex
-														pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
-												</p:inputText>
-											</div>
-											 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_fax}" />
-													</div>
-													 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputMask styleClass="form-control"
-													id="proprietairefax" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.ownerFaxNumber}"
-													placeholder="#{messages.label_fax_owner1}" label="fax"
-													mask="#{etablissementCreateServiceBean.maskphonformatproprietaire}">
-												</p:inputMask>
-											</div>
-											</div>
-											<div class="row">
-											 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_ligne_tel1}" />
-													</div>
-													 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputMask styleClass="form-control"
-													id="proprietairelanphone1"
-													value="#{etablissementCreateServiceBean.establishmentDto.ownerLanPhoneNumber1}"
-													placeholder="#{messages.label_ligne_tel1_owner1}"
-													label="telephone1"
-													validatorMessage="#{messages.label_telephone1owner}"
-													mask="#{etablissementCreateServiceBean.maskphonformatproprietaire}">
-												</p:inputMask>
-											</div>
-											 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_ligne_tel2}" />
-													</div>
-													 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputMask styleClass="form-control"
-													id="proprietairelanphone2"
-													value="#{etablissementCreateServiceBean.establishmentDto.ownerLanPhoneNumber2}"
-													placeholder="#{messages.label_ligne_tel2_owner1}"
-													label="telephone2"
-													validatorMessage="#{messages.label_telephone2owner}"
-													mask="#{etablissementCreateServiceBean.maskphonformatproprietaire}">
-												</p:inputMask>
-											</div>
-											</div>
-										</div>
+										</p:panel>
 									</div>
-								</p:panel>
-							</div>
-						</div>
-					</p:tab>
+								</div>
+							</p:tab>
 
-					<p:tab id="contact" title="Contact">
-						<div class="ui-grid ui-grid-responsive">
-							<div class="ui-grid-col-12">
-								<p:panel header="#{messages.label_contact_details}">
-
-									<div class="ui-grid ui-grid-responsive wrap class">
-										<div class="col-xs-12">
-											<div class="row">
-											   <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_name}" />
+							<p:tab id="proprietaire" title="Propriétaire">
+								<div class="ui-grid ui-grid-responsive">
+									<div class="ui-grid-col-12">
+										<p:panel header="#{messages.label_proprietaire_details}">
+											<div class="ui-grid ui-grid-responsive wrap class">
+												<div class="col-xs-12">
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_name}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control"
+																id="proprietairename" maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.ownerFistName}"
+																placeholder="#{messages.label_name_owner1}"
+																label="nom proprietaire">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_surname}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control"
+																id="proprietairelastname" maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.ownerLastName}"
+																placeholder="#{messages.label_surname_owner1}"
+																label="prenom proprietaire">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
 													</div>
-													<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="contactname" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.contactFistName}"
-													placeholder="#{messages.label_name_contact1}"
-													label="nom contact">
-													<f:validateLength  maximum="128" />
-												</p:inputText>
-											</div>
-                                            <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_surname}" />
+
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_secsurname}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control"
+																id="proprietairmiddelleename" maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.ownerMiddleName}"
+																placeholder="#{messages.label_secsurname_owner1}"
+																label="sec prenom proprietaire">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_function}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control"
+																id="proprietaireposition" maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.ownerPosition}"
+																placeholder="#{messages.label_function_owner1}"
+																label="sec prenom proprietaire">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
 													</div>
-													<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="contactlastname" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.contactLastName}"
-													placeholder="#{messages.label_surname_contact1}"
-													label="prenom contact">
-													<f:validateLength  maximum="128" />
-												</p:inputText>
-											</div>
-											</div>
-											<div class="row">
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_secsurname}" />
+
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_country}" />
+															<span class="requireds">(*)</span>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:selectOneMenu styleClass="form-control"
+																id="proprietairecountry"
+																value="#{etablissementCreateServiceBean.establishmentDto.ownerCountry}"
+																converter="entityConverter"
+																placeholder="#{messages.label_country}" required="true"
+																requiredMessage="#{messages.label_ownerCountry_requeried}">
+																<f:selectItem
+																	itemLabel="#{etablissementCreateServiceBean.establishmentDto.country.countryName}"
+																	itemValue="#{etablissementCreateServiceBean.establishmentDto.country}"
+																	label="#{messages.label_region}" />
+																<f:selectItems
+																	value="#{etablissementCreateServiceBean.listcountry}"
+																	var="country" itemValue="#{country}"
+																	itemLabel="#{country.countryName}" />
+																<p:ajax event="valueChange"
+																	listener="#{etablissementCreateServiceBean.maskPhone_owner()}"
+																	update="proprietairefax proprietairelanphone1 proprietairelanphone2 proprietaireregion" />
+															</p:selectOneMenu>
+														</div>
+
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_region}" />
+															<span class="requireds">(*)</span>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:selectOneMenu styleClass="form-control"
+																id="proprietaireregion"
+																value="#{etablissementCreateServiceBean.establishmentDto.ownerRegion}"
+																converter="entityConverter"
+																placeholder="#{messages.label_country}" required="true"
+																requiredMessage="#{messages.label_ownerRegion_requeried}">
+																<f:selectItem
+																	itemLabel="#{etablissementCreateServiceBean.establishmentDto.region.regionName}"
+																	itemValue="#{etablissementCreateServiceBean.establishmentDto.region}"
+																	label="#{messages.label_region}" />
+																<f:selectItems
+																	value="#{etablissementCreateServiceBean.listregion}"
+																	var="region" itemValue="#{region}"
+																	itemLabel="#{region.regionName}" />
+																<p:ajax event="valueChange"
+																	listener="#{etablissementCreateServiceBean.testLieucityowner()}"
+																	update="proprietairecity" />
+															</p:selectOneMenu>
+														</div>
 													</div>
-													<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="contactmiddellename" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.contactMiddleName}"
-													placeholder="#{messages.label_secsurname_contact1}"
-													label="sec prenom proprietaire">
-													<f:validateLength  maximum="128" />
-												</p:inputText>
-											</div>
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_function}" />
+
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_city}" />
+															<span class="requireds">(*)</span>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:selectOneMenu styleClass="form-control"
+																id="proprietairecity"
+																value="#{etablissementCreateServiceBean.establishmentDto.ownerCity}"
+																converter="entityConverter"
+																placeholder="#{messages.label_country}" required="true"
+																requiredMessage="#{messages.label_ownerCity_requeried}">
+																<f:selectItem
+																	itemLabel="#{etablissementCreateServiceBean.establishmentDto.city.cityName}"
+																	itemValue="#{etablissementCreateServiceBean.establishmentDto.city}"
+																	label="#{messages.label_region}" />
+																<f:selectItems
+																	value="#{etablissementCreateServiceBean.listcity}"
+																	var="city" itemValue="#{city}"
+																	itemLabel="#{city.cityName}" />
+																<p:ajax event="valueChange"
+																	listener="#{etablissementCreateServiceBean.testLieuzipcodeowner()}"
+																	update="proprietairezipcode" />
+															</p:selectOneMenu>
+														</div>
+
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_zipcode}" />
+															<span class="requireds">(*)</span>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:selectOneMenu styleClass="form-control"
+																id="proprietairezipcode"
+																value="#{etablissementCreateServiceBean.establishmentDto.ownerZipcode}"
+																converter="entityConverter"
+																placeholder="#{messages.label_country}" required="true"
+																immediate="true"
+																requiredMessage="#{messages.label_ownerZipcode_requeried}">
+																<f:selectItem
+																	itemLabel="#{etablissementCreateServiceBean.establishmentDto.zipcode.zipCode}"
+																	itemValue="#{etablissementCreateServiceBean.establishmentDto.zipcode}"
+																	label="#{messages.label_region}" />
+																<f:selectItems
+																	value="#{etablissementCreateServiceBean.listzipcode}"
+																	var="zipcode" itemValue="#{zipcode}"
+																	itemLabel="#{zipcode.zipCode}" />
+															</p:selectOneMenu>
+														</div>
 													</div>
-													<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="contactposition" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.contactPosition}"
-													placeholder="#{messages.label_function_contact1}"
-													label="sec prenom proprietaire">
-													<f:validateLength  maximum="128" />
-												</p:inputText>
-											</div>
-											</div>
 
-											<div class="row">
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_country}" /><span class="requireds">(*)</span>
+
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_address_ligne1}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control"
+																id="proprietaireaddligne1" maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.ownerAddressLigne1}"
+																placeholder="#{messages.label_address_ligne1_owner1}"
+																label="addresse ligne 1">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
+
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_address_ligne2}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control"
+																id="proprietaireaddligne2" maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.ownerAddressLigne2}"
+																placeholder="#{messages.label_address_ligne2_owner1}"
+																label="addresse ligne 2">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
 													</div>
-													<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:selectOneMenu styleClass="form-control"
-													id="contactcountry"
-													value="#{etablissementCreateServiceBean.establishmentDto.contactCountry}"
-													converter="entityConverter"
-													placeholder="#{messages.label_country}" required="true"
-													requiredMessage="#{messages.label_contactCountry_requeried}">
-													<f:selectItem
-														itemLabel="#{etablissementCreateServiceBean.establishmentDto.country.countryName}"
-														itemValue="#{etablissementCreateServiceBean.establishmentDto.country}"
-														label="#{messages.label_region}" />
-													<f:selectItems
-														value="#{etablissementCreateServiceBean.listcountry}"
-														var="country" itemValue="#{country}"
-														itemLabel="#{country.countryName}" />
-														<p:ajax event="valueChange"
-														listener="#{etablissementCreateServiceBean.maskPhone_contact}"
-														update="contactfax contactlanphone1 contactlanphone2 contactregion" />
-												</p:selectOneMenu>
-											</div>
 
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_region}" /><span class="requireds">(*)</span>
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_address_ligne3}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control"
+																id="proprietaireaddligne3" maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.ownerAddressLigne3}"
+																placeholder="#{messages.label_address_ligne3_owner1}"
+																label="addresse ligne 3">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_alintention}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control"
+																id="proprietairecareof" maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.ownerCareOf}"
+																placeholder="#{messages.label_alintention_owner1}"
+																label="intention">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
 													</div>
-													<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:selectOneMenu styleClass="form-control"
-													id="contactregion"
-													value="#{etablissementCreateServiceBean.establishmentDto.contactRegion}"
-													converter="entityConverter"
-													placeholder="#{messages.label_country}" required="true"
-													requiredMessage="#{messages.label_contactRegion_requeried}">
-													<f:selectItem
-														itemLabel="#{etablissementCreateServiceBean.establishmentDto.region.regionName}"
-														itemValue="#{etablissementCreateServiceBean.establishmentDto.region}"
-														label="#{messages.label_region}" />
-													<f:selectItems
-														value="#{etablissementCreateServiceBean.listregion}"
-														var="region" itemValue="#{region}"
-														itemLabel="#{region.regionName}" />
-														<p:ajax event="valueChange"
-														listener="#{etablissementCreateServiceBean.testLieucitycontact}"
-														update="contactcity" />
-												</p:selectOneMenu>
-											</div>
-											</div>
 
-											<div class="row">
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_city}" /><span class="requireds">(*)</span>
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_email_namepeople}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control"
+																id="proprietaireemailadd" maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.ownerEmailAddress}"
+																placeholder="#{messages.label_email_name_owner1}"
+																label="email">
+																<f:validateLength maximum="128" />
+																<f:validateRegex
+																	pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+															</p:inputText>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_fax}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputMask styleClass="form-control"
+																id="proprietairefax" maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.ownerFaxNumber}"
+																placeholder="#{messages.label_fax_owner1}" label="fax"
+																mask="#{etablissementCreateServiceBean.maskphonformatproprietaire}">
+															</p:inputMask>
+														</div>
 													</div>
-													<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:selectOneMenu styleClass="form-control"
-													id="contactcity"
-													value="#{etablissementCreateServiceBean.establishmentDto.contactCity}"
-													converter="entityConverter"
-													placeholder="#{messages.label_country}" required="true"
-													requiredMessage="#{messages.label_contactCity_requeried}">
-													<f:selectItem
-														itemLabel="#{etablissementCreateServiceBean.establishmentDto.city.cityName}"
-														itemValue="#{etablissementCreateServiceBean.establishmentDto.city}"
-														label="#{messages.label_city}" />
-													<f:selectItems
-														value="#{etablissementCreateServiceBean.listcity}"
-														var="city" itemValue="#{city}"
-														itemLabel="#{city.cityName}" />
-														<p:ajax event="valueChange"
-														listener="#{etablissementCreateServiceBean.testLieuzipcodecontact}"
-														update="contactzipcode" />
-												</p:selectOneMenu>
-											</div>
-
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_zipcode}" /><span class="requireds">(*)</span>
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_ligne_tel1}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputMask styleClass="form-control"
+																id="proprietairelanphone1"
+																value="#{etablissementCreateServiceBean.establishmentDto.ownerLanPhoneNumber1}"
+																placeholder="#{messages.label_ligne_tel1_owner1}"
+																label="telephone1"
+																validatorMessage="#{messages.label_telephone1owner}"
+																mask="#{etablissementCreateServiceBean.maskphonformatproprietaire}">
+															</p:inputMask>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_ligne_tel2}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputMask styleClass="form-control"
+																id="proprietairelanphone2"
+																value="#{etablissementCreateServiceBean.establishmentDto.ownerLanPhoneNumber2}"
+																placeholder="#{messages.label_ligne_tel2_owner1}"
+																label="telephone2"
+																validatorMessage="#{messages.label_telephone2owner}"
+																mask="#{etablissementCreateServiceBean.maskphonformatproprietaire}">
+															</p:inputMask>
+														</div>
 													</div>
-													<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:selectOneMenu styleClass="form-control"
-													id="contactzipcode"
-													value="#{etablissementCreateServiceBean.establishmentDto.contactZipcode}"
-													converter="entityConverter"
-													placeholder="#{messages.label_country}" required="true"
-													immediate="true"
-													requiredMessage="#{messages.label_contactZipcode_requeried}">
-													<f:selectItem
-														itemLabel="#{etablissementCreateServiceBean.establishmentDto.zipcode.zipCode}"
-														itemValue="#{etablissementCreateServiceBean.establishmentDto.zipcode}"
-														label="#{messages.label_region}" />
-													<f:selectItems
-														value="#{etablissementCreateServiceBean.listzipcode}"
-														var="zipcode" itemValue="#{zipcode}"
-														itemLabel="#{zipcode.zipCode}" />
-												</p:selectOneMenu>
-											</div>
-										</div>
-
-										
-											<div class="row">
-											 <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_address_ligne1}" />
-												</div>
-												<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="contactaddligne1" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.contactAddressLigne1}"
-													placeholder="#{messages.label_address_ligne1_contact1}"
-													label="addresse ligne 1">
-													<f:validateLength  maximum="128" />
-												</p:inputText>
-											</div>
-
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_address_ligne2}" />
-												</div>
-												<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="contactaddligne2" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.contactAddressLigne2}"
-													placeholder="#{messages.label_address_ligne2_contact1}"
-													label="addresse ligne 2">
-													<f:validateLength  maximum="128" />
-												</p:inputText>
-											</div>
-											</div>
-
-											<div class="row">
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_address_ligne3}" />
-												</div>
-												<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="contactaddligne3" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.contactAddressLigne3}"
-													placeholder="#{messages.label_address_ligne3_contact1}"
-													label="addresse ligne 3">
-													<f:validateLength maximum="128" />
-												</p:inputText>
-											</div>
-                                             <div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_alintention}" />
-												</div>
-												<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="contactcareof" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.contactCareOf}"
-													placeholder="#{messages.label_alintention_contact1}"
-													label="intention">
-													<f:validateLength  maximum="128" />
-												</p:inputText>
-											</div>
-											</div>
-
-											<div class="row">
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_email_namepeople}" />
-												</div>
-												<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputText styleClass="form-control"
-													id="contactemailadd" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.contactEmailAddress}"
-													placeholder="#{messages.label_alintention_contact1}"
-													label="email">
-													<f:validateLength  maximum="128" />
-													<f:validateRegex
-														pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
-												</p:inputText>
-											</div>
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_fax}" />
-												</div>
-												<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputMask styleClass="form-control"
-													id="contactfax" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.contactFaxNumber}"
-													placeholder="#{messages.label_fax_contact1}" label="fax"
-													mask="#{etablissementCreateServiceBean.maskphonformatcontact}">
-												</p:inputMask>
-											</div>
-											</div>
-											<div class="row">
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_ligne_tel1}" />
-												</div>
-												<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputMask styleClass="form-control"
-													id="contactlanphone1"
-													value="#{etablissementCreateServiceBean.establishmentDto.contactLanPhoneNumber1}"
-													placeholder="#{messages.label_ligne_tel1_contact1}"
-													label="telephone1"
-													validatorMessage="#{messages.label_telephone1contact}"
-													mask="#{etablissementCreateServiceBean.maskphonformatcontact}">
-												</p:inputMask>
-											</div>
-
-											<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:outputLabel 
-													value="#{messages.label_ligne_tel2}" />
-													</div>
-													<div class="col-lg-3 col-md-3 col-sm-3">
-												<p:inputMask styleClass="form-control"
-													id="contactlanphone2" maxlength="128"
-													value="#{etablissementCreateServiceBean.establishmentDto.contactLanPhoneNumber2}"
-													placeholder="#{messages.label_ligne_tel2_contact1}"
-													label="telephone2"
-													validatorMessage="#{messages.label_telephone2contact}"
-													mask="#{etablissementCreateServiceBean.maskphonformatcontact}">
-												</p:inputMask>
 												</div>
 											</div>
-										</div>
+										</p:panel>
 									</div>
-								</p:panel>
-							</div>
-						</div>
+								</div>
+							</p:tab>
+
+							<p:tab id="contact" title="Contact">
+								<div class="ui-grid ui-grid-responsive">
+									<div class="ui-grid-col-12">
+										<p:panel header="#{messages.label_contact_details}">
+
+											<div class="ui-grid ui-grid-responsive wrap class">
+												<div class="col-xs-12">
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_name}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control" id="contactname"
+																maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.contactFistName}"
+																placeholder="#{messages.label_name_contact1}"
+																label="nom contact">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_surname}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control"
+																id="contactlastname" maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.contactLastName}"
+																placeholder="#{messages.label_surname_contact1}"
+																label="prenom contact">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_secsurname}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control"
+																id="contactmiddellename" maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.contactMiddleName}"
+																placeholder="#{messages.label_secsurname_contact1}"
+																label="sec prenom proprietaire">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_function}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control"
+																id="contactposition" maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.contactPosition}"
+																placeholder="#{messages.label_function_contact1}"
+																label="sec prenom proprietaire">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
+													</div>
+
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_country}" />
+															<span class="requireds">(*)</span>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:selectOneMenu styleClass="form-control"
+																id="contactcountry"
+																value="#{etablissementCreateServiceBean.establishmentDto.contactCountry}"
+																converter="entityConverter"
+																placeholder="#{messages.label_country}" required="true"
+																requiredMessage="#{messages.label_contactCountry_requeried}">
+																<f:selectItem
+																	itemLabel="#{etablissementCreateServiceBean.establishmentDto.country.countryName}"
+																	itemValue="#{etablissementCreateServiceBean.establishmentDto.country}"
+																	label="#{messages.label_region}" />
+																<f:selectItems
+																	value="#{etablissementCreateServiceBean.listcountry}"
+																	var="country" itemValue="#{country}"
+																	itemLabel="#{country.countryName}" />
+																<p:ajax event="valueChange"
+																	listener="#{etablissementCreateServiceBean.maskPhone_contact}"
+																	update="contactfax contactlanphone1 contactlanphone2 contactregion" />
+															</p:selectOneMenu>
+														</div>
+
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_region}" />
+															<span class="requireds">(*)</span>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:selectOneMenu styleClass="form-control"
+																id="contactregion"
+																value="#{etablissementCreateServiceBean.establishmentDto.contactRegion}"
+																converter="entityConverter"
+																placeholder="#{messages.label_country}" required="true"
+																requiredMessage="#{messages.label_contactRegion_requeried}">
+																<f:selectItem
+																	itemLabel="#{etablissementCreateServiceBean.establishmentDto.region.regionName}"
+																	itemValue="#{etablissementCreateServiceBean.establishmentDto.region}"
+																	label="#{messages.label_region}" />
+																<f:selectItems
+																	value="#{etablissementCreateServiceBean.listregion}"
+																	var="region" itemValue="#{region}"
+																	itemLabel="#{region.regionName}" />
+																<p:ajax event="valueChange"
+																	listener="#{etablissementCreateServiceBean.testLieucitycontact}"
+																	update="contactcity" />
+															</p:selectOneMenu>
+														</div>
+													</div>
+
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_city}" />
+															<span class="requireds">(*)</span>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:selectOneMenu styleClass="form-control"
+																id="contactcity"
+																value="#{etablissementCreateServiceBean.establishmentDto.contactCity}"
+																converter="entityConverter"
+																placeholder="#{messages.label_country}" required="true"
+																requiredMessage="#{messages.label_contactCity_requeried}">
+																<f:selectItem
+																	itemLabel="#{etablissementCreateServiceBean.establishmentDto.city.cityName}"
+																	itemValue="#{etablissementCreateServiceBean.establishmentDto.city}"
+																	label="#{messages.label_city}" />
+																<f:selectItems
+																	value="#{etablissementCreateServiceBean.listcity}"
+																	var="city" itemValue="#{city}"
+																	itemLabel="#{city.cityName}" />
+																<p:ajax event="valueChange"
+																	listener="#{etablissementCreateServiceBean.testLieuzipcodecontact}"
+																	update="contactzipcode" />
+															</p:selectOneMenu>
+														</div>
+
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_zipcode}" />
+															<span class="requireds">(*)</span>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:selectOneMenu styleClass="form-control"
+																id="contactzipcode"
+																value="#{etablissementCreateServiceBean.establishmentDto.contactZipcode}"
+																converter="entityConverter"
+																placeholder="#{messages.label_country}" required="true"
+																immediate="true"
+																requiredMessage="#{messages.label_contactZipcode_requeried}">
+																<f:selectItem
+																	itemLabel="#{etablissementCreateServiceBean.establishmentDto.zipcode.zipCode}"
+																	itemValue="#{etablissementCreateServiceBean.establishmentDto.zipcode}"
+																	label="#{messages.label_region}" />
+																<f:selectItems
+																	value="#{etablissementCreateServiceBean.listzipcode}"
+																	var="zipcode" itemValue="#{zipcode}"
+																	itemLabel="#{zipcode.zipCode}" />
+															</p:selectOneMenu>
+														</div>
+													</div>
+
+
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_address_ligne1}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control"
+																id="contactaddligne1" maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.contactAddressLigne1}"
+																placeholder="#{messages.label_address_ligne1_contact1}"
+																label="addresse ligne 1">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
+
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_address_ligne2}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control"
+																id="contactaddligne2" maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.contactAddressLigne2}"
+																placeholder="#{messages.label_address_ligne2_contact1}"
+																label="addresse ligne 2">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
+													</div>
+
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_address_ligne3}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control"
+																id="contactaddligne3" maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.contactAddressLigne3}"
+																placeholder="#{messages.label_address_ligne3_contact1}"
+																label="addresse ligne 3">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_alintention}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control" id="contactcareof"
+																maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.contactCareOf}"
+																placeholder="#{messages.label_alintention_contact1}"
+																label="intention">
+																<f:validateLength maximum="128" />
+															</p:inputText>
+														</div>
+													</div>
+
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_email_namepeople}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputText styleClass="form-control"
+																id="contactemailadd" maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.contactEmailAddress}"
+																placeholder="#{messages.label_alintention_contact1}"
+																label="email">
+																<f:validateLength maximum="128" />
+																<f:validateRegex
+																	pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+															</p:inputText>
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_fax}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputMask styleClass="form-control" id="contactfax"
+																maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.contactFaxNumber}"
+																placeholder="#{messages.label_fax_contact1}" label="fax"
+																mask="#{etablissementCreateServiceBean.maskphonformatcontact}">
+															</p:inputMask>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_ligne_tel1}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputMask styleClass="form-control"
+																id="contactlanphone1"
+																value="#{etablissementCreateServiceBean.establishmentDto.contactLanPhoneNumber1}"
+																placeholder="#{messages.label_ligne_tel1_contact1}"
+																label="telephone1"
+																validatorMessage="#{messages.label_telephone1contact}"
+																mask="#{etablissementCreateServiceBean.maskphonformatcontact}">
+															</p:inputMask>
+														</div>
+
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:outputLabel value="#{messages.label_ligne_tel2}" />
+														</div>
+														<div class="col-lg-3 col-md-3 col-sm-3">
+															<p:inputMask styleClass="form-control"
+																id="contactlanphone2" maxlength="128"
+																value="#{etablissementCreateServiceBean.establishmentDto.contactLanPhoneNumber2}"
+																placeholder="#{messages.label_ligne_tel2_contact1}"
+																label="telephone2"
+																validatorMessage="#{messages.label_telephone2contact}"
+																mask="#{etablissementCreateServiceBean.maskphonformatcontact}">
+															</p:inputMask>
+														</div>
+													</div>
+												</div>
+											</div>
+										</p:panel>
+									</div>
+								</div>
+							</p:tab>
+						</p:tabView>
 					</p:tab>
-				</p:tabView>
-
-				<div class="button-wrapper">
-					<p:commandButton
-						value="#{etablissementCreateServiceBean.action?'Enregistrer':'Modifier'}"
-						action="#{etablissementCreateServiceBean.createEtablissement}"
-						styleClass="btn btn-primary offset" update="fdial growl">
-					</p:commandButton>
-
-					<p:commandButton value="#{messages.label_button_annuler}"
-						type="reset" styleClass="btn btn-default btn-sm offset"
-						id="annulerButton">
-					</p:commandButton>
-				</div>
+				</p:accordionPanel>
 			</h:form>
 		</div>
 	</ui:define>

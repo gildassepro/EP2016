@@ -55,6 +55,25 @@ public class ModuleAcademiqueSearchServiceBean implements Serializable {
 	private AcademicModuleDto selectedacademiquemodules;
 
 	private boolean action = false;
+	private boolean action2 = false;
+	private boolean action3 = true;
+
+	
+	public boolean isAction2() {
+		return action2;
+	}
+
+	public void setAction2(boolean action2) {
+		this.action2 = action2;
+	}
+
+	public boolean isAction3() {
+		return action3;
+	}
+
+	public void setAction3(boolean action3) {
+		this.action3 = action3;
+	}
 
 	public List<AcademicModuleDto> getSelectedacademiquemodule() {
 		return selectedacademiquemodule;
@@ -139,6 +158,8 @@ public class ModuleAcademiqueSearchServiceBean implements Serializable {
 			listanneeacademique = new ArrayList<PopuplistDto>();
 			listfiliere = new ArrayList<PopuplistDto>();
 			listniveau = new ArrayList<PopuplistDto>();
+			action2 = true;
+			action3= false;
 			initUpdate();
 			return null;
 		} else {
@@ -147,6 +168,8 @@ public class ModuleAcademiqueSearchServiceBean implements Serializable {
 			listanneeacademique = new ArrayList<PopuplistDto>();
 			listniveau = new ArrayList<PopuplistDto>();
 			listfiliere = new ArrayList<PopuplistDto>();
+			action2 = true;
+			action3= false;
 			initCreate();
 		}
 		return null;
