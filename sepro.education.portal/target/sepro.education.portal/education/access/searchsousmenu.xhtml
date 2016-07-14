@@ -9,118 +9,170 @@
 		<p:growl id="growl" showDetail="true" sticky="false" />
 		<div class="container-fluid">
 			<b:row>
-				<p:overlayPanel id="updatsousmenu" widgetVar="updatesousmenu"
-					showEffect="fade" hideEffect="fade" dismissable="false"
-					showCloseIcon="true">
-					<div class="messages">
-						<p:messages id="mdescription"></p:messages>
-					</div>
-					<h:form id="fdial">
-						<h3 style="margin-top: 0">
-							<p:outputLabel value="#{messages.label_sous_dupliquer_Menu}"
-								rendered="#{childMenuSearchServiceBean.isAction()}" />
-							<p:outputLabel value="#{messages.label_modifier_Sous_Menu}"
-								rendered="#{!childMenuSearchServiceBean.isAction()}" />
-						</h3>
-
-						<div class="ui-grid ui-grid-responsive">
-							<div class="row">
-								<div class="col-md-3 col-sm-3 label-input">
-									<p:outputLabel value="#{messages.label_menu_name}:" />
-								</div>
-								<div class="col-md-4 col-sm-4">
-									<p:inputText styleClass="form-text form-control"
-										id="menunamelabel"
-										value="#{childMenuSearchServiceBean.sousmenuDto.menuName}"
-										readonly="true" placeholder="#{messages.label_menu_name}">
-									</p:inputText>
-								</div>
-								<div class="col-md-4 col-sm-4">
-									<p:inputText styleClass="form-text form-control" id="menuname"
-										value="#{childMenuSearchServiceBean.sousmenuDto.menuName}"
-										readonly="true">
-									</p:inputText>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-3 col-sm-3 label-input">
-									<p:outputLabel value="#{messages.label_description1}:" /><span class="requireds">(*)</span>
-								</div>
-								<div class="col-md-4 col-sm-4">
-									<p:inputText styleClass="form-text form-control"
-										id="descriptionlabel"
-										value="#{childMenuSearchServiceBean.sousmenuDto.description}"
-										readonly="true">
-									</p:inputText>
-								</div>
-								<div class="col-md-4 col-sm-4">
-									<p:inputText styleClass="form-text form-control"
-										id="description"
-										value="#{childMenuSearchServiceBean.description}"
-										placeholder="#{messages.label_description_name}"
-										rendered="#{childMenuSearchServiceBean.isAction()}"
-										required="true"
-										requiredMessage="#{messages.label_description_sousmenus_requeried}">
-										<p:ajax update="mdescription" event="keyup" />
-									</p:inputText>
-									<p:inputText styleClass="form-text form-control"
-										id="description1"
-										value="#{childMenuSearchServiceBean.sousmenuDto.description}"
-										rendered="#{!childMenuSearchServiceBean.isAction()}"
-										readonly="true">
-									</p:inputText>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-3 col-sm-3 label-input">
-									<p:outputLabel value="#{messages.label_role}:" /><span class="requireds">(*)</span>
-								</div>
-								<div class="col-md-4 col-sm-4">
-									<p:selectCheckboxMenu id="rolemenulist"
-										value="#{childMenuSearchServiceBean.listRoleDestination}"
-										filter="true" filterMatchMode="startsWith"
-										converter="entityConverter" panelStyle="width:250px"
-										label="Roles">
-										<f:selectItems
-											value="#{childMenuSearchServiceBean.listRoleSource}"
-											var="role" itemValue="#{role}" itemLabel="#{role.roleName}" />
-									</p:selectCheckboxMenu>
-								</div>
-							</div>
-							<div class="button-wrapper">
-								<p:commandButton id="dupliquer"
-									styleClass="btn btn-primary submit-button"
-									action="#{childMenuSearchServiceBean.dupliquerSousMenu()}"
-									rendered="#{childMenuSearchServiceBean.isAction()}"
-									value="#{messages.label_dupliquer}"
-									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatesousmenu').hide()"
-									update="forme fdial growl">
-								</p:commandButton>
-								<p:commandButton id="action"
-									styleClass="btn btn-primary submit-button"
-									action="#{childMenuSearchServiceBean.dupliquerSousMenu()}"
-									rendered="#{!childMenuSearchServiceBean.isAction()}"
-									value="#{messages.label_modifier}"
-									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatesousmenu').hide()"
-									update="forme fdial growl">
-								</p:commandButton>
-								<p:commandButton id="annulerButton" type="reset"
-									onclick="PF('updatesousmenu').hide()" update="forme"
-									styleClass="btn btn-default btn-sm offset"
-									value="#{messages.label_button_annuler}">
-								</p:commandButton>
-							</div>
-						</div>
-					</h:form>
-				</p:overlayPanel>
+				<div class="messages">
+					<p:messages id="mdescription"></p:messages>
+				</div>
 
 				<h:form id="forme">
 					<p:accordionPanel>
 						<p:tab title="#{messages.label_list_sous_menus}">
 							<b:row styleClass="listPage">
+
+								<div id="menubutton">
+									<p:commandButton id="dupliquer" styleClass="btn btn-info"
+										title="#{messages.label_dupliquer}"
+										action="#{childMenuSearchServiceBean.initDualList('1')}"
+										update="@([id$=updatsousmenu])"
+										onclick="PF('updatesousmenu').show()"
+										value="#{messages.label_dupliquer}" icon="fa fa-fw fa-copy">
+									</p:commandButton>
+									<p:commandButton id="printe"
+										update="@([id$=listmodule]) forme fdial"
+										styleClass="btn btn-primary submit-button"
+										title="#{messages.label_print}"
+										value="#{messages.label_print}"
+										onclick="PF('confirmation').show()" icon="fa fa-fw fa-print">
+									</p:commandButton>
+									<p:commandButton id="modifier" styleClass="btn btn-success"
+										title="#{messages.label_modifier}"
+										action="#{childMenuSearchServiceBean.initDualList('2')}"
+										update="@([id$=updatsousmenu])"
+										onclick="PF('updatesousmenu').show()"
+										value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil">
+									</p:commandButton>
+									<p:commandButton id="supprimer" styleClass="btn btn-danger"
+										title="#{messages.label_supprimer1}"
+										rendered="#{!sousmenu.isIsSystem()}"
+										onclick="PF('confirmation').show()"
+										value="#{messages.label_supprimer1}" icon="fa fa-fw fa-remove">
+									</p:commandButton>
+
+									<p:commandButton id="dup"
+										styleClass="btn btn-primary submit-button"
+										icon="fa fa-fw fa-check-circle"
+										action="#{childMenuSearchServiceBean.dupliquerSousMenu()}"
+										rendered="#{childMenuServiceBean.isAction()}"
+										value="#{messages.label_dupliquer}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatesousmenu').hide()"
+										update="forme fdial growl">
+									</p:commandButton>
+									<p:commandButton id="modif" icon="fa fa-fw fa-check-circle"
+										styleClass="btn btn-primary submit-button"
+										action="#{childMenuSearchServiceBean.dupliquerModule()}"
+										rendered="#{!childMenuSearchServiceBean.isAction()}"
+										value="#{messages.label_modifier}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatesousmenu').hide()"
+										update="forme fdial growl">
+									</p:commandButton>
+									<p:commandButton id="past"
+										styleClass="btn btn-primary submit-button" ajax="false"
+										action="searchsousmenu.xhtml?faces-redirect=true"
+										update="@([id$=listsousmenu]) forme fdial"
+										icon="fa fa-fw fa-arrow-left">
+									</p:commandButton>
+
+									<p:splitButton value="#{messages.label_options}"
+										actionListener="#{buttonView.save}" icon="ui-icon-gear">
+										<p:menuitem value="Update"
+											actionListener="#{buttonView.update}"
+											icon="ui-icon-arrowrefresh-1-w" />
+										<p:menuitem value="Delete"
+											actionListener="#{buttonView.delete}" ajax="false"
+											icon="ui-icon-close" />
+										<p:separator />
+										<p:menuitem value="Homepage" icon="ui-icon-extlink" />
+									</p:splitButton>
+
+								</div>
+
+								<p:panel id="updatsousmenu" widgetVar="updatesousmenu" rendered="#{!childMenuSearchServiceBean.isAction3()}">
+
+									<h:form id="fdial">
+										<h3 style="margin-top: 0">
+											<p:outputLabel value="#{messages.label_sous_dupliquer_Menu}"
+												rendered="#{childMenuSearchServiceBean.isAction()}" />
+											<p:outputLabel value="#{messages.label_modifier_Sous_Menu}"
+												rendered="#{!childMenuSearchServiceBean.isAction()}" />
+										</h3>
+
+										<div class="ui-grid ui-grid-responsive">
+											<div class="row">
+												<div class="col-md-3 col-sm-3 label-input">
+													<p:outputLabel value="#{messages.label_menu_name}:" />
+												</div>
+												<div class="col-md-4 col-sm-4">
+													<p:inputText styleClass="form-text form-control"
+														id="menunamelabel"
+														value="#{childMenuSearchServiceBean.sousmenuDto.menuName}"
+														readonly="true" placeholder="#{messages.label_menu_name}">
+													</p:inputText>
+												</div>
+												<div class="col-md-4 col-sm-4">
+													<p:inputText styleClass="form-text form-control"
+														id="menuname"
+														value="#{childMenuSearchServiceBean.sousmenuDto.menuName}"
+														readonly="true">
+													</p:inputText>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-3 col-sm-3 label-input">
+													<p:outputLabel value="#{messages.label_description1}:" />
+													<span class="requireds">(*)</span>
+												</div>
+												<div class="col-md-4 col-sm-4">
+													<p:inputText styleClass="form-text form-control"
+														id="descriptionlabel"
+														value="#{childMenuSearchServiceBean.sousmenuDto.description}"
+														readonly="true">
+													</p:inputText>
+												</div>
+												<div class="col-md-4 col-sm-4">
+													<p:inputText styleClass="form-text form-control"
+														id="description"
+														value="#{childMenuSearchServiceBean.description}"
+														placeholder="#{messages.label_description_name}"
+														rendered="#{childMenuSearchServiceBean.isAction()}"
+														required="true"
+														requiredMessage="#{messages.label_description_sousmenus_requeried}">
+														<p:ajax update="mdescription" event="keyup" />
+													</p:inputText>
+													<p:inputText styleClass="form-text form-control"
+														id="description1"
+														value="#{childMenuSearchServiceBean.sousmenuDto.description}"
+														rendered="#{!childMenuSearchServiceBean.isAction()}"
+														readonly="true">
+													</p:inputText>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-3 col-sm-3 label-input">
+													<p:outputLabel value="#{messages.label_role}:" />
+													<span class="requireds">(*)</span>
+												</div>
+												<div class="col-md-4 col-sm-4">
+													<p:selectCheckboxMenu id="rolemenulist"
+														value="#{childMenuSearchServiceBean.listRoleDestination}"
+														filter="true" filterMatchMode="startsWith"
+														converter="entityConverter" panelStyle="width:250px"
+														label="Roles">
+														<f:selectItems
+															value="#{childMenuSearchServiceBean.listRoleSource}"
+															var="role" itemValue="#{role}"
+															itemLabel="#{role.roleName}" />
+													</p:selectCheckboxMenu>
+												</div>
+											</div>
+
+										</div>
+									</h:form>
+								</p:panel>
+
 								<p:dataTable id="listsousmenu"
 									value="#{childMenuSearchServiceBean.listsousmenu}"
+									rendered="#{!childMenuSearchServiceBean.isAction2()}"
 									var="sousmenu" widgetVar="sousmenuTable"
+									selection="#{childMenuSearchServiceBean.sousmenuDto}"
 									emptyMessage="#{messages.label_empty}"
 									styleClass="listeTable table-responsive filterable"
 									tableStyleClass="table table-striped table-condensed table-hover"
@@ -161,58 +213,17 @@
 										<p:outputLabel value="#{sousmenu.menuClass}"></p:outputLabel>
 									</p:column>
 
-									<p:column priority="1" width="100" filterMatchMode="contains">
-										<f:facet name="header">
-											<!-- 		 <p:outputLabel value="#{messages.label_action}" /> -->
-											<p:outputLabel value="#{messages.label_action}" />
-										</f:facet>
-										<p:commandButton id="dupliquer" styleClass="btn btn-info"
-											title="#{messages.label_dupliquer}"
-											action="#{childMenuSearchServiceBean.initDualList('1')}"
-											rendered="#{sousmenu.isIsSystem()}"
-											value="#{messages.label_dupliquer}" icon="fa fa-fw fa-copy"
-											update="@([id$=updatsousmenu])"
-											oncomplete="PF('updatesousmenu').show()">
-											<f:setPropertyActionListener value="#{sousmenu}"
-												target="#{childMenuSearchServiceBean.sousmenuDto}" />
-										</p:commandButton>
-										<p:commandButton id="modifier" styleClass="btn btn-success"
-											title="#{messages.label_modifier}"
-											action="#{childMenuSearchServiceBean.initDualList('2')}"
-											rendered="#{!sousmenu.isIsSystem()}"
-											value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil"
-											update="@([id$=updatsousmenu])"
-											oncomplete="PF('updatesousmenu').show()">
-											<f:setPropertyActionListener value="#{sousmenu}"
-												target="#{childMenuSearchServiceBean.sousmenuDto}" />
-										</p:commandButton>
-										<p:commandButton id="supprimer" styleClass="btn btn-danger"
-											title="#{messages.label_supprimer1}"
-											rendered="#{!sousmenu.isIsSystem()}"
-											onclick="PF('confirmation').show()"
-											value="#{messages.label_supprimer1}"
-											icon="fa fa-fw fa-remove">
-											<f:setPropertyActionListener value="#{sousmenu}"
-												target="#{childMenuSearchServiceBean.sousmenuDto}" />
-										</p:commandButton>
-										<p:blockUI block="listsousmenu"
-											trigger="listsousmenu:supprimer,listsousmenu:modifier,listsousmenu:dupliquer">
-										#{messages.label_loading}<br />
-											<p:graphicImage value="/resources/images/loadingpics.gif" />
-										</p:blockUI>
-										<p:confirmDialog
-											message="#{messages.label_msg_alerte_supression}"
-											header="Confirmation" widgetVar="confirmation">
-											<p:commandButton value="#{messages.label_msg_confirmOui}"
-												onclick="PF('confirmation').hide()"
-												action="#{childMenuSearchServiceBean.supprimerSousMenu()}"
-												update="forme growl" />
-											<p:commandButton value="#{messages.label_msg_confirmNon}"
-												onclick="PF('confirmation').hide()" type="button" />
-										</p:confirmDialog>
-									</p:column>
 								</p:dataTable>
-
+								<p:confirmDialog
+									message="#{messages.label_msg_alerte_supression}"
+									header="Confirmation" widgetVar="confirmation">
+									<p:commandButton value="#{messages.label_msg_confirmOui}"
+										onclick="PF('confirmation').hide()"
+										action="#{childMenuSearchServiceBean.supprimerSousMenu()}"
+										update="forme growl" />
+									<p:commandButton value="#{messages.label_msg_confirmNon}"
+										onclick="PF('confirmation').hide()" type="button" />
+								</p:confirmDialog>
 								<p:contextMenu for="listsousmenu">
 									<p:menuitem value="Modifier" icon="ui-icon-search" />
 									<p:menuitem value="Supprimer" icon="ui-icon-search" />

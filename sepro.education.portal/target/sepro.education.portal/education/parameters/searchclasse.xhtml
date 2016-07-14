@@ -9,7 +9,6 @@
 		<p:growl id="growl" showDetail="true" sticky="false" />
 		<div class="container-fluid">
 			<b:row>
-
 				<h:form id="forme">
 					<p:accordionPanel>
 						<p:tab title="#{messages.label_Recherche_Classe}">
@@ -35,16 +34,17 @@
 										title="#{messages.label_supprimer1}"
 										onclick="PF('confirmation').show()" icon="fa fa-fw fa-remove">
 									</p:commandButton>
-									<p:commandButton id="detail"
-										styleClass="btn btn-primary submit-button"
-										value="#{messages.label_detail}" title="#{messages.label_new}"
-										action="#{classeSearchServiceBean.initDualListInventaire('2')}"
+
+									<p:commandButton id="detel" styleClass="btn btn-primary"
+										value="#{messages.label_modifier}"
 										update="@([id$=updatinventoryclasse]) forme fdial"
 										onclick="PF('updateinventoryclasse').show()"
-										icon="fa fa-fw fa-list-alt">
+										icon="fa fa-fw fa-list-alt"
+										action="#{classeSearchServiceBean.initDualListInventaire('2')}">
 									</p:commandButton>
+
 									<p:commandButton id="printe"
-										update="@([id$=updatclasse]) forme fdial"
+										update="@([id$=listregions]) forme fdial"
 										styleClass="btn btn-primary submit-button"
 										title="#{messages.label_print}"
 										value="#{messages.label_print}"
@@ -77,16 +77,14 @@
 										update="forme fdial growl" />
 									<p:commandButton value="#{messages.label_create}"
 										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
-										rendered="#{classeSearchServiceBean.isAction()}"
+										rendered="#{regionSearchServiceBean.isAction()}"
 										action="#{classeSearchServiceBean.createClasse()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateclasse').hide()"
 										update="forme fdial growl" />
 
 								</div>
-
 								<p:panel id="updatclasse" widgetVar="updateclasse"
-									rendered="#{!regionSearchServiceBean.isAction3()}">
-
+									rendered="#{!classeSearchServiceBean.isAction3()}">
 									<h:form id="fdial">
 										<h3 style="margin-top: 0">
 											<p:outputLabel value="#{messages.label_modifier_Classe}"
@@ -94,7 +92,6 @@
 											<p:outputLabel value="#{messages.label_creer_classe}"
 												rendered="#{classeSearchServiceBean.isAction()}" />
 										</h3>
-
 										<div class="ui-grid ui-grid-responsive wrap class">
 											<div class="col-xs-12">
 												<div class="row">
@@ -234,7 +231,6 @@
 														</p:inputText>
 													</div>
 												</div>
-
 												<div class="row">
 													<div class="col-lg-3 col-md-3 col-sm-3 label-input">
 														<p:outputLabel value="#{messages.labelnbreplace}" />
@@ -250,11 +246,12 @@
 														</p:inputText>
 													</div>
 													<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-														<div class="col-lg-4 col-md-3 col-sm-3 label-input">
+														<div class="col-lg-3 col-md-3 col-sm-3 label-input">
 															<p:outputLabel value="#{messages.labeljourdispo}" />
 														</div>
 														<div class="col-lg-6 col-md-3 col-sm-3">
 															<p:selectCheckboxMenu id="jourdispo"
+																styleClass="form-text"
 																value="#{classeSearchServiceBean.listjourdestination}"
 																filter="true" filterMatchMode="startsWith"
 																converter="entityConverter" panelStyle="width:250px"
@@ -272,10 +269,9 @@
 
 									</h:form>
 								</p:panel>
-
 								<p:panel id="updatinventoryclasse"
 									widgetVar="updateinventoryclasse"
-									rendered="#{!classeSearchServiceBean.isAction3()}">
+									rendered="#{!classeSearchServiceBean.isAction4()}">
 									<h:form id="fdialinventaire">
 
 										<div class="ui-grid ui-grid-responsive wrap class">
@@ -285,7 +281,7 @@
 														<p:outputLabel value="#{messages.label_nom_sallinv}" />
 														<p:inputText styleClass="form-control"
 															id="nomsallinventory"
-															value="#{classeSearchServiceBean.selectedclasse.nameOfClass}"
+															value="#{classeSearchServiceBean.classDto.nameOfClass}"
 															readonly="true">
 														</p:inputText>
 													</div>
@@ -415,18 +411,19 @@
 														<p:graphicImage value="/resources/images/loadingpics.gif" />
 													</p:blockUI>
 
+													<p:confirmDialog appendToBody="true"
+														message="#{messages.label_msg_alerte_supression}"
+														header="Confirmation" widgetVar="confirmationinv">
+														<p:commandButton value="#{messages.label_msg_confirmOui}"
+															onclick="PF('confirmationinv').hide()"
+															action="#{classeSearchServiceBean.supprimerInventaire()}"
+															update="listMateriels growl" />
+														<p:commandButton value="#{messages.label_msg_confirmNon}"
+															onclick="PF('confirmationinv').hide()" type="button" />
+													</p:confirmDialog>
 												</p:column>
 											</p:dataTable>
-											<p:confirmDialog appendToBody="true"
-												message="#{messages.label_msg_alerte_supression}"
-												header="Confirmation" widgetVar="confirmationinv">
-												<p:commandButton value="#{messages.label_msg_confirmOui}"
-													onclick="PF('confirmationinv').hide()"
-													action="#{classeSearchServiceBean.supprimerInventaire()}"
-													update="listMateriels growl" />
-												<p:commandButton value="#{messages.label_msg_confirmNon}"
-													onclick="PF('confirmationinv').hide()" type="button" />
-											</p:confirmDialog>
+
 											<p:contextMenu for="listMateriels">
 												<p:menuitem value="Modifier" icon="ui-icon-search" />
 												<p:menuitem value="Supprimer" icon="ui-icon-search" />
@@ -436,15 +433,14 @@
 										</b:row>
 									</h:form>
 								</p:panel>
-
 								<p:dataTable id="listclasses"
-									rendered="#{!classeSearchServiceBean.isAction2()}"
 									value="#{classeSearchServiceBean.listclasse}" var="classe"
+									rendered="#{!classeSearchServiceBean.isAction2()}"
 									widgetVar="menuTable" emptyMessage="#{messages.label_empty}"
 									styleClass="listeTable table-responsive filterable"
+									selection="#{classeSearchServiceBean.classDto}"
 									tableStyleClass="table table-striped table-condensed table-hover"
 									rowKey="#{classe.idClass}" selectionMode="single"
-									selection="#{classeSearchServiceBean.classDto}"
 									paginator="true" paginatorPosition="bottom"
 									paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
 									rows="10" filterBy="#{classe.nameOfClass}">
@@ -488,48 +484,6 @@
 										</f:facet>
 										<h:outputText value="#{classe.numberOfSeats}"></h:outputText>
 									</p:column>
-
-									<p:column priority="1" width="141" filterMatchMode="contains">
-
-										<f:facet name="header">
-											<p:outputLabel value="#{messages.label_action}" />
-										</f:facet>
-
-										<p:commandButton id="modifier" styleClass="btn btn-success"
-											title="#{messages.label_modifier}"
-											action="#{classeSearchServiceBean.initDualList('1')}"
-											update="@([id$=updatclasse])"
-											oncomplete="PF('updateclasse').show()"
-											value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil">
-											<f:setPropertyActionListener value="#{classe}"
-												target="#{classeSearchServiceBean.classDto}" />
-										</p:commandButton>
-
-										<p:commandButton id="supprimer" styleClass="btn btn-danger"
-											title="#{messages.label_supprimer1}"
-											onclick="PF('confirmation').show()"
-											value="#{messages.label_supprimer1}"
-											icon="fa fa-fw fa-remove">
-											<f:setPropertyActionListener value="#{classe}"
-												target="#{classeSearchServiceBean.classDto}" />
-										</p:commandButton>
-
-										<p:blockUI block="listclasses"
-											trigger="listclasses:supprimer,listclasses:modifier">
-										#{messages.label_loading}<br />
-											<p:graphicImage value="/resources/images/loadingpics.gif" />
-										</p:blockUI>
-										<p:commandButton id="detail" styleClass="btn btn-primary"
-											title="#{messages.label_detail}"
-											action="#{classeSearchServiceBean.initDualListInventaire('2')}"
-											update="@([id$=updatinventoryclasse]) listclasses"
-											oncomplete="PF('updateinventoryclasse').show()"
-											value="#{messages.label_detail}" icon="fa fa-fw fa-list-alt">
-											<f:setPropertyActionListener value="#{classe}"
-												target="#{classeSearchServiceBean.selectedclasse}" />
-										</p:commandButton>
-
-									</p:column>
 								</p:dataTable>
 								<p:confirmDialog
 									message="#{messages.label_msg_alerte_supression}"
@@ -547,7 +501,6 @@
 									<p:separator />
 									<p:menuitem value="Détails" icon="ui-icon-close" />
 								</p:contextMenu>
-
 							</b:row>
 						</p:tab>
 					</p:accordionPanel>

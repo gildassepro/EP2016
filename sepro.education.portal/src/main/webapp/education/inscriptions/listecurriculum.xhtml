@@ -167,9 +167,9 @@
 										<span class="requireds">(*)</span>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:inputText styleClass="form-control" id="numcontact"
+										<p:inputText styleClass="form-control" id="numcontact" 
 											value="#{inscriptionSearchServiceBean.inscriptionStep4Dto.contactTelephoneNumber}">
-											<f:validateRegex pattern="^[+]?[0-9]+$"
+											<f:validateRegex pattern="[0-9]+"
 												update=":formbuttons:enregistrer :formbuttons:next" />
 											<p:ajax event="keyup"
 												listener="#{inscriptionSearchServiceBean.testformListCursus()}"

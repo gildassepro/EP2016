@@ -84,10 +84,19 @@ public class ClasseSearchServiceBean implements Serializable {
 	private boolean action = false;
 	private boolean action2 = false;
 	private boolean action3 = true;
+	private boolean action4 = true;
 	private boolean test = false;
 
 	
 	
+	public boolean isAction4() {
+		return action4;
+	}
+
+	public void setAction4(boolean action4) {
+		this.action4 = action4;
+	}
+
 	public boolean isAction2() {
 		return action2;
 	}
@@ -106,13 +115,13 @@ public class ClasseSearchServiceBean implements Serializable {
 
 	public List<RoomInventoryDto> getListinventaire() {
 		listinventaire = new ArrayList<RoomInventoryDto>();
-		if (selectedclasse != null && selectedclasse.getIdClass() != null) {
+		if (classDto != null && classDto.getIdClass() != null) {
 			RoomInventoryDto roominventorydto1 = new RoomInventoryDto();
-			roominventorydto1.setClasse(selectedclasse);
+			roominventorydto1.setClasse(classDto);
 			List<RoomInventoryDto> listinventairetemp = roomInventoryServicewsEndpoint
 					.getAllRoomInventoryServicews();
 			for (RoomInventoryDto roomInventoryDto2 : listinventairetemp) {
-				if (roomInventoryDto2.getClasse().getIdClass() == selectedclasse
+				if (roomInventoryDto2.getClasse().getIdClass() == classDto
 						.getIdClass()) {
 					listinventaire.add(roomInventoryDto2);
 				}
@@ -253,7 +262,7 @@ public class ClasseSearchServiceBean implements Serializable {
 	public void createInventaire() {
 		try {
 			RoomInventoryDto inventaire = new RoomInventoryDto();
-			inventaire.setClasse(selectedclasse);
+			inventaire.setClasse(classDto);
 			inventaire.setMaterial(roominventorydto.getMaterial());
 			inventaire.setQuantity(roominventorydto.getQuantity());
 			inventaire.setCommissioningDate(roominventorydto
@@ -278,7 +287,7 @@ public class ClasseSearchServiceBean implements Serializable {
 	public String updateInventaire() {
 		RoomInventoryDto modifinventaire = new RoomInventoryDto();
 		try {
-			modifinventaire.setClasse(selectedclasse);
+			modifinventaire.setClasse(classDto);
 			modifinventaire.setMaterial(roominventorydto.getMaterial());
 			modifinventaire.setQuantity(roominventorydto.getQuantity());
 			modifinventaire.setCommissioningDate(roominventorydto
@@ -351,15 +360,19 @@ public class ClasseSearchServiceBean implements Serializable {
 	public void initDualListInventaire(String caction) {
 		if (caction.equals("1")) {
 			roominventorydto = selectedinventaire;
+			action2 = true;
+			action4 = false;
 			initUpdateInventaire();
 		} else {
 			roominventorydto = new RoomInventoryDto();
+			action2 = true;
+			action4 = false;
 			try {
 
-				if (selectedclasse != null) {
+				if (classDto != null) {
 					roomInventoryServicewsEndpoint = roomInventoryServicews
 							.getRoomInventoryServicewsImplPort();
-					roominventorydto.setClasse(selectedclasse);
+					roominventorydto.setClasse(classDto);
 				}
 
 			} catch (Exception e) {

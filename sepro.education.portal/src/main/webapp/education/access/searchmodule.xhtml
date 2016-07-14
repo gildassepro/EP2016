@@ -22,16 +22,20 @@
 										action="#{moduleSearchServiceBean.initDualList('1')}"
 										update="@([id$=updatmodule])"
 										onclick="PF('updatemodule').show()"
-										rendered="#{module.isIsSystem()}"
 										value="#{messages.label_dupliquer}" icon="fa fa-fw fa-copy">
-
+									</p:commandButton>
+									<p:commandButton id="printe"
+										update="@([id$=listmodule]) forme fdial"
+										styleClass="btn btn-primary submit-button"
+										title="#{messages.label_print}"
+										value="#{messages.label_print}"
+										onclick="PF('confirmation').show()" icon="fa fa-fw fa-print">
 									</p:commandButton>
 									<p:commandButton id="modifier" styleClass="btn btn-success"
 										title="#{messages.label_modifier}"
 										action="#{moduleSearchServiceBean.initDualList('2')}"
 										update="@([id$=updatmodule])"
 										onclick="PF('updatemodule').show()"
-										rendered="#{!module.isIsSystem()}"
 										value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil">
 									</p:commandButton>
 									<p:commandButton id="supprimer" styleClass="btn btn-danger"
@@ -41,15 +45,16 @@
 										value="#{messages.label_supprimer1}" icon="fa fa-fw fa-remove">
 									</p:commandButton>
 
-									<p:commandButton id="dupliquer"
+									<p:commandButton id="dup"
 										styleClass="btn btn-primary submit-button"
+										icon="fa fa-fw fa-check-circle"
 										action="#{moduleSearchServiceBean.dupliquerModule()}"
 										rendered="#{moduleSearchServiceBean.isAction()}"
 										value="#{messages.label_dupliquer}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatemodule').hide()"
 										update="forme fdial growl">
 									</p:commandButton>
-									<p:commandButton id="modifier"
+									<p:commandButton id="modif" icon="fa fa-fw fa-check-circle"
 										styleClass="btn btn-primary submit-button"
 										action="#{moduleSearchServiceBean.dupliquerModule()}"
 										rendered="#{!moduleSearchServiceBean.isAction()}"
@@ -57,8 +62,27 @@
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatemodule').hide()"
 										update="forme fdial growl">
 									</p:commandButton>
+									<p:commandButton id="past"
+										styleClass="btn btn-primary submit-button" ajax="false"
+										action="searchmodule.xhtml?faces-redirect=true"
+										update="@([id$=listmodule]) forme fdial"
+										icon="fa fa-fw fa-arrow-left">
+									</p:commandButton>
+
+									<p:splitButton value="#{messages.label_options}"
+										actionListener="#{buttonView.save}" icon="ui-icon-gear">
+										<p:menuitem value="Update"
+											actionListener="#{buttonView.update}"
+											icon="ui-icon-arrowrefresh-1-w" />
+										<p:menuitem value="Delete"
+											actionListener="#{buttonView.delete}" ajax="false"
+											icon="ui-icon-close" />
+										<p:separator />
+										<p:menuitem value="Homepage" icon="ui-icon-extlink" />
+									</p:splitButton>
 
 								</div>
+
 								<p:panel id="updatmodule" widgetVar="updatemodule"
 									rendered="#{!moduleSearchServiceBean.isAction3()}">
 									<h:form id="fdial">
@@ -145,6 +169,7 @@
 										</div>
 									</h:form>
 								</p:panel>
+
 								<p:dataTable id="listmodule"
 									rendered="#{!moduleSearchServiceBean.isAction2()}"
 									value="#{moduleSearchServiceBean.listmodule}" var="module"

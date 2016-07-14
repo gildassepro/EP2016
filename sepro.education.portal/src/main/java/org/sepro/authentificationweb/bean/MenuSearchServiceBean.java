@@ -44,7 +44,27 @@ public class MenuSearchServiceBean implements Serializable {
 	private List<RoleDto> listRoleSource = new ArrayList<RoleDto>();
 	private List<RoleDto> listRoleDestination = new ArrayList<RoleDto>();
 	private boolean action = true;
+	private boolean action2 = false;
+	private boolean action3 = true;
 	private String description = new String();
+
+	
+	
+	public boolean isAction2() {
+		return action2;
+	}
+
+	public void setAction2(boolean action2) {
+		this.action2 = action2;
+	}
+
+	public boolean isAction3() {
+		return action3;
+	}
+
+	public void setAction3(boolean action3) {
+		this.action3 = action3;
+	}
 
 	public boolean isAction() {
 		return action;
@@ -184,8 +204,12 @@ public class MenuSearchServiceBean implements Serializable {
 		listRoleDestination = new ArrayList<RoleDto>();
 		if (baction.equals("1")) {
 			action = true;
+			action2 = true;
+			action3= false;
 		} else {
 			action = false;
+			action2 = true;
+			action3= false;
 		}
 		initUpdate();
 	}

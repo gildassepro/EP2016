@@ -155,6 +155,11 @@ public class TeacherSearchServiceBean implements Serializable {
 	private boolean action2 = false;
 	private boolean action4 = false;
 	private boolean action3 = true;
+	
+	private boolean render2 = false;
+	private boolean render3 = true;
+	private boolean render4 = true;
+	private boolean render5 = true;
 	private boolean testdetail = true;
 	private String maskphonformatteacher;
 
@@ -169,6 +174,54 @@ public class TeacherSearchServiceBean implements Serializable {
 	
 	
 	
+	public boolean isRender4() {
+		return render4;
+	}
+
+
+
+	public void setRender4(boolean render4) {
+		this.render4 = render4;
+	}
+
+
+
+	public boolean isRender5() {
+		return render5;
+	}
+
+
+
+	public void setRender5(boolean render5) {
+		this.render5 = render5;
+	}
+
+
+
+	public boolean isRender2() {
+		return render2;
+	}
+
+
+
+	public void setRender2(boolean render2) {
+		this.render2 = render2;
+	}
+
+
+
+	public boolean isRender3() {
+		return render3;
+	}
+
+
+
+	public void setRender3(boolean render3) {
+		this.render3 = render3;
+	}
+
+
+
 	public boolean isAction4() {
 		return action4;
 	}
@@ -740,19 +793,22 @@ public void onchangeZipCode(){
 
 		if (caction.equals("1")) {
 			cvteacherDto = selectedcvteacherDto;
-
+			render2 = true;
+			render4 = false;
 			initUpdatecvprof();
 		}
 
 		else {
 			cvteacherDto = new CvteacherDto();
+			render2 = true;
+			render4 = false;
 
 			try {
 
-				if (selectedidentityTeacherDto != null) {
+				if (identityTeacherDtos != null) {
 					cvteacherServicewsEndpoint = cvteacherServicews
 							.getCvteacherServicewsImplPort();
-					cvteacherDto.setIdentityTeacher(selectedidentityTeacherDto);
+					cvteacherDto.setIdentityTeacher(identityTeacherDtos);
 
 				}
 
@@ -792,6 +848,8 @@ public void onchangeZipCode(){
 			listmois = new ArrayList<PopuplistDto>();
 			listfiliere = new ArrayList<PopuplistDto>();
 			listanneeacademique = new ArrayList<PopuplistDto>();
+			render2 = true;
+			render5 = false;
 			initUpdateteachermodule();
 		}
 
@@ -805,10 +863,12 @@ public void onchangeZipCode(){
 			listmois = new ArrayList<PopuplistDto>();
 			listfiliere = new ArrayList<PopuplistDto>();
 			listanneeacademique = new ArrayList<PopuplistDto>();
+			render2 = true;
+			render5 = false;
 			initCreatedetailprof();
 			try {
 				logger.debug("je suis dans le try");
-				if (selectedidentityTeacherDto != null) {
+				if (identityTeacherDtos != null) {
 					logger.debug("111111111111111111111");
 					detailteacherServicewsEndpoint = detailteacherServicews
 							.getDetailteacherServicewsImplPort();
@@ -818,7 +878,7 @@ public void onchangeZipCode(){
 					teacherModuleDto.setDetailteacher(detailteacherDto);
 					logger.debug("333333333333333333333333333");
 					detailteacherDto
-							.setIdentityTeacher(selectedidentityTeacherDto);
+							.setIdentityTeacher(identityTeacherDtos);
 					logger.debug("id = "+detailteacherDto.getIdDetailteacher());
 					logger.debug("id = "+detailteacherDto);
 					
@@ -896,7 +956,7 @@ public void onchangeZipCode(){
 		FacesMessage msg = null;
 		try {
 			CvteacherDto createcvprof = new CvteacherDto();
-			createcvprof.setIdentityTeacher(selectedidentityTeacherDto);
+			createcvprof.setIdentityTeacher(identityTeacherDtos);
 			createcvprof.setStartDate(cvteacherDto.getStartDate());
 			createcvprof.setEnDate(cvteacherDto.getEnDate());
 			createcvprof.setDiploma(cvteacherDto.getDiploma());
@@ -922,7 +982,7 @@ public void onchangeZipCode(){
 		FacesMessage msg = null;
 		try {
 			CvteacherDto cvprofmodif = new CvteacherDto();
-			cvprofmodif.setIdentityTeacher(selectedidentityTeacherDto);
+			cvprofmodif.setIdentityTeacher(identityTeacherDtos);
 			cvprofmodif.setDiploma(cvteacherDto.getDiploma());
 			cvprofmodif.setEnDate(cvteacherDto.getEnDate());
 			cvprofmodif.setLinkdiploma(file.getAbsolutePath());
@@ -971,7 +1031,7 @@ public void onchangeZipCode(){
 		try {
 			DetailteacherDto createdetailprof = new DetailteacherDto();
 			createdetailprof.setHourRate(detailteacherDto.getHourRate());
-			createdetailprof.setIdentityTeacher(selectedidentityTeacherDto);
+			createdetailprof.setIdentityTeacher(identityTeacherDtos);
 			createdetailprof.setNumberOfHoursWorked(detailteacherDto
 					.getNumberOfHoursWorked());
 			createdetailprof.setStartHour(detailteacherDto.getStartHour());
@@ -1256,6 +1316,8 @@ public void onchangeZipCode(){
 			listsexe = new ArrayList<PopuplistDto>();
 			action4 = true;
 			action3= false;
+			render2 = true;
+			render3= false;
 
 			initUpdate();
 		} else {
@@ -1272,6 +1334,8 @@ public void onchangeZipCode(){
 			listsexe = new ArrayList<PopuplistDto>();
 			action4 = true;
 			action3= false;
+			render2 = true;
+			render3= false;
 
 			initCreate();
 		}
