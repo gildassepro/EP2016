@@ -245,24 +245,24 @@
 															<p:ajax event="keyup" />
 														</p:inputText>
 													</div>
-													<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-														<div class="col-lg-3 col-md-3 col-sm-3 label-input">
-															<p:outputLabel value="#{messages.labeljourdispo}" />
-														</div>
-														<div class="col-lg-6 col-md-3 col-sm-3">
-															<p:selectCheckboxMenu id="jourdispo"
-																styleClass="form-text"
-																value="#{classeSearchServiceBean.listjourdestination}"
-																filter="true" filterMatchMode="startsWith"
-																converter="entityConverter" panelStyle="width:250px"
-																label="#{messages.label_choix_des_jours}">
-																<f:selectItems
-																	value="#{classeSearchServiceBean.listjoursource}"
-																	var="dayofweek" itemValue="#{dayofweek}"
-																	itemLabel="#{dayofweek.days}" />
-															</p:selectCheckboxMenu>
-														</div>
+
+													<div class="col-lg-3 col-md-3 col-sm-3 label-input">
+														<p:outputLabel value="#{messages.labeljourdispo}" />
 													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:selectCheckboxMenu id="jourdispo"
+															styleClass="form-text"
+															value="#{classeSearchServiceBean.listjourdestination}"
+															filter="true" filterMatchMode="startsWith"
+															converter="entityConverter" panelStyle="width:250px"
+															label="#{messages.label_choix_des_jours}">
+															<f:selectItems
+																value="#{classeSearchServiceBean.listjoursource}"
+																var="dayofweek" itemValue="#{dayofweek}"
+																itemLabel="#{dayofweek.days}" />
+														</p:selectCheckboxMenu>
+													</div>
+
 												</div>
 											</div>
 										</div>
