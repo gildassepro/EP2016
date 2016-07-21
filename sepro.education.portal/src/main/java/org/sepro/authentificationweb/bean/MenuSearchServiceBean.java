@@ -39,6 +39,7 @@ public class MenuSearchServiceBean implements Serializable {
 	private RoleServicews roleServicews = new RoleServicews();
 	private RoleServicewsEndpoint roleServicewsEndpoint;
 	private MenuDto menuDto = new MenuDto();
+	private MenuDto menuDtos = new MenuDto();
 	private List<MenuDto> listSousMenuSource = new ArrayList<MenuDto>();
 	private List<MenuDto> listSousMenuDestination = new ArrayList<MenuDto>();
 	private List<RoleDto> listRoleSource = new ArrayList<RoleDto>();
@@ -50,6 +51,14 @@ public class MenuSearchServiceBean implements Serializable {
 
 	
 	
+	public MenuDto getMenuDtos() {
+		return menuDtos;
+	}
+
+	public void setMenuDtos(MenuDto menuDtos) {
+		this.menuDtos = menuDtos;
+	}
+
 	public boolean isAction2() {
 		return action2;
 	}
@@ -164,8 +173,43 @@ public class MenuSearchServiceBean implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	
+	public void initCreate() {
+		logger.setLevel(Level.DEBUG);
+		try {
+			if (menuDto != null) {
+				menuServicewsEndpoint = menuServicews
+						.getMenuServicewsImplPort();
+				roleServicewsEndpoint = roleServicews
+						.getRoleServicewsImplPort();
+				listSousMenuSource = menuServicewsEndpoint
+						.getAllMenuServicews();
+				listRoleSource = roleServicewsEndpoint.getAllRoleServicews();
+				if (menuDto != null) {
+					for (MenuDto menu : menuDto.getChildMenu().getChildMenu()) {
+						for (MenuDto menus : listSousMenuSource) {
+							if (menus.getIdMenu() == menu.getIdMenu()) {
+								listSousMenuDestination.add(menus);
+								break;
+							}
+						}
+					}
+					for (RoleDto role : menuDto.getRoles().getRole()) {
+						for (RoleDto roles : listRoleSource) {
+							if (roles.getIdRole() == role.getIdRole()) {
+								listRoleDestination.add(roles);
+								break;
+							}
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-	public void dupliquerMenu() {
+	public void modifMenu(){
 		MenuDto menuDupp = new MenuDto();
 		ChildMenu menue = new ChildMenu();
 		Roles role = new Roles();
@@ -177,25 +221,38 @@ public class MenuSearchServiceBean implements Serializable {
 		menuDupp.setIsSystem(false);
 		menuServicews.getMenuServicewsImplPort();
 		roleServicews.getRoleServicewsImplPort();
-		if (action) {
-			menuDupp.setDescription(this.description);
-			menuDupp = menuServicewsEndpoint.createMenuServicews(menuDupp);
-			FacesContext.getCurrentInstance().addMessage(
-					"mesagesalert2",
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", rb
-							.getString("label_msg_duplique_menu")));
-		} else {
-			menuDupp.setDescription(menuDto.getDescription());
-			menuDupp.setIdMenu(menuDto.getIdMenu());
-			menuDupp.setMenuName(menuDto.getMenuName());
-			menuDupp = menuServicewsEndpoint.updateMenuServicews(menuDupp);
-			FacesContext.getCurrentInstance().addMessage(
-					"mesagesalert2",
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", rb
-							.getString("label_msg_modifier_menu")));
-		}
+		menuDupp.setDescription(menuDto.getDescription());
+		menuDupp.setIdMenu(menuDto.getIdMenu());
+		menuDupp.setMenuName(menuDto.getMenuName());
+		menuDupp = menuServicewsEndpoint.updateMenuServicews(menuDupp);
+		FacesContext.getCurrentInstance().addMessage(
+				"mesagesalert2",
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", rb
+						.getString("label_msg_modifier_menu")));
 		init();
 	}
+	
+	public void duppMenu(){
+		MenuDto menuDupp = new MenuDto();
+		ChildMenu menue = new ChildMenu();
+		Roles role = new Roles();
+		menue.getChildMenu().addAll(listSousMenuDestination);
+		role.getRole().addAll(listRoleDestination);
+		menuDupp.setRoles(role);
+		menuDupp.setChildMenu(menue);
+		menuDupp.setMenuName(menuDto.getMenuName());
+		menuDupp.setIsSystem(false);
+		menuServicews.getMenuServicewsImplPort();
+		roleServicews.getRoleServicewsImplPort();
+		menuDupp.setDescription(this.description);
+		menuDupp = menuServicewsEndpoint.createMenuServicews(menuDupp);
+		FacesContext.getCurrentInstance().addMessage(
+				"mesagesalert2",
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", rb
+						.getString("label_msg_duplique_menu")));
+		init();
+	}
+	
 
 	public void initDualList(String baction) {
 		listSousMenuSource = new ArrayList<MenuDto>();
@@ -203,20 +260,24 @@ public class MenuSearchServiceBean implements Serializable {
 		listRoleSource = new ArrayList<RoleDto>();
 		listRoleDestination = new ArrayList<RoleDto>();
 		if (baction.equals("1")) {
+			menuDto = menuDtos;
 			action = true;
 			action2 = true;
 			action3= false;
+			initUpdate();
 		} else {
+			menuDto = menuDtos;
 			action = false;
 			action2 = true;
 			action3= false;
+			initCreate();
 		}
-		initUpdate();
+		
 	}
 
 	public String supprimerMenu() {
 		try {
-			menuServicewsEndpoint.deleteMenuServicews(menuDto);
+			menuServicewsEndpoint.deleteMenuServicews(menuDtos);
 			init();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(

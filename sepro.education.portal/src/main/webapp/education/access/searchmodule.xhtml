@@ -19,7 +19,7 @@
 								<div id="menubutton">
 									<p:commandButton id="dupliquer" styleClass="btn btn-info"
 										title="#{messages.label_dupliquer}"
-										action="#{moduleSearchServiceBean.initDualList('1')}"
+										action="#{moduleSearchServiceBean.initDualList('2')}"
 										update="@([id$=updatmodule])"
 										onclick="PF('updatemodule').show()"
 										value="#{messages.label_dupliquer}" icon="fa fa-fw fa-copy">
@@ -33,7 +33,7 @@
 									</p:commandButton>
 									<p:commandButton id="modifier" styleClass="btn btn-success"
 										title="#{messages.label_modifier}"
-										action="#{moduleSearchServiceBean.initDualList('2')}"
+										action="#{moduleSearchServiceBean.initDualList('1')}"
 										update="@([id$=updatmodule])"
 										onclick="PF('updatemodule').show()"
 										value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil">
@@ -48,7 +48,7 @@
 									<p:commandButton id="dup"
 										styleClass="btn btn-primary submit-button"
 										icon="fa fa-fw fa-check-circle"
-										action="#{moduleSearchServiceBean.dupliquerModule()}"
+										action="#{moduleSearchServiceBean.duppModule()}"
 										rendered="#{moduleSearchServiceBean.isAction()}"
 										value="#{messages.label_dupliquer}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatemodule').hide()"
@@ -56,7 +56,7 @@
 									</p:commandButton>
 									<p:commandButton id="modif" icon="fa fa-fw fa-check-circle"
 										styleClass="btn btn-primary submit-button"
-										action="#{moduleSearchServiceBean.dupliquerModule()}"
+										action="#{moduleSearchServiceBean.modifModule()}"
 										rendered="#{!moduleSearchServiceBean.isAction()}"
 										value="#{messages.label_modifier}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatemodule').hide()"
@@ -177,7 +177,7 @@
 									styleClass="listeTable table-responsive filterable"
 									tableStyleClass="table table-striped table-condensed table-hover"
 									rowKey="#{module.idModule}" selectionMode="single"
-									selection="#{moduleSearchServiceBean.moduleDto}"
+									selection="#{moduleSearchServiceBean.moduleDtos}"
 									paginator="true" paginatorPosition="bottom"
 									paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
 									rows="10" filterBy="#{module.moduleName}">

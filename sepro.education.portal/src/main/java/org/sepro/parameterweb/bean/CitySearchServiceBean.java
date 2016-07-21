@@ -137,10 +137,10 @@ public class CitySearchServiceBean implements Serializable {
 	}
 
 	public void createCity() {
-		logger.debug("DEBUT createVille +++++++++++++");
 		FacesMessage msg = null;
+		logger.debug("DEBUT createVille +++++++++++++");
+		logger.debug("DEBUT createVille +++++++++++++");
 		CityDto citycreate = new CityDto();
-
 		citycreate.setRegion(cityDto.getRegion());
 		citycreate.setCityCode(cityDto.getCityCode());
 		citycreate.setCityName(cityDto.getCityName());

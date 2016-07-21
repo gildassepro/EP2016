@@ -38,6 +38,7 @@ public class ModuleSearchServiceBean implements Serializable {
 	private MenuServicews menuServicews = new MenuServicews();
 	private MenuServicewsEndpoint menuServicewsEndpoint;
 	private ModuleDto moduleDto = new ModuleDto();
+	private ModuleDto moduleDtos = new ModuleDto();
 	private List<MenuDto> listMenuSource = new ArrayList<MenuDto>();
 	private List<MenuDto> listMenuDestination = new ArrayList<MenuDto>();
 	private boolean action = false;
@@ -47,6 +48,14 @@ public class ModuleSearchServiceBean implements Serializable {
 
 	
 	
+	public ModuleDto getModuleDtos() {
+		return moduleDtos;
+	}
+
+	public void setModuleDtos(ModuleDto moduleDtos) {
+		this.moduleDtos = moduleDtos;
+	}
+
 	public boolean isAction2() {
 		return action2;
 	}
@@ -112,6 +121,7 @@ public class ModuleSearchServiceBean implements Serializable {
 	}
 
 	public void initUpdate() {
+		action = false;
 		try {
 			if (moduleDto != null) {
 				menuServicewsEndpoint = menuServicews
@@ -132,8 +142,56 @@ public class ModuleSearchServiceBean implements Serializable {
 			e.printStackTrace();
 		}
 	}
-
-	public void dupliquerModule() {
+	
+	public void initCreate() {
+		action = true;
+		try {
+			if (moduleDto != null) {
+				menuServicewsEndpoint = menuServicews
+						.getMenuServicewsImplPort();
+				listMenuSource = menuServicewsEndpoint.getAllMenuServicews();
+				if (moduleDto != null) {
+					for (MenuDto menu : moduleDto.getMenus().getMenu()) {
+						for (MenuDto menus : listMenuSource) {
+							if (menus.getIdMenu() == menu.getIdMenu()) {
+								listMenuDestination.add(menus);
+								break;
+							}
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	public void modifModule(){
+		ModuleDto moduleDupp = new ModuleDto();
+		Menus menu = new Menus();
+		menu.getMenu().removeAll(listMenuDestination);
+		menu.getMenu().addAll(listMenuDestination);
+		moduleDupp.setMenus(menu);
+		
+		moduleDupp.setModuleName(moduleDto.getModuleName());
+		moduleDupp.setDescription(moduleDto.getDescription());
+		moduleDupp.setIsSystem(false);
+		moduleServicewsEndpoint = moduleServicews.getModuleServicewsImplPort();
+		
+		moduleDupp.setIdModule(moduleDto.getIdModule());
+		moduleDupp = moduleServicewsEndpoint
+				.updateModuleServicews(moduleDupp);
+		
+		FacesContext.getCurrentInstance().addMessage(
+				"mesagesalert2",
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", rb
+						.getString("label_msg_modifier_module")));
+		init();
+	}
+	
+	public void duppModule(){
 		ModuleDto moduleDupp = new ModuleDto();
 		Menus menu = new Menus();
 		menu.getMenu().addAll(listMenuDestination);
@@ -141,46 +199,38 @@ public class ModuleSearchServiceBean implements Serializable {
 		moduleDupp.setModuleName(moduleDto.getModuleName());
 		moduleDupp.setIsSystem(false);
 		moduleServicewsEndpoint = moduleServicews.getModuleServicewsImplPort();
-		if (action) {
-			moduleDupp.setDescription(this.description);
-			moduleDupp = moduleServicewsEndpoint
-					.createModuleServicews(moduleDupp);
-			FacesContext.getCurrentInstance().addMessage(
-					"mesagesalert2",
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", rb
-							.getString("label_msg_duplique_module")));
-		} else {
-			moduleDupp.setDescription(moduleDto.getDescription());
-			moduleDupp.setIdModule(moduleDto.getIdModule());
-			moduleDupp = moduleServicewsEndpoint
-					.updateModuleServicews(moduleDupp);
-			FacesContext.getCurrentInstance().addMessage(
-					"mesagesalert2",
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", rb
-							.getString("label_msg_modifier_module")));
-		}
+		moduleDupp.setDescription(this.description);
+		moduleDupp = moduleServicewsEndpoint
+				.createModuleServicews(moduleDupp);
+		FacesContext.getCurrentInstance().addMessage(
+				"mesagesalert2",
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", rb
+						.getString("label_msg_duplique_module")));
 		init();
-
 	}
+	
 
 	public void initDualList(String baction) {
 		listMenuSource = new ArrayList<MenuDto>();
 		listMenuDestination = new ArrayList<MenuDto>();
 		if (baction.equals("1")) {
-			action2 = true;
-			action3= false;
+			moduleDto = moduleDtos;
 			action = true;
-		} else {
 			action2 = true;
 			action3= false;
+			initUpdate();
+		} else {
+			moduleDto = moduleDtos;
 			action = false;
+			action2 = true;
+			action3= false;
+			initCreate();
 		}
-		initUpdate();
 	}
 
 	public String supprimerModule() {
 		try {
-		moduleServicewsEndpoint.deleteModuleServicews(moduleDto);
+		moduleServicewsEndpoint.deleteModuleServicews(moduleDtos);
 		init();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(

@@ -21,7 +21,7 @@
 								<div id="menubutton">
 									<p:commandButton id="dupliquer" styleClass="btn btn-info"
 										title="#{messages.label_dupliquer}"
-										action="#{childMenuSearchServiceBean.initDualList('1')}"
+										action="#{childMenuSearchServiceBean.initDualList('2')}"
 										update="@([id$=updatsousmenu])"
 										onclick="PF('updatesousmenu').show()"
 										value="#{messages.label_dupliquer}" icon="fa fa-fw fa-copy">
@@ -35,7 +35,7 @@
 									</p:commandButton>
 									<p:commandButton id="modifier" styleClass="btn btn-success"
 										title="#{messages.label_modifier}"
-										action="#{childMenuSearchServiceBean.initDualList('2')}"
+										action="#{childMenuSearchServiceBean.initDualList('1')}"
 										update="@([id$=updatsousmenu])"
 										onclick="PF('updatesousmenu').show()"
 										value="#{messages.label_modifier}" icon="fa fa-fw fa-pencil">
@@ -50,15 +50,15 @@
 									<p:commandButton id="dup"
 										styleClass="btn btn-primary submit-button"
 										icon="fa fa-fw fa-check-circle"
-										action="#{childMenuSearchServiceBean.dupliquerSousMenu()}"
-										rendered="#{childMenuServiceBean.isAction()}"
+										action="#{childMenuSearchServiceBean.duppSousMenu()}"
+										rendered="#{childMenuSearchServiceBean.isAction()}"
 										value="#{messages.label_dupliquer}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatesousmenu').hide()"
 										update="forme fdial growl">
 									</p:commandButton>
 									<p:commandButton id="modif" icon="fa fa-fw fa-check-circle"
 										styleClass="btn btn-primary submit-button"
-										action="#{childMenuSearchServiceBean.dupliquerModule()}"
+										action="#{childMenuSearchServiceBean.modifSousMenu()}"
 										rendered="#{!childMenuSearchServiceBean.isAction()}"
 										value="#{messages.label_modifier}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatesousmenu').hide()"
@@ -172,7 +172,7 @@
 									value="#{childMenuSearchServiceBean.listsousmenu}"
 									rendered="#{!childMenuSearchServiceBean.isAction2()}"
 									var="sousmenu" widgetVar="sousmenuTable"
-									selection="#{childMenuSearchServiceBean.sousmenuDto}"
+									selection="#{childMenuSearchServiceBean.sousmenuDtos}"
 									emptyMessage="#{messages.label_empty}"
 									styleClass="listeTable table-responsive filterable"
 									tableStyleClass="table table-striped table-condensed table-hover"

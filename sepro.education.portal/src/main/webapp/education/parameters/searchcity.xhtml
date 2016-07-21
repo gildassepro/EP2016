@@ -26,13 +26,14 @@
 										value="#{messages.label_new}" title="#{messages.label_new}"
 										action="#{citySearchServiceBean.initDualList('2')}"
 										update="@([id$=updatcity]) forme fdial"
-										oncomplete="PF('updatecity').show()" icon="fa fa-fw fa-plus">
+										onclick="PF('updatecity').show()"
+										icon="fa fa-fw fa-plus">
 									</p:commandButton>
 									<p:commandButton id="modifs"
 										styleClass="btn btn-primary submit-button"
 										value="#{messages.label_modifier}"
 										update="@([id$=updatcity]) forme fdial"
-										oncomplete="PF('updatecity').show()" icon="fa fa-fw fa-pencil"
+										onclick="PF('updatecity').show()" icon="fa fa-fw fa-pencil"
 										action="#{citySearchServiceBean.initDualList('1')}">
 									</p:commandButton>
 									<p:commandButton id="delete" process="@([id$=listcities])"
@@ -72,7 +73,7 @@
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatecity').hide()"
 										update="forme fdial growl" />
 									<p:commandButton value="#{messages.label_create}"
-										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
+										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
 										rendered="#{citySearchServiceBean.isAction()}"
 										action="#{citySearchServiceBean.createCity()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatecity').hide()"
@@ -121,6 +122,7 @@
 												</div>
 												<div class="col-md-8 col-sm-8">
 													<p:inputText id="citycode" styleClass="form-text"
+														maxlength="3"
 														value="#{citySearchServiceBean.cityDto.cityCode}"
 														placeholder="#{messages.label_citycode}">
 														<f:validateLength minimum="3" maximum="3" />

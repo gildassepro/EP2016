@@ -70,7 +70,7 @@
 
 									<p:commandButton value="#{messages.label_modifier}"
 										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
-										rendered="#{!regionSearchServiceBean.isAction()}"
+										rendered="#{!buildingSearchServiceBean.isAction()}"
 										action="#{buildingSearchServiceBean.updateBuilding()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatebuilding').hide()"
 										update="forme fdial growl" />

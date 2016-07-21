@@ -76,7 +76,8 @@
 										rendered="#{phoneFormatSearchServiceBean.isAction()}"
 										action="#{phoneFormatSearchServiceBean.createPhone()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatephoneformat').hide()"
-										update="forme fdial growl" />
+										update="forme fdial growl"
+										 />
 
 								</div>
 								<p:panel id="updatphoneformat" widgetVar="updatephoneformat"
@@ -271,27 +272,7 @@
 													</div>
 												</div>
 											</div>
-											<div class="button-wrapper">
-												<p:commandButton value="#{messages.label_modifier}"
-													styleClass="btn btn-primary"
-													rendered="#{!phoneFormatSearchServiceBean.isAction()}"
-													action="#{phoneFormatSearchServiceBean.updatePhone()}"
-													oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatephoneformat').hide()"
-													update="forme fdial growl">
-												</p:commandButton>
-												<p:commandButton value="#{messages.label_create}"
-													styleClass="btn btn-primary"
-													rendered="#{phoneFormatSearchServiceBean.isAction()}"
-													action="#{phoneFormatSearchServiceBean.createPhone()}"
-													oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatephoneformat').hide()"
-													update="forme fdial growl">
-												</p:commandButton>
-												<p:commandButton value="#{messages.label_button_annuler}"
-													type="reset" onclick="PF('updatephoneformat').hide()"
-													update="fdial" styleClass="btn btn-default btn-sm offset"
-													id="annulerButton">
-												</p:commandButton>
-											</div>
+											
 										</p:outputPanel>
 									</h:form>
 								</p:panel>
