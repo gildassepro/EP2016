@@ -36,8 +36,8 @@
 										styleClass="btn btn-primary submit-button"
 										value="#{messages.label_new}" title="#{messages.label_new}"
 										action="#{teacherSearchServiceBean.initDualList('2')}"
-										update="@([id$==updatprof]) forme fdial"
-										onclick="PF('=updateprof').show()" icon="fa fa-fw fa-plus">
+										update="@([id$=updatprof]) forme fdial"
+										onclick="PF('updateprof').show()" icon="fa fa-fw fa-plus">
 									</p:commandButton>
 									<p:commandButton id="modifse"
 										styleClass="btn btn-primary submit-button"
@@ -1009,11 +1009,12 @@
 												<p:commandButton id="modifierdetail1"
 													styleClass="btn btn-success"
 													title="#{messages.label_modifier}"
+													update="@([id$=formdialogdetail])"
 													action="#{teacherSearchServiceBean.initDualListdetail('1')}"
 													value="#{messages.label_modifier}"
 													icon="fa fa-fw fa-pencil">
 													<f:setPropertyActionListener value="#{doc}"
-														target="#{teacherSearchServiceBean.selectedteacherModuleDto}" />
+														target="#{teacherSearchServiceBean.teacherModuleDtos}" />
 												</p:commandButton>
 
 												<p:commandButton id="supprimerdetail"

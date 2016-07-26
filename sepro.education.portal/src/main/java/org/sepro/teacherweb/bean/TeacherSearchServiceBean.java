@@ -165,7 +165,7 @@ public class TeacherSearchServiceBean implements Serializable {
 
 	private UploadedFile myfile;
 	private String filename;
-	private String destination = "F:\\DossierCVTeacher\\";
+	private String destination = "D:\\DossierCVTeacher\\";
 	File file;
 	private static final int DEFAULT_BUFFER_SIZE = 10240;
 
@@ -377,6 +377,7 @@ public class TeacherSearchServiceBean implements Serializable {
 			CvteacherDto cvtserchaeacherDto = new CvteacherDto();
 			cvtserchaeacherDto.setIdentityTeacher(cvteacherDto
 					.getIdentityTeacher());
+			logger.debug("TEST GET IDENTITY"+cvtserchaeacherDto.getIdentityTeacher());
 			listexperienceprof = cvteacherServicewsEndpoint
 					.searchCvteacherServicews(cvtserchaeacherDto);
 			logger.debug(" @@@@@@@@@@@@@@ la taille de la liste est "+listexperienceprof.size());
@@ -842,7 +843,7 @@ public void onchangeZipCode(){
 	public void initDualListdetail(String daction) {
 		logger.debug("debut init dualist detail");
 		if (daction.equals("1")) {
-			teacherModuleDto = selectedteacherModuleDto;
+			teacherModuleDto = teacherModuleDtos;
 			listhoraire = new ArrayList<PopuplistDto>();
 			listpriorite = new ArrayList<PopuplistDto>();
 			listmois = new ArrayList<PopuplistDto>();
@@ -874,9 +875,10 @@ public void onchangeZipCode(){
 							.getDetailteacherServicewsImplPort();
 					teachedModuleServicewsEndpoint = teachedModuleServicews
 							.getTeachedModuleServicewsImplPort();
-					logger.debug("2222222222222222222222");
+					logger.debug("2222222222222222222222"+identityTeacherDtos.getIdIdentityTeacher());
+					logger.debug("333333333333333333333"+detailteacherDto.getWorkingMonth());
 					teacherModuleDto.setDetailteacher(detailteacherDto);
-					logger.debug("333333333333333333333333333");
+					logger.debug("44444444444444444444444");
 					detailteacherDto
 							.setIdentityTeacher(identityTeacherDtos);
 					logger.debug("id = "+detailteacherDto.getIdDetailteacher());
@@ -930,7 +932,8 @@ public void onchangeZipCode(){
 			action2 = true;
 			popuplistDtoServicewsEndpoint = popuplistDtoServicews
 					.getPopuplistDtoServicewsImplPort();
-
+			teachedModuleServicewsEndpoint = teachedModuleServicews.getTeachedModuleServicewsImplPort();
+			detailteacherServicewsEndpoint = detailteacherServicews.getDetailteacherServicewsImplPort();
 			listpriorite = popuplistDtoServicewsEndpoint
 					.searchPopuplistDtoServicews("priorite");
 
@@ -1028,10 +1031,17 @@ public void onchangeZipCode(){
 
 	public String enregistrerDetailprof() {
 		FacesMessage msg = null;
+		logger.debug("++++++++JE SUIS DANS LE CREATE+++++++++++++");
+		
 		try {
+			logger.debug("++++++++JE SUIS DANS LE CREATE3+++++++++++++");
 			DetailteacherDto createdetailprof = new DetailteacherDto();
 			createdetailprof.setHourRate(detailteacherDto.getHourRate());
+			logger.debug("++++++++JE SUIS DANS LE CREATE22222222+++++++++++++");
+			logger.debug("*******ID TEACHER111********"+identityTeacherDtos.getIdIdentityTeacher());
+			logger.debug("*******ID TEACHER222********"+identityTeacherDtos.getIdIdentityTeacher());
 			createdetailprof.setIdentityTeacher(identityTeacherDtos);
+			logger.debug("*******ID TEACHER333********"+identityTeacherDtos.getIdIdentityTeacher());
 			createdetailprof.setNumberOfHoursWorked(detailteacherDto
 					.getNumberOfHoursWorked());
 			createdetailprof.setStartHour(detailteacherDto.getStartHour());
@@ -1042,6 +1052,7 @@ public void onchangeZipCode(){
 					.getDetailteacherServicewsImplPort();
 			createdetailprof = detailteacherServicewsEndpoint
 					.createDetailteacherServicews(createdetailprof);
+			logger.debug("++++++++JE SUIS DANS LE CREATE5+++++++++++++");
 			activatebuton();
 			//detailteacherDto = new DetailteacherDto();
 			
@@ -1238,6 +1249,10 @@ public void onchangeZipCode(){
 			teachermodif
 					.setAddressLigne4(identityTeacherDto.getAddressLigne4());
 			teachermodif.setBirthday(identityTeacherDto.getBirthday());
+			teachermodif.setPlaceOfBirthday(identityTeacherDto.getPlaceOfBirthday());
+			teachermodif.setPhoneNumber(identityTeacherDto.getPhoneNumber());
+			teachermodif.setEmailAdd(identityTeacherDto.getEmailAdd());
+			teachermodif.setNationality(identityTeacherDto.getNationality());
 			teachermodif.setCityAddress(identityTeacherDto.getCityAddress());
 			teachermodif.setCountryAddress(identityTeacherDto
 					.getCountryAddress());

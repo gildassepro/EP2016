@@ -31,7 +31,8 @@
 										icon="fa fa-fw fa-pencil"
 										action="#{moduleAcademiqueSearchServiceBean.initDualList('1')}">
 									</p:commandButton>
-									<p:commandButton id="deletee" process="@([id$=listregions])"
+									<p:commandButton id="deletee"
+										process="@([id$=listmoduleacademiques])"
 										styleClass="btn btn-primary submit-button"
 										value="#{messages.label_supprimer1}"
 										title="#{messages.label_supprimer1}"
@@ -65,7 +66,7 @@
 
 									<p:commandButton value="#{messages.label_modifier}"
 										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
-										rendered="#{!regionSearchServiceBean.isAction()}"
+										rendered="#{!moduleAcademiqueSearchServiceBean.isAction()}"
 										action="#{moduleAcademiqueSearchServiceBean.updateModule()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatemoduleacademique').hide()"
 										update="forme fdial growl" />
@@ -386,6 +387,16 @@
 										<h:outputText value="#{moduleacademique.academicSector.value}"></h:outputText>
 									</p:column>
 								</p:dataTable>
+								<p:confirmDialog
+									message="#{messages.label_msg_alerte_supression}"
+									header="Confirmation" widgetVar="confirmation">
+									<p:commandButton value="#{messages.label_msg_confirmOui}"
+										onclick="PF('confirmation').hide()"
+										action="#{moduleAcademiqueSearchServiceBean.supprimerModule()}"
+										update="forme growl" />
+									<p:commandButton value="#{messages.label_msg_confirmNon}"
+										onclick="PF('confirmation').hide()" type="button" />
+								</p:confirmDialog>
 								<p:contextMenu for="listmoduleacademiques">
 									<p:menuitem value="Modifier" icon="ui-icon-search" />
 									<p:menuitem value="Supprimer" icon="ui-icon-search" />

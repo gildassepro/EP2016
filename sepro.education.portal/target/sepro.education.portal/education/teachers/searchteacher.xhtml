@@ -811,7 +811,7 @@
 																value="#{messages.label_enregistrer}"
 																action="#{teacherSearchServiceBean.enregistrerDetailprof()}"
 																oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprofdetail').show()"
-																update="growl fdial2">
+																update="@([id$=formdatatabledetail]) growl @([id$=fdialfiel])">
 															</p:commandButton>
 
 														</div>
@@ -833,7 +833,7 @@
 												action="#{teacherSearchServiceBean.addModuleTeacher()}"
 												value="#{messages.label_adds}" icon="fa fa-fw fa-plus"
 												oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprofdetail').show()"
-												update="growl fdialfiel">
+												update="@([id$=formdatatabledetail]) growl @([id$=fdialfiel])">
 											</p:commandButton>
 											<div class="row">
 												<div class="col-xs-12">
@@ -937,7 +937,7 @@
 													value="#{messages.label_modifier}"
 													action="#{teacherSearchServiceBean.modifModuleTeacher()}"
 													oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprofdetail').show()"
-													update="growl">
+													update=" growl">
 												</p:commandButton>
 											</div>
 										</div>
@@ -1020,7 +1020,7 @@
 													styleClass="btn btn-danger"
 													title="#{messages.label_supprimer1}"
 													oncomplete="PF('confirmation').show()"
-													update="formdialogdetail"
+													update="@([id$=formdialogdetail])"
 													value="#{messages.label_supprimer1}"
 													icon="fa fa-fw fa-remove">
 													<f:setPropertyActionListener value="#{doc}"
