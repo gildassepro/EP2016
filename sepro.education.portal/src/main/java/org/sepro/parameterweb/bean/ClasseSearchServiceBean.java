@@ -58,7 +58,7 @@ public class ClasseSearchServiceBean implements Serializable {
 	private RoomInventoryServicewsEndpoint roomInventoryServicewsEndpoint;
 	private List<RoomInventoryDto> listinventaire = new ArrayList<RoomInventoryDto>();
 	private RoomInventoryDto roominventorydto = new RoomInventoryDto();
-	private RoomInventoryDto roominventorrydto = new RoomInventoryDto();
+	private RoomInventoryDto roominventorydtos = new RoomInventoryDto();
 	private RoomInventoryDto selectedinventaire = new RoomInventoryDto();
 
 	private SubEstablishmentServicews sousetablissementServicews = new SubEstablishmentServicews();
@@ -79,16 +79,12 @@ public class ClasseSearchServiceBean implements Serializable {
 	private List<DaysofWeekDto> listjoursource = new ArrayList<DaysofWeekDto>();
 	private List<DaysofWeekDto> listjourdestination = new ArrayList<DaysofWeekDto>();
 
-	
-
 	private boolean action = false;
 	private boolean action2 = false;
 	private boolean action3 = true;
 	private boolean action4 = true;
 	private boolean test = false;
 
-	
-	
 	public boolean isAction4() {
 		return action4;
 	}
@@ -139,12 +135,14 @@ public class ClasseSearchServiceBean implements Serializable {
 		this.selectedinventaire = selectedinventaire;
 	}
 
-	public RoomInventoryDto getRoominventorrydto() {
-		return roominventorrydto;
+	
+
+	public RoomInventoryDto getRoominventorydtos() {
+		return roominventorydtos;
 	}
 
-	public void setRoominventorrydto(RoomInventoryDto roominventorrydto) {
-		this.roominventorrydto = roominventorrydto;
+	public void setRoominventorydtos(RoomInventoryDto roominventorydtos) {
+		this.roominventorydtos = roominventorydtos;
 	}
 
 	public boolean isTest() {
@@ -167,7 +165,6 @@ public class ClasseSearchServiceBean implements Serializable {
 		this.selectedclasse = selectedclasse;
 	}
 
-
 	public RoomInventoryDto getRoominventorydto() {
 		return roominventorydto;
 	}
@@ -175,7 +172,6 @@ public class ClasseSearchServiceBean implements Serializable {
 	public void setRoominventorydto(RoomInventoryDto roominventorydto) {
 		this.roominventorydto = roominventorydto;
 	}
-
 
 	public List<DaysofWeekDto> getListdayofweek() {
 		return listdayofweek;
@@ -260,8 +256,15 @@ public class ClasseSearchServiceBean implements Serializable {
 	}
 
 	public void createInventaire() {
+		
+		logger.debug("*******ENTREE CREATE INVENTAIRE ********");
+		logger.debug("*******CLASS CREATE INVENTAIRE 2********" + classDto);
+		
+		logger.debug("*******CLASS CREATE INVENTAIRE 3********" + classDto);
 		try {
 			RoomInventoryDto inventaire = new RoomInventoryDto();
+			logger.debug("*******JE SUIS LA 1 ********");
+			logger.debug("*******CLASSE AVANT*******" + classDto);
 			inventaire.setClasse(classDto);
 			inventaire.setMaterial(roominventorydto.getMaterial());
 			inventaire.setQuantity(roominventorydto.getQuantity());
@@ -279,7 +282,7 @@ public class ClasseSearchServiceBean implements Serializable {
 							.getString("label_msg_create_inventaire")));
 
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 
 	}
@@ -312,10 +315,10 @@ public class ClasseSearchServiceBean implements Serializable {
 	}
 
 	public String supprimerInventaire() {
-		
+
 		try {
 			roomInventoryServicewsEndpoint
-					.deleteRoomInventoryServicews(roominventorrydto);
+					.deleteRoomInventoryServicews(roominventorydtos);
 			init();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
@@ -330,7 +333,7 @@ public class ClasseSearchServiceBean implements Serializable {
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", rb
 						.getString("label_msg_delete_inventaire")));
 		return null;
-		
+
 	}
 
 	public void initDualList(String baction) {
@@ -342,7 +345,7 @@ public class ClasseSearchServiceBean implements Serializable {
 			listjoursource = new ArrayList<DaysofWeekDto>();
 			listjourdestination = new ArrayList<DaysofWeekDto>();
 			action2 = true;
-			action3= false;
+			action3 = false;
 			initUpdate();
 		} else {
 			classeDto = new ClasseDto();
@@ -352,7 +355,7 @@ public class ClasseSearchServiceBean implements Serializable {
 			listjoursource = new ArrayList<DaysofWeekDto>();
 			listjourdestination = new ArrayList<DaysofWeekDto>();
 			action2 = true;
-			action3= false;
+			action3 = false;
 			initCreate();
 		}
 	}
@@ -368,17 +371,24 @@ public class ClasseSearchServiceBean implements Serializable {
 			action2 = true;
 			action4 = false;
 			try {
-
+				logger.debug("*******CLASS INDUALIST********"
+						+ classDto.getNameOfClass());
 				if (classDto != null) {
 					roomInventoryServicewsEndpoint = roomInventoryServicews
 							.getRoomInventoryServicewsImplPort();
+					logger.debug("*******CLASS INDUALIST22********"
+							+ classDto.getNameOfClass());
+					logger.debug("*******CLASS INDUALIST22********" + classDto);
 					roominventorydto.setClasse(classDto);
+					logger.debug("*******CLASS INDUALIST33********"
+							+ roominventorydto.getClasse());
+					initCreateInventaire();
 				}
 
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			initCreateInventaire();
+
 		}
 	}
 
@@ -404,7 +414,6 @@ public class ClasseSearchServiceBean implements Serializable {
 					.getDaysofWeekServicewsImplPort();
 			listdayofweek = dayofweekserServicewsEndpoint
 					.getAllDaysofWeekServicews();
-			
 
 			if (classeDto != null) {
 				classeServicewsEndpoint = classeServicews
@@ -423,8 +432,7 @@ public class ClasseSearchServiceBean implements Serializable {
 					}
 				}
 			}
-			
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -460,8 +468,7 @@ public class ClasseSearchServiceBean implements Serializable {
 					.getAllDaysofWeekServicews();
 			listjoursource = dayofweekserServicewsEndpoint
 					.getAllDaysofWeekServicews();
-		
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -469,8 +476,18 @@ public class ClasseSearchServiceBean implements Serializable {
 	}
 
 	public void initCreateInventaire() {
+
+		test = true;
+
 		try {
-			test = true;
+			roomInventoryServicewsEndpoint = roomInventoryServicews
+					.getRoomInventoryServicewsImplPort();
+			classeServicewsEndpoint = classeServicews
+					.getClasseServicewsImplPort();
+			logger.debug("*******CLASS INDUALIST INITCREATE********" + classDto);
+			logger.debug("*******CLASSINDUALIST INITCREATE22********" + classDto.getNameOfClass());
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -504,7 +521,7 @@ public class ClasseSearchServiceBean implements Serializable {
 		Dayofweek dayofweek = new Dayofweek();
 		dayofweek.getDayofweek().addAll(listjourdestination);
 		classe.setDayofweek(dayofweek);
-		
+
 		classe.setBuildiing(classeDto.getBuildiing());
 		classe.setEndingHour(classeDto.getEndingHour());
 		classe.setLocation(classeDto.getLocation());

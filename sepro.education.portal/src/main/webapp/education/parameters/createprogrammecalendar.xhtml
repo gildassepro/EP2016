@@ -24,8 +24,7 @@
 										onclick="PF('updateprogrammcalendar').show()"
 										icon="fa fa-fw fa-plus">
 									</p:commandButton>
-									<p:commandButton id="modifse"
-										styleClass="btn btn-primary submit-button"
+									<p:commandButton id="modifse" styleClass="btn btn-success"
 										value="#{messages.label_modifier}"
 										update="@([id$=updatprogrammcalendar]) formlistprogrammecalendar fdialprogramme"
 										onclick="PF('updateprogrammcalendar').show()"
@@ -34,7 +33,7 @@
 									</p:commandButton>
 									<p:commandButton id="deletee"
 										process="@([id$=listprogrammecalendar])"
-										styleClass="btn btn-primary submit-button"
+										styleClass="btn btn-danger"
 										value="#{messages.label_supprimer1}"
 										title="#{messages.label_supprimer1}"
 										onclick="PF('confirmation').show()" icon="fa fa-fw fa-remove">
@@ -45,24 +44,6 @@
 										title="#{messages.label_print}"
 										value="#{messages.label_print}"
 										onclick="PF('confirmation').show()" icon="fa fa-fw fa-print">
-									</p:commandButton>
-									<p:splitButton value="#{messages.label_options}"
-										actionListener="#{buttonView.save}" icon="ui-icon-gear">
-										<p:menuitem value="Update"
-											actionListener="#{buttonView.update}"
-											icon="ui-icon-arrowrefresh-1-w" />
-										<p:menuitem value="Delete"
-											actionListener="#{buttonView.delete}" ajax="false"
-											icon="ui-icon-close" />
-										<p:separator />
-										<p:menuitem value="Homepage" icon="ui-icon-extlink" />
-									</p:splitButton>
-
-									<p:commandButton id="past"
-										styleClass="btn btn-primary submit-button" ajax="false"
-										action="createprogrammecalendar.xhtml?faces-redirect=true"
-										update="@([id$=listprogrammecalendar]) formlistprogrammecalendar fdialprogramme"
-										icon="fa fa-fw fa-arrow-left">
 									</p:commandButton>
 
 									<p:commandButton value="#{messages.label_modifier}"
@@ -77,6 +58,23 @@
 										action="#{programmeCalendarCreateServiceBean.saveProgrammeCalendar()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprogrammcalendar').hide()"
 										update="formlistprogrammecalendar fdialprogramme growl" />
+									<p:splitButton value="#{messages.label_options}"
+										actionListener="#{buttonView.save}" icon="ui-icon-gear">
+										<p:menuitem value="Update"
+											actionListener="#{buttonView.update}"
+											icon="ui-icon-arrowrefresh-1-w" />
+										<p:menuitem value="Delete"
+											actionListener="#{buttonView.delete}" ajax="false"
+											icon="ui-icon-close" />
+										<p:separator />
+										<p:menuitem value="Homepage" icon="ui-icon-extlink" />
+									</p:splitButton>
+									<p:commandButton id="past"
+										styleClass="btn btn-primary submit-button" ajax="false"
+										action="createprogrammecalendar.xhtml?faces-redirect=true"
+										update="@([id$=listprogrammecalendar]) formlistprogrammecalendar fdialprogramme"
+										icon="fa fa-fw fa-arrow-left">
+									</p:commandButton>
 								</div>
 
 								<p:panel id="updatprogrammcalendar"

@@ -29,15 +29,14 @@
 										update="@([id$=updatregion]) forme fdial"
 										onclick="PF('updateregion').show()" icon="fa fa-fw fa-plus">
 									</p:commandButton>
-									<p:commandButton id="modifse"
-										styleClass="btn btn-primary submit-button"
+									<p:commandButton id="modifse" styleClass="btn btn-success"
 										value="#{messages.label_modifier}"
 										update="@([id$=updatregion]) forme fdial"
 										onclick="PF('updateregion').show()" icon="fa fa-fw fa-pencil"
 										action="#{regionSearchServiceBean.initDualList('1')}">
 									</p:commandButton>
 									<p:commandButton id="deletee" process="@([id$=listregions])"
-										styleClass="btn btn-primary submit-button"
+										styleClass="btn btn-danger"
 										value="#{messages.label_supprimer1}"
 										title="#{messages.label_supprimer1}"
 										onclick="PF('confirmation').show()" icon="fa fa-fw fa-remove">
@@ -49,26 +48,7 @@
 										value="#{messages.label_print}"
 										onclick="PF('confirmation').show()" icon="fa fa-fw fa-print">
 									</p:commandButton>
-									<p:splitButton value="#{messages.label_options}"
-										actionListener="#{buttonView.save}" icon="ui-icon-gear">
-										<p:menuitem value="Update"
-											actionListener="#{buttonView.update}"
-											icon="ui-icon-arrowrefresh-1-w" />
-										<p:menuitem value="Delete"
-											actionListener="#{buttonView.delete}" ajax="false"
-											icon="ui-icon-close" />
-										<p:separator />
-										<p:menuitem value="Homepage" icon="ui-icon-extlink" />
-									</p:splitButton>
-									
-									<p:commandButton id="past"
-										styleClass="btn btn-primary submit-button"
-										ajax="false"
-										action="searchregion.xhtml?faces-redirect=true"
-										update="@([id$=listregions]) forme fdial"
-										icon="fa fa-fw fa-arrow-left">
-									</p:commandButton>
-									
+
 									<p:commandButton value="#{messages.label_modifier}"
 										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
 										rendered="#{!regionSearchServiceBean.isAction()}"
@@ -80,7 +60,24 @@
 										rendered="#{regionSearchServiceBean.isAction()}"
 										action="#{regionSearchServiceBean.createRegion()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateregion').hide()"
-										update="forme fdial growl"/>
+										update="forme fdial growl" />
+									<p:splitButton value="#{messages.label_options}"
+										actionListener="#{buttonView.save}" icon="ui-icon-gear">
+										<p:menuitem value="Update"
+											actionListener="#{buttonView.update}"
+											icon="ui-icon-arrowrefresh-1-w" />
+										<p:menuitem value="Delete"
+											actionListener="#{buttonView.delete}" ajax="false"
+											icon="ui-icon-close" />
+										<p:separator />
+										<p:menuitem value="Homepage" icon="ui-icon-extlink" />
+									</p:splitButton>
+									<p:commandButton id="past"
+										styleClass="btn btn-primary submit-button" ajax="false"
+										action="searchregion.xhtml?faces-redirect=true"
+										update="@([id$=listregions]) forme fdial"
+										icon="fa fa-fw fa-arrow-left">
+									</p:commandButton>
 								</div>
 
 

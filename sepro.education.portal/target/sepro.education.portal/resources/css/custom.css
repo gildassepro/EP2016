@@ -44,10 +44,19 @@
 	margin-top: -10px;
 	margin-bottom: 10px;
 }
+.ui-growl {
+    left: 700px;
+}
+
 .flaticon-notes:before {
-  content: "\f106";
+  content: "\f107";
 }
 
 .flaticon-teacher-with-stick:before {
-  content: "\f10b";
+  content: "\f10c";
 }
+
+.flaticon-graduate-student-avatar:before {
+  content: "\f104";
+}
+

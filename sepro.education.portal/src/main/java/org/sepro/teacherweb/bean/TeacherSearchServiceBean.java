@@ -1367,11 +1367,27 @@ public void onchangeZipCode(){
 					.getRegionServicewsImplPort();
 			cityServicewsEndpoint = cityServicews.getCityServicewsImplPort();
 			zipServicewsEndpoint = zipServicews.getZipServicewsImplPort();
+			popuplistDtoServicewsEndpoint = popuplistDtoServicews
+					.getPopuplistDtoServicewsImplPort();
 
 			listCountry = countryServicewsEndpoint.getAllCountryServicews();
-			listCity = cityServicewsEndpoint.getAllCityServicews();
-			listRegion = regionServicewsEndpoint.getAllRegionServicews();
-			listZipcode = zipServicewsEndpoint.getAllZipcodeServicews();
+			
+			listetatcivile = popuplistDtoServicewsEndpoint
+					.searchPopuplistDtoServicews("etatcivile");
+
+			listnationalite = popuplistDtoServicewsEndpoint
+					.searchPopuplistDtoServicews("nationnalite");
+
+			listdocumentidentity = popuplistDtoServicewsEndpoint
+					.searchPopuplistDtoServicews("identite");
+
+			listsexe = popuplistDtoServicewsEndpoint
+					.searchPopuplistDtoServicews("sexe");
+
+			listspecialite = popuplistDtoServicewsEndpoint
+					.searchPopuplistDtoServicews("speciality");
+			
+			
 
 			logger.debug("fin dual");
 

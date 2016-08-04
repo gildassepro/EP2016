@@ -1,6 +1,6 @@
 	/*
   	Flaticon icon font: Flaticon
-  	Creation date: 24/05/2016 19:16
+  	Creation date: 23/07/2016 15:14
   	*/
 
 @font-face {
@@ -33,14 +33,15 @@ margin-left: 20px;
 .flaticon-cogwheel28:before { content: "\f101"; }
 .flaticon-computer:before { content: "\f102"; }
 .flaticon-gps:before { content: "\f103"; }
-.flaticon-list100:before { content: "\f104"; }
-.flaticon-man115:before { content: "\f105"; }
-.flaticon-notes:before { content: "\f106"; }
-.flaticon-profile10:before { content: "\f107"; }
-.flaticon-school:before { content: "\f108"; }
-.flaticon-school52:before { content: "\f109"; }
-.flaticon-symbols:before { content: "\f10a"; }
-.flaticon-teacher-with-stick:before { content: "\f10b"; }
-.flaticon-tool598:before { content: "\f10c"; }
-.flaticon-transport315:before { content: "\f10d"; }
-.flaticon-wall-clock:before { content: "\f10e"; }
+.flaticon-graduate-student-avatar:before { content: "\f104"; }
+.flaticon-list100:before { content: "\f105"; }
+.flaticon-man115:before { content: "\f106"; }
+.flaticon-notes:before { content: "\f107"; }
+.flaticon-profile10:before { content: "\f108"; }
+.flaticon-school:before { content: "\f109"; }
+.flaticon-school52:before { content: "\f10a"; }
+.flaticon-symbols:before { content: "\f10b"; }
+.flaticon-teacher-with-stick:before { content: "\f10c"; }
+.flaticon-tool598:before { content: "\f10d"; }
+.flaticon-transport315:before { content: "\f10e"; }
+.flaticon-wall-clock:before { content: "\f10f"; }
