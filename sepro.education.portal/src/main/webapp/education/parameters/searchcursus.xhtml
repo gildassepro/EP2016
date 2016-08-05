@@ -32,14 +32,14 @@
 										onclick="PF('updatecursus').show()" icon="fa fa-fw fa-plus">
 									</p:commandButton>
 									<p:commandButton id="modifse"
-										styleClass="btn btn-primary submit-button"
+										styleClass="btn btn-success"
 										value="#{messages.label_modifier}"
 										update="@([id$=updatcursus]) forme fdial"
 										onclick="PF('updatecursus').show()" icon="fa fa-fw fa-pencil"
 										action="#{cursusSearchServiceBean.initDualList('1')}">
 									</p:commandButton>
 									<p:commandButton id="deletee" process="@([id$=listcursus])"
-										styleClass="btn btn-primary submit-button"
+										styleClass="btn btn-danger"
 										value="#{messages.label_supprimer1}"
 										title="#{messages.label_supprimer1}"
 										onclick="PF('confirmation').show()" icon="fa fa-fw fa-remove">
@@ -63,13 +63,6 @@
 										<p:menuitem value="Homepage" icon="ui-icon-extlink" />
 									</p:splitButton>
 
-									<p:commandButton id="past"
-										styleClass="btn btn-primary submit-button" ajax="false"
-										action="searchcursus.xhtml?faces-redirect=true"
-										update="@([id$=listcursus]) forme fdial"
-										icon="fa fa-fw fa-arrow-left">
-									</p:commandButton>
-
 									<p:commandButton value="#{messages.label_modifier}"
 										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
 										rendered="#{!cursusSearchServiceBean.isAction()}"
@@ -82,6 +75,13 @@
 										action="#{cursusSearchServiceBean.createCurriculum()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatecursus').hide()"
 										update="forme fdial growl" />
+										<p:commandButton id="past"
+										styleClass="btn btn-primary submit-button" ajax="false"
+										action="searchcursus.xhtml?faces-redirect=true"
+										update="@([id$=listcursus]) forme fdial"
+										immediate="true"
+										icon="fa fa-fw fa-arrow-left">
+									</p:commandButton>
 								</div>
 								<p:panel id="updatcursus" widgetVar="updatecursus"
 									rendered="#{!cursusSearchServiceBean.isAction3()}">

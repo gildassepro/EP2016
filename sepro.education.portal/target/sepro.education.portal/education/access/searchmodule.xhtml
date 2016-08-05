@@ -62,12 +62,7 @@
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatemodule').hide()"
 										update="forme fdial growl">
 									</p:commandButton>
-									<p:commandButton id="past"
-										styleClass="btn btn-primary submit-button" ajax="false"
-										action="searchmodule.xhtml?faces-redirect=true"
-										update="@([id$=listmodule]) forme fdial"
-										icon="fa fa-fw fa-arrow-left">
-									</p:commandButton>
+
 
 									<p:splitButton value="#{messages.label_options}"
 										actionListener="#{buttonView.save}" icon="ui-icon-gear">
@@ -80,6 +75,12 @@
 										<p:separator />
 										<p:menuitem value="Homepage" icon="ui-icon-extlink" />
 									</p:splitButton>
+									<p:commandButton id="past"
+										styleClass="btn btn-primary submit-button" ajax="false"
+										action="searchmodule.xhtml?faces-redirect=true"
+										immediate="true" update="@([id$=listmodule]) forme fdial"
+										icon="fa fa-fw fa-arrow-left">
+									</p:commandButton>
 
 								</div>
 
@@ -102,14 +103,14 @@
 												</div>
 												<div class="col-md-4 col-sm-4">
 													<p:inputText styleClass="form-text form-control"
-														id="modulenamelabel"
+														id="modulenamelabel" immediate="true"
 														value="#{moduleSearchServiceBean.moduleDto.moduleName}"
 														readonly="true">
 													</p:inputText>
 												</div>
 												<div class="col-md-4 col-sm-4">
 													<p:inputText styleClass="form-text form-control"
-														id="modulename"
+														id="modulename" immediate="true"
 														value="#{moduleSearchServiceBean.moduleDto.moduleName}"
 														readonly="true">
 													</p:inputText>
@@ -123,14 +124,14 @@
 												</div>
 												<div class="col-md-4 col-sm-4">
 													<p:inputText styleClass="form-text form-control"
-														id="descriptionlabel"
+														id="descriptionlabel" immediate="true"
 														value="#{moduleSearchServiceBean.moduleDto.description}"
 														readonly="true">
 													</p:inputText>
 												</div>
 												<div class="col-md-4 col-sm-4">
 													<p:inputText styleClass="form-text form-control"
-														id="description" maxlength="128"
+														id="description" maxlength="128" immediate="true"
 														value="#{moduleSearchServiceBean.description}"
 														placeholder="#{messages.label_description_name}"
 														rendered="#{moduleSearchServiceBean.isAction()}"
@@ -140,7 +141,7 @@
 														<p:ajax event="keyup" />
 													</p:inputText>
 													<p:inputText styleClass="form-text form-control"
-														id="description1"
+														id="description1" immediate="true"
 														value="#{moduleSearchServiceBean.moduleDto.description}"
 														rendered="#{!moduleSearchServiceBean.isAction()}"
 														readonly="true">
@@ -153,7 +154,7 @@
 													<p:outputLabel value="#{messages.label_menuname1}" />
 												</div>
 												<div class="col-md-4 col-sm-4">
-													<p:selectCheckboxMenu id="menulist"
+													<p:selectCheckboxMenu id="menulist" immediate="true"
 														value="#{moduleSearchServiceBean.listMenuDestination}"
 														filter="true" filterMatchMode="startsWith"
 														converter="entityConverter" panelStyle="width:250px"

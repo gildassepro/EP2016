@@ -22,15 +22,14 @@
 										update="@([id$=updatmatiere]) forme fdial"
 										onclick="PF('updatematiere').show()" icon="fa fa-fw fa-plus">
 									</p:commandButton>
-									<p:commandButton id="modifse"
-										styleClass="btn btn-primary submit-button"
+									<p:commandButton id="modifse" styleClass="btn btn-success"
 										value="#{messages.label_modifier}"
 										update="@([id$=updatmatiere]) forme fdial"
 										onclick="PF('updatematiere').show()" icon="fa fa-fw fa-pencil"
 										action="#{matiereSearchServiceBean.initDualList('1')}">
 									</p:commandButton>
 									<p:commandButton id="deletee" process="@([id$=listmatiere])"
-										styleClass="btn btn-primary submit-button"
+										styleClass="btn btn-danger"
 										value="#{messages.label_supprimer1}"
 										title="#{messages.label_supprimer1}"
 										onclick="PF('confirmation').show()" icon="fa fa-fw fa-remove">
@@ -42,6 +41,21 @@
 										value="#{messages.label_print}"
 										onclick="PF('confirmation').show()" icon="fa fa-fw fa-print">
 									</p:commandButton>
+
+
+									<p:commandButton value="#{messages.label_modifier}"
+										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
+										rendered="#{!matiereSearchServiceBean.isAction()}"
+										action="#{matiereSearchServiceBean.updateMatiere()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatematiere').hide()"
+										update="forme fdial growl" />
+									<p:commandButton value="#{messages.label_create}"
+										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
+										rendered="#{matiereSearchServiceBean.isAction()}"
+										action="#{matiereSearchServiceBean.createMatiere()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatematiere').hide()"
+										update="forme fdial growl" />
+
 									<p:splitButton value="#{messages.label_options}"
 										actionListener="#{buttonView.save}" icon="ui-icon-gear">
 										<p:menuitem value="Update"
@@ -56,23 +70,11 @@
 
 									<p:commandButton id="past"
 										styleClass="btn btn-primary submit-button" ajax="false"
+										immediate="true"
 										action="searchmatiere.xhtml?faces-redirect=true"
 										update="@([id$=listmatiere]) forme fdial"
 										icon="fa fa-fw fa-arrow-left">
 									</p:commandButton>
-
-									<p:commandButton value="#{messages.label_modifier}"
-										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
-										rendered="#{!matiereSearchServiceBean.isAction()}"
-										action="#{matiereSearchServiceBean.updateMatiere()}"
-										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatematiere').hide()"
-										update="forme fdial growl" />
-									<p:commandButton value="#{messages.label_create}"
-										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
-										rendered="#{matiereSearchServiceBean.isAction()}"
-										action="#{matiereSearchServiceBean.createMatiere()}"
-										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatematiere').hide()"
-										update="forme fdial growl" />
 
 								</div>
 								<p:panel id="updatmatiere" widgetVar="updatematiere"
@@ -97,6 +99,7 @@
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:inputText id="matierename" styleClass="form-text"
+															immediate="true"
 															value="#{matiereSearchServiceBean.matiereDto.subjectName}"
 															placeholder="#{messages.labelnommatiere}" required="true"
 															requiredMessage="#{messages.label_nommatiere_requeried}">
@@ -111,7 +114,7 @@
 														<p:selectOneMenu id="selectacademicyears"
 															styleClass="form-text"
 															value="#{matiereSearchServiceBean.matiereDto.academiqueYear}"
-															converter="entityConverter"
+															converter="entityConverter" immediate="true"
 															placeholder="#{messages.label_academic_years}"
 															required="true"
 															requiredMessage="#{messages.label_academic_years_requeried}">
@@ -135,7 +138,7 @@
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:selectOneMenu id="selectfil" styleClass="form-text"
 															value="#{matiereSearchServiceBean.matiereDto.academicGrade}"
-															converter="entityConverter"
+															converter="entityConverter" immediate="true"
 															placeholder="#{messages.label_filiere}" required="true"
 															requiredMessage="#{messages.label_curriculum_requeried}">
 															<f:selectItem
@@ -154,7 +157,7 @@
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:selectOneMenu id="selectmatieretype"
-															styleClass="form-text"
+															styleClass="form-text" immediate="true"
 															value="#{matiereSearchServiceBean.matiereDto.typeOfClasse}"
 															converter="entityConverter"
 															placeholder="#{messages.label_typedeclasse}"
@@ -180,6 +183,7 @@
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:inputText id="matieretarif" styleClass="form-text"
+															immediate="true"
 															value="#{matiereSearchServiceBean.matiereDto.teacheRate}"
 															placeholder="#{messages.label_tarif}" required="true"
 															requiredMessage="#{messages.label_teacheRate_required}">
@@ -191,6 +195,7 @@
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:inputText id="nbremax" styleClass="form-text"
+															immediate="true"
 															value="#{matiereSearchServiceBean.matiereDto.numberOfAttendentMax}"
 															placeholder="#{messages.labelnbremax}" required="true"
 															requiredMessage="#{messages.label_numberOfAttendentMax_required}">
@@ -205,6 +210,7 @@
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:inputText id="nbremin" styleClass="form-text"
+															immediate="true"
 															value="#{matiereSearchServiceBean.matiereDto.numberOfAttendentMin}"
 															placeholder="#{messages.label_nbremin}" required="true"
 															requiredMessage="#{messages.label_numberOfAttendentMin_required}">
@@ -216,6 +222,7 @@
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:inputText id="volumehoraire" styleClass="form-text"
+															immediate="true"
 															value="#{matiereSearchServiceBean.matiereDto.numberOfHours}"
 															placeholder="#{messages.label_volumehoraire}"
 															required="true"

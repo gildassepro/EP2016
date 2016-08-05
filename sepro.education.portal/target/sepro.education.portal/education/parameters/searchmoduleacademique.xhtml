@@ -24,7 +24,7 @@
 										icon="fa fa-fw fa-plus">
 									</p:commandButton>
 									<p:commandButton id="modifse"
-										styleClass="btn btn-primary submit-button"
+										styleClass="btn btn-success"
 										value="#{messages.label_modifier}"
 										update="@([id$=updatmoduleacademique]) forme fdial"
 										onclick="PF('updatemoduleacademique').show()"
@@ -33,7 +33,7 @@
 									</p:commandButton>
 									<p:commandButton id="deletee"
 										process="@([id$=listmoduleacademiques])"
-										styleClass="btn btn-primary submit-button"
+										styleClass="btn btn-danger"
 										value="#{messages.label_supprimer1}"
 										title="#{messages.label_supprimer1}"
 										onclick="PF('confirmation').show()" icon="fa fa-fw fa-remove">
@@ -45,6 +45,20 @@
 										value="#{messages.label_print}"
 										onclick="PF('confirmation').show()" icon="fa fa-fw fa-print">
 									</p:commandButton>
+
+
+									<p:commandButton value="#{messages.label_modifier}"
+										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
+										rendered="#{!moduleAcademiqueSearchServiceBean.isAction()}"
+										action="#{moduleAcademiqueSearchServiceBean.updateModule()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatemoduleacademique').hide()"
+										update="forme fdial growl" />
+									<p:commandButton value="#{messages.label_create}"
+										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
+										rendered="#{moduleAcademiqueSearchServiceBean.isAction()}"
+										action="#{moduleAcademiqueSearchServiceBean.createModule()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatemoduleacademique').hide()"
+										update="forme fdial growl" />
 									<p:splitButton value="#{messages.label_options}"
 										actionListener="#{buttonView.save}" icon="ui-icon-gear">
 										<p:menuitem value="Update"
@@ -60,22 +74,10 @@
 									<p:commandButton id="past"
 										styleClass="btn btn-primary submit-button" ajax="false"
 										action="searchmoduleacademique.xhtml?faces-redirect=true"
+										immediate="true"
 										update="@([id$=listmoduleacademiques]) forme fdial"
 										icon="fa fa-fw fa-arrow-left">
 									</p:commandButton>
-
-									<p:commandButton value="#{messages.label_modifier}"
-										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
-										rendered="#{!moduleAcademiqueSearchServiceBean.isAction()}"
-										action="#{moduleAcademiqueSearchServiceBean.updateModule()}"
-										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatemoduleacademique').hide()"
-										update="forme fdial growl" />
-									<p:commandButton value="#{messages.label_create}"
-										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
-										rendered="#{moduleAcademiqueSearchServiceBean.isAction()}"
-										action="#{moduleAcademiqueSearchServiceBean.createModule()}"
-										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatemoduleacademique').hide()"
-										update="forme fdial growl" />
 
 								</div>
 								<p:panel id="updatmoduleacademique"
@@ -101,9 +103,10 @@
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:inputText styleClass="form-control" id="nommodule"
 															maxlength="64"
+															immediate="true"
 															value="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.moduleName}"
 															placeholder="#{messages.labelnommodule}" required="true"
-															immediate="true"
+										
 															requiredMessage="#{messages.label_nommodule_requeried}">
 															<f:validateLength minimum="5" maximum="64" />
 															<p:ajax event="keyup" />
@@ -117,6 +120,7 @@
 														<p:selectOneMenu styleClass="form-text" id="filiere"
 															value="#{moduleAcademiqueSearchServiceBean.moduleacademiqueDto.academicGrade}"
 															converter="entityConverter" required="true"
+															
 															immediate="true"
 															requiredMessage="#{messages.label_filiere_requeried}">
 															<f:selectItem

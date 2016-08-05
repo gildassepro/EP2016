@@ -71,6 +71,7 @@
 									</p:splitButton>
 									<p:commandButton id="past"
 										styleClass="btn btn-primary submit-button" ajax="false"
+										immediate="true"
 										action="createprogrammecalendar.xhtml?faces-redirect=true"
 										update="@([id$=listprogrammecalendar]) formlistprogrammecalendar fdialprogramme"
 										icon="fa fa-fw fa-arrow-left">
@@ -96,7 +97,7 @@
 
 															<p:selectOneMenu
 																styleClass="col-lg-10 col-md-10 col-sm-12 form-text"
-																id="nomprogrammecalendar"
+																id="nomprogrammecalendar" immediate="true"
 																value="#{programmeCalendarCreateServiceBean.programmeCalendarDto.programme}"
 																converter="entityConverter"
 																placeholder="#{messages.label_academic_years}"
@@ -118,7 +119,7 @@
 														</div>
 														<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 															<p:selectOneMenu id="selectprogrammeacademicyears"
-																styleClass="form-text"
+																styleClass="form-text" immediate="true"
 																value="#{programmeCalendarCreateServiceBean.programmeCalendarDto.academiqueYear}"
 																converter="entityConverter"
 																placeholder="#{messages.label_academic_years}"
@@ -141,7 +142,7 @@
 															<span class="requireds">(*)</span>
 														</div>
 														<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-															<p:calendar id="buttonstart"
+															<p:calendar id="buttonstart" immediate="true"
 																value="#{programmeCalendarCreateServiceBean.programmeCalendarDto.startDate}"
 																showOn="button" pattern="MM/dd/yyyy" required="true"
 																requiredMessage="#{messages.label_startDate_requeried}"
@@ -155,7 +156,7 @@
 															<span class="requireds">(*)</span>
 														</div>
 														<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-															<p:calendar id="buttonend"
+															<p:calendar id="buttonend" immediate="true"
 																value="#{programmeCalendarCreateServiceBean.programmeCalendarDto.endDate}"
 																showOn="button" pattern="MM/dd/yyyy" required="true"
 																requiredMessage="#{messages.label_startDate_requeried}"
@@ -176,7 +177,7 @@
 																	value="#{messages.label_module1}" />
 																<p:selectOneMenu
 																	styleClass="col-lg-10 col-md-10 col-sm-12 form-text"
-																	id="selectmoduleprogrammess"
+																	id="selectmoduleprogrammess" immediate="true"
 																	value="#{programmeCalendarCreateServiceBean.moduleCalendarDto.academicModule}"
 																	converter="entityConverter"
 																	placeholder="#{messages.label_academic_years}"
@@ -197,7 +198,7 @@
 																	value="#{messages.label_session}" />
 																<p:selectOneMenu
 																	styleClass="col-lg-10 col-md-10 col-sm-12 form-text"
-																	id="selectsessionmodule"
+																	id="selectsessionmodule" immediate="true"
 																	value="#{programmeCalendarCreateServiceBean.moduleCalendarDto.session}"
 																	converter="entityConverter"
 																	placeholder="#{messages.label_academic_years}"
@@ -216,7 +217,7 @@
 																<p:outputLabel
 																	styleClass="col-lg-3 col-md-3 col-sm-12 label-input"
 																	value="#{messages.label_coef}" />
-																<p:inputText
+																<p:inputText immediate="true"
 																	styleClass="col-lg-9 col-md-9 col-sm-12 form-control"
 																	id="coef"
 																	value="#{programmeCalendarCreateServiceBean.moduleCalendarDto.coefficient}">

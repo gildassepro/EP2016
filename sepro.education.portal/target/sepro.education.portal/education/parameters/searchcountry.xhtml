@@ -23,15 +23,14 @@
 										update="@([id$=updatcountry]) forme fdial"
 										onclick="PF('updatecountry').show()" icon="fa fa-fw fa-plus">
 									</p:commandButton>
-									<p:commandButton id="modifse"
-										styleClass="btn btn-primary submit-button"
+									<p:commandButton id="modifse" styleClass="btn btn-success"
 										value="#{messages.label_modifier}"
 										update="@([id$=updatcountry]) forme fdial"
 										onclick="PF('updatecountry').show()" icon="fa fa-fw fa-pencil"
 										action="#{countrySearchServiceBean.initDualList('1')}">
 									</p:commandButton>
 									<p:commandButton id="deletee" process="@([id$=listcountrys])"
-										styleClass="btn btn-primary submit-button"
+										styleClass="btn btn-danger"
 										value="#{messages.label_supprimer1}"
 										title="#{messages.label_supprimer1}"
 										onclick="PF('confirmation').show()" icon="fa fa-fw fa-remove">
@@ -43,6 +42,19 @@
 										value="#{messages.label_print}"
 										onclick="PF('confirmation').show()" icon="fa fa-fw fa-print">
 									</p:commandButton>
+
+									<p:commandButton value="#{messages.label_modifier}"
+										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
+										rendered="#{!countrySearchServiceBean.isAction()}"
+										action="#{countrySearchServiceBean.updateCountry()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatecountry').hide()"
+										update="forme fdial growl" />
+									<p:commandButton value="#{messages.label_create}"
+										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
+										rendered="#{countrySearchServiceBean.isAction()}"
+										action="#{countrySearchServiceBean.createCountry()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatecountry').hide()"
+										update="forme fdial growl" />
 									<p:splitButton value="#{messages.label_options}"
 										actionListener="#{buttonView.save}" icon="ui-icon-gear">
 										<p:menuitem value="Update"
@@ -58,27 +70,14 @@
 									<p:commandButton id="past"
 										styleClass="btn btn-primary submit-button" ajax="false"
 										action="searchcountry.xhtml?faces-redirect=true"
-										update="@([id$=listcountrys]) forme fdial"
+										immediate="true" update="@([id$=listcountrys]) forme fdial"
 										icon="fa fa-fw fa-arrow-left">
 									</p:commandButton>
-
-									<p:commandButton value="#{messages.label_modifier}"
-										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
-										rendered="#{!countrySearchServiceBean.isAction()}"
-										action="#{countrySearchServiceBean.updateCountry()}"
-										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatecountry').hide()"
-										update="forme fdial growl" />
-									<p:commandButton value="#{messages.label_create}"
-										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
-										rendered="#{countrySearchServiceBean.isAction()}"
-										action="#{countrySearchServiceBean.createCountry()}"
-										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatecountry').hide()"
-										update="forme fdial growl" />
 								</div>
 
 								<p:panel id="updatcountry" widgetVar="updatecountry"
 									rendered="#{!countrySearchServiceBean.isAction3()}">
-									
+
 									<h:form id="fdial">
 
 										<h3 style="margin-top: 0">
@@ -99,7 +98,7 @@
 													<p:inputText id="iso" maxlength="3" styleClass="form-text"
 														value="#{countrySearchServiceBean.countryDto.isoCountryCode}"
 														placeholder="#{messages.label_iso_country_code1}"
-														required="true"
+														required="true" immediate="true"
 														requiredMessage="#{messages.label_iso_requeried}">
 														<f:validateLength minimum="3" maximum="3" />
 														<p:ajax event="keyup" />
@@ -114,11 +113,11 @@
 												</div>
 												<div class="col-md-6 col-sm-6">
 													<p:inputText id="alpha3" maxlength="3"
-														styleClass="form-text"
+														styleClass="form-text" immediate="true"
 														value="#{countrySearchServiceBean.countryDto.alpha3}"
 														placeholder="#{messages.labelalpha31}" required="true"
 														requiredMessage="#{messages.label_alpha3_requeried}">
-														<f:validateLength minimum="2"/>
+														<f:validateLength minimum="2" />
 														<p:ajax event="keyup" />
 													</p:inputText>
 												</div>
@@ -131,7 +130,7 @@
 												</div>
 												<div class="col-md-6 col-sm-6">
 													<p:inputText id="alpha2" maxlength="2"
-														styleClass="form-text"
+														styleClass="form-text" immediate="true"
 														value="#{countrySearchServiceBean.countryDto.alpha2}"
 														placeholder="#{messages.labelalpha21}" required="true"
 														requiredMessage="#{messages.label_alpha2_requeried}">
@@ -151,7 +150,7 @@
 														styleClass="form-text"
 														value="#{countrySearchServiceBean.countryDto.countryName}"
 														placeholder="#{messages.label_country_name1}"
-														required="true"
+														required="true" immediate="true"
 														requiredMessage="#{messages.label_countryname_requeried}">
 														<f:validateLength maximum="128" />
 														<p:ajax event="keyup" />
@@ -167,7 +166,7 @@
 												<div class="col-md-6 col-sm-6">
 													<p:selectOneMenu styleClass="form-text" id="lg"
 														value="#{countrySearchServiceBean.countryDto.language}"
-														converter="entityConverter"
+														converter="entityConverter" immediate="true"
 														placeholder="#{messages.label_country}" required="true"
 														requiredMessage="#{messages.label_choixlangue_requeried}">
 														<f:selectItem
@@ -190,7 +189,7 @@
 												<div class="col-md-6 col-sm-6">
 													<p:selectOneMenu styleClass="form-text" id="mobileph"
 														value="#{countrySearchServiceBean.countryDto.mobilePhoneFormat}"
-														converter="entityConverter"
+														converter="entityConverter" immediate="true"
 														placeholder="#{messages.label_country}">
 														<f:selectItem
 															itemLabel="#{countrySearchServiceBean.countryDto.mobilePhoneFormat.description}"
@@ -211,7 +210,7 @@
 												<div class="col-md-6 col-sm-6">
 													<p:selectOneMenu styleClass="form-text" id="lanph"
 														value="#{countrySearchServiceBean.countryDto.lanPhoneFormat}"
-														converter="entityConverter"
+														converter="entityConverter" immediate="true"
 														placeholder="#{messages.label_country}">
 														<f:selectItem
 															itemLabel="#{countrySearchServiceBean.countryDto.lanPhoneFormat.description}"

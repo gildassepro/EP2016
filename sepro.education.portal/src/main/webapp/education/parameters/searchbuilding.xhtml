@@ -28,7 +28,8 @@
 										update="@([id$=updatbuilding]) forme fdial"
 										onclick="PF('updatebuilding').show()" icon="fa fa-fw fa-plus">
 									</p:commandButton>
-									<p:commandButton id="modifse" styleClass="btn btn-success"
+									<p:commandButton id="modifse"
+										styleClass="btn btn-success"
 										value="#{messages.label_modifier}"
 										update="@([id$=updatbuilding]) forme fdial"
 										onclick="PF('updatebuilding').show()"
@@ -61,6 +62,7 @@
 										action="#{buildingSearchServiceBean.createBuilding()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatebuilding').hide()"
 										update="forme fdial growl" />
+
 									<p:splitButton value="#{messages.label_options}"
 										actionListener="#{buttonView.save}" icon="ui-icon-gear">
 										<p:menuitem value="Update"
@@ -74,6 +76,7 @@
 									</p:splitButton>
 									<p:commandButton id="past"
 										styleClass="btn btn-primary submit-button" ajax="false"
+										immediate="true"
 										action="searchbuilding.xhtml?faces-redirect=true"
 										update="@([id$=listbatiments]) forme fdial"
 										icon="fa fa-fw fa-arrow-left">
@@ -100,6 +103,7 @@
 														<span class="requireds">(*)</span>
 														<p:inputText styleClass="col-sm-6 col-xs-12"
 															id="buildingnames"
+															immediate="true"
 															value="#{buildingSearchServiceBean.buildingDto.nameBuilding}"
 															placeholder="#{messages.label_name_building}"
 															required="true"
@@ -113,6 +117,7 @@
 														<span class="requireds">(*)</span>
 														<p:selectOneMenu styleClass="col-sm-6 col-xs-12"
 															id="selectestablishment"
+															immediate="true"
 															value="#{buildingSearchServiceBean.buildingDto.establishment}"
 															converter="entityConverter"
 															placeholder="#{messages.label_establishment}"
@@ -135,6 +140,7 @@
 															value="#{messages.label_subestablishment}:" />
 														<p:selectOneMenu styleClass="col-sm-6 col-xs-12"
 															id="selectsubestablishment"
+															immediate="true"
 															value="#{buildingSearchServiceBean.buildingDto.subestablishment}"
 															converter="entityConverter"
 															placeholder="#{messages.label_subestablishment}"
@@ -158,6 +164,7 @@
 															<p:selectCheckboxMenu style="width:50px" id="cleanhrs"
 																value="#{buildingSearchServiceBean.listCleanHoursDestination}"
 																filter="true" filterMatchMode="startsWith"
+																immediate="true"
 																converter="entityConverter" panelStyle="width:250px"
 																label="#{messages.label_time_cleaning}">
 																<f:selectItems
@@ -175,6 +182,7 @@
 															value="#{messages.label_situation_geographique}" />
 														<span class="requireds">(*)</span>
 														<p:inputText styleClass="col-sm-6 col-xs-12" id="gps"
+														immediate="true"
 															value="#{buildingSearchServiceBean.buildingDto.geographicalLocation}"
 															placeholder="#{messages.label_situation_geographique}">
 														</p:inputText>
@@ -186,6 +194,7 @@
 															value="#{messages.label_nombre_etage}" />
 														<p:inputText styleClass="col-sm-6 col-xs-12"
 															id="nbreetages"
+															immediate="true"
 															value="#{buildingSearchServiceBean.buildingDto.numberOfFloors}"
 															placeholder="#{messages.label_nombre_etage}">
 														</p:inputText>
@@ -195,6 +204,7 @@
 															value="#{messages.label_nombre_bloc}" />
 														<p:inputText styleClass="col-sm-6 col-xs-12"
 															id="nmbreblocs"
+															immediate="true"
 															value="#{buildingSearchServiceBean.buildingDto.numberOfBlocks}"
 															placeholder="#{messages.label_nombre_bloc}">
 														</p:inputText>
@@ -206,6 +216,7 @@
 															value="#{messages.label_nombre_salle}" />
 														<p:inputText styleClass="col-sm-6 col-xs-12"
 															id="nbreclasse"
+															immediate="true"
 															value="#{buildingSearchServiceBean.buildingDto.numberOfClassrooms}"
 															placeholder="#{messages.label_nombre_salle}"
 															required="true"
@@ -217,6 +228,7 @@
 															value="#{messages.label_nombre_salle_machine}" />
 														<p:inputText styleClass="col-sm-6 col-xs-12"
 															id="nbresallemachine"
+															immediate="true"
 															value="#{buildingSearchServiceBean.buildingDto.numberOfMachinerooms}"
 															placeholder="#{messages.label_nombre_salle_machine}">
 														</p:inputText>
@@ -228,6 +240,7 @@
 															value="#{messages.label_nombre_bureaux}" />
 														<p:inputText styleClass="col-sm-6 col-xs-12"
 															id="nbrbureaux"
+															immediate="true"
 															value="#{buildingSearchServiceBean.buildingDto.numberOfOffices}"
 															placeholder="#{messages.label_nombre_bureaux}">
 														</p:inputText>
@@ -237,6 +250,7 @@
 															value="#{messages.label_nombre_laboratoire}" />
 														<p:inputText styleClass="col-sm-6 col-xs-12"
 															id="nbrelaboratoire"
+															immediate="true"
 															value="#{buildingSearchServiceBean.buildingDto.numberOfLaboratories}"
 															placeholder="#{messages.label_nombre_laboratoire}">
 														</p:inputText>

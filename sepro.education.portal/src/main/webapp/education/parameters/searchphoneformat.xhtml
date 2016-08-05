@@ -25,7 +25,7 @@
 										icon="fa fa-fw fa-plus">
 									</p:commandButton>
 									<p:commandButton id="modifse"
-										styleClass="btn btn-primary submit-button"
+										styleClass="btn btn-success"
 										value="#{messages.label_modifier}"
 										update="@([id$=updatphoneformat]) forme fdial"
 										onclick="PF('updatephoneformat').show()"
@@ -34,7 +34,7 @@
 									</p:commandButton>
 									<p:commandButton id="deletee"
 										process="@([id$=listphoneformats])"
-										styleClass="btn btn-primary submit-button"
+										styleClass="btn btn-danger"
 										value="#{messages.label_supprimer1}"
 										title="#{messages.label_supprimer1}"
 										onclick="PF('confirmation').show()" icon="fa fa-fw fa-remove">
@@ -62,6 +62,7 @@
 										styleClass="btn btn-primary submit-button" ajax="false"
 										action="searchphoneformat.xhtml?faces-redirect=true"
 										update="@([id$=listphoneformats]) forme fdial"
+										immediate="true"
 										icon="fa fa-fw fa-arrow-left">
 									</p:commandButton>
 
@@ -101,6 +102,7 @@
 														<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 															<p:inputText styleClass="form-control" id="indicatif"
 																maxlength="4"
+																immediate="true"
 																value="#{phoneFormatSearchServiceBean.phoneformatDto.indicatif}"
 																placeholder="#{messages.label_indicatifphone}"
 																required="true"
@@ -115,6 +117,7 @@
 														<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 															<p:inputText styleClass="form-control" id="description"
 																maxlength="64"
+																immediate="true"
 																value="#{phoneFormatSearchServiceBean.phoneformatDto.description}"
 																placeholder="#{messages.label_descriptionphone}">
 																<f:validateLength minimum="3" maximum="64" />
@@ -132,6 +135,7 @@
 																value="#{phoneFormatSearchServiceBean.phoneformatDto.nbrOfDigitBloc1}"
 																placeholder="#{messages.label_menu_name}"
 																required="true"
+																immediate="true"
 																requiredMessage="#{messages.label_bloc1_requeried}">
 																<f:validateLength minimum="1" maximum="11" />
 																<p:ajax event="keyup" />
@@ -146,6 +150,7 @@
 																value="#{phoneFormatSearchServiceBean.phoneformatDto.nbrOfDigitBloc2}"
 																placeholder="#{messages.label_menu_name}"
 																required="true"
+																immediate="true"
 																requiredMessage="#{messages.label_bloc2_requeried}">
 																<f:validateLength minimum="1" maximum="11" />
 																<p:ajax event="keyup" />
@@ -162,6 +167,7 @@
 																value="#{phoneFormatSearchServiceBean.phoneformatDto.nbrOfDigitBloc3}"
 																placeholder="#{messages.label_menu_name}"
 																required="true"
+																immediate="true"
 																requiredMessage="#{messages.label_bloc3_requeried}">
 																<f:validateLength minimum="1" maximum="11" />
 																<p:ajax event="keyup" />
@@ -176,6 +182,7 @@
 																value="#{phoneFormatSearchServiceBean.phoneformatDto.nbrOfDigitBloc4}"
 																placeholder="#{messages.label_menu_name}"
 																required="true"
+																immediate="true"
 																requiredMessage="#{messages.label_bloc4_requeried}">
 																<p:ajax event="keyup" />
 															</b:inputText>
@@ -191,6 +198,7 @@
 																value="#{phoneFormatSearchServiceBean.phoneformatDto.nbrOfDigitBloc5}"
 																placeholder="#{messages.label_menu_name}"
 																required="true"
+																immediate="true"
 																requiredMessage="#{messages.label_bloc5_requeried}">
 																<f:validateLength minimum="1" maximum="11" />
 																<p:ajax event="keyup" />
@@ -205,6 +213,7 @@
 																value="#{phoneFormatSearchServiceBean.phoneformatDto.nbrOfDigitBloc6}"
 																placeholder="#{messages.label_menu_name}"
 																required="true"
+																immediate="true"
 																requiredMessage="#{messages.label_bloc6_requeried}">
 																<f:validateLength minimum="1" maximum="11" />
 																<p:ajax event="keyup" />
@@ -221,6 +230,7 @@
 																value="#{phoneFormatSearchServiceBean.phoneformatDto.nbrOfDigitBloc7}"
 																placeholder="#{messages.label_menu_name}"
 																required="true"
+																immediate="true"
 																requiredMessage="#{messages.label_bloc7_requeried}">
 																<f:validateLength minimum="1" maximum="11" />
 																<p:ajax event="keyup" />
@@ -235,6 +245,7 @@
 																value="#{phoneFormatSearchServiceBean.phoneformatDto.nbrOfDigitBloc8}"
 																placeholder="#{messages.label_menu_name}"
 																required="true"
+																immediate="true"
 																requiredMessage="#{messages.label_bloc8_requeried}">
 																<f:validateLength minimum="1" maximum="11" />
 																<p:ajax event="keyup" />
@@ -251,6 +262,7 @@
 																value="#{phoneFormatSearchServiceBean.phoneformatDto.nbrOfDigitBloc9}"
 																placeholder="#{messages.label_menu_name}"
 																required="true"
+																immediate="true"
 																requiredMessage="#{messages.label_bloc9_requeried}">
 																<f:validateLength minimum="1" maximum="11" />
 																<p:ajax event="keyup" />
@@ -265,6 +277,7 @@
 																value="#{phoneFormatSearchServiceBean.phoneformatDto.nbrOfDigitBloc10}"
 																placeholder="#{messages.label_menu_name}"
 																required="true"
+																immediate="true"
 																requiredMessage="#{messages.label_bloc10_requeried}">
 																<p:ajax event="keyup" />
 															</b:inputText>

@@ -59,12 +59,6 @@
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatemenu').hide()"
 										update="forme fdial growl">
 									</p:commandButton>
-									<p:commandButton id="past"
-										styleClass="btn btn-primary submit-button" ajax="false"
-										action="searchmenu.xhtml?faces-redirect=true"
-										update="@([id$=listmenu]) forme fdial"
-										icon="fa fa-fw fa-arrow-left">
-									</p:commandButton>
 
 									<p:splitButton value="#{messages.label_options}"
 										actionListener="#{buttonView.save}" icon="ui-icon-gear">
@@ -77,6 +71,12 @@
 										<p:separator />
 										<p:menuitem value="Homepage" icon="ui-icon-extlink" />
 									</p:splitButton>
+									<p:commandButton id="past"
+										styleClass="btn btn-primary submit-button" ajax="false"
+										action="searchmenu.xhtml?faces-redirect=true" immediate="true"
+										update="@([id$=listmenu]) forme fdial"
+										icon="fa fa-fw fa-arrow-left">
+									</p:commandButton>
 
 								</div>
 								<p:panel id="updatmenu" widgetVar="updatemenu"
@@ -99,14 +99,14 @@
 												</div>
 												<div class="col-md-4 col-sm-4">
 													<p:inputText styleClass="form-text form-control"
-														id="menunamelabel"
+														id="menunamelabel" immediate="true"
 														value="#{menuSearchServiceBean.menuDto.menuName}"
 														readonly="true">
 													</p:inputText>
 												</div>
 												<div class="col-md-4 col-sm-4 offset">
 													<p:inputText styleClass="form-text form-control"
-														id="menuname"
+														id="menuname" immediate="true"
 														value="#{menuSearchServiceBean.menuDto.menuName}"
 														readonly="true">
 													</p:inputText>
@@ -120,14 +120,14 @@
 												</div>
 												<div class="col-md-4 col-sm-4">
 													<p:inputText styleClass="form-text form-control"
-														id="descriptionlabel"
+														id="descriptionlabel" immediate="true"
 														value="#{menuSearchServiceBean.menuDto.description}"
 														readonly="true">
 													</p:inputText>
 												</div>
 												<div class="col-md-4 col-sm-4 offset">
 													<p:inputText styleClass="form-text form-control"
-														id="description" maxlength="128"
+														id="description" maxlength="128" immediate="true"
 														value="#{menuSearchServiceBean.description}"
 														placeholder="#{messages.label_description_name}"
 														rendered="#{menuSearchServiceBean.isAction()}"
@@ -137,7 +137,7 @@
 														<p:ajax event="keyup" />
 													</p:inputText>
 													<p:inputText styleClass="form-text form-control"
-														id="description1"
+														id="description1" immediate="true"
 														value="#{menuSearchServiceBean.menuDto.description}"
 														rendered="#{!menuSearchServiceBean.isAction()}"
 														readonly="true">
@@ -153,7 +153,8 @@
 													<p:selectCheckboxMenu id="sousmenulist"
 														value="#{menuSearchServiceBean.listSousMenuDestination}"
 														filter="true" filterMatchMode="startsWith"
-														converter="entityConverter" panelStyle="width:250px"
+														immediate="true" converter="entityConverter"
+														panelStyle="width:250px"
 														label="#{messages.label_choix_des_sousmenus}">
 														<f:selectItems
 															value="#{menuSearchServiceBean.listSousMenuSource}"
@@ -168,7 +169,7 @@
 													<p:outputLabel value="#{messages.label_role}" />
 												</div>
 												<div class="col-md-5 col-sm-5">
-													<p:selectCheckboxMenu id="rolemenulist"
+													<p:selectCheckboxMenu id="rolemenulist" immediate="true"
 														value="#{menuSearchServiceBean.listRoleDestination}"
 														filter="true" filterMatchMode="startsWith"
 														converter="entityConverter" panelStyle="width:250px"
