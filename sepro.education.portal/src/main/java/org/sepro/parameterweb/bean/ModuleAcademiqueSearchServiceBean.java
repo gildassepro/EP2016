@@ -180,7 +180,6 @@ public class ModuleAcademiqueSearchServiceBean implements Serializable {
 		try {
 
 			if (moduleacademiqueDto != null) {
-				logger.debug("JE SUIS ICI ZONE 1********");
 				popuplistDtoServicewsEndpoint = popuplistDtoServicews
 						.getPopuplistDtoServicewsImplPort();
 

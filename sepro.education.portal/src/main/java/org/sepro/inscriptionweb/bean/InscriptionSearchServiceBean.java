@@ -1358,7 +1358,7 @@ public class InscriptionSearchServiceBean implements Serializable {
 			listeProgramme = programmeCalendarDtoServicewsEndpoint
 					.getAllProgrammeCalendarServicews();
 
-			listzipcode = zipServicewsEndpoint.getAllZipcodeServicews();
+			
 
 			logger.debug("end init");
 

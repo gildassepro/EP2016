@@ -31,8 +31,7 @@
 										update="@([id$=updatcursus]) forme fdial"
 										onclick="PF('updatecursus').show()" icon="fa fa-fw fa-plus">
 									</p:commandButton>
-									<p:commandButton id="modifse"
-										styleClass="btn btn-success"
+									<p:commandButton id="modifse" styleClass="btn btn-success"
 										value="#{messages.label_modifier}"
 										update="@([id$=updatcursus]) forme fdial"
 										onclick="PF('updatecursus').show()" icon="fa fa-fw fa-pencil"
@@ -51,17 +50,7 @@
 										value="#{messages.label_print}"
 										onclick="PF('confirmation').show()" icon="fa fa-fw fa-print">
 									</p:commandButton>
-									<p:splitButton value="#{messages.label_options}"
-										actionListener="#{buttonView.save}" icon="ui-icon-gear">
-										<p:menuitem value="Update"
-											actionListener="#{buttonView.update}"
-											icon="ui-icon-arrowrefresh-1-w" />
-										<p:menuitem value="Delete"
-											actionListener="#{buttonView.delete}" ajax="false"
-											icon="ui-icon-close" />
-										<p:separator />
-										<p:menuitem value="Homepage" icon="ui-icon-extlink" />
-									</p:splitButton>
+
 
 									<p:commandButton value="#{messages.label_modifier}"
 										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
@@ -75,11 +64,23 @@
 										action="#{cursusSearchServiceBean.createCurriculum()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatecursus').hide()"
 										update="forme fdial growl" />
-										<p:commandButton id="past"
+									<p:splitButton value="#{messages.label_options}"
+										actionListener="#{buttonView.save}" icon="ui-icon-gear">
+										<p:menuitem value="Update"
+											actionListener="#{buttonView.update}"
+											icon="ui-icon-arrowrefresh-1-w" />
+										<p:menuitem value="Delete"
+											actionListener="#{buttonView.delete}" ajax="false"
+											icon="ui-icon-close" />
+										<p:separator />
+										<p:menuitem value="Homepage" icon="ui-icon-extlink" />
+									</p:splitButton>
+
+									<p:commandButton id="past"
 										styleClass="btn btn-primary submit-button" ajax="false"
+										immediate="true"
 										action="searchcursus.xhtml?faces-redirect=true"
 										update="@([id$=listcursus]) forme fdial"
-										immediate="true"
 										icon="fa fa-fw fa-arrow-left">
 									</p:commandButton>
 								</div>
@@ -105,6 +106,7 @@
 															value="#{cursusSearchServiceBean.curriculumDto.nameCurriculum}"
 															placeholder="#{messages.label_cursus_name}"
 															required="true"
+															immediate="true"
 															requiredMessage="#{messages.label_cursusname_requeried}">
 															<p:ajax update="msgcursussname" event="keyup" />
 														</p:inputText>
@@ -118,6 +120,7 @@
 															styleClass="form-text"
 															value="#{cursusSearchServiceBean.curriculumDto.academiqueYear}"
 															converter="entityConverter"
+															immediate="true"
 															placeholder="#{messages.label_academic_years}"
 															required="true"
 															requiredMessage="#{messages.label_academic_years_requeried}">
@@ -143,6 +146,7 @@
 															value="#{cursusSearchServiceBean.curriculumDto.numberOfYears}"
 															placeholder="#{messages.label_study_years_number}"
 															required="true"
+															immediate="true"
 															requiredMessage="#{messages.label_studyyears_requeried}">
 															<p:ajax update="msgstudyyears" event="keyup" />
 														</p:inputText>
@@ -156,6 +160,7 @@
 															styleClass="form-text"
 															value="#{cursusSearchServiceBean.curriculumDto.academicGrade}"
 															converter="entityConverter"
+															immediate="true"
 															placeholder="#{messages.label_subestablishment}"
 															required="true"
 															requiredMessage="#{messages.label_curriculum_requeried}">
@@ -177,6 +182,7 @@
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:inputText id="sessionnumber" styleClass="form-text"
+														immediate="true"
 															value="#{cursusSearchServiceBean.curriculumDto.numberOfSessions}"
 															placeholder="#{messages.label_session_number}"
 															required="true"
@@ -189,6 +195,7 @@
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:selectOneMenu id="selectcursustatut"
 															styleClass="form-text"
+															immediate="true"
 															value="#{cursusSearchServiceBean.curriculumDto.cursusStatus}"
 															converter="entityConverter"
 															placeholder="#{messages.label_cursus_status}"
@@ -208,6 +215,7 @@
 												<div class="row">
 													<div class="col-lg-6 col-md-6 col-sm-12">
 														<h:selectOneRadio id="typecourse"
+														immediate="true"
 															value="#{cursusSearchServiceBean.curriculumDto.typeOfCourse}">
 															<f:converter converterId="javax.faces.Boolean" />
 															<f:selectItem itemLabel="#{messages.label_dayschool}"

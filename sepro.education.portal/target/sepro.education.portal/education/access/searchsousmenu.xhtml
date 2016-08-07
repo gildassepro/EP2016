@@ -66,7 +66,6 @@
 									</p:commandButton>
 									<p:commandButton id="past"
 										styleClass="btn btn-primary submit-button" ajax="false"
-										immediate="true"
 										action="searchsousmenu.xhtml?faces-redirect=true"
 										update="@([id$=listsousmenu]) forme fdial"
 										icon="fa fa-fw fa-arrow-left">
@@ -104,7 +103,6 @@
 												<div class="col-md-4 col-sm-4">
 													<p:inputText styleClass="form-text form-control"
 														id="menunamelabel"
-														immediate="true"
 														value="#{childMenuSearchServiceBean.sousmenuDto.menuName}"
 														readonly="true" placeholder="#{messages.label_menu_name}">
 													</p:inputText>
@@ -112,7 +110,6 @@
 												<div class="col-md-4 col-sm-4">
 													<p:inputText styleClass="form-text form-control"
 														id="menuname"
-														immediate="true"
 														value="#{childMenuSearchServiceBean.sousmenuDto.menuName}"
 														readonly="true">
 													</p:inputText>
@@ -126,7 +123,6 @@
 												<div class="col-md-4 col-sm-4">
 													<p:inputText styleClass="form-text form-control"
 														id="descriptionlabel"
-														immediate="true"
 														value="#{childMenuSearchServiceBean.sousmenuDto.description}"
 														readonly="true">
 													</p:inputText>
@@ -134,7 +130,6 @@
 												<div class="col-md-4 col-sm-4">
 													<p:inputText styleClass="form-text form-control"
 														id="description"
-														immediate="true"
 														value="#{childMenuSearchServiceBean.description}"
 														placeholder="#{messages.label_description_name}"
 														rendered="#{childMenuSearchServiceBean.isAction()}"
@@ -144,7 +139,6 @@
 													</p:inputText>
 													<p:inputText styleClass="form-text form-control"
 														id="description1"
-														immediate="true"
 														value="#{childMenuSearchServiceBean.sousmenuDto.description}"
 														rendered="#{!childMenuSearchServiceBean.isAction()}"
 														readonly="true">

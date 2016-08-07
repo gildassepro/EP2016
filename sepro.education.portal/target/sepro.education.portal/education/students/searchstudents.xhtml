@@ -41,14 +41,14 @@
 										onclick="PF('updatestudent').show()" icon="fa fa-fw fa-plus">
 									</p:commandButton>
 									<p:commandButton id="modifse"
-										styleClass="btn btn-primary submit-button"
+										styleClass="btn btn-success"
 										value="#{messages.label_modifier}"
 										action="#{studentSearchServiceBean.initDualList('1')}"
 										update="@([id$=updatstudent]) forme fdial"
 										onclick="PF('updatestudent').show()" icon="fa fa-fw fa-pencil">
 									</p:commandButton>
 									<p:commandButton id="deletee" process="@([id$=liststudents])"
-										styleClass="btn btn-primary submit-button"
+										styleClass="btn btn-danger"
 										value="#{messages.label_supprimer1}"
 										title="#{messages.label_supprimer1}"
 										onclick="PF('confirmation').show()" icon="fa fa-fw fa-remove">

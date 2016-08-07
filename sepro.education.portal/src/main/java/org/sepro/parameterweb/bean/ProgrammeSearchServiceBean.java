@@ -511,6 +511,7 @@ public class ProgrammeSearchServiceBean implements Serializable {
 						.getAcademicModuleDtoServicewsImplPort();
 				listDesModuleAcademicSource = academicModuleDtoServicewsEndpoint
 						.getAllAcademicModuleServicews();
+				logger.debug("+++++++++++++++TEST SIZE++++++++++++"+selectedAcademicmodule.size());
 
 				if (programmeDto != null) {
 					for (AcademicModuleDto programme : programmeDto
@@ -519,6 +520,7 @@ public class ProgrammeSearchServiceBean implements Serializable {
 							if (modules.getIdAcademicModule() == programme
 									.getIdAcademicModule()) {
 								selectedAcademicmodule.add(modules);
+								logger.debug("+++++++++++++++TEST SIZE11111++++++++++++"+selectedAcademicmodule.size());
 								break;
 							}
 						}

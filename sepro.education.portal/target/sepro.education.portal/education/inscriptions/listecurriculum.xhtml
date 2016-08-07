@@ -83,7 +83,8 @@
 										</p:selectOneMenu>
 									</div>
 									<div class="col-lg-offset-1 col-lg-2 col-md-3 col-sm-3">
-										<p:outputLabel value="#{messages.label_name_contact}" /><span class="requireds">(*)</span>
+										<p:outputLabel value="#{messages.label_name_contact}" />
+										<span class="requireds">(*)</span>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
 										<p:inputText styleClass="form-control" id="contact"
@@ -167,7 +168,7 @@
 										<span class="requireds">(*)</span>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
-										<p:inputText styleClass="form-control" id="numcontact" 
+										<p:inputText styleClass="form-control" id="numcontact"
 											value="#{inscriptionSearchServiceBean.inscriptionStep4Dto.contactTelephoneNumber}">
 											<f:validateRegex pattern="[0-9]+"
 												update=":formbuttons:enregistrer :formbuttons:next" />
@@ -175,6 +176,7 @@
 												listener="#{inscriptionSearchServiceBean.testformListCursus()}"
 												update=":formbuttons:enregistrer :formbuttons:next" />
 										</p:inputText>
+										
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3"></div>
 									<div class="col-lg-3 col-md-3 col-sm-3"></div>

@@ -1037,7 +1037,7 @@ public void onchangeZipCode(){
 			logger.debug("++++++++JE SUIS DANS LE CREATE3+++++++++++++");
 			DetailteacherDto createdetailprof = new DetailteacherDto();
 			createdetailprof.setHourRate(detailteacherDto.getHourRate());
-			logger.debug("++++++++JE SUIS DANS LE CREATE22222222+++++++++++++");
+			logger.debug("++++++++JE SUIS DANS LE CREATE22222222+++++++++++++"+detailteacherDto.getHourRate());
 			logger.debug("*******ID TEACHER111********"+identityTeacherDtos.getIdIdentityTeacher());
 			logger.debug("*******ID TEACHER222********"+identityTeacherDtos.getIdIdentityTeacher());
 			createdetailprof.setIdentityTeacher(identityTeacherDtos);
@@ -1326,7 +1326,6 @@ public void onchangeZipCode(){
 			listdocumentidentity = new ArrayList<PopuplistDto>();
 			listetatcivile = new ArrayList<PopuplistDto>();
 			listnationalite = new ArrayList<PopuplistDto>();
-			listRegion = new ArrayList<RegionDto>();
 			listspecialite = new ArrayList<PopuplistDto>();
 			listsexe = new ArrayList<PopuplistDto>();
 			action4 = true;
@@ -1344,7 +1343,6 @@ public void onchangeZipCode(){
 			listdocumentidentity = new ArrayList<PopuplistDto>();
 			listetatcivile = new ArrayList<PopuplistDto>();
 			listnationalite = new ArrayList<PopuplistDto>();
-			listRegion = new ArrayList<RegionDto>();
 			listspecialite = new ArrayList<PopuplistDto>();
 			listsexe = new ArrayList<PopuplistDto>();
 			action4 = true;
@@ -1367,27 +1365,11 @@ public void onchangeZipCode(){
 					.getRegionServicewsImplPort();
 			cityServicewsEndpoint = cityServicews.getCityServicewsImplPort();
 			zipServicewsEndpoint = zipServicews.getZipServicewsImplPort();
-			popuplistDtoServicewsEndpoint = popuplistDtoServicews
-					.getPopuplistDtoServicewsImplPort();
 
 			listCountry = countryServicewsEndpoint.getAllCountryServicews();
-			
-			listetatcivile = popuplistDtoServicewsEndpoint
-					.searchPopuplistDtoServicews("etatcivile");
-
-			listnationalite = popuplistDtoServicewsEndpoint
-					.searchPopuplistDtoServicews("nationnalite");
-
-			listdocumentidentity = popuplistDtoServicewsEndpoint
-					.searchPopuplistDtoServicews("identite");
-
-			listsexe = popuplistDtoServicewsEndpoint
-					.searchPopuplistDtoServicews("sexe");
-
-			listspecialite = popuplistDtoServicewsEndpoint
-					.searchPopuplistDtoServicews("speciality");
-			
-			
+			listCity = cityServicewsEndpoint.getAllCityServicews();
+			listRegion = regionServicewsEndpoint.getAllRegionServicews();
+			listZipcode = zipServicewsEndpoint.getAllZipcodeServicews();
 
 			logger.debug("fin dual");
 

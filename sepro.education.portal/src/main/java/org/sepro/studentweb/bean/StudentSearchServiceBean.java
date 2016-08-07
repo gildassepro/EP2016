@@ -19,6 +19,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.model.UploadedFile;
 import org.sepro.inscriptionweb.serviceapi.InscriptionAuthentificationDto;
 import org.sepro.inscriptionweb.serviceapi.InscriptionStepfourDto;
@@ -63,6 +64,8 @@ import org.sepro.teacherweb.serviceapi.IdentityTeacherDto;
 import org.sepro.teacherweb.serviceimpl.TeachedModuleServicews;
 import org.sepro.teacherweb.serviceimpl.TeachedModuleServicewsEndpoint;
 
+import sepro.education.web.util.FormatNumberPhoneUtil;
+
 @ManagedBean
 @ViewScoped
 public class StudentSearchServiceBean implements Serializable {
@@ -85,6 +88,7 @@ public class StudentSearchServiceBean implements Serializable {
 	private InscriptionSteponeServicews inscriptionSteponeServicews = new InscriptionSteponeServicews();
 	private InscriptionSteponeServicewsEndpoint inscriptionSteponeServicewsEndpoint;
 	private InscriptionSteponeDto inscriptionSteponeDto = new InscriptionSteponeDto();
+	private InscriptionSteponeDto inscriptionSteponeDtos = new InscriptionSteponeDto();
 	private List<InscriptionSteponeDto> listStudentIdentity = new ArrayList<InscriptionSteponeDto>();
 	
 	private InscriptionSteptwoServicews inscriptionSteptwoServicews = new InscriptionSteptwoServicews();
@@ -140,7 +144,83 @@ public class StudentSearchServiceBean implements Serializable {
 	private PopuplistDtoServicews popuplistDtoServicews = new PopuplistDtoServicews();
 	private PopuplistDtoServicewsEndpoint popuplistDtoServicewsEndpoint;
 	
+	private List<PopuplistDto> listetatcivile = new ArrayList<PopuplistDto>();
+	private List<PopuplistDto> listnationalite = new ArrayList<PopuplistDto>();
+	private List<PopuplistDto> listsexe = new ArrayList<PopuplistDto>();
+	private List<PopuplistDto> listtypecontact = new ArrayList<PopuplistDto>();
+	private List<PopuplistDto> listdocumentidentity = new ArrayList<PopuplistDto>();
+	private List<PopuplistDto> listlienparante = new ArrayList<PopuplistDto>();
+
+	private List<PopuplistDto> listfiliere = new ArrayList<PopuplistDto>();
+	private List<PopuplistDto> listanneeacademique = new ArrayList<PopuplistDto>();
+
+	public boolean status;
+	private boolean action = false;
+	private boolean action2 = false; 
+	private boolean action3 = true;
+
+	private boolean render2 = false;
+
+	private boolean render3 = true;
+	private boolean render4 = true;
+	private boolean render5 = true;
+
+	private boolean testdetail = true;
+	private String maskphonformatteacher;
+
+	private UploadedFile myfile;
+	private String filename;
+	private String destination = "D:\\DossierCVStudent\\";
+	File file;
+	private static final int DEFAULT_BUFFER_SIZE = 10240;
 	
+	
+	
+	private String maskphonformat;
+	private String maskphonformatparent;
+
+	
+	
+	public InscriptionSteponeDto getInscriptionSteponeDtos() {
+		return inscriptionSteponeDtos;
+	}
+
+	public void setInscriptionSteponeDtos(
+			InscriptionSteponeDto inscriptionSteponeDtos) {
+		this.inscriptionSteponeDtos = inscriptionSteponeDtos;
+	}
+
+	public String getMaskphonformat() {
+		return maskphonformat;
+	}
+
+	public void setMaskphonformat(String maskphonformat) {
+		this.maskphonformat = maskphonformat;
+	}
+
+	public String getMaskphonformatparent() {
+		return maskphonformatparent;
+	}
+
+	public void setMaskphonformatparent(String maskphonformatparent) {
+		this.maskphonformatparent = maskphonformatparent;
+	}
+
+	public boolean isAction2() {
+		return action2;
+	}
+
+	public void setAction2(boolean action2) {
+		this.action2 = action2;
+	}
+
+	public boolean isAction3() {
+		return action3;
+	}
+
+	public void setAction3(boolean action3) {
+		this.action3 = action3;
+	}
 
 	public InscriptionSteptwoDto getInscriptionSteptwoDto() {
 		return inscriptionSteptwoDto;
@@ -199,37 +279,6 @@ public class StudentSearchServiceBean implements Serializable {
 			List<InscriptionStepfourDto> listInscriptionStepfour) {
 		this.listInscriptionStepfour = listInscriptionStepfour;
 	}
-
-
-
-
-	private List<PopuplistDto> listetatcivile = new ArrayList<PopuplistDto>();
-	private List<PopuplistDto> listnationalite = new ArrayList<PopuplistDto>();
-	private List<PopuplistDto> listsexe = new ArrayList<PopuplistDto>();
-	private List<PopuplistDto> listtypecontact = new ArrayList<PopuplistDto>();
-	private List<PopuplistDto> listdocumentidentity = new ArrayList<PopuplistDto>();
-	private List<PopuplistDto> listlienparante = new ArrayList<PopuplistDto>();
-
-	private List<PopuplistDto> listfiliere = new ArrayList<PopuplistDto>();
-	private List<PopuplistDto> listanneeacademique = new ArrayList<PopuplistDto>();
-
-	public boolean status;
-	private boolean action = false;
-
-	private boolean render2 = false;
-
-	private boolean render3 = true;
-	private boolean render4 = true;
-	private boolean render5 = true;
-
-	private boolean testdetail = true;
-	private String maskphonformatteacher;
-
-	private UploadedFile myfile;
-	private String filename;
-	private String destination = "D:\\DossierCVStudent\\";
-	File file;
-	private static final int DEFAULT_BUFFER_SIZE = 10240;
 
 	
 	
@@ -561,6 +610,95 @@ public class StudentSearchServiceBean implements Serializable {
 		}
 
 	}
+	
+	
+	
+	public void initDualListPro(String daction) {
+		if (daction.equals("1")) {
+
+			listCountry = new ArrayList<CountryDto>();
+			listRegion = new ArrayList<RegionDto>();
+			listCity = new ArrayList<CityDto>();
+			listZipcode = new ArrayList<ZipcodeDto>();
+			listtypecontact = new ArrayList<PopuplistDto>();
+			listlienparante = new ArrayList<PopuplistDto>();
+			listsexe = new ArrayList<PopuplistDto>();
+			listanneeacademique = new ArrayList<PopuplistDto>();
+			listdocumentidentity = new ArrayList<PopuplistDto>();;
+			listetatcivile = new ArrayList<PopuplistDto>();;
+			listfiliere = new ArrayList<PopuplistDto>();
+			listnationalite = new ArrayList<PopuplistDto>();
+			
+			action2 = true;
+			action3 = false;
+			logger.debug("*********DANS INIDUALIST*****"+inscAuthentificationDto.getIdInscription());
+			initStudentDetail();
+
+		} else {
+
+			listCountry = new ArrayList<CountryDto>();
+			listRegion = new ArrayList<RegionDto>();
+			listCity = new ArrayList<CityDto>();
+			listZipcode = new ArrayList<ZipcodeDto>();
+			listtypecontact = new ArrayList<PopuplistDto>();
+			listlienparante = new ArrayList<PopuplistDto>();
+			listsexe = new ArrayList<PopuplistDto>();
+			listanneeacademique = new ArrayList<PopuplistDto>();
+			listdocumentidentity = new ArrayList<PopuplistDto>();;
+			listetatcivile = new ArrayList<PopuplistDto>();;
+			listfiliere = new ArrayList<PopuplistDto>();
+			listnationalite = new ArrayList<PopuplistDto>();
+			
+			action2 = true;
+			action3 = false;
+			initUpdateStudentDetail();
+			
+			
+		}
+		
+	}
+	public void initStudentDetail() {
+		
+//		inscriptionAuthServicewsEndpoint = inscriptionAuthServicews
+//				.getInscriptionAuthServicewsImplPort();
+//		inscriptionSteponeServicewsEndpoint = inscriptionSteponeServicews.getInscriptionSteponeServicewsImplPort();
+//		inscriptionSteptwoServicewsEndpoint = inscriptionSteptwoServicews.getInscriptionSteptwoServicewsImplPort();
+//		inscriptionSteptreeServicewsEndpoint = inscriptionSteptreeServicews.getInscriptionSteptreeServicewsImplPort();
+//		inscriptionStepfourServicewsEndpoint = inscriptionStepfourServicews.getInscriptionStepfourServicewsImplPort();
+//
+//		popuplistDtoServicewsEndpoint = popuplistDtoServicews
+//				.getPopuplistDtoServicewsImplPort();
+
+
+
+		
+		
+		logger.debug("**********NOUS SOMMES DANS LE INIT STUDENTDETAIL******"+inscAuthentificationDto.getIdInscription());
+		inscriptionSteponeDto.setInscriptionAuthentification(inscAuthentificationDto);
+		
+		listStudentIdentity = inscriptionSteponeServicewsEndpoint.searchInscriptionSteponeServicews(inscriptionSteponeDto);
+		logger.debug("******TAILLE DE LA LISTE ******"+listStudentIdentity.size());
+		
+		
+		
+		
+		//inscriptionSteponeDto.setInscriptionAuthentification(inscAuthentificationDto);
+//		inscriptionSteptwoDto.setInscriptionAuthentification(inscAuthentificationDto);
+//		inscriptionSteptreeDto.setInscriptionAuthentification(inscAuthentificationDto);
+//		inscriptionStepfourDto.setInscriptionAuthentification(inscAuthentificationDto);
+//		logger.debug("22222222222"+inscriptionSteptwoDto);
+		
+	//	listStudentIdentity = inscriptionSteponeServicewsEndpoint.searchInscriptionSteponeServicews(inscriptionSteponeDto);
+//		listInscriptionSteptwo = inscriptionSteptwoServicewsEndpoint.searchInscriptionSteptwoServicews(inscriptionSteptwoDto);
+//		listInscriptionSteptree = inscriptionSteptreeServicewsEndpoint.searchInscriptionSteptreeServicews(inscriptionSteptreeDto);
+//		listInscriptionStepfour = inscriptionStepfourServicewsEndpoint.searchInscriptionStepfourServicews(inscriptionStepfourDto);
+//		
+		
+	//	logger.debug("IDENTITY ETUDIANT"+listStudentIdentity.size());
+//		logger.debug("44444444"+listInscriptionSteptwo.size());
+//		logger.debug("55555555"+listInscriptionSteptree.size());
+//		logger.debug("66666666"+listInscriptionStepfour.size());
+	}
 
 	public void initCreateStudentDetail() {
 
@@ -659,12 +797,17 @@ public class StudentSearchServiceBean implements Serializable {
 		action = false;
 		try {
 			logger.debug("fin initCreate");
+			
+			inscriptionAuthServicewsEndpoint = inscriptionAuthServicews
+					.getInscriptionAuthServicewsImplPort();
+			inscriptionSteponeServicewsEndpoint = inscriptionSteponeServicews.getInscriptionSteponeServicewsImplPort();
+			inscriptionSteptwoServicewsEndpoint = inscriptionSteptwoServicews.getInscriptionSteptwoServicewsImplPort();
+			inscriptionSteptreeServicewsEndpoint = inscriptionSteptreeServicews.getInscriptionSteptreeServicewsImplPort();
+			inscriptionStepfourServicewsEndpoint = inscriptionStepfourServicews.getInscriptionStepfourServicewsImplPort();
 
 			popuplistDtoServicewsEndpoint = popuplistDtoServicews
 					.getPopuplistDtoServicewsImplPort();
 
-			inscriptionAuthServicewsEndpoint = inscriptionAuthServicews
-					.getInscriptionAuthServicewsImplPort();
 
 			countryServicewsEndpoint = countryServicews
 					.getCountryServicewsImplPort();
@@ -690,7 +833,26 @@ public class StudentSearchServiceBean implements Serializable {
 					.searchPopuplistDtoServicews("identite");
 			listnationalite = popuplistDtoServicewsEndpoint
 					.searchPopuplistDtoServicews("nationnalite");
-
+			
+			
+			logger.debug("1111111111"+inscAuthentificationDto);
+			inscriptionSteponeDto.setInscriptionAuthentification(inscAuthentificationDto);
+			inscriptionSteptwoDto.setInscriptionAuthentification(inscAuthentificationDto);
+			inscriptionSteptreeDto.setInscriptionAuthentification(inscAuthentificationDto);
+			inscriptionStepfourDto.setInscriptionAuthentification(inscAuthentificationDto);
+			logger.debug("22222222222"+inscriptionSteptwoDto);
+			
+			listStudentIdentity = inscriptionSteponeServicewsEndpoint.searchInscriptionSteponeServicews(inscriptionSteponeDto);
+			listInscriptionSteptwo = inscriptionSteptwoServicewsEndpoint.searchInscriptionSteptwoServicews(inscriptionSteptwoDto);
+			listInscriptionSteptree = inscriptionSteptreeServicewsEndpoint.searchInscriptionSteptreeServicews(inscriptionSteptreeDto);
+			listInscriptionStepfour = inscriptionStepfourServicewsEndpoint.searchInscriptionStepfourServicews(inscriptionStepfourDto);
+			
+			
+			logger.debug("33333333"+listStudentIdentity.size());
+			logger.debug("44444444"+listInscriptionSteptwo.size());
+			logger.debug("55555555"+listInscriptionSteptree.size());
+			logger.debug("66666666"+listInscriptionStepfour.size());
+			
 			logger.debug("end init initCreate");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -814,7 +976,9 @@ public class StudentSearchServiceBean implements Serializable {
 					.getRegionServicewsImplPort();
 			cityServicewsEndpoint = cityServicews.getCityServicewsImplPort();
 			zipServicewsEndpoint = zipServicews.getZipServicewsImplPort();
-
+			
+			listRegion = regionServicewsEndpoint.getAllRegionServicews();
+			
 			listCountry = countryServicewsEndpoint.getAllCountryServicews();
 
 			listZipcode = zipServicewsEndpoint.getAllZipcodeServicews();
@@ -839,17 +1003,19 @@ public class StudentSearchServiceBean implements Serializable {
 //			listStudents = studentServicewsEndpoint
 //					.searchStudentServicews(studentDto);
 			logger.debug("1111111111"+inscAuthentificationDto);
-			inscriptionSteponeDto.setInscriptionAuthentification(inscAuthentificationDto);
-			inscriptionSteptwoDto.setInscriptionAuthentification(inscAuthentificationDto);
-			inscriptionSteptreeDto.setInscriptionAuthentification(inscAuthentificationDto);
-			inscriptionStepfourDto.setInscriptionAuthentification(inscAuthentificationDto);
-			logger.debug("22222222222"+inscriptionSteptwoDto);
+//			inscriptionSteponeDto.setInscriptionAuthentification(inscAuthentificationDto);
+//			inscriptionSteptwoDto.setInscriptionAuthentification(inscAuthentificationDto);
+//			inscriptionSteptreeDto.setInscriptionAuthentification(inscAuthentificationDto);
+//			inscriptionStepfourDto.setInscriptionAuthentification(inscAuthentificationDto);
+//			logger.debug("22222222222"+inscriptionSteptwoDto);
+//			
+//			listStudentIdentity = inscriptionSteponeServicewsEndpoint.searchInscriptionSteponeServicews(inscriptionSteponeDto);
+//			listInscriptionSteptwo = inscriptionSteptwoServicewsEndpoint.searchInscriptionSteptwoServicews(inscriptionSteptwoDto);
+//			listInscriptionSteptree = inscriptionSteptreeServicewsEndpoint.searchInscriptionSteptreeServicews(inscriptionSteptreeDto);
+//			listInscriptionStepfour = inscriptionStepfourServicewsEndpoint.searchInscriptionStepfourServicews(inscriptionStepfourDto);
 			
-			listStudentIdentity = inscriptionSteponeServicewsEndpoint.searchInscriptionSteponeServicews(inscriptionSteponeDto);
-			listInscriptionSteptwo = inscriptionSteptwoServicewsEndpoint.searchInscriptionSteptwoServicews(inscriptionSteptwoDto);
-			listInscriptionSteptree = inscriptionSteptreeServicewsEndpoint.searchInscriptionSteptreeServicews(inscriptionSteptreeDto);
-			listInscriptionStepfour = inscriptionStepfourServicewsEndpoint.searchInscriptionStepfourServicews(inscriptionStepfourDto);
-			
+//			listStudentIdentity = inscriptionSteponeServicewsEndpoint.searchInscriptionSteponeServicews(inscriptionSteponeDto);
+//			logger.debug("TAILLE EST DE "+listStudentIdentity.size());
 			listInscripts = inscriptionAuthServicewsEndpoint.searchInscriptionAuthServicews(inscAuthentificationDto);
 			
 
@@ -860,5 +1026,215 @@ public class StudentSearchServiceBean implements Serializable {
 		}
 
 	}
+	
+	
+	
+	
+	
+public void maskPhone() {
+		
+		if (inscriptionSteponeDto.getCountryAddress().getIdCountry() != null){
+			
+					regionServicewsEndpoint = regionServicews.getRegionServicewsImplPort();
+					countryServicewsEndpoint = countryServicews.getCountryServicewsImplPort();
+					RegionDto regionsearch = new RegionDto();
+					regionsearch.setCountry(inscriptionSteponeDto.getCountryAddress());
+					listRegion = regionServicewsEndpoint.searchRegionServicews(regionsearch);
+					
+//					CityDto citysearch = new CityDto();
+//					citysearch.setRegion(inscriptionSteponeDto.getRegionAddress());
+//					logger.debug(" @@@@@@@@@@@ je vais en ville "+citysearch.getRegion().getRegionName());
+//					listcity = cityServicewsEndpoint.searchCityServicews(citysearch);
+//					logger.debug("la taille de la liste villlllle est "+listcity.size());
+//					
+//					ZipcodeDto zipcodesearch = new ZipcodeDto();
+//					zipcodesearch.setCity(inscriptionSteponeDto.getCityAddress());
+//					logger.debug("@@@@@@@@@@@@@@@@ je vais en code "+zipcodesearch.getCity().getCityName());
+//					listzipcode = zipServicewsEndpoint.searchZipcodeServicews(zipcodesearch);
+//					logger.debug("la taille de la liste zippppppppp est "+listzipcode.size());
+		  }
+		
+	
+
+		if (inscriptionSteponeDto.getCountryAddress().getIdCountry() != null) {
+			maskphonformat = "("
+					+ inscriptionSteponeDto.getCountryAddress()
+							.getMobilePhoneFormat().getIndicatif() + ")";
+		}
+
+		if (inscriptionSteponeDto.getCountryAddress().getMobilePhoneFormat()
+				.getNbrOfDigitBloc1() > 0) {
+			maskphonformat = maskphonformat
+					+ FormatNumberPhoneUtil.getFormat(inscriptionSteponeDto
+							.getCountryAddress().getMobilePhoneFormat()
+							.getNbrOfDigitBloc1());
+		}
+		if (inscriptionSteponeDto.getCountryAddress().getMobilePhoneFormat()
+				.getNbrOfDigitBloc2() > 0) {
+			maskphonformat = maskphonformat
+					+ FormatNumberPhoneUtil.getFormat(inscriptionSteponeDto
+							.getCountryAddress().getMobilePhoneFormat()
+							.getNbrOfDigitBloc2());
+		}
+		if (inscriptionSteponeDto.getCountryAddress().getMobilePhoneFormat()
+				.getNbrOfDigitBloc3() > 0) {
+			maskphonformat = maskphonformat
+					+ FormatNumberPhoneUtil.getFormat(inscriptionSteponeDto
+							.getCountryAddress().getMobilePhoneFormat()
+							.getNbrOfDigitBloc3());
+		}
+		if (inscriptionSteponeDto.getCountryAddress().getMobilePhoneFormat()
+				.getNbrOfDigitBloc4() > 0) {
+			maskphonformat = maskphonformat
+					+ FormatNumberPhoneUtil.getFormat(inscriptionSteponeDto
+							.getCountryAddress().getMobilePhoneFormat()
+							.getNbrOfDigitBloc4());
+		}
+		if (inscriptionSteponeDto.getCountryAddress().getMobilePhoneFormat()
+				.getNbrOfDigitBloc5() > 0) {
+			maskphonformat = maskphonformat
+					+ FormatNumberPhoneUtil.getFormat(inscriptionSteponeDto
+							.getCountryAddress().getMobilePhoneFormat()
+							.getNbrOfDigitBloc5());
+		}
+		if (inscriptionSteponeDto.getCountryAddress().getMobilePhoneFormat()
+				.getNbrOfDigitBloc6() > 0) {
+			maskphonformat = maskphonformat
+					+ FormatNumberPhoneUtil.getFormat(inscriptionSteponeDto
+							.getCountryAddress().getMobilePhoneFormat()
+							.getNbrOfDigitBloc6());
+		}
+		if (inscriptionSteponeDto.getCountryAddress().getMobilePhoneFormat()
+				.getNbrOfDigitBloc7() > 0) {
+			maskphonformat = maskphonformat
+					+ FormatNumberPhoneUtil.getFormat(inscriptionSteponeDto
+							.getCountryAddress().getMobilePhoneFormat()
+							.getNbrOfDigitBloc7());
+		}
+		if (inscriptionSteponeDto.getCountryAddress().getMobilePhoneFormat()
+				.getNbrOfDigitBloc8() > 0) {
+			maskphonformat = maskphonformat
+					+ FormatNumberPhoneUtil.getFormat(inscriptionSteponeDto
+							.getCountryAddress().getMobilePhoneFormat()
+							.getNbrOfDigitBloc8());
+		}
+		if (inscriptionSteponeDto.getCountryAddress().getMobilePhoneFormat()
+				.getNbrOfDigitBloc9() > 0) {
+			maskphonformat = maskphonformat
+					+ FormatNumberPhoneUtil.getFormat(inscriptionSteponeDto
+							.getCountryAddress().getMobilePhoneFormat()
+							.getNbrOfDigitBloc9());
+		}
+		if (inscriptionSteponeDto.getCountryAddress().getMobilePhoneFormat()
+				.getNbrOfDigitBloc10() > 0) {
+			maskphonformat = maskphonformat
+					+ FormatNumberPhoneUtil.getFormat(inscriptionSteponeDto
+							.getCountryAddress().getMobilePhoneFormat()
+							.getNbrOfDigitBloc10());
+		}
+		inscriptionSteponeDto.setPhoneNumber("221");
+		logger.debug("maskphonformat:" + maskphonformat);
+
+	}
+
+	public void maskPhoneparent() {
+          
+		
+		if (inscriptionSteptwoDto.getCountryAddress().getIdCountry() != null){
+			
+			regionServicewsEndpoint = regionServicews.getRegionServicewsImplPort();
+			countryServicewsEndpoint = countryServicews.getCountryServicewsImplPort();
+			RegionDto regionsearch = new RegionDto();
+			regionsearch.setCountry(inscriptionSteptwoDto.getCountryAddress());
+			listRegion = regionServicewsEndpoint.searchRegionServicews(regionsearch);
+	   
+  }
+		if (inscriptionSteptwoDto.getCountryAddress().getIdCountry() != null) {
+			maskphonformatparent = "("
+					+ inscriptionSteptwoDto.getCountryAddress()
+							.getMobilePhoneFormat().getIndicatif() + ")";
+		}
+
+		if (inscriptionSteptwoDto.getCountryAddress().getMobilePhoneFormat()
+				.getNbrOfDigitBloc1() > 0) {
+			maskphonformatparent = maskphonformatparent
+					+ FormatNumberPhoneUtil.getFormat(inscriptionSteptwoDto
+							.getCountryAddress().getMobilePhoneFormat()
+							.getNbrOfDigitBloc1());
+		}
+		if (inscriptionSteptwoDto.getCountryAddress().getMobilePhoneFormat()
+				.getNbrOfDigitBloc2() > 0) {
+			maskphonformatparent = maskphonformatparent
+					+ FormatNumberPhoneUtil.getFormat(inscriptionSteptwoDto
+							.getCountryAddress().getMobilePhoneFormat()
+							.getNbrOfDigitBloc2());
+		}
+		if (inscriptionSteptwoDto.getCountryAddress().getMobilePhoneFormat()
+				.getNbrOfDigitBloc3() > 0) {
+			maskphonformatparent = maskphonformatparent
+					+ FormatNumberPhoneUtil.getFormat(inscriptionSteptwoDto
+							.getCountryAddress().getMobilePhoneFormat()
+							.getNbrOfDigitBloc3());
+		}
+		if (inscriptionSteptwoDto.getCountryAddress().getMobilePhoneFormat()
+				.getNbrOfDigitBloc4() > 0) {
+			maskphonformatparent = maskphonformatparent
+					+ FormatNumberPhoneUtil.getFormat(inscriptionSteptwoDto
+							.getCountryAddress().getMobilePhoneFormat()
+							.getNbrOfDigitBloc4());
+		}
+		if (inscriptionSteptwoDto.getCountryAddress().getMobilePhoneFormat()
+				.getNbrOfDigitBloc5() > 0) {
+			maskphonformatparent = maskphonformatparent
+					+ FormatNumberPhoneUtil.getFormat(inscriptionSteptwoDto
+							.getCountryAddress().getMobilePhoneFormat()
+							.getNbrOfDigitBloc5());
+		}
+		if (inscriptionSteptwoDto.getCountryAddress().getMobilePhoneFormat()
+				.getNbrOfDigitBloc6() > 0) {
+			maskphonformatparent = maskphonformatparent
+					+ FormatNumberPhoneUtil.getFormat(inscriptionSteptwoDto
+							.getCountryAddress().getMobilePhoneFormat()
+							.getNbrOfDigitBloc6());
+		}
+		if (inscriptionSteptwoDto.getCountryAddress().getMobilePhoneFormat()
+				.getNbrOfDigitBloc7() > 0) {
+			maskphonformatparent = maskphonformatparent
+					+ FormatNumberPhoneUtil.getFormat(inscriptionSteptwoDto
+							.getCountryAddress().getMobilePhoneFormat()
+							.getNbrOfDigitBloc7());
+		}
+		if (inscriptionSteptwoDto.getCountryAddress().getMobilePhoneFormat()
+				.getNbrOfDigitBloc8() > 0) {
+			maskphonformatparent = maskphonformatparent
+					+ FormatNumberPhoneUtil.getFormat(inscriptionSteptwoDto
+							.getCountryAddress().getMobilePhoneFormat()
+							.getNbrOfDigitBloc8());
+		}
+		if (inscriptionSteptwoDto.getCountryAddress().getMobilePhoneFormat()
+				.getNbrOfDigitBloc9() > 0) {
+			maskphonformatparent = maskphonformatparent
+					+ FormatNumberPhoneUtil.getFormat(inscriptionSteptwoDto
+							.getCountryAddress().getMobilePhoneFormat()
+							.getNbrOfDigitBloc9());
+		}
+		if (inscriptionSteptwoDto.getCountryAddress().getMobilePhoneFormat()
+				.getNbrOfDigitBloc10() > 0) {
+			maskphonformatparent = maskphonformatparent
+					+ FormatNumberPhoneUtil.getFormat(inscriptionSteptwoDto
+							.getCountryAddress().getMobilePhoneFormat()
+							.getNbrOfDigitBloc10());
+		}
+		inscriptionSteponeDto.setPhoneNumber("221");
+		logger.debug("maskphonformatparent:" + maskphonformatparent);
+
+	}
+	
+//	public void onRowSelect(SelectEvent event) {
+//        FacesMessage msg = new FacesMessage("Proéspect Selectionné", ((InscriptionAuthentificationDto) event.getObject()).getIdInscription().toString());
+//        FacesContext.getCurrentInstance().addMessage(null, msg);
+//        action2 = true;
+//        action3 = false;
+//    }
 
 }

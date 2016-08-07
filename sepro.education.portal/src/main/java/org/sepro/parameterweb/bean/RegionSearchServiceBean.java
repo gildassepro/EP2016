@@ -199,7 +199,7 @@ public class RegionSearchServiceBean implements Serializable {
 		logger.debug("FIN createRegion +++++++++++++");
 	}
 
-	public void initDualList(String baction) {
+	public String initDualList(String baction) {
 		logger.debug("DEBUT initDualList +++++++++++++");
 		if (baction.equals("1")) {
 			regionDto = regionsDto;
@@ -207,14 +207,21 @@ public class RegionSearchServiceBean implements Serializable {
 			action2 = true;
 			action3= false;
 			initUpdate();
+			return null;
 		} else {
 			regionDto = new RegionDto();
 			listCountry = new ArrayList<CountryDto>();
 			action2 = true;
 			action3= false;
 			initCreate();
+			return null;
 		}
-		logger.debug("FIN CREATE REGION +++++++++++++");
+		
+		
+	}
+	
+	public void reinitialiser(){
+		init();
 	}
 
 	public void initUpdate() {

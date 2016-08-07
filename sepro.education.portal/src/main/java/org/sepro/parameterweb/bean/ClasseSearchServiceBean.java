@@ -58,7 +58,7 @@ public class ClasseSearchServiceBean implements Serializable {
 	private RoomInventoryServicewsEndpoint roomInventoryServicewsEndpoint;
 	private List<RoomInventoryDto> listinventaire = new ArrayList<RoomInventoryDto>();
 	private RoomInventoryDto roominventorydto = new RoomInventoryDto();
-	private RoomInventoryDto roominventorydtos = new RoomInventoryDto();
+	private RoomInventoryDto roominventorrydto = new RoomInventoryDto();
 	private RoomInventoryDto selectedinventaire = new RoomInventoryDto();
 
 	private SubEstablishmentServicews sousetablissementServicews = new SubEstablishmentServicews();
@@ -80,10 +80,56 @@ public class ClasseSearchServiceBean implements Serializable {
 	private List<DaysofWeekDto> listjourdestination = new ArrayList<DaysofWeekDto>();
 
 	private boolean action = false;
-	private boolean action2 = false;
-	private boolean action3 = true;
+	private boolean render2 = false;
+
+	private boolean render3 = true;
+	private boolean render4 = true;
+	private boolean render5 = true;
+	private boolean render6 = true;
+
+	private boolean action3 = false;
 	private boolean action4 = true;
 	private boolean test = false;
+
+	public boolean isRender6() {
+		return render6;
+	}
+
+	public void setRender6(boolean render6) {
+		this.render6 = render6;
+	}
+
+	public boolean isRender5() {
+		return render5;
+	}
+
+	public void setRender5(boolean render5) {
+		this.render5 = render5;
+	}
+
+	public boolean isRender4() {
+		return render4;
+	}
+
+	public void setRender4(boolean render4) {
+		this.render4 = render4;
+	}
+
+	public boolean isRender2() {
+		return render2;
+	}
+
+	public void setRender2(boolean render2) {
+		this.render2 = render2;
+	}
+
+	public boolean isRender3() {
+		return render3;
+	}
+
+	public void setRender3(boolean render3) {
+		this.render3 = render3;
+	}
 
 	public boolean isAction4() {
 		return action4;
@@ -91,14 +137,6 @@ public class ClasseSearchServiceBean implements Serializable {
 
 	public void setAction4(boolean action4) {
 		this.action4 = action4;
-	}
-
-	public boolean isAction2() {
-		return action2;
-	}
-
-	public void setAction2(boolean action2) {
-		this.action2 = action2;
 	}
 
 	public boolean isAction3() {
@@ -135,14 +173,12 @@ public class ClasseSearchServiceBean implements Serializable {
 		this.selectedinventaire = selectedinventaire;
 	}
 
-	
-
-	public RoomInventoryDto getRoominventorydtos() {
-		return roominventorydtos;
+	public RoomInventoryDto getRoominventorrydto() {
+		return roominventorrydto;
 	}
 
-	public void setRoominventorydtos(RoomInventoryDto roominventorydtos) {
-		this.roominventorydtos = roominventorydtos;
+	public void setRoominventorrydto(RoomInventoryDto roominventorrydto) {
+		this.roominventorrydto = roominventorrydto;
 	}
 
 	public boolean isTest() {
@@ -256,15 +292,8 @@ public class ClasseSearchServiceBean implements Serializable {
 	}
 
 	public void createInventaire() {
-		
-		logger.debug("*******ENTREE CREATE INVENTAIRE ********");
-		logger.debug("*******CLASS CREATE INVENTAIRE 2********" + classDto);
-		
-		logger.debug("*******CLASS CREATE INVENTAIRE 3********" + classDto);
 		try {
 			RoomInventoryDto inventaire = new RoomInventoryDto();
-			logger.debug("*******JE SUIS LA 1 ********");
-			logger.debug("*******CLASSE AVANT*******" + classDto);
 			inventaire.setClasse(classDto);
 			inventaire.setMaterial(roominventorydto.getMaterial());
 			inventaire.setQuantity(roominventorydto.getQuantity());
@@ -282,7 +311,7 @@ public class ClasseSearchServiceBean implements Serializable {
 							.getString("label_msg_create_inventaire")));
 
 		} catch (Exception e) {
-			e.printStackTrace();
+
 		}
 
 	}
@@ -290,7 +319,9 @@ public class ClasseSearchServiceBean implements Serializable {
 	public String updateInventaire() {
 		RoomInventoryDto modifinventaire = new RoomInventoryDto();
 		try {
+			logger.debug("+++****@@@@@ LA CLASSE AVANT ++******@@@@@"+classDto.getNameOfClass());
 			modifinventaire.setClasse(classDto);
+			logger.debug("+++****@@@@@@@@@@@@ LA CLASSE APRES ++******@@@@@@@@@@@"+classDto.getNameOfClass());
 			modifinventaire.setMaterial(roominventorydto.getMaterial());
 			modifinventaire.setQuantity(roominventorydto.getQuantity());
 			modifinventaire.setCommissioningDate(roominventorydto
@@ -318,7 +349,7 @@ public class ClasseSearchServiceBean implements Serializable {
 
 		try {
 			roomInventoryServicewsEndpoint
-					.deleteRoomInventoryServicews(roominventorydtos);
+					.deleteRoomInventoryServicews(roominventorrydto);
 			init();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
@@ -344,8 +375,8 @@ public class ClasseSearchServiceBean implements Serializable {
 			listtypedeclasse = new ArrayList<TypeofClassDto>();
 			listjoursource = new ArrayList<DaysofWeekDto>();
 			listjourdestination = new ArrayList<DaysofWeekDto>();
-			action2 = true;
-			action3 = false;
+			render2 = true;
+			render3 = false;
 			initUpdate();
 		} else {
 			classeDto = new ClasseDto();
@@ -354,8 +385,8 @@ public class ClasseSearchServiceBean implements Serializable {
 			listtypedeclasse = new ArrayList<TypeofClassDto>();
 			listjoursource = new ArrayList<DaysofWeekDto>();
 			listjourdestination = new ArrayList<DaysofWeekDto>();
-			action2 = true;
-			action3 = false;
+			render2 = true;
+			render3 = false;
 			initCreate();
 		}
 	}
@@ -363,32 +394,36 @@ public class ClasseSearchServiceBean implements Serializable {
 	public void initDualListInventaire(String caction) {
 		if (caction.equals("1")) {
 			roominventorydto = selectedinventaire;
-			action2 = true;
-			action4 = false;
+			// action = false;
+			render5 = false;
+			render6 = false;
+
+			render2 = true;
+			render4 = false;
+			render3 = true;
 			initUpdateInventaire();
 		} else {
 			roominventorydto = new RoomInventoryDto();
-			action2 = true;
-			action4 = false;
+			// action = false;
+			render5 = false;
+			render6 = false;
+
+			render2 = true;
+			render4 = false;
+			render3 = true;
+
 			try {
-				logger.debug("*******CLASS INDUALIST********"
-						+ classDto.getNameOfClass());
+
 				if (classDto != null) {
 					roomInventoryServicewsEndpoint = roomInventoryServicews
 							.getRoomInventoryServicewsImplPort();
-					logger.debug("*******CLASS INDUALIST22********"
-							+ classDto.getNameOfClass());
-					logger.debug("*******CLASS INDUALIST22********" + classDto);
 					roominventorydto.setClasse(classDto);
-					logger.debug("*******CLASS INDUALIST33********"
-							+ roominventorydto.getClasse());
-					initCreateInventaire();
 				}
 
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
+			initCreateInventaire();
 		}
 	}
 
@@ -476,18 +511,8 @@ public class ClasseSearchServiceBean implements Serializable {
 	}
 
 	public void initCreateInventaire() {
-
-		test = true;
-
 		try {
-			roomInventoryServicewsEndpoint = roomInventoryServicews
-					.getRoomInventoryServicewsImplPort();
-			classeServicewsEndpoint = classeServicews
-					.getClasseServicewsImplPort();
-			logger.debug("*******CLASS INDUALIST INITCREATE********" + classDto);
-			logger.debug("*******CLASSINDUALIST INITCREATE22********" + classDto.getNameOfClass());
-			
-			
+			test = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

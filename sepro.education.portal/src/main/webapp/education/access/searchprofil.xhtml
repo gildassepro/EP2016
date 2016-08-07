@@ -26,14 +26,15 @@
 										update="@([id$=updatprofile]) forme fdial"
 										onclick="PF('updateprofile').show()" icon="fa fa-fw fa-plus">
 									</p:commandButton>
-									<p:commandButton id="modifse" styleClass="btn btn-success"
+									<p:commandButton id="modifse"
+										styleClass="btn btn-primary submit-button"
 										value="#{messages.label_modifier}"
 										update="@([id$=updatprofile]) forme fdial"
 										onclick="PF('updateprofile').show()" icon="fa fa-fw fa-pencil"
 										action="#{profilSearchServiceBean.initDualList('1')}">
 									</p:commandButton>
 									<p:commandButton id="deletee" process="@([id$=Listprofiles])"
-										styleClass="btn btn-danger"
+										styleClass="btn btn-primary submit-button"
 										value="#{messages.label_supprimer1}"
 										title="#{messages.label_supprimer1}"
 										onclick="PF('confirmation').show()" icon="fa fa-fw fa-remove">
@@ -44,6 +45,24 @@
 										title="#{messages.label_print}"
 										value="#{messages.label_print}"
 										onclick="PF('confirmation').show()" icon="fa fa-fw fa-print">
+									</p:commandButton>
+									<p:splitButton value="#{messages.label_options}"
+										actionListener="#{buttonView.save}" icon="ui-icon-gear">
+										<p:menuitem value="Update"
+											actionListener="#{buttonView.update}"
+											icon="ui-icon-arrowrefresh-1-w" />
+										<p:menuitem value="Delete"
+											actionListener="#{buttonView.delete}" ajax="false"
+											icon="ui-icon-close" />
+										<p:separator />
+										<p:menuitem value="Homepage" icon="ui-icon-extlink" />
+									</p:splitButton>
+
+									<p:commandButton id="past"
+										styleClass="btn btn-primary submit-button" ajax="false"
+										action="searchprofil.xhtml?faces-redirect=true"
+										update="@([id$=Listprofiles]) forme fdial"
+										icon="fa fa-fw fa-arrow-left">
 									</p:commandButton>
 
 									<p:commandButton value="#{messages.label_modifier}"
@@ -58,26 +77,6 @@
 										action="#{profilSearchServiceBean.createProfil()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprofile').hide()"
 										update="forme fdial growl" />
-
-									<p:splitButton value="#{messages.label_options}"
-										actionListener="#{buttonView.save}" icon="ui-icon-gear">
-										<p:menuitem value="Update"
-											actionListener="#{buttonView.update}"
-											icon="ui-icon-arrowrefresh-1-w" />
-										<p:menuitem value="Delete"
-											actionListener="#{buttonView.delete}" ajax="false"
-											icon="ui-icon-close" />
-										<p:separator />
-										<p:menuitem value="Homepage" icon="ui-icon-extlink" />
-									</p:splitButton>
-									<p:commandButton id="past"
-									immediate="true"
-										styleClass="btn btn-primary submit-button" ajax="false"
-										action="searchprofil.xhtml?faces-redirect=true"
-										update="@([id$=Listprofiles]) forme fdial"
-										icon="fa fa-fw fa-arrow-left">
-									</p:commandButton>
-
 
 								</div>
 								<p:panel id="updatprofile" widgetVar="updateprofile"
@@ -100,7 +99,6 @@
 
 												<div class="col-md-7 col-sm-7">
 													<p:inputText id="profilname"
-													immediate="true"
 														styleClass="form-text form-control"
 														value="#{profilSearchServiceBean.profilDto.profilName}"
 														placeholder="#{messages.label_profile_name}"
@@ -120,7 +118,6 @@
 													<p:selectCheckboxMenu id="modulelist"
 														value="#{profilSearchServiceBean.listModuleDestination}"
 														filter="true" filterMatchMode="startsWith"
-														immediate="true"
 														converter="entityConverter" panelStyle=""
 														label="#{messages.label_choix_module}:">
 														<f:selectItems
