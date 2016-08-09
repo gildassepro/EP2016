@@ -40,8 +40,7 @@
 										update="@([id$=updatstudent]) forme fdial"
 										onclick="PF('updatestudent').show()" icon="fa fa-fw fa-plus">
 									</p:commandButton>
-									<p:commandButton id="modifse"
-										styleClass="btn btn-success"
+									<p:commandButton id="modifse" styleClass="btn btn-success"
 										value="#{messages.label_modifier}"
 										action="#{studentSearchServiceBean.initDualList('1')}"
 										update="@([id$=updatstudent]) forme fdial"
@@ -102,8 +101,8 @@
 
 									<p:commandButton id="past"
 										styleClass="btn btn-primary submit-button" ajax="false"
-										action="searchstudents.xhtml?faces-redirect=true" immediate="true"
-										update="@([id$=liststudents]) forme fdial"
+										action="searchstudents.xhtml?faces-redirect=true"
+										immediate="true" update="@([id$=liststudents]) forme fdial"
 										icon="fa fa-fw fa-arrow-left">
 									</p:commandButton>
 
@@ -133,7 +132,8 @@
 															</div>
 
 															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:inputText styleClass="form-control" id="name" immediate="true"
+																<p:inputText styleClass="form-control" id="name"
+																	immediate="true"
 																	value="#{studentSearchServiceBean.inscriptionSteponeDto.name}"
 																	placeholder="#{messages.label_name1}">
 
@@ -147,7 +147,8 @@
 															</div>
 
 															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:inputText styleClass="form-control" id="prenom1" immediate="true"
+																<p:inputText styleClass="form-control" id="prenom1"
+																	immediate="true"
 																	value="#{studentSearchServiceBean.inscriptionSteponeDto.firstName}"
 																	placeholder="#{messages.label_firstName1}">
 
@@ -197,8 +198,8 @@
 															</div>
 
 															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:inputText styleClass="form-control" id="emailstudent" immediate="true"
-																	readonly="true"
+																<p:inputText styleClass="form-control" id="emailstudent"
+																	immediate="true" readonly="true"
 																	value="#{studentSearchServiceBean.inscAuthentificationDto.emailAdd}">
 																</p:inputText>
 															</div>
@@ -210,8 +211,8 @@
 
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:selectOneMenu styleClass="form-text" id="sexestuden"
-																	value="#{studentSearchServiceBean.inscriptionSteponeDto.sexe}" immediate="true"
-																	converter="entityConverter">
+																	value="#{studentSearchServiceBean.inscriptionSteponeDto.sexe}"
+																	immediate="true" converter="entityConverter">
 																	<f:selectItem
 																		itemLabel="#{studentSearchServiceBean.inscriptionSteponeDto.sexe.value}"
 																		itemValue="#{studentSearchServiceBean.inscriptionSteponeDto.sexe}" />
@@ -260,8 +261,7 @@
 																	value="#{studentSearchServiceBean.inscriptionSteponeDto.identityNumber}"
 																	placeholder="#{messages.label_identityNumber1}"
 																	validatorMessage="#{messages.label_telephone1eta}">
-																	<f:validateRegex pattern="^[0-9]+$"
-																		update="enregistrer suivant" />
+																	<f:validateRegex pattern="^[0-9]+$" />
 
 																</p:inputText>
 															</div>
@@ -273,7 +273,8 @@
 																<span class="requireds">(*)</span>
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:selectOneMenu styleClass="form-text" id="pays" immediate="true"
+																<p:selectOneMenu styleClass="form-text" id="pays"
+																	immediate="true"
 																	value="#{studentSearchServiceBean.inscriptionSteponeDto.countryOfBirthday}"
 																	converter="entityConverter">
 																	<f:selectItem
@@ -319,7 +320,8 @@
 																<span class="requireds">(*)</span>
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:selectOneMenu styleClass="form-text" id="region1" immediate="true"
+																<p:selectOneMenu styleClass="form-text" id="region1"
+																	immediate="true"
 																	value="#{studentSearchServiceBean.inscriptionSteponeDto.regionAddress}"
 																	converter="entityConverter">
 																	<f:selectItem
@@ -339,7 +341,8 @@
 																<span class="requireds">(*)</span>
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:selectOneMenu styleClass="form-text" id="city1" immediate="true"
+																<p:selectOneMenu styleClass="form-text" id="city1"
+																	immediate="true"
 																	value="#{studentSearchServiceBean.inscriptionSteponeDto.cityAddress}"
 																	converter="entityConverter">
 																	<f:selectItem
@@ -361,7 +364,8 @@
 																<span class="requireds">(*)</span>
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:selectOneMenu styleClass="form-text" id="zipcode1" immediate="true"
+																<p:selectOneMenu styleClass="form-text" id="zipcode1"
+																	immediate="true"
 																	value="#{studentSearchServiceBean.inscriptionSteponeDto.zipcodeAddress}"
 																	converter="entityConverter">
 																	<f:selectItem
@@ -407,7 +411,8 @@
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:inputMask styleClass="form-control" id="phone1"
 																	value="#{studentSearchServiceBean.inscriptionSteponeDto.phoneNumber}"
-																	placeholder="#{messages.label_phoneNumber1}" immediate="true"
+																	placeholder="#{messages.label_phoneNumber1}"
+																	immediate="true"
 																	validatorMessage="#{messages.label_telephone1eta}"
 																	mask="#{studentSearchServiceBean.maskphonformat}">
 
@@ -419,7 +424,8 @@
 																<span class="requireds">(*)</span>
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:selectOneMenu styleClass="form-text" id="etatcivile" immediate="true"
+																<p:selectOneMenu styleClass="form-text" id="etatcivile"
+																	immediate="true"
 																	value="#{studentSearchServiceBean.inscriptionSteponeDto.maritalStatus}"
 																	converter="entityConverter">
 																	<f:selectItem
@@ -450,7 +456,8 @@
 															</div>
 
 															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:inputText styleClass="form-control" id="nomc" immediate="true"
+																<p:inputText styleClass="form-control" id="nomc"
+																	immediate="true"
 																	value="#{studentSearchServiceBean.inscriptionSteptwoDto.name}"
 																	placeholder="#{messages.label_name1}">
 
@@ -463,7 +470,8 @@
 															</div>
 
 															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:inputText styleClass="form-control" id="prenomc" immediate="true"
+																<p:inputText styleClass="form-control" id="prenomc"
+																	immediate="true"
 																	value="#{studentSearchServiceBean.inscriptionSteptwoDto.firstName}"
 																	placeholder="#{messages.label_firstName1}">
 
@@ -479,12 +487,12 @@
 																<span class="requireds">(*)</span>
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:inputText styleClass="form-control" id="emailc" immediate="true"
+																<p:inputText styleClass="form-control" id="emailc"
+																	immediate="true"
 																	value="#{studentSearchServiceBean.inscriptionSteptwoDto.emailAddress}"
 																	placeholder="#{messages.label_emailAdd1}">
 																	<f:validateRegex
-																		pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"
-																		update="enregistrer suivant" />
+																		pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
 
 																</p:inputText>
 															</div>
@@ -495,7 +503,8 @@
 															</div>
 
 															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:selectOneMenu styleClass="form-text" id="lienc" immediate="true"
+																<p:selectOneMenu styleClass="form-text" id="lienc"
+																	immediate="true"
 																	value="#{studentSearchServiceBean.inscriptionSteptwoDto.relationship}"
 																	converter="entityConverter">
 																	<f:selectItem
@@ -537,7 +546,8 @@
 															</div>
 
 															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:selectOneMenu styleClass="form-text" id="regionc" immediate="true"
+																<p:selectOneMenu styleClass="form-text" id="regionc"
+																	immediate="true"
 																	value="#{studentSearchServiceBean.inscriptionSteptwoDto.regionAddress}"
 																	converter="entityConverter">
 																	<f:selectItem
@@ -558,7 +568,8 @@
 																<span class="requireds">(*)</span>
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:selectOneMenu styleClass="form-text" id="cityc" immediate="true"
+																<p:selectOneMenu styleClass="form-text" id="cityc"
+																	immediate="true"
 																	value="#{studentSearchServiceBean.inscriptionSteptwoDto.cityAddress}"
 																	converter="entityConverter">
 																	<f:selectItem
@@ -577,7 +588,8 @@
 																<span class="requireds">(*)</span>
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:selectOneMenu styleClass="form-text" id="zipcodec" immediate="true"
+																<p:selectOneMenu styleClass="form-text" id="zipcodec"
+																	immediate="true"
 																	value="#{studentSearchServiceBean.inscriptionSteptwoDto.zipcodeAddress}"
 																	converter="entityConverter">
 																	<f:selectItem
@@ -600,7 +612,8 @@
 																<span class="requireds">(*)</span>
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:inputMask styleClass="form-control" id="phonec" immediate="true"
+																<p:inputMask styleClass="form-control" id="phonec"
+																	immediate="true"
 																	value="#{studentSearchServiceBean.inscriptionSteptwoDto.phoneNumber}"
 																	placeholder="#{messages.label_phoneNumber1}"
 																	validatorMessage="#{messages.label_telephone1eta}"
@@ -614,7 +627,8 @@
 																<span class="requireds">(*)</span>
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:selectOneMenu styleClass="form-text" id="contactc" immediate="true"
+																<p:selectOneMenu styleClass="form-text" id="contactc"
+																	immediate="true"
 																	value="#{studentSearchServiceBean.inscriptionSteptwoDto.typeOfContact}"
 																	converter="entityConverter">
 																	<f:selectItem
@@ -677,45 +691,7 @@
 															<h:outputText value="#{parent.emailAddress}"></h:outputText>
 														</p:column>
 
-														<p:column priority="1" width="100"
-															filterMatchMode="contains">
-
-															<f:facet name="header">
-																<p:outputLabel value="#{messages.label_action}" />
-															</f:facet>
-
-
-															<p:commandButton id="modifier"
-																styleClass="btn btn-success"
-																title="#{messages.label_modifier}" update="forme"
-																value="#{messages.label_modifier}"
-																icon="fa fa-fw fa-pencil">
-																<f:setPropertyActionListener value="#{parent}"
-																	target="#{studentSearchServiceBean.inscriptionSteptwoDto}" />
-															</p:commandButton>
-
-															<p:commandButton id="supprimer"
-																styleClass="btn btn-danger"
-																title="#{messages.label_supprimer1}"
-																oncomplete="PF('confirmation').show()"
-																update="formdialogs"
-																value="#{messages.label_supprimer1}"
-																icon="fa fa-fw fa-remove">
-																<f:setPropertyActionListener value="#{parent}"
-																	target="#{studentSearchServiceBean.inscriptionSteptwoDto}" />
-															</p:commandButton>
-
-
-
-															<p:blockUI block="listpar"
-																trigger="listpar:supprimer,listpar:modifier">
-										#{messages.label_loading}<br />
-																<p:graphicImage
-																	value="/resources/images/loadingpics.gif" />
-															</p:blockUI>
-
-
-														</p:column>
+														
 													</p:dataTable>
 												</h:form>
 
@@ -744,7 +720,8 @@
 																<span class="requireds">(*)</span>
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:inputText styleClass="form-control" id="nom" immediate="true"
+																<p:inputText styleClass="form-control" id="nom"
+																	immediate="true"
 																	value="#{studentSearchServiceBean.inscriptionStepfourDto.nameOfScool}">
 
 																</p:inputText>
@@ -754,8 +731,8 @@
 																<span class="requireds">(*)</span>
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:inputText styleClass="form-control" id="dip" immediate="true"
-																	maxlength="128"
+																<p:inputText styleClass="form-control" id="dip"
+																	immediate="true" maxlength="128"
 																	value="#{studentSearchServiceBean.inscriptionStepfourDto.diploma}">
 
 																</p:inputText>
@@ -786,7 +763,8 @@
 																<span class="requireds">(*)</span>
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:inputText styleClass="form-control" id="contact" immediate="true"
+																<p:inputText styleClass="form-control" id="contact"
+																	immediate="true"
 																	value="#{studentSearchServiceBean.inscriptionStepfourDto.contactName}">
 
 																</p:inputText>
@@ -813,8 +791,7 @@
 																<span class="requireds">(*)</span>
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:calendar id="buttonend"
-																immediate="true"
+																<p:calendar id="buttonend" immediate="true"
 																	value="#{studentSearchServiceBean.inscriptionStepfourDto.enDate}"
 																	showOn="button" pattern="MM/dd/yyyy" required="true"
 																	requiredMessage="#{messages.label_enDate_requeried}"
@@ -831,7 +808,7 @@
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:selectOneMenu styleClass="form-text" id="typecontact"
-																immediate="true"
+																	immediate="true"
 																	value="#{studentSearchServiceBean.inscriptionStepfourDto.typeOfContact}"
 																	converter="entityConverter">
 																	<f:selectItem
@@ -850,7 +827,8 @@
 																<span class="requireds">(*)</span>
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:inputText styleClass="form-control" id="email" immediate="true"
+																<p:inputText styleClass="form-control" id="email"
+																	immediate="true"
 																	value="#{studentSearchServiceBean.inscriptionStepfourDto.contactEmail}">
 																	<f:validateRegex
 																		pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
@@ -864,7 +842,8 @@
 																<span class="requireds">(*)</span>
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:inputText styleClass="form-control" id="numcontact" immediate="true"
+																<p:inputText styleClass="form-control" id="numcontact"
+																	immediate="true"
 																	value="#{studentSearchServiceBean.inscriptionStepfourDto.contactTelephoneNumber}">
 																	<f:validateRegex pattern="[0-9]+" />
 
@@ -946,40 +925,7 @@
 																value="#{listestablishment.contactTelephoneNumber}"></h:outputText>
 														</p:column>
 
-														<p:column priority="1" width="100"
-															filterMatchMode="contains">
-															<f:facet name="header">
-																<p:outputLabel value="#{messages.label_action}" />
-															</f:facet>
-															<p:commandButton id="modifier"
-																styleClass="btn btn-success"
-																title="#{messages.label_modifier}" update="forme"
-																value="#{messages.label_modifier}"
-																icon="fa fa-fw fa-pencil">
-																<f:setPropertyActionListener
-																	value="#{listestablishment}"
-																	target="#{studentSearchServiceBean.inscriptionStepfourDto}" />
-															</p:commandButton>
-
-															<p:commandButton id="supprimer"
-																styleClass="btn btn-danger"
-																title="#{messages.label_supprimer1}"
-																oncomplete="PF('confirmation').show()"
-																update="formdialog" value="#{messages.label_supprimer1}"
-																icon="fa fa-fw fa-remove">
-																<f:setPropertyActionListener
-																	value="#{listestablishment}"
-																	target="#{studentSearchServiceBean.inscriptionStepfourDto}" />
-															</p:commandButton>
-
-															<p:blockUI block="listcurriculum"
-																trigger="listcurriculum:supprimer,listcurriculum:modifier">
-										#{messages.label_loading}<br />
-																<p:graphicImage
-																	value="/resources/images/loadingpics.gif" />
-															</p:blockUI>
-
-														</p:column>
+							
 													</p:dataTable>
 												</h:form>
 
@@ -1009,59 +955,57 @@
 
 
 								<p:dataTable id="liststudents"
-									value="#{studentSearchServiceBean.listInscripts}"
-									var="student" widgetVar="studentTable"
-									emptyMessage="#{messages.label_empty}"
+									value="#{studentSearchServiceBean.listprospects}" var="student"
+									widgetVar="studentTable" emptyMessage="#{messages.label_empty}"
 									rendered="#{!studentSearchServiceBean.isAction2()}"
-									selection="#{studentSearchServiceBean.inscAuthentificationDto}"
+									selection="#{studentSearchServiceBean.prospectDtos}"
 									styleClass="listeTable table-responsive filterable"
 									tableStyleClass="table table-striped table-condensed table-hover"
-									rowKey="#{student.idInscription}" selectionMode="single"
+									rowKey="#{student.idAuthentif}" selectionMode="single"
 									paginator="true" paginatorPosition="bottom"
 									paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
-									rows="10" filterBy="#{student.idInscription}">
+									rows="10" filterBy="#{student.idAuthentif}">
 									<!-- 									<p:ajax event="rowSelect" listener="#{dtLazyView.onRowSelect}" -->
 									<!-- 										update=":forme:updatstudent" oncomplete="PF('updatstudent').show()" /> -->
 
-<!-- 									<p:ajax event="rowSelect" listener="#{studentSearchServiceBean.onRowSelect}" -->
-<!-- 										update="@([id$=updatdetailstudent])" oncomplete="PF('updatedetailstudent').show()" /> -->
+									<!-- 									<p:ajax event="rowSelect" listener="#{studentSearchServiceBean.onRowSelect}" -->
+									<!-- 										update="@([id$=updatdetailstudent])" oncomplete="PF('updatedetailstudent').show()" /> -->
 									<p:column priority="3" width="100"
-										filterBy="#{student.idInscription}"
-										filterMatchMode="contains">
+										filterBy="#{student.idAuthentif}" filterMatchMode="contains">
 										<f:facet name="header">
 											<p:outputLabel value="#{messages.label_number_inscription}" />
 										</f:facet>
-										<h:outputText value="#{student.idInscription}"></h:outputText>
+										<h:outputText value="#{student.idAuthentif}"></h:outputText>
 									</p:column>
 
-									<p:column priority="1" filterBy="#{student.idInscription}"
+									<p:column priority="1" filterBy="#{student.nom}"
 										filterMatchMode="contains">
 										<f:facet name="header">
 											<p:outputLabel value="#{messages.label_name}" />
 										</f:facet>
-										<h:outputText value="#{student.idInscription}"></h:outputText>
+										<h:outputText value="#{student.nom}"></h:outputText>
 									</p:column>
-									<p:column priority="1" filterBy="#{student.emailAdd}"
+									<p:column priority="1" filterBy="#{student.prenom}"
 										filterMatchMode="contains">
 										<f:facet name="header">
 											<p:outputLabel value="#{messages.label_surname}" />
 										</f:facet>
-										<h:outputText value="#{student.emailAdd}"></h:outputText>
+										<h:outputText value="#{student.prenom}"></h:outputText>
 									</p:column>
 
-									<p:column priority="1" filterBy="#{student.emailAdd}"
+									<p:column priority="1" filterBy="#{student.nom}"
 										filterMatchMode="contains">
 										<f:facet name="header">
 											<p:outputLabel value="#{messages.label_phoneNumber}" />
 										</f:facet>
-										<h:outputText value="#{student.emailAdd}"></h:outputText>
+										<h:outputText value="#{student.nom}"></h:outputText>
 									</p:column>
-									<p:column priority="1" filterBy="#{student.emailAdd}"
+									<p:column priority="1" filterBy="#{student.fillier}"
 										filterMatchMode="contains">
 										<f:facet name="header">
 											<p:outputLabel value="#{messages.label_curriculum}" />
 										</f:facet>
-										<h:outputText value="#{student.emailAdd}"></h:outputText>
+										<h:outputText value="#{student.fillier}"></h:outputText>
 									</p:column>
 
 								</p:dataTable>

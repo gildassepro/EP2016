@@ -51,6 +51,8 @@ import org.sepro.parameterweb.serviceimpl.RegionServicews;
 import org.sepro.parameterweb.serviceimpl.RegionServicewsEndpoint;
 import org.sepro.parameterweb.serviceimpl.ZipServicews;
 import org.sepro.parameterweb.serviceimpl.ZipServicewsEndpoint;
+
+import org.sepro.studentweb.bean.util.ProspectDto;
 import org.sepro.studentweb.serviceapi.StudentCVDto;
 import org.sepro.studentweb.serviceapi.StudentContactDto;
 import org.sepro.studentweb.serviceapi.StudentDto;
@@ -105,6 +107,10 @@ public class StudentSearchServiceBean implements Serializable {
 	private InscriptionStepfourServicewsEndpoint inscriptionStepfourServicewsEndpoint;
 	private InscriptionStepfourDto inscriptionStepfourDto = new InscriptionStepfourDto();
 	private List<InscriptionStepfourDto> listInscriptionStepfour = new ArrayList<InscriptionStepfourDto>();
+	
+	private List<ProspectDto> listprospects = new ArrayList<ProspectDto>();
+	private ProspectDto prospectDto = new ProspectDto();
+	private ProspectDto prospectDtos = new ProspectDto();
 	
 
 	private StudentServicews studentServicews = new StudentServicews();
@@ -181,6 +187,32 @@ public class StudentSearchServiceBean implements Serializable {
 
 	
 	
+	
+
+	public ProspectDto getProspectDtos() {
+		return prospectDtos;
+	}
+
+	public void setProspectDtos(ProspectDto prospectDtos) {
+		this.prospectDtos = prospectDtos;
+	}
+
+	public List<ProspectDto> getListprospects() {
+		return listprospects;
+	}
+
+	public void setListprospects(List<ProspectDto> listprospects) {
+		this.listprospects = listprospects;
+	}
+
+	public ProspectDto getProspectDto() {
+		return prospectDto;
+	}
+
+	public void setProspectDto(ProspectDto prospectDto) {
+		this.prospectDto = prospectDto;
+	}
+
 	public InscriptionSteponeDto getInscriptionSteponeDtos() {
 		return inscriptionSteponeDtos;
 	}
@@ -659,39 +691,39 @@ public class StudentSearchServiceBean implements Serializable {
 	}
 	public void initStudentDetail() {
 		
-//		inscriptionAuthServicewsEndpoint = inscriptionAuthServicews
-//				.getInscriptionAuthServicewsImplPort();
-//		inscriptionSteponeServicewsEndpoint = inscriptionSteponeServicews.getInscriptionSteponeServicewsImplPort();
-//		inscriptionSteptwoServicewsEndpoint = inscriptionSteptwoServicews.getInscriptionSteptwoServicewsImplPort();
-//		inscriptionSteptreeServicewsEndpoint = inscriptionSteptreeServicews.getInscriptionSteptreeServicewsImplPort();
-//		inscriptionStepfourServicewsEndpoint = inscriptionStepfourServicews.getInscriptionStepfourServicewsImplPort();
-//
-//		popuplistDtoServicewsEndpoint = popuplistDtoServicews
-//				.getPopuplistDtoServicewsImplPort();
+		inscriptionAuthServicewsEndpoint = inscriptionAuthServicews
+				.getInscriptionAuthServicewsImplPort();
+		inscriptionSteponeServicewsEndpoint = inscriptionSteponeServicews.getInscriptionSteponeServicewsImplPort();
+		inscriptionSteptwoServicewsEndpoint = inscriptionSteptwoServicews.getInscriptionSteptwoServicewsImplPort();
+		inscriptionSteptreeServicewsEndpoint = inscriptionSteptreeServicews.getInscriptionSteptreeServicewsImplPort();
+		inscriptionStepfourServicewsEndpoint = inscriptionStepfourServicews.getInscriptionStepfourServicewsImplPort();
+
+		popuplistDtoServicewsEndpoint = popuplistDtoServicews
+				.getPopuplistDtoServicewsImplPort();
 
 
 
 		
 		
-		logger.debug("**********NOUS SOMMES DANS LE INIT STUDENTDETAIL******"+inscAuthentificationDto.getIdInscription());
-		inscriptionSteponeDto.setInscriptionAuthentification(inscAuthentificationDto);
-		
-		listStudentIdentity = inscriptionSteponeServicewsEndpoint.searchInscriptionSteponeServicews(inscriptionSteponeDto);
-		logger.debug("******TAILLE DE LA LISTE ******"+listStudentIdentity.size());
+//		logger.debug("**********NOUS SOMMES DANS LE INIT STUDENTDETAIL******"+inscAuthentificationDto.getIdInscription());
+//		inscriptionSteponeDto.setInscriptionAuthentification(inscAuthentificationDto);
+//		
+//		listStudentIdentity = inscriptionSteponeServicewsEndpoint.searchInscriptionSteponeServicews(inscriptionSteponeDto);
+//		logger.debug("******TAILLE DE LA LISTE ******"+listStudentIdentity.size());
 		
 		
 		
 		
 		//inscriptionSteponeDto.setInscriptionAuthentification(inscAuthentificationDto);
-//		inscriptionSteptwoDto.setInscriptionAuthentification(inscAuthentificationDto);
-//		inscriptionSteptreeDto.setInscriptionAuthentification(inscAuthentificationDto);
-//		inscriptionStepfourDto.setInscriptionAuthentification(inscAuthentificationDto);
+		inscriptionSteptwoDto.setInscriptionAuthentification(prospectDtos.getIdAuthentification());
+		inscriptionSteptreeDto.setInscriptionAuthentification(prospectDtos.getIdAuthentification());
+		inscriptionStepfourDto.setInscriptionAuthentification(prospectDtos.getIdAuthentification());
 //		logger.debug("22222222222"+inscriptionSteptwoDto);
 		
 	//	listStudentIdentity = inscriptionSteponeServicewsEndpoint.searchInscriptionSteponeServicews(inscriptionSteponeDto);
-//		listInscriptionSteptwo = inscriptionSteptwoServicewsEndpoint.searchInscriptionSteptwoServicews(inscriptionSteptwoDto);
-//		listInscriptionSteptree = inscriptionSteptreeServicewsEndpoint.searchInscriptionSteptreeServicews(inscriptionSteptreeDto);
-//		listInscriptionStepfour = inscriptionStepfourServicewsEndpoint.searchInscriptionStepfourServicews(inscriptionStepfourDto);
+		listInscriptionSteptwo = inscriptionSteptwoServicewsEndpoint.searchInscriptionSteptwoServicews(inscriptionSteptwoDto);
+		listInscriptionSteptree = inscriptionSteptreeServicewsEndpoint.searchInscriptionSteptreeServicews(inscriptionSteptreeDto);
+		listInscriptionStepfour = inscriptionStepfourServicewsEndpoint.searchInscriptionStepfourServicews(inscriptionStepfourDto);
 //		
 		
 	//	logger.debug("IDENTITY ETUDIANT"+listStudentIdentity.size());
@@ -1003,20 +1035,41 @@ public class StudentSearchServiceBean implements Serializable {
 //			listStudents = studentServicewsEndpoint
 //					.searchStudentServicews(studentDto);
 			logger.debug("1111111111"+inscAuthentificationDto);
-//			inscriptionSteponeDto.setInscriptionAuthentification(inscAuthentificationDto);
+	//		inscriptionSteponeDto.setInscriptionAuthentification(inscAuthentificationDto);
 //			inscriptionSteptwoDto.setInscriptionAuthentification(inscAuthentificationDto);
-//			inscriptionSteptreeDto.setInscriptionAuthentification(inscAuthentificationDto);
+	//		inscriptionSteptreeDto.setInscriptionAuthentification(inscAuthentificationDto);
 //			inscriptionStepfourDto.setInscriptionAuthentification(inscAuthentificationDto);
 //			logger.debug("22222222222"+inscriptionSteptwoDto);
 //			
-//			listStudentIdentity = inscriptionSteponeServicewsEndpoint.searchInscriptionSteponeServicews(inscriptionSteponeDto);
+			listStudentIdentity = inscriptionSteponeServicewsEndpoint.searchInscriptionSteponeServicews(inscriptionSteponeDto);
+			
+			
 //			listInscriptionSteptwo = inscriptionSteptwoServicewsEndpoint.searchInscriptionSteptwoServicews(inscriptionSteptwoDto);
-//			listInscriptionSteptree = inscriptionSteptreeServicewsEndpoint.searchInscriptionSteptreeServicews(inscriptionSteptreeDto);
+			listInscriptionSteptree = inscriptionSteptreeServicewsEndpoint.searchInscriptionSteptreeServicews(inscriptionSteptreeDto);
+			
+			prospectDto.getInformations(listStudentIdentity, listInscriptionSteptree);
+			
+	    	listprospects = prospectDto.getInformations(listStudentIdentity, listInscriptionSteptree);
+	    	
+	    	for (int i = 0; i < listprospects.size(); i++){
+	    		logger.debug("+++++++affichage++++++++++++"+listprospects.get(i).getNom());
+	    		
+	    		
+	    	}
+	    	logger.debug("@@@@@@@@TAILLE DES PROSPECTS @@@@@"+listprospects.size());
+	    	logger.debug("@@@@@@@@TAILLE DES PROSPECTS @@@@@"+listprospects.size());
+			
+//			logger.debug("***********LISTE DES PROSPECTS*****"+listprospects.size());
+			
 //			listInscriptionStepfour = inscriptionStepfourServicewsEndpoint.searchInscriptionStepfourServicews(inscriptionStepfourDto);
 			
-//			listStudentIdentity = inscriptionSteponeServicewsEndpoint.searchInscriptionSteponeServicews(inscriptionSteponeDto);
-//			logger.debug("TAILLE EST DE "+listStudentIdentity.size());
+			logger.debug("@@@@TAILLE step 1 EST DE "+listStudentIdentity.size());
+			
+			logger.debug("@@@@@@TAILLE step 3 "+listInscriptionSteptree.size());
+			
 			listInscripts = inscriptionAuthServicewsEndpoint.searchInscriptionAuthServicews(inscAuthentificationDto);
+			
+			
 			
 
 			logger.debug("end init");

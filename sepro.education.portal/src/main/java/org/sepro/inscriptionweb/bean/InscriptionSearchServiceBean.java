@@ -199,12 +199,14 @@ public class InscriptionSearchServiceBean implements Serializable {
 	private boolean testlistcursus = false;
 	private boolean testlistdoc = false;
 	private boolean testmodif = true;
+	private boolean testbuttonactive = true;
 	private UploadedFile myfile;
 	private Calendar now = Calendar.getInstance();
 	private String filename;
 	private String destination = "F:\\DossierTeleversement\\";
 	File file;
 	private static final int DEFAULT_BUFFER_SIZE = 10240; // 10KB.
+	private boolean renderResponse = false;
 	
 	
 	
@@ -220,6 +222,22 @@ public class InscriptionSearchServiceBean implements Serializable {
 	
 	
 
+
+	public boolean isTestbuttonactive() {
+		return testbuttonactive;
+	}
+
+	public void setTestbuttonactive(boolean testbuttonactive) {
+		this.testbuttonactive = testbuttonactive;
+	}
+
+	public boolean isRenderResponse() {
+		return renderResponse;
+	}
+
+	public void setRenderResponse(boolean renderResponse) {
+		this.renderResponse = renderResponse;
+	}
 
 	public void loadPDF() throws IOException {
 
@@ -1713,6 +1731,7 @@ if(inscription2Dto.getRegionAddress().getIdRegion() != null ){
 				inscription2Dto = new InscriptionSteptwoDto();
 
 				inscription2Dto.setInscriptionAuthentification(inscriptionDto);
+				activatebutton();
 			}
 
 			else {
@@ -1735,6 +1754,10 @@ if(inscription2Dto.getRegionAddress().getIdRegion() != null ){
 
 		}
 
+	}
+	
+	public void activatebutton(){
+		test = false;
 	}
 
 	public void enregistrerInscriptionStepfour() {
@@ -1774,6 +1797,7 @@ if(inscription2Dto.getRegionAddress().getIdRegion() != null ){
 						
 				inscriptionStep4Dto = new InscriptionStepfourDto();
 				inscriptionStep4Dto.setInscriptionAuthentification(inscriptionDto);
+				activatebutton2();
 		
 			}
 
@@ -1797,6 +1821,10 @@ if(inscription2Dto.getRegionAddress().getIdRegion() != null ){
 		}
 		
 			
+	}
+	
+	public void activatebutton2(){
+		test2 = false;
 	}
 	
 	
@@ -1852,7 +1880,7 @@ if(inscription2Dto.getRegionAddress().getIdRegion() != null ){
 
 
 			}
-			test2 = true;
+			testlist = true;
 			testmodifier2 = false;
 		} catch (Exception e) {
 
@@ -1938,6 +1966,8 @@ if(inscription2Dto.getRegionAddress().getIdRegion() != null ){
 				insererdocument = inscriptionSteptreeServicewsEndpoint.createInscriptionSteptreeServicews(insererdocument);
 				inscriptionStep3Dto = insererdocument;
 				inscriptionStep3supDtos = insererdocument;
+				renderResponse = true;
+				activatebutton3();
 				
 				
 						
@@ -1946,6 +1976,7 @@ if(inscription2Dto.getRegionAddress().getIdRegion() != null ){
 
 			test3 = true;
 			testmodifier3 = false;
+			renderResponse = true;
 
 			logger.debug("début enregistrerInscriptionstep3");
 		} catch (Exception e) {
@@ -1958,6 +1989,9 @@ if(inscription2Dto.getRegionAddress().getIdRegion() != null ){
 		context.addMessage(null, msg);
 	}
 	
+	public void activatebutton3(){
+		test3 = false;
+	}
 	
 	public void enregistrerBrouillonInscriptionStepfive() {
 		FacesMessage msg = null;
@@ -2006,7 +2040,7 @@ if(inscription2Dto.getRegionAddress().getIdRegion() != null ){
 				
 			}
 
-			test3 = true;
+			testdoc = true;
 			testmodifier3 = false;
 
 			logger.debug("début enregistrerInscriptionstep3");

@@ -76,7 +76,7 @@
 												update="enregistrer suivant" />
 											<p:ajax event="keyup"
 												listener="#{inscriptionSearchServiceBean.testformparent()}"
-												update=":formbuttons:enregistrer :formbuttons:suivant" />
+												update=":formbuttons:enregistrer" />
 										</p:inputText>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
@@ -98,7 +98,7 @@
 												itemLabel="#{relationship.value}" />
 											<p:ajax event="valueChange"
 												listener="#{inscriptionSearchServiceBean.testformparent()}"
-												update=":formbuttons:enregistrer :formbuttons:suivant" />
+												update=":formbuttons:enregistrer" />
 										</p:selectOneMenu>
 									</div>
 								</div>
@@ -188,7 +188,7 @@
 												itemLabel="#{zipcodeAddress.zipCode}" />
 											<p:ajax event="valueChange"
 												listener="#{inscriptionSearchServiceBean.testformparent()}"
-												update=":formbuttons:enregistrer :formbuttons:suivant" />
+												update=":formbuttons:enregistrer" />
 										</p:selectOneMenu>
 									</div>
 								</div>
@@ -207,7 +207,7 @@
 											mask="#{inscriptionSearchServiceBean.maskphonformatparent}">
 											<p:ajax event="keyup"
 												listener="#{inscriptionSearchServiceBean.testformparent()}"
-												update=":formbuttons:enregistrer :formbuttons:suivant" />
+												update=":formbuttons:enregistrer" />
 										</p:inputMask>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-3">
@@ -228,7 +228,7 @@
 												itemLabel="#{typeOfContact.value}" />
 											<p:ajax event="valueChange"
 												listener="#{inscriptionSearchServiceBean.testformparent()}"
-												update=":formbuttons:enregistrer :formbuttons:suivant" />
+												update=":formbuttons:enregistrer" />
 										</p:selectOneMenu>
 									</div>
 								</div>
@@ -261,7 +261,7 @@
 									value="#{messages.label_enregistrer}"
 									action="#{inscriptionSearchServiceBean.enregistrerInscriptionsteptwo()}"
 									disabled="#{inscriptionSearchServiceBean.testparent}"
-									update="formdatatable forme enregistrer">
+									update="formdatatable forme enregistrer formbuttons:suivant">
 								</p:commandButton>
 							</div>
 
