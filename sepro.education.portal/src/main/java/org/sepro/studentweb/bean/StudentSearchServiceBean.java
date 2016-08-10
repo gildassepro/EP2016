@@ -108,6 +108,7 @@ public class StudentSearchServiceBean implements Serializable {
 	private InscriptionStepfourDto inscriptionStepfourDto = new InscriptionStepfourDto();
 	private List<InscriptionStepfourDto> listInscriptionStepfour = new ArrayList<InscriptionStepfourDto>();
 	
+	
 	private List<ProspectDto> listprospects = new ArrayList<ProspectDto>();
 	private ProspectDto prospectDto = new ProspectDto();
 	private ProspectDto prospectDtos = new ProspectDto();
@@ -122,14 +123,17 @@ public class StudentSearchServiceBean implements Serializable {
 	private StudentContactDto studentContactDto = new StudentContactDto();
 	private StudentContactDto studentContactDtos = new StudentContactDto();
 	private List<StudentContactDto> liststudentcontact = new ArrayList<StudentContactDto>();
+	private List<StudentContactDto> liststudentcontact1 = new ArrayList<StudentContactDto>();
 
 	private StudentCVDto studentCVDto = new StudentCVDto();
 	private StudentCVDto studentCVDtos = new StudentCVDto();
 	private List<StudentCVDto> listCVstudent = new ArrayList<StudentCVDto>();
+	private List<StudentCVDto> listCVstudent1 = new ArrayList<StudentCVDto>();
 
 	private StudentDto studentDto = new StudentDto();
 	private StudentDto studentDtos = new StudentDto();
 	private List<StudentDto> listStudents = new ArrayList<StudentDto>();
+	private List<StudentDto> listStudents1 = new ArrayList<StudentDto>();
 
 	private CityServicews cityServicews = new CityServicews();
 	private CityServicewsEndpoint cityServicewsEndpoint;
@@ -188,6 +192,30 @@ public class StudentSearchServiceBean implements Serializable {
 	
 	
 	
+
+	public List<StudentContactDto> getListstudentcontact1() {
+		return liststudentcontact1;
+	}
+
+	public void setListstudentcontact1(List<StudentContactDto> liststudentcontact1) {
+		this.liststudentcontact1 = liststudentcontact1;
+	}
+
+	public List<StudentCVDto> getListCVstudent1() {
+		return listCVstudent1;
+	}
+
+	public void setListCVstudent1(List<StudentCVDto> listCVstudent1) {
+		this.listCVstudent1 = listCVstudent1;
+	}
+
+	public List<StudentDto> getListStudents1() {
+		return listStudents1;
+	}
+
+	public void setListStudents1(List<StudentDto> listStudents1) {
+		this.listStudents1 = listStudents1;
+	}
 
 	public ProspectDto getProspectDtos() {
 		return prospectDtos;
@@ -712,18 +740,76 @@ public class StudentSearchServiceBean implements Serializable {
 //		logger.debug("******TAILLE DE LA LISTE ******"+listStudentIdentity.size());
 		
 		
+		logger.debug("****++++ LE NUMERO DE PROSPECT+++******"+prospectDtos.getIdAuthentif());
+		inscAuthentificationDto.setIdInscription(prospectDtos.getIdAuthentif());
+		
+		logger.debug("********NOUS VOILA 111111111 **********"+inscAuthentificationDto);
+		
+		inscriptionSteponeDto.setInscriptionAuthentification(inscAuthentificationDto);
+		inscriptionSteptwoDto.setInscriptionAuthentification(inscAuthentificationDto);
+		inscriptionSteptreeDto.setInscriptionAuthentification(inscAuthentificationDto);
+		inscriptionStepfourDto.setInscriptionAuthentification(inscAuthentificationDto);
 		
 		
-		//inscriptionSteponeDto.setInscriptionAuthentification(inscAuthentificationDto);
-		inscriptionSteptwoDto.setInscriptionAuthentification(prospectDtos.getIdAuthentification());
-		inscriptionSteptreeDto.setInscriptionAuthentification(prospectDtos.getIdAuthentification());
-		inscriptionStepfourDto.setInscriptionAuthentification(prospectDtos.getIdAuthentification());
-//		logger.debug("22222222222"+inscriptionSteptwoDto);
+		logger.debug("********NOUS VOILA 2222222222**********"+inscriptionSteponeDto);
+		logger.debug("********NOUS VOILA 3333333333**********"+inscriptionStepfourDto);
 		
-	//	listStudentIdentity = inscriptionSteponeServicewsEndpoint.searchInscriptionSteponeServicews(inscriptionSteponeDto);
+		listStudentIdentity = inscriptionSteponeServicewsEndpoint.searchInscriptionSteponeServicews(inscriptionSteponeDto);
 		listInscriptionSteptwo = inscriptionSteptwoServicewsEndpoint.searchInscriptionSteptwoServicews(inscriptionSteptwoDto);
 		listInscriptionSteptree = inscriptionSteptreeServicewsEndpoint.searchInscriptionSteptreeServicews(inscriptionSteptreeDto);
 		listInscriptionStepfour = inscriptionStepfourServicewsEndpoint.searchInscriptionStepfourServicews(inscriptionStepfourDto);
+		
+		
+		
+		logger.debug("********NOUS VOILA 4444444444 **********"+listStudentIdentity.size());
+		logger.debug("********NOUS VOILA 5555555555 **********"+listInscriptionSteptwo.size());
+		logger.debug("********NOUS VOILA 5555555555 **********"+listInscriptionSteptree.size());
+		logger.debug("********NOUS VOILA 5555555555 **********"+listInscriptionStepfour.size());
+		
+		for (int i = 0; i < listStudentIdentity.size(); i++){
+    		logger.debug("+++++++affichage++++++++++++"+listStudentIdentity.get(i).getFirstName());
+    		logger.debug("+++++++affichage++++++++++++"+listStudentIdentity.get(i).getName());
+    		
+    		
+    	}
+		for (int i = 0; i < listInscriptionSteptwo.size(); i++){
+			
+    		logger.debug("+++++++affichage++++++++++++"+listInscriptionSteptwo.get(i).getFirstName());
+    		logger.debug("+++++++affichage++++++++++++"+listInscriptionSteptwo.get(i).getAddressLigne1());
+    		logger.debug("+++++++affichage++++++++++++"+listInscriptionSteptwo.get(i).getAddressLigne2());
+    		logger.debug("+++++++affichage++++++++++++"+listInscriptionSteptwo.get(i).getAddressLigne3());
+    		logger.debug("+++++++affichage++++++++++++"+listInscriptionSteptwo.get(i).getAddressLigne4());
+    		logger.debug("+++++++affichage++++++++++++"+listInscriptionSteptwo.get(i).getEmailAddress());
+    		logger.debug("+++++++affichage++++++++++++"+listInscriptionSteptwo.get(i).getName());
+    		logger.debug("+++++++affichage++++++++++++"+listInscriptionSteptwo.get(i).getPhoneNumber());
+    		logger.debug("+++++++affichage++++++++++++"+listInscriptionSteptwo.get(i).getCityAddress().getCityName());
+    		logger.debug("+++++++affichage++++++++++++"+listInscriptionSteptwo.get(i).getZipcodeAddress().getZipCode());
+    		logger.debug("+++++++affichage++++++++++++"+listInscriptionSteptwo.get(i).getCountryAddress().getCountryName());
+    		logger.debug("+++++++affichage++++++++++++"+listInscriptionSteptwo.get(i).getRegionAddress().getRegionName());
+    		logger.debug("+++++++affichage++++++++++++"+listInscriptionSteptwo.get(i).getTypeOfContact().getValue());
+    		logger.debug("+++++++affichage++++++++++++"+listInscriptionSteptwo.get(i).getInscriptionAuthentification().getIdInscription());
+    		
+    		
+    	}
+		for (int i = 0; i < listInscriptionSteptree.size(); i++){
+    		logger.debug("+++++++affichage++++++++++++"+listInscriptionSteptree.get(i).getDescription());
+    		logger.debug("+++++++affichage++++++++++++"+listInscriptionSteptree.get(i).getNameOfDocument());
+    		logger.debug("+++++++affichage++++++++++++"+listInscriptionSteptree.get(i).getAcademicSector().getValue());
+    		logger.debug("+++++++affichage++++++++++++"+listInscriptionSteptree.get(i).getAcademicYear().getValue());
+    		logger.debug("+++++++affichage++++++++++++"+listInscriptionSteptree.get(i).getProgrammeCalendar().getProgramme().getNameProgramme());
+    		logger.debug("+++++++affichage++++++++++++"+listInscriptionSteptree.get(i).getTypeOfDocument().getValue());
+    		
+    		
+    	}
+		for (int i = 0; i < listInscriptionStepfour.size(); i++){
+    		logger.debug("+++++++affichage++++++++++++"+listInscriptionStepfour.get(i).getContactName());
+    		
+    		
+    	}
+		
+		logger.debug("********NOUS VOILA 666666666 **********"+listInscriptionSteptree.get(1).getAcademicSector().getValue());
+		logger.debug("********NOUS VOILA 777777777 **********"+listInscriptionSteptree.get(1).getAcademicYear().getValue());
+		logger.debug("********NOUS VOILA 777777777 **********"+listInscriptionSteptree.get(1).getNameOfDocument());
 //		
 		
 	//	logger.debug("IDENTITY ETUDIANT"+listStudentIdentity.size());
@@ -893,40 +979,134 @@ public class StudentSearchServiceBean implements Serializable {
 
 	public void CreateStudent() {
 		FacesMessage msg = null;
-
+		
+		inscriptionAuthServicewsEndpoint = inscriptionAuthServicews
+				.getInscriptionAuthServicewsImplPort();
+		
+		inscriptionSteponeServicewsEndpoint = inscriptionSteponeServicews.getInscriptionSteponeServicewsImplPort();
+		inscriptionSteptwoServicewsEndpoint = inscriptionSteptwoServicews.getInscriptionSteptwoServicewsImplPort();
+		inscriptionSteptreeServicewsEndpoint = inscriptionSteptreeServicews.getInscriptionSteptreeServicewsImplPort();
+		inscriptionStepfourServicewsEndpoint = inscriptionStepfourServicews.getInscriptionStepfourServicewsImplPort();
+			
+       inscAuthentificationDto.setIdInscription(prospectDtos.getIdAuthentif());
+		
+		logger.debug("******** DANS LE CREATE STUDENT **********"+inscAuthentificationDto);
+		
+		inscriptionSteponeDto.setInscriptionAuthentification(inscAuthentificationDto);
+		inscriptionSteptwoDto.setInscriptionAuthentification(inscAuthentificationDto);
+		inscriptionSteptreeDto.setInscriptionAuthentification(inscAuthentificationDto);
+		inscriptionStepfourDto.setInscriptionAuthentification(inscAuthentificationDto);
+		
+		
+		logger.debug("******** DANS LE CREATE STUDENT 111 **********"+inscriptionSteponeDto);
+		logger.debug("********DANS LE CREATE STUDENT 222 **********"+inscriptionStepfourDto);
+		
+		listStudentIdentity = inscriptionSteponeServicewsEndpoint.searchInscriptionSteponeServicews(inscriptionSteponeDto);
+		listInscriptionSteptwo = inscriptionSteptwoServicewsEndpoint.searchInscriptionSteptwoServicews(inscriptionSteptwoDto);
+		listInscriptionSteptree = inscriptionSteptreeServicewsEndpoint.searchInscriptionSteptreeServicews(inscriptionSteptreeDto);
+		listInscriptionStepfour = inscriptionStepfourServicewsEndpoint.searchInscriptionStepfourServicews(inscriptionStepfourDto);
+		
+		logger.debug("********TAILLE LISTES STEP ONE**********"+listStudentIdentity.size());
+		logger.debug("********TAILLE LISTES STEP TWO**********"+listInscriptionSteptwo.size());
+		logger.debug("********TAILLE LISTES STEP THREE**********"+listInscriptionSteptree.size());
+		logger.debug("********TAILLE LISTES STEP FOUR**********"+listInscriptionStepfour.size());
+		
 		try {
+			
+			for(int i = 0; i< listStudentIdentity.size(); i++ ) {
+				StudentDto createstudent = new StudentDto();
 
-			StudentDto createstudent = new StudentDto();
+				createstudent.setAddressLigne1(listStudentIdentity.get(i).getAddressLigne1());
+				createstudent.setAddressLigne2(listStudentIdentity.get(i).getAddressLigne2());
+				createstudent.setAddressLigne3(listStudentIdentity.get(i).getAddressLigne3());
+				createstudent.setAddressLigne4(listStudentIdentity.get(i).getAddressLigne4());
+				createstudent.setCityAddress(listStudentIdentity.get(i).getCityAddress());
+				createstudent.setBirthday(listStudentIdentity.get(i).getBirthday());
+				createstudent.setCityAddress(listStudentIdentity.get(i).getCityAddress());
+				createstudent.setCountryAddress(listStudentIdentity.get(i).getCountryAddress());
+				createstudent.setPhoneNumber(listStudentIdentity.get(i).getPhoneNumber());
+				createstudent
+						.setFirstName(listStudentIdentity.get(i).getFirstName());
+				createstudent.setIdentityNumber(listStudentIdentity.get(i).getIdentityNumber());
+				createstudent.setCountryOfBirthday(listStudentIdentity.get(i).getCountryOfBirthday());
+				
+				createstudent.setInscriptionAuthentification(listStudentIdentity.get(i).getInscriptionAuthentification());
+				createstudent.setMaritalStatus(listStudentIdentity.get(i).getMaritalStatus());
+				createstudent.setName(listStudentIdentity.get(i).getName());
+				createstudent.setNationality(listStudentIdentity.get(i).getMaritalStatus());
+				createstudent.setRegionAddress(listStudentIdentity.get(i).getRegionAddress());
+				createstudent.setInscriptionAuthentification(listStudentIdentity.get(i).getInscriptionAuthentification());
+				createstudent.setSexe(listStudentIdentity.get(i).getSexe());
+				createstudent.setTypeOfDocument(listStudentIdentity.get(i).getTypeOfDocument());
 
-			createstudent.setAddressLigne1(studentDto.getAddressLigne1());
-			createstudent.setAddressLigne2(studentDto.getAddressLigne2());
-			createstudent.setAddressLigne3(studentDto.getAddressLigne3());
-			createstudent.setAddressLigne4(studentDto.getAddressLigne4());
-			createstudent.setBirthday(studentDto.getBirthday());
-			createstudent.setCityAddress(studentDto.getCityAddress());
-			createstudent.setCountryAddress(studentDto.getCountryAddress());
-			createstudent.setCountryOfBirthday(studentDto
-					.getCountryOfBirthday());
-			createstudent.setFirstName(studentDto.getFirstName());
-			createstudent.setIdentityNumber(studentDto.getIdentityNumber());
-			createstudent
-					.setInscriptionAuthentification(inscAuthentificationDto);
-			createstudent.setZipcodeAddress(studentDto.getZipcodeAddress());
-			createstudent.setMaritalStatus(studentDto.getMaritalStatus());
-			createstudent.setTypeOfDocument(studentDto.getTypeOfDocument());
-			createstudent.setSexe(studentDto.getSexe());
-			createstudent.setName(studentDto.getName());
-			createstudent.setNationality(studentDto.getNationality());
-			createstudent.setRegionAddress(studentDto.getRegionAddress());
-			createstudent.setPhoneNumber(studentDto.getPhoneNumber());
-			createstudent.setPlaceOfBirthday(studentDto.getPlaceOfBirthday());
+				studentServicewsEndpoint = studentServicews
+						.getStudentServicewsImplPort();
+				createstudent = studentServicewsEndpoint.createStudentServicews(createstudent);
 
-			studentServicewsEndpoint = studentServicews
-					.getStudentServicewsImplPort();
-			createstudent = studentServicewsEndpoint
-					.createStudentServicews(createstudent);
+				init();
+			}
+				
+				
+			
+			for(int i = 0; i< listInscriptionSteptwo.size(); i++ ) {
+				StudentContactDto createstudentcontact = new StudentContactDto();
+				
+				studentDtos.setInscriptionAuthentification(inscAuthentificationDto);
+				listStudents = studentServicewsEndpoint.searchStudentServicews(studentDtos);
+				studentDto.setIdStudent(listStudents1.get(i).getIdStudent());
+				
+				createstudentcontact.setAddressLigne1(listInscriptionSteptwo.get(i).getAddressLigne1());
+				createstudentcontact.setAddressLigne2(listInscriptionSteptwo.get(i).getAddressLigne2());
+				createstudentcontact.setAddressLigne3(listInscriptionSteptwo.get(i).getAddressLigne3());
+				createstudentcontact.setAddressLigne4(listInscriptionSteptwo.get(i).getAddressLigne4());
+				createstudentcontact.setCityAddress(listInscriptionSteptwo.get(i).getCityAddress());
+				createstudentcontact.setCountryAddress(listInscriptionSteptwo.get(i).getCountryAddress());
+				createstudentcontact.setEmailAddress(listInscriptionSteptwo.get(i).getEmailAddress());
+				createstudentcontact.setFirstName(listInscriptionSteptwo.get(i).getFirstName());
+				createstudentcontact.setName(listInscriptionSteptwo.get(i).getName());
+				createstudentcontact.setPhoneNumber(listInscriptionSteptwo.get(i).getPhoneNumber());
+				createstudentcontact
+						.setRegionAddress(listInscriptionSteptwo.get(i).getRegionAddress());
+				createstudentcontact.setStudent(studentDto);
+			
+				createstudentcontact.setRelationship(listInscriptionSteptwo.get(i).getRelationship());
+				createstudentcontact.setTypeOfContact(listInscriptionSteptwo.get(i).getTypeOfContact());
+				createstudentcontact.setZipcodeAddress(listInscriptionSteptwo.get(i).getZipcodeAddress());
+				
+				studentContactServicewsEndpoint = studentContactServicews.getStudentContactServicewsImplPort();
+				
+				createstudentcontact = studentContactServicewsEndpoint.createStudentContactServicews(createstudentcontact);
 
-			init();
+				init();
+			}
+			
+			
+			for(int i = 0; i< listInscriptionStepfour.size(); i++ ) {
+				StudentCVDto createstudentcv = new StudentCVDto();
+				
+				studentDtos.setInscriptionAuthentification(inscAuthentificationDto);
+				listStudents = studentServicewsEndpoint.searchStudentServicews(studentDtos);
+				studentDto.setIdStudent(listStudents1.get(i).getIdStudent());
+				
+				createstudentcv.setContactEmail(listInscriptionStepfour.get(i).getContactEmail());
+				createstudentcv.setContactName(listInscriptionStepfour.get(i).getContactName());
+				createstudentcv.setContactTelephoneNumber(listInscriptionStepfour.get(i).getContactTelephoneNumber());
+				createstudentcv.setDiploma(listInscriptionStepfour.get(i).getDiploma());
+				createstudentcv.setEnDate(listInscriptionStepfour.get(i).getEnDate());
+				createstudentcv.setGrade(listInscriptionStepfour.get(i).getGrade());
+				createstudentcv.setNameOfScool(listInscriptionStepfour.get(i).getNameOfScool());
+				createstudentcv.setStartDate(listInscriptionStepfour.get(i).getStartDate());
+				createstudentcv.setStudent(studentDto);
+				createstudentcv.setTypeOfContact(listInscriptionStepfour.get(i).getTypeOfContact());
+			
+				studentCVServicewsEndpoint = studentCVServicews.getStudentCVServicewsImplPort();
+				createstudentcv = studentCVServicewsEndpoint.createStudentCVServicews(createstudentcv);
+				
+				init();
+				
+			}
+			
+					
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
