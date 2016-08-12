@@ -341,7 +341,7 @@
 
 						<p:commandButton id="supprimer" styleClass="btn btn-danger"
 							title="#{messages.label_supprimer1}"
-							oncomplete="PF('confirmation').show()" update="formdialog"
+							oncomplete="PF('confirmation').show()" update="formdialog formbuttons:suivant"
 							value="#{messages.label_supprimer1}" icon="fa fa-fw fa-remove">
 							<f:setPropertyActionListener value="#{parent}"
 								target="#{inscriptionSearchServiceBean.inscriptio2supDto}" />
@@ -372,12 +372,6 @@
 						onclick="PF('confirmation').hide()" type="button" />
 				</p:confirmDialog>
 			</h:form>
-
-
-
-
-
-
 
 		</div>
 	</ui:define>

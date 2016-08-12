@@ -1585,7 +1585,7 @@ if(inscription2Dto.getRegionAddress().getIdRegion() != null ){
 			nowGregorian = DatatypeFactory.newInstance()
 					.newXMLGregorianCalendar(gregory);
 			etape1.setStepStartDate(nowGregorian);
-			etape1.setStepIndicator(1L);
+			etape1.setStepIndicator(0L);
 			logger.debug("@@@@@@@@ avant email");
 			etape1.setInscriptionAuthentification(inscriptionDto);
 			logger.debug("@@@@@@@@ aprés email");
@@ -1627,7 +1627,7 @@ if(inscription2Dto.getRegionAddress().getIdRegion() != null ){
 			nowGregorian = DatatypeFactory.newInstance()
 					.newXMLGregorianCalendar(gregory);
 			etape1.setStepStartDate(nowGregorian);
-			etape1.setStepIndicator(0L);
+			etape1.setStepIndicator(2L);
 			inscriptionSteponeServicewsEndpoint = inscriptionSteponeServicews
 					.getInscriptionSteponeServicewsImplPort();
 			etape1 = inscriptionSteponeServicewsEndpoint
@@ -1651,7 +1651,7 @@ if(inscription2Dto.getRegionAddress().getIdRegion() != null ){
 			etape2.setPhoneNumber(inscription2Dto.getPhoneNumber());
 			etape2.setRegionAddress(inscription2Dto.getRegionAddress());
 			etape2.setRelationship(inscription2Dto.getRelationship());
-			etape2.setStepIndicator(0L);
+			etape2.setStepIndicator(2L);
 			etape2.setTypeOfContact(inscription2Dto.getTypeOfContact());
 			etape2.setZipcodeAddress(inscription2Dto.getZipcodeAddress());
 			GregorianCalendar gregory = new GregorianCalendar();
@@ -1709,7 +1709,7 @@ if(inscription2Dto.getRegionAddress().getIdRegion() != null ){
 			etape2.setPhoneNumber(inscription2Dto.getPhoneNumber());
 			etape2.setRegionAddress(inscription2Dto.getRegionAddress());
 			etape2.setRelationship(inscription2Dto.getRelationship());
-			etape2.setStepIndicator(2L);
+			etape2.setStepIndicator(0L);
 			etape2.setTypeOfContact(inscription2Dto.getTypeOfContact());
 			etape2.setZipcodeAddress(inscription2Dto.getZipcodeAddress());
 			GregorianCalendar gregory = new GregorianCalendar();
@@ -1776,7 +1776,7 @@ if(inscription2Dto.getRegionAddress().getIdRegion() != null ){
 			stepfour.setNameOfScool(inscriptionStep4Dto.getNameOfScool());
 			stepfour.setTypeOfContact(inscriptionStep4Dto.getTypeOfContact());
 			stepfour.setInscriptionAuthentification(inscriptionDto);
-			stepfour.setStepIndicator(1L);
+			stepfour.setStepIndicator(0L);
 
 			GregorianCalendar gregory = new GregorianCalendar();
 			gregory.setTime(now.getTime());
@@ -1843,7 +1843,7 @@ if(inscription2Dto.getRegionAddress().getIdRegion() != null ){
 			stepfour.setNameOfScool(inscriptionStep4Dto.getNameOfScool());
 			stepfour.setTypeOfContact(inscriptionStep4Dto.getTypeOfContact());
 			stepfour.setInscriptionAuthentification(inscriptionDto);
-			stepfour.setStepIndicator(0L);
+			stepfour.setStepIndicator(2L);
 
 			GregorianCalendar gregory = new GregorianCalendar();
 			gregory.setTime(now.getTime());
@@ -1905,7 +1905,7 @@ if(inscription2Dto.getRegionAddress().getIdRegion() != null ){
 			updatestep4.setGrade(inscriptionStep4Dto.getGrade());
 			updatestep4.setEnDate(inscriptionStep4Dto.getEnDate());
 			updatestep4.setEnDate(inscriptionStep4Dto.getEnDate());
-			updatestep4.setStepIndicator(1L);
+			updatestep4.setStepIndicator(0L);
 
 			GregorianCalendar gregory = new GregorianCalendar();
 			gregory.setTime(now.getTime());
@@ -1950,7 +1950,7 @@ if(inscription2Dto.getRegionAddress().getIdRegion() != null ){
 			insererdocument.setDescription(inscriptionStep3Dto.getDescription());	
 			insererdocument.setTypeOfDocument(inscriptionStep3Dto
 					.getTypeOfDocument());
-			insererdocument.setStepIndicator(1L);
+			insererdocument.setStepIndicator(0L);
 			GregorianCalendar gregory = new GregorianCalendar();
 			gregory.setTime(now.getTime());
 			XMLGregorianCalendar nowGregorian;
@@ -2017,7 +2017,7 @@ if(inscription2Dto.getRegionAddress().getIdRegion() != null ){
 					+ inscriptionStep3Dto.getDescription());
 			insererdocument.setTypeOfDocument(inscriptionStep3Dto
 					.getTypeOfDocument());
-			insererdocument.setStepIndicator(0L);
+			insererdocument.setStepIndicator(2L);
 			GregorianCalendar gregory = new GregorianCalendar();
 			gregory.setTime(now.getTime());
 			XMLGregorianCalendar nowGregorian;
@@ -2061,11 +2061,18 @@ if(inscription2Dto.getRegionAddress().getIdRegion() != null ){
 		inscriptionStepfourServicewsEndpoint
 				.deleteInscriptionStepfourServicews(inscriptionStep4supDtos);
 		init();
+		if(listestablishment.size() == 0){
+			activatebutton22();
+		}
 		msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
 				rb.getString("label_warn"), rb.getString("label_warn"));
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null, msg);
 
+	}
+	
+	public void activatebutton22(){
+		test2 = true;
 	}
 
 
@@ -2075,10 +2082,20 @@ if(inscription2Dto.getRegionAddress().getIdRegion() != null ){
 		inscriptionSteptreeServicewsEndpoint
 				.deleteInscriptionSteptreeServicews(inscriptionStep3supDtos);
 		init();
+		
+		if(listdocinscriptions.size() == 0){
+			logger.debug("+++++JE SUIS LA !!!!");
+			activatebutton33();
+		}
+		
 		msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
 				rb.getString("label_warn"), rb.getString("label_warn"));
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null, msg);
+	}
+	
+	public void activatebutton33(){
+		test3 = true;
 	}
 
 	public void supprimerParent() {
@@ -2086,11 +2103,18 @@ if(inscription2Dto.getRegionAddress().getIdRegion() != null ){
 		inscriptionSteptwoServicewsEndpoint
 				.deleteInscriptionSteptwoServicews(inscriptio2supDto);
 		init();
+		if(listparent.size() == 0){
+			activatebutton1();
+		}
 		msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
 				rb.getString("label_warn"), rb.getString("label_warn"));
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null, msg);
 
+	}
+	
+	public void activatebutton1(){
+		test = true;
 	}
 
 	public void mis_a_jour_parent(InscriptionSteptwoDto parent) {

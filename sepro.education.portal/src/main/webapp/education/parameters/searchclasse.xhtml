@@ -14,26 +14,19 @@
 						<p:tab title="#{messages.label_Recherche_Classe}">
 							<b:row styleClass="listPage">
 								<div id="menubutton">
-									<p:commandButton id="adde" styleClass="btn btn-info"
+									<p:commandButton id="adde"
+										styleClass="btn btn-primary submit-button"
 										value="#{messages.label_new}" title="#{messages.label_new}"
 										action="#{classeSearchServiceBean.initDualList('2')}"
 										update="@([id$=updatclasse]) forme fdial"
 										onclick="PF('updateclasse').show()" icon="fa fa-fw fa-plus">
 									</p:commandButton>
-									<p:commandButton id="modifse" styleClass="btn btn-success"
+									<p:commandButton id="modifse"
+										styleClass="btn btn-success"
 										value="#{messages.label_modifier}"
-										rendered="#{!classeSearchServiceBean.isRender6()}"
 										update="@([id$=updatclasse]) forme fdial"
 										onclick="PF('updateclasse').show()" icon="fa fa-fw fa-pencil"
 										action="#{classeSearchServiceBean.initDualList('1')}">
-									</p:commandButton>
-									<p:commandButton id="modifseevent" styleClass="btn btn-primary"
-										value="#{messages.label_modifier}"
-										rendered="#{classeSearchServiceBean.isRender5()}"
-										update="@([id$=updatinventoryclasse]) forme fdialinventaire"
-										onclick="PF('updateinventoryclasse').show()"
-										icon="fa fa-fw fa-pencil"
-										action="#{classeSearchServiceBean.initDualListInventaire('1')}">
 									</p:commandButton>
 									<p:commandButton id="deletee" process="@([id$=listclasses])"
 										styleClass="btn btn-danger"
@@ -51,7 +44,7 @@
 									</p:commandButton>
 
 									<p:commandButton id="printe"
-										update="@([id$=listclasses]) forme fdial"
+										update="@([id$=listregions]) forme fdial"
 										styleClass="btn btn-primary submit-button"
 										title="#{messages.label_print}"
 										value="#{messages.label_print}"
@@ -72,8 +65,8 @@
 									<p:commandButton id="past"
 										styleClass="btn btn-primary submit-button" ajax="false"
 										action="searchclasse.xhtml?faces-redirect=true"
-										update="@([id$=listclasses]) forme fdial"
 										immediate="true"
+										update="@([id$=listclasses]) forme fdial"
 										icon="fa fa-fw fa-arrow-left">
 									</p:commandButton>
 
@@ -84,23 +77,15 @@
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateclasse').hide()"
 										update="forme fdial growl" />
 									<p:commandButton value="#{messages.label_create}"
-										styleClass="btn btn-info" icon="fa fa-fw fa-check-circle"
-										rendered="#{classeSearchServiceBean.isAction()}"
+										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
+										rendered="#{regionSearchServiceBean.isAction()}"
 										action="#{classeSearchServiceBean.createClasse()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateclasse').hide()"
 										update="forme fdial growl" />
 
-									<!-- 									<p:commandButton value="#{messages.label_create}" -->
-									<!-- 										styleClass="btn btn-info" icon="fa fa-fw fa-check-circle" -->
-									<!-- 										rendered="#{classeSearchServiceBean.isAction3()}" -->
-									<!-- 										action="#{classeSearchServiceBean.createClasse()}" -->
-									<!-- 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateclasse').hide()" -->
-									<!-- 										update="forme fdial growl" /> -->
-
-
 								</div>
 								<p:panel id="updatclasse" widgetVar="updateclasse"
-									rendered="#{!classeSearchServiceBean.isRender3()}">
+									rendered="#{!classeSearchServiceBean.isAction3()}">
 									<h:form id="fdial">
 										<h3 style="margin-top: 0">
 											<p:outputLabel value="#{messages.label_modifier_Classe}"
@@ -287,13 +272,9 @@
 								</p:panel>
 								<p:panel id="updatinventoryclasse"
 									widgetVar="updateinventoryclasse"
-									rendered="#{!classeSearchServiceBean.isRender4()}">
+									rendered="#{!classeSearchServiceBean.isAction4()}">
 									<h:form id="fdialinventaire">
 
-										<!-- 										<h3 style="margin-top: 0"> -->
-										<!-- 											<p:outputLabel value="#{messages.label_modifier_Classe}" -->
-										<!-- 												rendered="#{classeSearchServiceBean.isAction3()}" /> -->
-										<!-- 										</h3> -->
 										<div class="ui-grid ui-grid-responsive wrap class">
 											<div class="col-xs-12">
 												<div class="row">
@@ -368,7 +349,6 @@
 												styleClass="listeTable table-responsive filterable"
 												tableStyleClass="table table-striped table-condensed table-hover"
 												rowKey="#{inventairecl.idRoomInventory}"
-												selection="#{classeSearchServiceBean.selectedinventaire}"
 												selectionMode="single" paginator="true"
 												paginatorPosition="bottom"
 												paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
@@ -456,7 +436,7 @@
 								</p:panel>
 								<p:dataTable id="listclasses"
 									value="#{classeSearchServiceBean.listclasse}" var="classe"
-									rendered="#{!classeSearchServiceBean.isRender2()}"
+									rendered="#{!classeSearchServiceBean.isAction2()}"
 									widgetVar="menuTable" emptyMessage="#{messages.label_empty}"
 									styleClass="listeTable table-responsive filterable"
 									selection="#{classeSearchServiceBean.classDto}"

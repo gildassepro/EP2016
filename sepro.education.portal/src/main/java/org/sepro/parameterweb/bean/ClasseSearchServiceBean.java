@@ -79,64 +79,30 @@ public class ClasseSearchServiceBean implements Serializable {
 	private List<DaysofWeekDto> listjoursource = new ArrayList<DaysofWeekDto>();
 	private List<DaysofWeekDto> listjourdestination = new ArrayList<DaysofWeekDto>();
 
+	
+
 	private boolean action = false;
-	private boolean render2 = false;
-
-	private boolean render3 = true;
-	private boolean render4 = true;
-	private boolean render5 = true;
-	private boolean render6 = true;
-
-	private boolean action3 = false;
+	private boolean action2 = false;
+	private boolean action3 = true;
 	private boolean action4 = true;
 	private boolean test = false;
 
-	public boolean isRender6() {
-		return render6;
-	}
-
-	public void setRender6(boolean render6) {
-		this.render6 = render6;
-	}
-
-	public boolean isRender5() {
-		return render5;
-	}
-
-	public void setRender5(boolean render5) {
-		this.render5 = render5;
-	}
-
-	public boolean isRender4() {
-		return render4;
-	}
-
-	public void setRender4(boolean render4) {
-		this.render4 = render4;
-	}
-
-	public boolean isRender2() {
-		return render2;
-	}
-
-	public void setRender2(boolean render2) {
-		this.render2 = render2;
-	}
-
-	public boolean isRender3() {
-		return render3;
-	}
-
-	public void setRender3(boolean render3) {
-		this.render3 = render3;
-	}
-
+	
+	
 	public boolean isAction4() {
 		return action4;
 	}
 
 	public void setAction4(boolean action4) {
 		this.action4 = action4;
+	}
+
+	public boolean isAction2() {
+		return action2;
+	}
+
+	public void setAction2(boolean action2) {
+		this.action2 = action2;
 	}
 
 	public boolean isAction3() {
@@ -201,6 +167,7 @@ public class ClasseSearchServiceBean implements Serializable {
 		this.selectedclasse = selectedclasse;
 	}
 
+
 	public RoomInventoryDto getRoominventorydto() {
 		return roominventorydto;
 	}
@@ -208,6 +175,7 @@ public class ClasseSearchServiceBean implements Serializable {
 	public void setRoominventorydto(RoomInventoryDto roominventorydto) {
 		this.roominventorydto = roominventorydto;
 	}
+
 
 	public List<DaysofWeekDto> getListdayofweek() {
 		return listdayofweek;
@@ -319,9 +287,7 @@ public class ClasseSearchServiceBean implements Serializable {
 	public String updateInventaire() {
 		RoomInventoryDto modifinventaire = new RoomInventoryDto();
 		try {
-			logger.debug("+++****@@@@@ LA CLASSE AVANT ++******@@@@@"+classDto.getNameOfClass());
 			modifinventaire.setClasse(classDto);
-			logger.debug("+++****@@@@@@@@@@@@ LA CLASSE APRES ++******@@@@@@@@@@@"+classDto.getNameOfClass());
 			modifinventaire.setMaterial(roominventorydto.getMaterial());
 			modifinventaire.setQuantity(roominventorydto.getQuantity());
 			modifinventaire.setCommissioningDate(roominventorydto
@@ -346,7 +312,7 @@ public class ClasseSearchServiceBean implements Serializable {
 	}
 
 	public String supprimerInventaire() {
-
+		
 		try {
 			roomInventoryServicewsEndpoint
 					.deleteRoomInventoryServicews(roominventorrydto);
@@ -364,7 +330,7 @@ public class ClasseSearchServiceBean implements Serializable {
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", rb
 						.getString("label_msg_delete_inventaire")));
 		return null;
-
+		
 	}
 
 	public void initDualList(String baction) {
@@ -375,8 +341,8 @@ public class ClasseSearchServiceBean implements Serializable {
 			listtypedeclasse = new ArrayList<TypeofClassDto>();
 			listjoursource = new ArrayList<DaysofWeekDto>();
 			listjourdestination = new ArrayList<DaysofWeekDto>();
-			render2 = true;
-			render3 = false;
+			action2 = true;
+			action3= false;
 			initUpdate();
 		} else {
 			classeDto = new ClasseDto();
@@ -385,8 +351,8 @@ public class ClasseSearchServiceBean implements Serializable {
 			listtypedeclasse = new ArrayList<TypeofClassDto>();
 			listjoursource = new ArrayList<DaysofWeekDto>();
 			listjourdestination = new ArrayList<DaysofWeekDto>();
-			render2 = true;
-			render3 = false;
+			action2 = true;
+			action3= false;
 			initCreate();
 		}
 	}
@@ -394,24 +360,13 @@ public class ClasseSearchServiceBean implements Serializable {
 	public void initDualListInventaire(String caction) {
 		if (caction.equals("1")) {
 			roominventorydto = selectedinventaire;
-			// action = false;
-			render5 = false;
-			render6 = false;
-
-			render2 = true;
-			render4 = false;
-			render3 = true;
+			action2 = true;
+			action4 = false;
 			initUpdateInventaire();
 		} else {
 			roominventorydto = new RoomInventoryDto();
-			// action = false;
-			render5 = false;
-			render6 = false;
-
-			render2 = true;
-			render4 = false;
-			render3 = true;
-
+			action2 = true;
+			action4 = false;
 			try {
 
 				if (classDto != null) {
@@ -449,6 +404,7 @@ public class ClasseSearchServiceBean implements Serializable {
 					.getDaysofWeekServicewsImplPort();
 			listdayofweek = dayofweekserServicewsEndpoint
 					.getAllDaysofWeekServicews();
+			
 
 			if (classeDto != null) {
 				classeServicewsEndpoint = classeServicews
@@ -467,7 +423,8 @@ public class ClasseSearchServiceBean implements Serializable {
 					}
 				}
 			}
-
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -503,7 +460,8 @@ public class ClasseSearchServiceBean implements Serializable {
 					.getAllDaysofWeekServicews();
 			listjoursource = dayofweekserServicewsEndpoint
 					.getAllDaysofWeekServicews();
-
+		
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -546,7 +504,7 @@ public class ClasseSearchServiceBean implements Serializable {
 		Dayofweek dayofweek = new Dayofweek();
 		dayofweek.getDayofweek().addAll(listjourdestination);
 		classe.setDayofweek(dayofweek);
-
+		
 		classe.setBuildiing(classeDto.getBuildiing());
 		classe.setEndingHour(classeDto.getEndingHour());
 		classe.setLocation(classeDto.getLocation());

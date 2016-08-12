@@ -70,14 +70,13 @@
 									</p:commandButton>
 									<p:splitButton value="#{messages.label_options}"
 										actionListener="#{buttonView.save}" icon="ui-icon-gear">
-										<p:menuitem value="Update"
-											actionListener="#{buttonView.update}"
-											icon="ui-icon-arrowrefresh-1-w" />
-										<p:menuitem value="Delete"
-											actionListener="#{buttonView.delete}" ajax="false"
-											icon="ui-icon-close" />
-										<p:separator />
-										<p:menuitem value="Homepage" icon="ui-icon-extlink" />
+										<p:menuitem value="#{messages.label_validate}"  
+											actionListener="#{studentSearchServiceBean.CreateStudent()}"
+											icon="ui-icon-circle-check" />
+											<p:separator />
+										<p:menuitem value="#{messages.label_reject}"
+											actionListener="#{studentSearchServiceBean.RejectStudent()}"
+											icon="ui-icon-cancel" />
 									</p:splitButton>
 
 									<p:commandButton value="#{messages.label_modifier}"
@@ -133,7 +132,7 @@
 
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:inputText styleClass="form-control" id="name"
-																	immediate="true"
+																	immediate="true" readonly="true"
 																	value="#{studentSearchServiceBean.inscriptionSteponeDto.name}"
 																	placeholder="#{messages.label_name1}">
 
@@ -148,7 +147,7 @@
 
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:inputText styleClass="form-control" id="prenom1"
-																	immediate="true"
+																	immediate="true" readonly="true"
 																	value="#{studentSearchServiceBean.inscriptionSteponeDto.firstName}"
 																	placeholder="#{messages.label_firstName1}">
 
@@ -167,7 +166,7 @@
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:calendar id="datedenaissance" immediate="true"
 																	value="#{studentSearchServiceBean.inscriptionSteponeDto.birthday}"
-																	placeholder="#{messages.label_birthday1}"
+																	placeholder="#{messages.label_birthday1}" readonly="true"
 																	showOn="button" pattern="MM/dd/yyyy">
 																	<f:converter converterId="dateConverter" />
 																	<p:ajax event="dateSelect" />
@@ -182,7 +181,7 @@
 
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:inputText styleClass="form-control"
-																	id="lieunaissance" immediate="true"
+																	id="lieunaissance" immediate="true" readonly="true"
 																	value="#{studentSearchServiceBean.inscriptionSteponeDto.placeOfBirthday}"
 																	placeholder="#{messages.label_placeOfBirthday1}">
 
@@ -199,7 +198,7 @@
 
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:inputText styleClass="form-control" id="emailstudent"
-																	immediate="true" readonly="true"
+																	immediate="true" readonly="true" 
 																	value="#{studentSearchServiceBean.inscAuthentificationDto.emailAdd}">
 																</p:inputText>
 															</div>
@@ -210,7 +209,7 @@
 															</div>
 
 															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:selectOneMenu styleClass="form-text" id="sexestuden"
+																<p:selectOneMenu styleClass="form-text" id="sexestuden" readonly="true"
 																	value="#{studentSearchServiceBean.inscriptionSteponeDto.sexe}"
 																	immediate="true" converter="entityConverter">
 																	<f:selectItem
@@ -234,7 +233,7 @@
 															</div>
 
 															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:selectOneMenu styleClass="form-text"
+																<p:selectOneMenu styleClass="form-text" readonly="true"
 																	id="documentidentitystudent" immediate="true"
 																	value="#{studentSearchServiceBean.inscriptionSteponeDto.typeOfDocument}"
 																	converter="entityConverter">
@@ -256,7 +255,7 @@
 															</div>
 
 															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:inputText styleClass="form-control"
+																<p:inputText styleClass="form-control" readonly="true"
 																	id="identityNumber" maxlength="20" immediate="true"
 																	value="#{studentSearchServiceBean.inscriptionSteponeDto.identityNumber}"
 																	placeholder="#{messages.label_identityNumber1}"
@@ -274,7 +273,7 @@
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:selectOneMenu styleClass="form-text" id="pays"
-																	immediate="true"
+																	immediate="true" readonly="true"
 																	value="#{studentSearchServiceBean.inscriptionSteponeDto.countryOfBirthday}"
 																	converter="entityConverter">
 																	<f:selectItem
@@ -297,7 +296,7 @@
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:selectOneMenu styleClass="form-text"
-																	id="paysresidence" immediate="true"
+																	id="paysresidence" immediate="true" readonly="true"
 																	value="#{studentSearchServiceBean.inscriptionSteponeDto.countryAddress}"
 																	converter="entityConverter">
 																	<f:selectItem
@@ -321,7 +320,7 @@
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:selectOneMenu styleClass="form-text" id="region1"
-																	immediate="true"
+																	immediate="true" readonly="true"
 																	value="#{studentSearchServiceBean.inscriptionSteponeDto.regionAddress}"
 																	converter="entityConverter">
 																	<f:selectItem
@@ -342,7 +341,7 @@
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:selectOneMenu styleClass="form-text" id="city1"
-																	immediate="true"
+																	immediate="true" readonly="true"
 																	value="#{studentSearchServiceBean.inscriptionSteponeDto.cityAddress}"
 																	converter="entityConverter">
 																	<f:selectItem
@@ -365,7 +364,7 @@
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:selectOneMenu styleClass="form-text" id="zipcode1"
-																	immediate="true"
+																	immediate="true" readonly="true"
 																	value="#{studentSearchServiceBean.inscriptionSteponeDto.zipcodeAddress}"
 																	converter="entityConverter">
 																	<f:selectItem
@@ -387,7 +386,7 @@
 
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:selectOneMenu styleClass="form-text"
-																	id="nationnalite" immediate="true"
+																	id="nationnalite" immediate="true" readonly="true"
 																	value="#{studentSearchServiceBean.inscriptionSteponeDto.nationality}"
 																	converter="entityConverter">
 																	<f:selectItem
@@ -411,7 +410,7 @@
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:inputMask styleClass="form-control" id="phone1"
 																	value="#{studentSearchServiceBean.inscriptionSteponeDto.phoneNumber}"
-																	placeholder="#{messages.label_phoneNumber1}"
+																	placeholder="#{messages.label_phoneNumber1}" readonly="true"
 																	immediate="true"
 																	validatorMessage="#{messages.label_telephone1eta}"
 																	mask="#{studentSearchServiceBean.maskphonformat}">
@@ -425,7 +424,7 @@
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:selectOneMenu styleClass="form-text" id="etatcivile"
-																	immediate="true"
+																	immediate="true" readonly="true"
 																	value="#{studentSearchServiceBean.inscriptionSteponeDto.maritalStatus}"
 																	converter="entityConverter">
 																	<f:selectItem
@@ -446,205 +445,7 @@
 											</p:tab>
 
 											<p:tab id="tab2" title="#{messages.label_Contact}">
-												<div class="ui-grid ui-grid-responsive wrap class">
-													<div class="col-xs-12">
-														<div class="row">
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
-																	value="#{messages.label_name}" />
-																<span class="requireds">(*)</span>
-															</div>
-
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:inputText styleClass="form-control" id="nomc"
-																	immediate="true"
-																	value="#{studentSearchServiceBean.inscriptionSteptwoDto.name}"
-																	placeholder="#{messages.label_name1}">
-
-																</p:inputText>
-															</div>
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
-																	value="#{messages.label_firstname}" />
-																<span class="requireds">(*)</span>
-															</div>
-
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:inputText styleClass="form-control" id="prenomc"
-																	immediate="true"
-																	value="#{studentSearchServiceBean.inscriptionSteptwoDto.firstName}"
-																	placeholder="#{messages.label_firstName1}">
-
-																</p:inputText>
-															</div>
-														</div>
-														<br />
-														<div class="row">
-
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
-																	value="#{messages.label_adresseemail}" />
-																<span class="requireds">(*)</span>
-															</div>
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:inputText styleClass="form-control" id="emailc"
-																	immediate="true"
-																	value="#{studentSearchServiceBean.inscriptionSteptwoDto.emailAddress}"
-																	placeholder="#{messages.label_emailAdd1}">
-																	<f:validateRegex
-																		pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
-
-																</p:inputText>
-															</div>
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
-																	value="#{messages.label_relationship}" />
-																<span class="requireds">(*)</span>
-															</div>
-
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:selectOneMenu styleClass="form-text" id="lienc"
-																	immediate="true"
-																	value="#{studentSearchServiceBean.inscriptionSteptwoDto.relationship}"
-																	converter="entityConverter">
-																	<f:selectItem
-																		itemLabel="#{studentSearchServiceBean.inscriptionSteptwoDto.relationship.value}"
-																		itemValue="#{studentSearchServiceBean.inscriptionSteptwoDto.relationship}" />
-																	<f:selectItems
-																		value="#{studentSearchServiceBean.listlienparante}"
-																		var="relationship" itemValue="#{relationship}"
-																		itemLabel="#{relationship.value}" />
-
-																</p:selectOneMenu>
-															</div>
-														</div>
-														<div class="row">
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
-																	value="#{messages.label_countrys}" />
-																<span class="requireds">(*)</span>
-															</div>
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:selectOneMenu styleClass="form-text"
-																	id="gerantcountry" immediate="true"
-																	value="#{studentSearchServiceBean.inscriptionSteptwoDto.countryAddress}"
-																	converter="entityConverter">
-																	<f:selectItem
-																		itemLabel="#{studentSearchServiceBean.inscriptionSteptwoDto.countryAddress.countryName}"
-																		itemValue="#{studentSearchServiceBean.inscriptionSteptwoDto.countryAddress}" />
-																	<f:selectItems
-																		value="#{studentSearchServiceBean.listCountry}"
-																		var="countryAddress" itemValue="#{countryAddress}"
-																		itemLabel="#{countryAddress.countryName}" />
-
-																</p:selectOneMenu>
-															</div>
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
-																	value="#{messages.label_regions}" />
-																<span class="requireds">(*)</span>
-															</div>
-
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:selectOneMenu styleClass="form-text" id="regionc"
-																	immediate="true"
-																	value="#{studentSearchServiceBean.inscriptionSteptwoDto.regionAddress}"
-																	converter="entityConverter">
-																	<f:selectItem
-																		itemLabel="#{studentSearchServiceBean.inscriptionSteptwoDto.regionAddress.regionName}"
-																		itemValue="#{studentSearchServiceBean.inscriptionSteptwoDto.regionAddress}" />
-																	<f:selectItems
-																		value="#{studentSearchServiceBean.listRegion}"
-																		var="regionAddress" itemValue="#{regionAddress}"
-																		itemLabel="#{regionAddress.regionName}" />
-
-																</p:selectOneMenu>
-															</div>
-														</div>
-														<div class="row">
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
-																	value="#{messages.label_citys}" />
-																<span class="requireds">(*)</span>
-															</div>
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:selectOneMenu styleClass="form-text" id="cityc"
-																	immediate="true"
-																	value="#{studentSearchServiceBean.inscriptionSteptwoDto.cityAddress}"
-																	converter="entityConverter">
-																	<f:selectItem
-																		itemLabel="#{studentSearchServiceBean.inscriptionSteptwoDto.cityAddress.cityName}"
-																		itemValue="#{studentSearchServiceBean.inscriptionSteptwoDto.cityAddress}" />
-																	<f:selectItems
-																		value="#{studentSearchServiceBean.listCity}"
-																		var="cityAddress" itemValue="#{cityAddress}"
-																		itemLabel="#{cityAddress.cityName}" />
-
-																</p:selectOneMenu>
-															</div>
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
-																	value="#{messages.label_zipcodes}" />
-																<span class="requireds">(*)</span>
-															</div>
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:selectOneMenu styleClass="form-text" id="zipcodec"
-																	immediate="true"
-																	value="#{studentSearchServiceBean.inscriptionSteptwoDto.zipcodeAddress}"
-																	converter="entityConverter">
-																	<f:selectItem
-																		itemLabel="#{studentSearchServiceBean.inscriptionSteptwoDto.zipcodeAddress.zipCode}"
-																		itemValue="#{studentSearchServiceBean.inscriptionSteptwoDto.zipcodeAddress}"
-																		label="#{messages.label_region}" />
-																	<f:selectItems
-																		value="#{studentSearchServiceBean.listZipcode}"
-																		var="zipcodeAddress" itemValue="#{zipcodeAddress}"
-																		itemLabel="#{zipcodeAddress.zipCode}" />
-
-																</p:selectOneMenu>
-															</div>
-														</div>
-
-														<div class="row">
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
-																	value="#{messages.label_phoneNumber}" />
-																<span class="requireds">(*)</span>
-															</div>
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:inputMask styleClass="form-control" id="phonec"
-																	immediate="true"
-																	value="#{studentSearchServiceBean.inscriptionSteptwoDto.phoneNumber}"
-																	placeholder="#{messages.label_phoneNumber1}"
-																	validatorMessage="#{messages.label_telephone1eta}"
-																	mask="#{studentSearchServiceBean.maskphonformatparent}">
-
-																</p:inputMask>
-															</div>
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:outputLabel styleClass="ui-grid-col-6 col-sm-6"
-																	value="#{messages.label_typeOfContact}" />
-																<span class="requireds">(*)</span>
-															</div>
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:selectOneMenu styleClass="form-text" id="contactc"
-																	immediate="true"
-																	value="#{studentSearchServiceBean.inscriptionSteptwoDto.typeOfContact}"
-																	converter="entityConverter">
-																	<f:selectItem
-																		itemLabel="#{studentSearchServiceBean.inscriptionSteptwoDto.typeOfContact.value}"
-																		itemValue="#{studentSearchServiceBean.inscriptionSteptwoDto.typeOfContact}" />
-																	<f:selectItems
-																		value="#{studentSearchServiceBean.listtypecontact}"
-																		var="typeOfContact" itemValue="#{typeOfContact}"
-																		itemLabel="#{typeOfContact.value}" />
-
-																</p:selectOneMenu>
-															</div>
-														</div>
-													</div>
-												</div>
-
+												
 												<h:form id="formdatatableparent">
 													<p:dataTable id="listpar"
 														value="#{studentSearchServiceBean.listInscriptionSteptwo}"
@@ -683,12 +484,20 @@
 															<h:outputText value="#{parent.firstName}"></h:outputText>
 														</p:column>
 
-														<p:column priority="1" filterBy="#{parent.emailAddress}"
+														<p:column priority="2" filterBy="#{parent.emailAddress}"
 															filterMatchMode="contains">
 															<f:facet name="header">
 																<p:outputLabel value="#{messages.label_adresseemail}" />
 															</f:facet>
 															<h:outputText value="#{parent.emailAddress}"></h:outputText>
+														</p:column>
+														
+														<p:column priority="1" filterBy="#{parent.phoneNumber}"
+															filterMatchMode="contains">
+															<f:facet name="header">
+																<p:outputLabel value="#{messages.label_number_contact}" />
+															</f:facet>
+															<h:outputText value="#{parent.phoneNumber}"></h:outputText>
 														</p:column>
 
 														
@@ -711,151 +520,7 @@
 
 
 											<p:tab id="tab3" title="#{messages.label_student_cv}">
-												<div class="ui-grid ui-grid-responsive wrap class">
-													<div class="col-xs-12">
-														<div class="row">
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:outputLabel
-																	value="#{messages.label_etablissement_etude}" />
-																<span class="requireds">(*)</span>
-															</div>
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:inputText styleClass="form-control" id="nom"
-																	immediate="true"
-																	value="#{studentSearchServiceBean.inscriptionStepfourDto.nameOfScool}">
-
-																</p:inputText>
-															</div>
-															<div class="col-lg-offset-1 col-lg-2 col-md-3 col-sm-3">
-																<p:outputLabel value="#{messages.label_diplome_obtenu}" />
-																<span class="requireds">(*)</span>
-															</div>
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:inputText styleClass="form-control" id="dip"
-																	immediate="true" maxlength="128"
-																	value="#{studentSearchServiceBean.inscriptionStepfourDto.diploma}">
-
-																</p:inputText>
-															</div>
-														</div>
-														<div class="row">
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:outputLabel value="#{messages.label_mention_obtenu}" />
-																<span class="requireds">(*)</span>
-															</div>
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:selectOneMenu styleClass="form-text"
-																	id="mentionobtain" immediate="true"
-																	value="#{studentSearchServiceBean.inscriptionStepfourDto.grade}"
-																	converter="entityConverter">
-																	<f:selectItem
-																		itemLabel="#{studentSearchServiceBean.inscriptionStepfourDto.grade.value}"
-																		itemValue="#{studentSearchServiceBean.inscriptionStepfourDto.grade}" />
-																	<f:selectItems
-																		value="#{studentSearchServiceBean.listfiliere}"
-																		var="mention" itemValue="#{mention}"
-																		itemLabel="#{mention.value}" />
-
-																</p:selectOneMenu>
-															</div>
-															<div class="col-lg-offset-1 col-lg-2 col-md-3 col-sm-3">
-																<p:outputLabel value="#{messages.label_name_contact}" />
-																<span class="requireds">(*)</span>
-															</div>
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:inputText styleClass="form-control" id="contact"
-																	immediate="true"
-																	value="#{studentSearchServiceBean.inscriptionStepfourDto.contactName}">
-
-																</p:inputText>
-															</div>
-														</div>
-														<div class="row">
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:outputLabel value="#{messages.label_year_start}" />
-																<span class="requireds">(*)</span>
-															</div>
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:calendar id="buttonstart"
-																	value="#{studentSearchServiceBean.inscriptionStepfourDto.startDate}"
-																	showOn="button" pattern="MM/dd/yyyy" required="true"
-																	immediate="true"
-																	requiredMessage="#{messages.label_startDate_requeried}"
-																	placeholder="#{messages.label_labeldatedebut}">
-																	<f:converter converterId="dateConverter" />
-																	<p:ajax event="dateSelect" />
-																</p:calendar>
-															</div>
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:outputLabel value="#{messages.label_year_end}" />
-																<span class="requireds">(*)</span>
-															</div>
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:calendar id="buttonend" immediate="true"
-																	value="#{studentSearchServiceBean.inscriptionStepfourDto.enDate}"
-																	showOn="button" pattern="MM/dd/yyyy" required="true"
-																	requiredMessage="#{messages.label_enDate_requeried}"
-																	placeholder="#{messages.label_labeldatefin}">
-																	<f:converter converterId="dateConverter" />
-																	<p:ajax event="dateSelect" />
-																</p:calendar>
-															</div>
-														</div>
-														<div class="row">
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:outputLabel value="#{messages.label_typeOfContact}" />
-																<span class="requireds">(*)</span>
-															</div>
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:selectOneMenu styleClass="form-text" id="typecontact"
-																	immediate="true"
-																	value="#{studentSearchServiceBean.inscriptionStepfourDto.typeOfContact}"
-																	converter="entityConverter">
-																	<f:selectItem
-																		itemLabel="#{studentSearchServiceBean.inscriptionStepfourDto.typeOfContact.value}"
-																		itemValue="#{studentSearchServiceBean.inscriptionStepfourDto.typeOfContact}" />
-																	<f:selectItems
-																		value="#{studentSearchServiceBean.listtypecontact}"
-																		var="typecontact" itemValue="#{typecontact}"
-																		itemLabel="#{typecontact.value}" />
-
-																</p:selectOneMenu>
-															</div>
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:outputLabel
-																	value="#{messages.label_email_name_contact}" />
-																<span class="requireds">(*)</span>
-															</div>
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:inputText styleClass="form-control" id="email"
-																	immediate="true"
-																	value="#{studentSearchServiceBean.inscriptionStepfourDto.contactEmail}">
-																	<f:validateRegex
-																		pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
-
-																</p:inputText>
-															</div>
-														</div>
-														<div class="row">
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:outputLabel value="#{messages.label_number_contact}" />
-																<span class="requireds">(*)</span>
-															</div>
-															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:inputText styleClass="form-control" id="numcontact"
-																	immediate="true"
-																	value="#{studentSearchServiceBean.inscriptionStepfourDto.contactTelephoneNumber}">
-																	<f:validateRegex pattern="[0-9]+" />
-
-																</p:inputText>
-
-															</div>
-															<div class="col-lg-3 col-md-3 col-sm-3"></div>
-															<div class="col-lg-3 col-md-3 col-sm-3"></div>
-														</div>
-													</div>
-												</div>
-
+												
 												<h:form id="formdatatablecv">
 													<p:dataTable id="listcurriculum"
 														value="#{studentSearchServiceBean.listInscriptionStepfour}"
@@ -961,7 +626,7 @@
 									selection="#{studentSearchServiceBean.prospectDtos}"
 									styleClass="listeTable table-responsive filterable"
 									tableStyleClass="table table-striped table-condensed table-hover"
-									rowKey="#{student.idAuthentif}" selectionMode="single"
+									rowKey="#{student.inscriptionAuthentificationDto.idInscription}" selectionMode="single"
 									paginator="true" paginatorPosition="bottom"
 									paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
 									rows="10" filterBy="#{student.idAuthentif}">
@@ -971,41 +636,35 @@
 									<!-- 									<p:ajax event="rowSelect" listener="#{studentSearchServiceBean.onRowSelect}" -->
 									<!-- 										update="@([id$=updatdetailstudent])" oncomplete="PF('updatedetailstudent').show()" /> -->
 									<p:column priority="3" width="100"
-										filterBy="#{student.idAuthentif}" filterMatchMode="contains">
+										filterBy="#{student.inscriptionAuthentificationDto.idInscription}" filterMatchMode="contains">
 										<f:facet name="header">
 											<p:outputLabel value="#{messages.label_number_inscription}" />
 										</f:facet>
-										<h:outputText value="#{student.idAuthentif}"></h:outputText>
+										<h:outputText value="#{student.inscriptionAuthentificationDto.idInscription}"></h:outputText>
 									</p:column>
 
-									<p:column priority="1" filterBy="#{student.nom}"
+									<p:column priority="1" filterBy="#{student.inscriptionSteponeDto.name}"
 										filterMatchMode="contains">
 										<f:facet name="header">
 											<p:outputLabel value="#{messages.label_name}" />
 										</f:facet>
-										<h:outputText value="#{student.nom}"></h:outputText>
+										<h:outputText value="#{student.inscriptionSteponeDto.name}"></h:outputText>
 									</p:column>
-									<p:column priority="1" filterBy="#{student.prenom}"
+									<p:column priority="1" filterBy="#{student.inscriptionSteponeDto.firstName}"
 										filterMatchMode="contains">
 										<f:facet name="header">
 											<p:outputLabel value="#{messages.label_surname}" />
 										</f:facet>
-										<h:outputText value="#{student.prenom}"></h:outputText>
+										<h:outputText value="#{student.inscriptionSteponeDto.firstName}"></h:outputText>
 									</p:column>
 
-									<p:column priority="1" filterBy="#{student.nom}"
-										filterMatchMode="contains">
-										<f:facet name="header">
-											<p:outputLabel value="#{messages.label_phoneNumber}" />
-										</f:facet>
-										<h:outputText value="#{student.nom}"></h:outputText>
-									</p:column>
-									<p:column priority="1" filterBy="#{student.fillier}"
+									
+									<p:column priority="1" filterBy="#{student.inscriptionSteptreeDto.academicSector.value}"
 										filterMatchMode="contains">
 										<f:facet name="header">
 											<p:outputLabel value="#{messages.label_curriculum}" />
 										</f:facet>
-										<h:outputText value="#{student.fillier}"></h:outputText>
+										<h:outputText value="#{student.inscriptionSteptreeDto.academicSector.value}"></h:outputText>
 									</p:column>
 
 								</p:dataTable>
@@ -1023,10 +682,10 @@
 								<p:contextMenu for="liststudents">
 									<p:menuitem value="Valider" update="@([id$=liststudents])"
 										icon="ui-icon-circle-check"
-										actionListener="#{studentSearchServiceBean.CreateStudent}" />
+										actionListener="#{studentSearchServiceBean.CreateStudent()}" />
 									<p:menuitem value="Rejeter" update="@([id$=liststudents])"
 										icon="ui-icon-cancel"
-										actionListener="#{studentSearchServiceBean.CreateStudent}" />
+										actionListener="#{studentSearchServiceBean.RejectStudent()}" />
 
 								</p:contextMenu>
 

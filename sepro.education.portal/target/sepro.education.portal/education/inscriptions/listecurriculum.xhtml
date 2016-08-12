@@ -338,7 +338,7 @@
 							<p:commandButton value="#{messages.label_msg_confirmOui}"
 								onclick="PF('confirmation').hide()"
 								action="#{inscriptionSearchServiceBean.supprimerListcursus()}"
-								update="formdatatable" />
+								update="formdatatable formbuttons:next" />
 							<p:commandButton value="#{messages.label_msg_confirmNon}"
 								onclick="PF('confirmation').hide()" type="button" />
 						</p:confirmDialog>
