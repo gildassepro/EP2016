@@ -441,7 +441,7 @@ public class TeacherSearchServiceBean implements Serializable {
 
 			detailteacherDto.setIdentityTeacher(detailteacherDto
 					.getIdentityTeacher());
-			detailteacherServicewsEndpoint.searchDetailteacherServicews(detailteacherDto);
+			listdetailprof = detailteacherServicewsEndpoint.searchDetailteacherServicews(detailteacherDto);
 			logger.debug("taille detaille "+listdetailprof.size());
 
 		}
@@ -701,6 +701,9 @@ public void onchangeZipCode(){
 	public void maskPhone() {
 
 		if (identityTeacherDto.getCountryAddress().getIdCountry() != null) {
+			regionServicewsEndpoint = regionServicews.getRegionServicewsImplPort();
+			countryServicewsEndpoint = countryServicews.getCountryServicewsImplPort();
+			
 			RegionDto regionsearch = new RegionDto();
 			regionsearch.setCountry(identityTeacherDto.getCountryAddress());
 			listRegion = regionServicewsEndpoint.searchRegionServicews(regionsearch);
@@ -801,6 +804,7 @@ public void onchangeZipCode(){
 
 		else {
 			cvteacherDto = new CvteacherDto();
+			identityTeacherDto = identityTeacherDtos;
 			render2 = true;
 			render4 = false;
 
@@ -844,11 +848,13 @@ public void onchangeZipCode(){
 		logger.debug("debut init dualist detail");
 		if (daction.equals("1")) {
 			teacherModuleDto = teacherModuleDtos;
+			identityTeacherDto = identityTeacherDtos;
 			listhoraire = new ArrayList<PopuplistDto>();
 			listpriorite = new ArrayList<PopuplistDto>();
 			listmois = new ArrayList<PopuplistDto>();
 			listfiliere = new ArrayList<PopuplistDto>();
 			listanneeacademique = new ArrayList<PopuplistDto>();
+			action = true;
 			render2 = true;
 			render5 = false;
 			initUpdateteachermodule();
@@ -859,11 +865,13 @@ public void onchangeZipCode(){
 			testdetail = true;
 			teacherModuleDto = new TeacherModuleDto();
 			detailteacherDto = new DetailteacherDto();
+			identityTeacherDto = identityTeacherDtos;
 			listhoraire = new ArrayList<PopuplistDto>();
 			listpriorite = new ArrayList<PopuplistDto>();
 			listmois = new ArrayList<PopuplistDto>();
 			listfiliere = new ArrayList<PopuplistDto>();
 			listanneeacademique = new ArrayList<PopuplistDto>();
+			action = true;
 			render2 = true;
 			render5 = false;
 			initCreatedetailprof();
@@ -875,10 +883,8 @@ public void onchangeZipCode(){
 							.getDetailteacherServicewsImplPort();
 					teachedModuleServicewsEndpoint = teachedModuleServicews
 							.getTeachedModuleServicewsImplPort();
-					logger.debug("2222222222222222222222"+identityTeacherDtos.getIdIdentityTeacher());
-					logger.debug("333333333333333333333"+detailteacherDto.getWorkingMonth());
+					
 					teacherModuleDto.setDetailteacher(detailteacherDto);
-					logger.debug("44444444444444444444444");
 					detailteacherDto
 							.setIdentityTeacher(identityTeacherDtos);
 					logger.debug("id = "+detailteacherDto.getIdDetailteacher());
@@ -959,7 +965,7 @@ public void onchangeZipCode(){
 		FacesMessage msg = null;
 		try {
 			CvteacherDto createcvprof = new CvteacherDto();
-			createcvprof.setIdentityTeacher(identityTeacherDtos);
+			createcvprof.setIdentityTeacher(identityTeacherDto);
 			createcvprof.setStartDate(cvteacherDto.getStartDate());
 			createcvprof.setEnDate(cvteacherDto.getEnDate());
 			createcvprof.setDiploma(cvteacherDto.getDiploma());
@@ -985,7 +991,7 @@ public void onchangeZipCode(){
 		FacesMessage msg = null;
 		try {
 			CvteacherDto cvprofmodif = new CvteacherDto();
-			cvprofmodif.setIdentityTeacher(identityTeacherDtos);
+			cvprofmodif.setIdentityTeacher(identityTeacherDto);
 			cvprofmodif.setDiploma(cvteacherDto.getDiploma());
 			cvprofmodif.setEnDate(cvteacherDto.getEnDate());
 			cvprofmodif.setLinkdiploma(file.getAbsolutePath());
@@ -1031,17 +1037,11 @@ public void onchangeZipCode(){
 
 	public String enregistrerDetailprof() {
 		FacesMessage msg = null;
-		logger.debug("++++++++JE SUIS DANS LE CREATE+++++++++++++");
 		
 		try {
-			logger.debug("++++++++JE SUIS DANS LE CREATE3+++++++++++++");
 			DetailteacherDto createdetailprof = new DetailteacherDto();
 			createdetailprof.setHourRate(detailteacherDto.getHourRate());
-			logger.debug("++++++++JE SUIS DANS LE CREATE22222222+++++++++++++"+detailteacherDto.getHourRate());
-			logger.debug("*******ID TEACHER111********"+identityTeacherDtos.getIdIdentityTeacher());
-			logger.debug("*******ID TEACHER222********"+identityTeacherDtos.getIdIdentityTeacher());
-			createdetailprof.setIdentityTeacher(identityTeacherDtos);
-			logger.debug("*******ID TEACHER333********"+identityTeacherDtos.getIdIdentityTeacher());
+			createdetailprof.setIdentityTeacher(identityTeacherDto);
 			createdetailprof.setNumberOfHoursWorked(detailteacherDto
 					.getNumberOfHoursWorked());
 			createdetailprof.setStartHour(detailteacherDto.getStartHour());
@@ -1052,9 +1052,7 @@ public void onchangeZipCode(){
 					.getDetailteacherServicewsImplPort();
 			createdetailprof = detailteacherServicewsEndpoint
 					.createDetailteacherServicews(createdetailprof);
-			logger.debug("++++++++JE SUIS DANS LE CREATE5+++++++++++++");
 			activatebuton();
-			//detailteacherDto = new DetailteacherDto();
 			
 
 		} catch (Exception ex) {
@@ -1071,22 +1069,30 @@ public void onchangeZipCode(){
 	}
 	
 	public void activatebuton(){
-		logger.debug("hfhfhfhfhfh");
 		testdetail = false;
 	}
 
 	public String addModuleTeacher() {
 		FacesMessage msg = null;
 		TeacherModuleDto teachermodulecreate = new TeacherModuleDto();
+		logger.debug("*******JE SUIS DANS MODULE TEACHER*********");
 		try {
 			teachermodulecreate.setDetailteacher(detailteacherDto);
+			logger.debug("******++DETAIL TEACHER +**+***+*+"+detailteacherDto);
 			teachermodulecreate.setAcademicModule(teacherModuleDto
+					.getAcademicModule());
+			logger.debug("******++DETAIL TEACHER 22 +**+***+*+"+teacherModuleDto
 					.getAcademicModule());
 			teachermodulecreate.setAcademicSector(teacherModuleDto
 					.getAcademicSector());
+			logger.debug("******++DETAIL TEACHER 33 +**+***+*+"+teacherModuleDto
+					.getAcademicSector());
 			teachermodulecreate.setAcademiqueYear(teacherModuleDto
 					.getAcademiqueYear());
+			logger.debug("******++DETAIL TEACHER 44 +**+***+*+"+teacherModuleDto
+					.getAcademiqueYear());
 			teachermodulecreate.setPriority(teacherModuleDto.getPriority());
+			logger.debug("******++DETAIL TEACHER 55 +**+***+*+"+teacherModuleDto.getPriority());
 			teachedModuleServicewsEndpoint = teachedModuleServicews
 					.getTeachedModuleServicewsImplPort();
 			teachedModuleServicewsEndpoint
@@ -1109,6 +1115,7 @@ public void onchangeZipCode(){
 		TeacherModuleDto teachermodulemodif = new TeacherModuleDto();
 		try {
 			teachermodulemodif.setDetailteacher(detailteacherDto);
+			logger.debug("******++DETAIL TEACHER +**+***+*+"+detailteacherDto);
 			teachermodulemodif.setAcademicModule(teacherModuleDto
 					.getAcademicModule());
 			teachermodulemodif.setAcademicSector(teacherModuleDto
@@ -1365,11 +1372,27 @@ public void onchangeZipCode(){
 					.getRegionServicewsImplPort();
 			cityServicewsEndpoint = cityServicews.getCityServicewsImplPort();
 			zipServicewsEndpoint = zipServicews.getZipServicewsImplPort();
+			popuplistDtoServicewsEndpoint = popuplistDtoServicews.getPopuplistDtoServicewsImplPort();
 
 			listCountry = countryServicewsEndpoint.getAllCountryServicews();
 			listCity = cityServicewsEndpoint.getAllCityServicews();
 			listRegion = regionServicewsEndpoint.getAllRegionServicews();
 			listZipcode = zipServicewsEndpoint.getAllZipcodeServicews();
+			
+			listetatcivile = popuplistDtoServicewsEndpoint
+					.searchPopuplistDtoServicews("etatcivile");
+
+			listnationalite = popuplistDtoServicewsEndpoint
+					.searchPopuplistDtoServicews("nationnalite");
+
+			listdocumentidentity = popuplistDtoServicewsEndpoint
+					.searchPopuplistDtoServicews("identite");
+
+			listsexe = popuplistDtoServicewsEndpoint
+					.searchPopuplistDtoServicews("sexe");
+
+			listspecialite = popuplistDtoServicewsEndpoint
+					.searchPopuplistDtoServicews("speciality");
 
 			logger.debug("fin dual");
 
@@ -1412,6 +1435,12 @@ public void onchangeZipCode(){
 					.getTeachedModuleServicewsImplPort();
 			countryServicewsEndpoint = countryServicews
 					.getCountryServicewsImplPort();
+			countryServicewsEndpoint = countryServicews
+					.getCountryServicewsImplPort();
+			regionServicewsEndpoint = regionServicews
+					.getRegionServicewsImplPort();
+			cityServicewsEndpoint = cityServicews.getCityServicewsImplPort();
+			zipServicewsEndpoint = zipServicews.getZipServicewsImplPort();
 
 			popuplistDtoServicewsEndpoint = popuplistDtoServicews
 					.getPopuplistDtoServicewsImplPort();
@@ -1430,7 +1459,6 @@ public void onchangeZipCode(){
 
 			listspecialite = popuplistDtoServicewsEndpoint
 					.searchPopuplistDtoServicews("speciality");
-
 
 			listCountry = countryServicewsEndpoint.getAllCountryServicews();
 

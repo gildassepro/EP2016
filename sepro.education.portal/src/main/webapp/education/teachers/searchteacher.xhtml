@@ -88,6 +88,16 @@
 										action="#{teacherSearchServiceBean.createProf()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprof').hide()"
 										update="forme fdial growl" />
+										<p:commandButton id="savedetail"
+										styleClass="btn btn-danger"
+										action="#{teacherSearchServiceBean.enregistrerDetailprof()}"
+										rendered="#{teacherSearchServiceBean.isAction2()}"
+										value="#{messages.label_enregistrer}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprofdetail').show()"
+										title="#{messages.label_enregistrer}"
+										update="@([id$=formdatatabledetail]) growl @([id$=fdialfiel])"
+										icon="fa fa-fw fa-check-circle">
+									</p:commandButton>
 									<p:splitButton value="#{messages.label_options}"
 										actionListener="#{buttonView.save}" icon="ui-icon-gear">
 										<p:menuitem value="Update"
@@ -105,6 +115,7 @@
 										update="@([id$=listprofs]) forme fdial"
 										icon="fa fa-fw fa-arrow-left">
 									</p:commandButton>
+										
 
 								</div>
 								<p:panel id="updatprof" widgetVar="updateprof"
@@ -126,7 +137,7 @@
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:inputText styleClass="form-control" id="name"
-															immediate="true"
+															
 															value="#{teacherSearchServiceBean.identityTeacherDto.name}">
 														</p:inputText>
 													</div>
@@ -136,7 +147,7 @@
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:inputText styleClass="form-control" id="surname"
-															immediate="true"
+															
 															value="#{teacherSearchServiceBean.identityTeacherDto.firstName}">
 														</p:inputText>
 													</div>
@@ -147,7 +158,7 @@
 														<span class="requireds">(*)</span>
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
-														<p:calendar id="datenaisse" immediate="true"
+														<p:calendar id="datenaisse" 
 															value="#{teacherSearchServiceBean.identityTeacherDto.birthday}"
 															showOn="button" pattern="MM/dd/yyyy"
 															placeholder="#{messages.labeldatedenaiss}">
@@ -160,7 +171,7 @@
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:selectOneMenu styleClass="form-text" id="paysnaissance"
-															immediate="true"
+															
 															value="#{teacherSearchServiceBean.identityTeacherDto.countryOfBirthday}"
 															converter="entityConverter">
 															<f:selectItem
@@ -179,7 +190,7 @@
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:inputText styleClass="form-control" id="placebirth"
-															immediate="true"
+															
 															value="#{teacherSearchServiceBean.identityTeacherDto.placeOfBirthday}">
 														</p:inputText>
 													</div>
@@ -189,7 +200,7 @@
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:selectOneMenu styleClass="form-text" id="sexe"
-															immediate="true"
+															
 															value="#{teacherSearchServiceBean.identityTeacherDto.sexe}"
 															converter="entityConverter">
 															<f:selectItem
@@ -207,7 +218,7 @@
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:selectOneMenu styleClass="form-text" id="etatcivil"
-															immediate="true"
+															
 															value="#{teacherSearchServiceBean.identityTeacherDto.maritalStatus}"
 															converter="entityConverter">
 															<f:selectItem
@@ -224,7 +235,7 @@
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:selectOneMenu styleClass="form-text" id="nationnality"
-															immediate="true"
+															
 															value="#{teacherSearchServiceBean.identityTeacherDto.nationality}"
 															converter="entityConverter">
 															<f:selectItem
@@ -244,7 +255,7 @@
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:selectOneMenu styleClass="form-text" id="docidentity"
-															immediate="true"
+															
 															value="#{teacherSearchServiceBean.identityTeacherDto.typeOfDocument}"
 															converter="entityConverter">
 															<f:selectItem
@@ -262,7 +273,7 @@
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:inputText styleClass="form-control" id="idnumber"
-															immediate="true"
+															
 															value="#{teacherSearchServiceBean.identityTeacherDto.identityNumber}">
 														</p:inputText>
 													</div>
@@ -274,7 +285,7 @@
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:selectOneMenu styleClass="form-text" id="pays"
-															immediate="true"
+															
 															value="#{teacherSearchServiceBean.identityTeacherDto.countryAddress}"
 															converter="entityConverter">
 															<f:selectItem
@@ -286,7 +297,7 @@
 																itemLabel="#{countryaddress.countryName}" />
 															<p:ajax event="valueChange"
 																listener="#{teacherSearchServiceBean.maskPhone()}"
-																update="fdial:phone fdial:region fdial:city fdial:zipcode" />
+																update="phone region " />
 														</p:selectOneMenu>
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
@@ -295,7 +306,7 @@
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:selectOneMenu styleClass="form-text" id="region"
-															immediate="true"
+															
 															value="#{teacherSearchServiceBean.identityTeacherDto.regionAddress}"
 															converter="entityConverter">
 															<f:selectItem
@@ -320,7 +331,7 @@
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:selectOneMenu styleClass="form-text" id="city"
-															immediate="true"
+															
 															value="#{teacherSearchServiceBean.identityTeacherDto.cityAddress}"
 															converter="entityConverter">
 															<f:selectItem
@@ -341,7 +352,7 @@
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:selectOneMenu styleClass="form-text" id="zipcode"
-															immediate="true"
+															
 															value="#{teacherSearchServiceBean.identityTeacherDto.zipcodeAddress}"
 															converter="entityConverter">
 															<f:selectItem
@@ -362,7 +373,7 @@
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:inputMask styleClass="form-control" id="phone"
-															immediate="true"
+															
 															value="#{teacherSearchServiceBean.identityTeacherDto.phoneNumber}"
 															placeholder="#{messages.label_phoneNumber1}"
 															mask="#{teacherSearchServiceBean.maskphonformatteacher}">
@@ -374,7 +385,7 @@
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:inputText styleClass="form-control" id="email"
-															immediate="true"
+															
 															value="#{teacherSearchServiceBean.identityTeacherDto.emailAdd}"
 															placeholder="#{messages.label_email}" match="email"
 															required="true"
@@ -395,7 +406,7 @@
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:inputText styleClass="form-control" id="adr1"
-															immediate="true"
+															
 															value="#{teacherSearchServiceBean.identityTeacherDto.addressLigne1}">
 														</p:inputText>
 													</div>
@@ -405,7 +416,7 @@
 													<div class="col-lg-3 col-md-3 col-sm-3">
 
 														<p:selectOneMenu styleClass="form-text" id="listspe"
-															immediate="true"
+															
 															value="#{teacherSearchServiceBean.identityTeacherDto.speciality}"
 															converter="entityConverter">
 															<f:selectItem
@@ -425,7 +436,7 @@
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:inputText styleClass="form-control" id="adr2"
-															immediate="true"
+															
 															value="#{teacherSearchServiceBean.identityTeacherDto.addressLigne2}">
 														</p:inputText>
 													</div>
@@ -434,7 +445,7 @@
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:inputText styleClass="form-control" id="adr3"
-															immediate="true"
+															
 															value="#{teacherSearchServiceBean.identityTeacherDto.addressLigne3}">
 														</p:inputText>
 													</div>
@@ -445,7 +456,7 @@
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:inputText styleClass="form-control" id="adr4"
-															immediate="true"
+															
 															value="#{teacherSearchServiceBean.identityTeacherDto.addressLigne4}">
 														</p:inputText>
 													</div>

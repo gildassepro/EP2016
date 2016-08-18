@@ -262,17 +262,23 @@ public class ClasseSearchServiceBean implements Serializable {
 	public void createInventaire() {
 		try {
 			RoomInventoryDto inventaire = new RoomInventoryDto();
-			inventaire.setClasse(classDto);
+			inventaire.setClasse(classeDto);
+			logger.debug("*********NOM DE LA CLASSE*****"+classeDto.getNameOfClass());
 			inventaire.setMaterial(roominventorydto.getMaterial());
+			logger.debug("*********NOM DE L INVENTAIRE*****"+roominventorydto.getMaterial());
 			inventaire.setQuantity(roominventorydto.getQuantity());
+			logger.debug("*********NOM DE LA QUANTITE*****"+roominventorydto.getQuantity());
 			inventaire.setCommissioningDate(roominventorydto
 					.getCommissioningDate());
+			logger.debug("*********COMMISSIONG DATE *****"+roominventorydto
+					.getCommissioningDate());
 			inventaire.setRef(roominventorydto.getRef());
+			logger.debug("*********REFERENCES *****"+roominventorydto.getRef());
 			roomInventoryServicewsEndpoint = roomInventoryServicews
 					.getRoomInventoryServicewsImplPort();
 			inventaire = roomInventoryServicewsEndpoint
 					.createRoomInventoryServicews(inventaire);
-			init();
+			
 			FacesContext.getCurrentInstance().addMessage(
 					"mesagesalert2",
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", rb
@@ -281,13 +287,13 @@ public class ClasseSearchServiceBean implements Serializable {
 		} catch (Exception e) {
 
 		}
-
+		init();
 	}
 
 	public String updateInventaire() {
 		RoomInventoryDto modifinventaire = new RoomInventoryDto();
 		try {
-			modifinventaire.setClasse(classDto);
+			modifinventaire.setClasse(classeDto);
 			modifinventaire.setMaterial(roominventorydto.getMaterial());
 			modifinventaire.setQuantity(roominventorydto.getQuantity());
 			modifinventaire.setCommissioningDate(roominventorydto
@@ -326,7 +332,7 @@ public class ClasseSearchServiceBean implements Serializable {
 
 		}
 		FacesContext.getCurrentInstance().addMessage(
-				"mesagesalert2",
+				"",
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", rb
 						.getString("label_msg_delete_inventaire")));
 		return null;
@@ -359,17 +365,21 @@ public class ClasseSearchServiceBean implements Serializable {
 
 	public void initDualListInventaire(String caction) {
 		if (caction.equals("1")) {
-			roominventorydto = selectedinventaire;
+			roominventorydto = roominventorrydto;
+			classeDto = classDto;
 			action2 = true;
 			action4 = false;
+			
 			initUpdateInventaire();
 		} else {
 			roominventorydto = new RoomInventoryDto();
+			classeDto = classDto;
 			action2 = true;
 			action4 = false;
 			try {
 
 				if (classDto != null) {
+//					logger.debug("********JE SUIS DANS L INIDULISTE INVENTAIRE******"+classeDto.getNameOfClass());
 					roomInventoryServicewsEndpoint = roomInventoryServicews
 							.getRoomInventoryServicewsImplPort();
 					roominventorydto.setClasse(classDto);
@@ -434,6 +444,7 @@ public class ClasseSearchServiceBean implements Serializable {
 	public void initUpdateInventaire() {
 		try {
 			test = false;
+			logger.debug("********JE SUIS DANS L initUpdateInventaire ******"+roominventorydto.getMaterial());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -471,6 +482,7 @@ public class ClasseSearchServiceBean implements Serializable {
 	public void initCreateInventaire() {
 		try {
 			test = true;
+			logger.debug("*****INITCREATE INVENTAIRE ****"+classeDto.getNameOfClass());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

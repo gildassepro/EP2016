@@ -21,18 +21,34 @@
 										update="@([id$=updatclasse]) forme fdial"
 										onclick="PF('updateclasse').show()" icon="fa fa-fw fa-plus">
 									</p:commandButton>
-									<p:commandButton id="modifse"
-										styleClass="btn btn-success"
+									<p:commandButton id="modifse" styleClass="btn btn-success"
 										value="#{messages.label_modifier}"
+										rendered="#{!classeSearchServiceBean.isTest()}"
 										update="@([id$=updatclasse]) forme fdial"
 										onclick="PF('updateclasse').show()" icon="fa fa-fw fa-pencil"
 										action="#{classeSearchServiceBean.initDualList('1')}">
 									</p:commandButton>
+									<p:commandButton id="modifsematerial" styleClass="btn btn-danger"
+										value="#{messages.label_modifier}"
+										rendered="#{classeSearchServiceBean.isTest()}"
+										update="@([id$=updatinventoryclasse]) forme fdial"
+										onclick="PF('updateinventoryclasse').show()" icon="fa fa-fw fa-pencil"
+										action="#{classeSearchServiceBean.initDualListInventaire('1')}">
+									</p:commandButton>
 									<p:commandButton id="deletee" process="@([id$=listclasses])"
 										styleClass="btn btn-danger"
+										rendered="#{!classeSearchServiceBean.isTest()}"
 										value="#{messages.label_supprimer1}"
 										title="#{messages.label_supprimer1}"
 										onclick="PF('confirmation').show()" icon="fa fa-fw fa-remove">
+									</p:commandButton>
+									
+									<p:commandButton id="deleteematerial" process="@([id$=listMateriels])"
+										styleClass="btn btn-primary submit-button"
+										rendered="#{classeSearchServiceBean.isTest()}"
+										value="#{messages.label_supprimer1}"
+										title="#{messages.label_supprimer1}"
+										onclick="PF('confirmationinv').show()" icon="fa fa-fw fa-remove">
 									</p:commandButton>
 
 									<p:commandButton id="detel" styleClass="btn btn-primary"
@@ -44,7 +60,7 @@
 									</p:commandButton>
 
 									<p:commandButton id="printe"
-										update="@([id$=listregions]) forme fdial"
+										update="@([id$=listclasses]) forme fdial"
 										styleClass="btn btn-primary submit-button"
 										title="#{messages.label_print}"
 										value="#{messages.label_print}"
@@ -62,14 +78,6 @@
 										<p:menuitem value="Homepage" icon="ui-icon-extlink" />
 									</p:splitButton>
 
-									<p:commandButton id="past"
-										styleClass="btn btn-primary submit-button" ajax="false"
-										action="searchclasse.xhtml?faces-redirect=true"
-										immediate="true"
-										update="@([id$=listclasses]) forme fdial"
-										icon="fa fa-fw fa-arrow-left">
-									</p:commandButton>
-
 									<p:commandButton value="#{messages.label_modifier}"
 										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
 										rendered="#{!classeSearchServiceBean.isAction()}"
@@ -78,10 +86,35 @@
 										update="forme fdial growl" />
 									<p:commandButton value="#{messages.label_create}"
 										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
-										rendered="#{regionSearchServiceBean.isAction()}"
+										rendered="#{classeSearchServiceBean.isAction()}"
 										action="#{classeSearchServiceBean.createClasse()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateclasse').hide()"
 										update="forme fdial growl" />
+
+									<p:commandButton id="past"
+										styleClass="btn btn-primary submit-button" ajax="false"
+										action="searchclasse.xhtml?faces-redirect=true"
+										immediate="true" update="@([id$=listclasses]) forme fdial"
+										icon="fa fa-fw fa-arrow-left">
+									</p:commandButton>
+
+									<p:commandButton id="savemateriel"
+										rendered="#{classeSearchServiceBean.isTest()}"
+										styleClass="btn btn-success"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateinventoryclasse').show()"
+										value="SAVE"
+										action="#{classeSearchServiceBean.createInventaire()}"
+										update="@([id$=listMateriels]) growl">
+									</p:commandButton>
+
+									<p:commandButton id="modifmateriel"
+										rendered="#{!classeSearchServiceBean.isTest()}"
+										styleClass="btn btn-primary"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateinventoryclasse').show()"
+										value="SAVE"	
+										action="#{classeSearchServiceBean.updateInventaire()}"
+										update="@([id$=listMateriels]) growl">
+									</p:commandButton>
 
 								</div>
 								<p:panel id="updatclasse" widgetVar="updateclasse"
@@ -291,7 +324,7 @@
 														<span class="requireds">(*)</span>
 														<p:inputText styleClass="form-control" id="namematerial"
 															value="#{classeSearchServiceBean.roominventorydto.material}"
-															required="true"
+															immediate="true"
 															requiredMessage="#{messages.label_designation_required}">
 														</p:inputText>
 													</div>
@@ -299,6 +332,7 @@
 														<p:outputLabel value="#{messages.label_quantite}" />
 														<span class="requireds">(*)</span>
 														<p:inputText styleClass="form-control" id="quantity"
+															immediate="true"
 															value="#{classeSearchServiceBean.roominventorydto.quantity}">
 														</p:inputText>
 													</div>
@@ -307,7 +341,7 @@
 													<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 														<p:outputLabel value="#{messages.labeldateenregistrement}"
 															for="dateenregistrement" />
-														<p:calendar id="dateenregistrement"
+														<p:calendar id="dateenregistrement" immediate="true"
 															value="#{classeSearchServiceBean.roominventorydto.commissioningDate}"
 															showOn="button">
 															<f:converter converterId="dateConverter" />
@@ -316,29 +350,30 @@
 													<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 														<p:outputLabel value="#{messages.label_ref}" />
 														<p:inputText styleClass="form-control" id="ref"
+															immediate="true"
 															value="#{classeSearchServiceBean.roominventorydto.ref}">
 														</p:inputText>
 													</div>
 												</div>
 											</div>
-											<div class="col-xs-2">
-												<div class="button-wrapper">
-													<p:commandButton value="#{messages.label_create}"
-														styleClass="btn btn-primary"
-														rendered="#{classeSearchServiceBean.isTest()}"
-														action="#{classeSearchServiceBean.createInventaire()}"
-														oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateinventoryclasse').show()"
-														update="fdialinventaire listMateriels growl">
-													</p:commandButton>
-													<p:commandButton value="#{messages.label_modifier}"
-														styleClass="btn btn-primary"
-														rendered="#{!classeSearchServiceBean.isTest()}"
-														action="#{classeSearchServiceBean.updateInventaire()}"
-														oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateinventoryclasse').show()"
-														update="fdialinventaire listMateriels growl">
-													</p:commandButton>
-												</div>
-											</div>
+<!-- 											<div class="col-xs-2"> -->
+<!-- 												<div class="button-wrapper"> -->
+<!-- 													<p:commandButton value="#{messages.label_create}" -->
+<!-- 														styleClass="btn btn-primary" -->
+<!-- 														rendered="#{classeSearchServiceBean.isTest()}" -->
+<!-- 														action="#{classeSearchServiceBean.createInventaire()}" -->
+<!-- 														oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateinventoryclasse').show()" -->
+<!-- 														update="fdialinventaire listMateriels growl"> -->
+<!-- 													</p:commandButton> -->
+<!-- 													<p:commandButton value="#{messages.label_modifier}" -->
+<!-- 														styleClass="btn btn-primary" -->
+<!-- 														rendered="#{!classeSearchServiceBean.isTest()}" -->
+<!-- 														action="#{classeSearchServiceBean.updateInventaire()}" -->
+<!-- 														oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateinventoryclasse').show()" -->
+<!-- 														update="fdialinventaire listMateriels growl"> -->
+<!-- 													</p:commandButton> -->
+<!-- 												</div> -->
+<!-- 											</div> -->
 										</div>
 
 										<b:row styleClass="listPage">
@@ -349,6 +384,7 @@
 												styleClass="listeTable table-responsive filterable"
 												tableStyleClass="table table-striped table-condensed table-hover"
 												rowKey="#{inventairecl.idRoomInventory}"
+												selection="#{classeSearchServiceBean.roominventorrydto}"
 												selectionMode="single" paginator="true"
 												paginatorPosition="bottom"
 												paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
@@ -386,37 +422,11 @@
 														<p:outputLabel value="#{messages.label_action}" />
 													</f:facet>
 
-													<p:commandButton id="modifier" styleClass="btn btn-success"
-														title="#{messages.label_modifier}"
-														action="#{classeSearchServiceBean.initDualListInventaire('1')}"
-														update="@([id$=updatinventoryclasse])"
-														oncomplete="PF('updateinventoryclasse').show()"
-														value="#{messages.label_modifier}"
-														icon="fa fa-fw fa-pencil">
-														<f:setPropertyActionListener value="#{inventairecl}"
-															target="#{classeSearchServiceBean.selectedinventaire}" />
-													</p:commandButton>
-
-													<p:commandButton id="supprimer" styleClass="btn btn-danger"
-														title="#{messages.label_supprimer1}"
-														onclick="PF('confirmationinv').show()"
-														value="#{messages.label_supprimer1}"
-														icon="fa fa-fw fa-remove">
-														<f:setPropertyActionListener value="#{inventairecl}"
-															target="#{classeSearchServiceBean.roominventorrydto}" />
-													</p:commandButton>
-
-													<p:blockUI block="listMateriels"
-														trigger="listMateriels:supprimer,listMateriels:modifier">
-										#{messages.label_loading}<br />
-														<p:graphicImage value="/resources/images/loadingpics.gif" />
-													</p:blockUI>
-
 													<p:confirmDialog appendToBody="true"
 														message="#{messages.label_msg_alerte_supression}"
 														header="Confirmation" widgetVar="confirmationinv">
 														<p:commandButton value="#{messages.label_msg_confirmOui}"
-															onclick="PF('confirmationinv').hide()"
+															onclick="PF('confirmationinv').hide()" immediate="true"
 															action="#{classeSearchServiceBean.supprimerInventaire()}"
 															update="listMateriels growl" />
 														<p:commandButton value="#{messages.label_msg_confirmNon}"
