@@ -10,6 +10,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -38,11 +39,14 @@ import org.sepro.parameterweb.serviceimpl.ZipServicews;
 import org.sepro.parameterweb.serviceimpl.ZipServicewsEndpoint;
 import org.sepro.studentweb.serviceapi.StudentCVDto;
 import org.sepro.studentweb.serviceapi.StudentContactDto;
+import org.sepro.studentweb.serviceapi.StudentDataDto;
 import org.sepro.studentweb.serviceapi.StudentDto;
 import org.sepro.studentweb.serviceimpl.StudentCVServicews;
 import org.sepro.studentweb.serviceimpl.StudentCVServicewsEndpoint;
 import org.sepro.studentweb.serviceimpl.StudentContactServicews;
 import org.sepro.studentweb.serviceimpl.StudentContactServicewsEndpoint;
+import org.sepro.studentweb.serviceimpl.StudentDataDtoServicews;
+import org.sepro.studentweb.serviceimpl.StudentDataDtoServicewsEndpoint;
 import org.sepro.studentweb.serviceimpl.StudentServicews;
 import org.sepro.studentweb.serviceimpl.StudentServicewsEndpoint;
 
@@ -67,6 +71,12 @@ public class StudentSearchServiceBean implements Serializable {
 
 	private StudentCVServicews studentCVServicews = new StudentCVServicews();
 	private StudentCVServicewsEndpoint studentCVServicewsEndpoint;
+	
+	private StudentDataDtoServicews studentDataDtoServicews = new StudentDataDtoServicews();
+	private StudentDataDtoServicewsEndpoint studentDataDtoServicewsEndpoint;
+	private StudentDataDto studentDataDto = new StudentDataDto();
+	private StudentDataDto studentDataDtos = new StudentDataDto();
+	private List<StudentDataDto> listDataStudent = new ArrayList<StudentDataDto>();
 
 	private StudentContactDto studentContactDto = new StudentContactDto();
 	private StudentContactDto studentContactDtos = new StudentContactDto();
@@ -108,6 +118,8 @@ public class StudentSearchServiceBean implements Serializable {
 	private List<PopuplistDto> listtypecontact = new ArrayList<PopuplistDto>();
 	private List<PopuplistDto> listdocumentidentity = new ArrayList<PopuplistDto>();
 	private List<PopuplistDto> listlienparante = new ArrayList<PopuplistDto>();
+	private List<PopuplistDto> listmention = new ArrayList<PopuplistDto>();
+	
 
 	private List<PopuplistDto> listfiliere = new ArrayList<PopuplistDto>();
 	private List<PopuplistDto> listanneeacademique = new ArrayList<PopuplistDto>();	
@@ -118,9 +130,10 @@ public class StudentSearchServiceBean implements Serializable {
 	private boolean action3 = true;
 
 	private boolean render2 = false;
-
-	private boolean render3 = true;
+	private boolean render3 = false;
+	
 	private boolean render4 = true;
+	
 	private boolean render5 = true;
 
 	private boolean testdetail = true;
@@ -141,6 +154,30 @@ public class StudentSearchServiceBean implements Serializable {
 	
 	
 	
+	public StudentDataDto getStudentDataDto() {
+		return studentDataDto;
+	}
+	public void setStudentDataDto(StudentDataDto studentDataDto) {
+		this.studentDataDto = studentDataDto;
+	}
+	public StudentDataDto getStudentDataDtos() {
+		return studentDataDtos;
+	}
+	public void setStudentDataDtos(StudentDataDto studentDataDtos) {
+		this.studentDataDtos = studentDataDtos;
+	}
+	public List<StudentDataDto> getListDataStudent() {
+		return listDataStudent;
+	}
+	public void setListDataStudent(List<StudentDataDto> listDataStudent) {
+		this.listDataStudent = listDataStudent;
+	}
+	public List<PopuplistDto> getListmention() {
+		return listmention;
+	}
+	public void setListmention(List<PopuplistDto> listmention) {
+		this.listmention = listmention;
+	}
 	public Calendar getNow() {
 		return now;
 	}
@@ -390,7 +427,7 @@ public class StudentSearchServiceBean implements Serializable {
 	
 	public void initDualListPro(String daction) {
 		if (daction.equals("1")) {
-			//testmodifier = true;
+			
 			studentDto = studentDtos;
 			action2 = true;
 			action3 = false;
@@ -403,21 +440,227 @@ public class StudentSearchServiceBean implements Serializable {
 			listlienparante = new ArrayList<PopuplistDto>();
 			listsexe = new ArrayList<PopuplistDto>();
 			listanneeacademique = new ArrayList<PopuplistDto>();
-			listdocumentidentity = new ArrayList<PopuplistDto>();;
-			listetatcivile = new ArrayList<PopuplistDto>();;
+			listdocumentidentity = new ArrayList<PopuplistDto>();
+			listetatcivile = new ArrayList<PopuplistDto>();
 			listfiliere = new ArrayList<PopuplistDto>();
 			listnationalite = new ArrayList<PopuplistDto>();
 			
-			logger.debug("****AFFICHAGE ETUDIANT********"+studentDto.getIdStudent());
+			logger.debug("****AFFICHAGE ETUDIANT ID********"+studentDto.getIdStudent());
 			initUpdateStudent();
 
 		} else {
 			action2 = true;
 			action3 = false;
 			
+			
+			
+			
 		}
 		
 	}
+	
+	public void initDualListCo(String faction) {
+		if (faction.equals("1")) {
+			
+			studentDto = studentDtos;
+			studentContactDto = studentContactDtos;
+			action2 = true;
+			action3 = false;
+			
+			listCountry = new ArrayList<CountryDto>();
+			listRegion = new ArrayList<RegionDto>();
+			listCity = new ArrayList<CityDto>();
+			listZipcode = new ArrayList<ZipcodeDto>();
+			listtypecontact = new ArrayList<PopuplistDto>();
+			listlienparante = new ArrayList<PopuplistDto>();
+			render2 = true;
+			logger.debug("****AFFICHAGE ETUDIANT CONTACT********"+studentContactDto.getName());
+//			logger.debug("****AFFICHAGE ETUDIANT CONTACT********"+studentDto);
+			
+			
+			initUpdateStudentCo();
+			
+
+		} else {
+			action2 = true;
+			action3 = false;
+			render3 = true;
+			
+			
+			
+			studentCVDto = studentCVDtos;
+			studentDto = studentDtos;
+			listtypecontact = new ArrayList<PopuplistDto>();
+			listlienparante = new ArrayList<PopuplistDto>();
+			listmention = new ArrayList<PopuplistDto>();
+			initUpdateStudentCv();
+			logger.debug("****AFFICHAGE ETUDIANT CV********"+studentCVDto);
+//			logger.debug("****AFFICHAGE ETUDIANT CV********"+studentDto);
+			
+		}
+		
+		
+	}
+	
+	public void initUpdateStudentCv(){
+		try {
+			logger.debug("end initUpdate");
+
+			
+			studentCVServicewsEndpoint = studentCVServicews.getStudentCVServicewsImplPort();
+			popuplistDtoServicewsEndpoint = popuplistDtoServicews
+					.getPopuplistDtoServicewsImplPort();
+			
+			listtypecontact = popuplistDtoServicewsEndpoint
+					.searchPopuplistDtoServicews("typecontact");
+			
+			listmention = popuplistDtoServicewsEndpoint
+					.searchPopuplistDtoServicews("mention");
+			
+			
+			
+			logger.debug("fin dual2");
+
+			logger.debug("end init initUpdate2");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void enregistrerStudentCv(){
+		
+		StudentCVDto studentcv = new StudentCVDto();
+		
+		studentcv.setContactEmail(studentCVDto.getContactEmail());
+		studentcv.setContactName(studentCVDto.getContactName());
+		studentcv.setContactTelephoneNumber(studentCVDto.getContactTelephoneNumber());
+		studentcv.setDiploma(studentCVDto.getDiploma());
+		studentcv.setGrade(studentCVDto.getGrade());
+		studentcv.setNameOfScool(studentCVDto.getNameOfScool());
+		studentcv.setEnDate(studentCVDto.getEnDate());
+		studentcv.setStartDate(studentCVDto.getStartDate());
+		studentcv.setStudent(studentDto);
+		studentcv.setTypeOfContact(studentCVDto.getTypeOfContact());
+		
+		studentCVServicewsEndpoint = studentCVServicews.getStudentCVServicewsImplPort();
+		
+		studentcv = studentCVServicewsEndpoint.createStudentCVServicews(studentcv);
+		
+		studentCVDto = new StudentCVDto();
+		
+	}
+   public void updateStudentCv(){
+		
+	   StudentCVDto updatestudentcv = new StudentCVDto();
+		
+	   updatestudentcv.setContactEmail(studentCVDto.getContactEmail());
+	   updatestudentcv.setContactName(studentCVDto.getContactName());
+	   updatestudentcv.setContactTelephoneNumber(studentCVDto.getContactTelephoneNumber());
+	   updatestudentcv.setDiploma(studentCVDto.getDiploma());
+		updatestudentcv.setGrade(studentCVDto.getGrade());
+		updatestudentcv.setNameOfScool(studentCVDto.getNameOfScool());
+		updatestudentcv.setEnDate(studentCVDto.getEnDate());
+		updatestudentcv.setStartDate(studentCVDto.getStartDate());
+		updatestudentcv.setStudent(studentDto);
+		updatestudentcv.setTypeOfContact(studentCVDto.getTypeOfContact());
+		
+		studentCVServicewsEndpoint = studentCVServicews.getStudentCVServicewsImplPort();
+		updatestudentcv.setIdStudentCV(studentCVDto.getIdStudentCV());
+		
+		updatestudentcv = studentCVServicewsEndpoint.updateStudentCVServicews(updatestudentcv);
+		
+		render3 = false;
+		studentCVDto = new StudentCVDto();
+		
+	}
+	
+	public String supprimerStudentCv(){
+		
+		FacesMessage msg = null;
+		logger.debug("DEBUT SuppressionCV +++++++++++++");
+		try {
+			studentCVServicewsEndpoint.deleteStudentCVServicews(studentCVDtos);
+			init();
+		}catch(Exception e) {
+			msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					rb.getString("label_warn"),
+					rb.getString("label_warn"));
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, msg);
+			
+		}
+		return null;
+	}
+	
+	public String supprimerStudentContact(){
+		
+		FacesMessage msg = null;
+		logger.debug("DEBUT SuppressionContact +++++++++++++");
+		try {
+			studentContactServicewsEndpoint.deleteStudentContactServicews(studentContactDtos);
+			init();
+		}catch(Exception e) {
+			msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					rb.getString("label_warn"),
+					rb.getString("label_warn"));
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, msg);
+			
+		}
+		return null;
+	}
+	
+	public void initUpdateStudentCo(){
+		try {
+		logger.debug("end initUpdate");
+		studentContactServicewsEndpoint = studentContactServicews.getStudentContactServicewsImplPort();
+		countryServicewsEndpoint = countryServicews
+				.getCountryServicewsImplPort();
+		regionServicewsEndpoint = regionServicews.getRegionServicewsImplPort();
+		zipServicewsEndpoint = zipServicews.getZipServicewsImplPort();
+		cityServicewsEndpoint = cityServicews.getCityServicewsImplPort();
+		popuplistDtoServicewsEndpoint = popuplistDtoServicews
+				.getPopuplistDtoServicewsImplPort();
+		
+		listCountry = countryServicewsEndpoint.getAllCountryServicews();
+
+        listRegion = regionServicewsEndpoint.getAllRegionServicews();
+
+		listZipcode = zipServicewsEndpoint.getAllZipcodeServicews();
+
+		listCity = cityServicewsEndpoint.getAllCityServicews();
+
+		listetatcivile = popuplistDtoServicewsEndpoint
+				.searchPopuplistDtoServicews("etatcivile");
+
+		listnationalite = popuplistDtoServicewsEndpoint
+				.searchPopuplistDtoServicews("nationnalite");
+
+		listdocumentidentity = popuplistDtoServicewsEndpoint
+				.searchPopuplistDtoServicews("identite");
+
+		listsexe = popuplistDtoServicewsEndpoint
+				.searchPopuplistDtoServicews("sexe");
+		
+		listlienparante = popuplistDtoServicewsEndpoint
+				.searchPopuplistDtoServicews("lien");
+		
+		listmention = popuplistDtoServicewsEndpoint
+				.searchPopuplistDtoServicews("mention");
+		
+		listtypecontact = popuplistDtoServicewsEndpoint
+				.searchPopuplistDtoServicews("typecontact");
+		
+		logger.debug("fin dual");
+
+		logger.debug("end init initUpdate");
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	
+}
 	
 	public void initUpdateStudent(){
 		studentServicewsEndpoint = studentServicews.getStudentServicewsImplPort();
@@ -454,6 +697,14 @@ public class StudentSearchServiceBean implements Serializable {
 		listsexe = popuplistDtoServicewsEndpoint
 				.searchPopuplistDtoServicews("sexe");
 		
+		listmention = popuplistDtoServicewsEndpoint
+				.searchPopuplistDtoServicews("mention");
+		
+		listtypecontact = popuplistDtoServicewsEndpoint
+				.searchPopuplistDtoServicews("typecontact");
+		listlienparante = popuplistDtoServicewsEndpoint
+				.searchPopuplistDtoServicews("lien");
+		
 		
 		logger.debug("***********STUDENT***************"+studentDtos.getIdStudent());
 		logger.debug("***********STUDENT***************"+studentDtos.getIdStudent());
@@ -478,7 +729,7 @@ public class StudentSearchServiceBean implements Serializable {
 			modifstudent.setCountryOfBirthday(studentDto.getCountryOfBirthday());
 			modifstudent.setFirstName(studentDto.getFirstName());
 			modifstudent.setIdentityNumber(studentDto.getIdentityNumber());
-			
+			modifstudent.setInscriptionAuthentification(studentDto.getInscriptionAuthentification());
 			modifstudent.setMaritalStatus(studentDto.getMaritalStatus());
 			modifstudent.setName(studentDto.getName());
 			modifstudent.setNationality(studentDto.getNationality());
@@ -501,8 +752,10 @@ public class StudentSearchServiceBean implements Serializable {
 	}
 	
 	
+	
 	public void enregistrerStudentContact() {
 		try {
+			
 			
 			StudentContactDto contactstudent = new StudentContactDto();
 			
@@ -510,45 +763,19 @@ public class StudentSearchServiceBean implements Serializable {
 			contactstudent.setCountryAddress(studentContactDto.getCountryAddress());
 			contactstudent.setEmailAddress(studentContactDto.getEmailAddress());
 			contactstudent.setFirstName(studentContactDto.getFirstName());
-			contactstudent.setStudent(studentDtos);
+			contactstudent.setStudent(studentDto);
 			contactstudent.setName(studentContactDto.getName());
 			contactstudent.setPhoneNumber(studentContactDto.getPhoneNumber());
 			contactstudent.setRegionAddress(studentContactDto.getRegionAddress());
 			contactstudent.setRelationship(studentContactDto.getRelationship());
 			contactstudent.setTypeOfContact(studentContactDto.getTypeOfContact());
 			contactstudent.setZipcodeAddress(studentContactDto.getZipcodeAddress());
-			GregorianCalendar gregory = new GregorianCalendar();
-			gregory.setTime(now.getTime());
-			XMLGregorianCalendar nowGregorian;
-			nowGregorian = DatatypeFactory.newInstance()
-					.newXMLGregorianCalendar(gregory);
+			
 			studentContactServicewsEndpoint = studentContactServicews.getStudentContactServicewsImplPort();
 
-			if (testmodifier == false) {
-
-
-				contactstudent = studentContactServicewsEndpoint.createStudentContactServicews(contactstudent);
-				studentContactDto = contactstudent;
-				studentContactDtos = contactstudent;
-
-				studentContactDto = new StudentContactDto();
-
-				studentContactDto.setStudent(studentDto);
+			contactstudent = studentContactServicewsEndpoint.createStudentContactServicews(contactstudent);
 				
-			}
 
-			else {
-				
-				contactstudent.setIdStudentContact(studentContactDto.getIdStudentContact());
-				contactstudent = studentContactServicewsEndpoint.updateStudentContactServicews(contactstudent);
-				
-				studentContactDto = contactstudent;
-				studentContactDtos = contactstudent;
-				studentContactDto = new StudentContactDto();
-				studentContactDto.setStudent(studentDto);
-
-			}
-			testmodifier = false;
 
 		} catch (Exception e) {
 
@@ -556,6 +783,30 @@ public class StudentSearchServiceBean implements Serializable {
 
 	}
 	
+	public void updateStudentContact(){
+		studentDtos.setIdStudent(studentContactDto.getStudent().getIdStudent());
+		StudentContactDto updatecontactstudent = new StudentContactDto();
+		
+		updatecontactstudent.setCityAddress(studentContactDto.getCityAddress());
+		updatecontactstudent.setCountryAddress(studentContactDto.getCountryAddress());
+		updatecontactstudent.setEmailAddress(studentContactDto.getEmailAddress());
+		updatecontactstudent.setFirstName(studentContactDto.getFirstName());
+		updatecontactstudent.setStudent(studentDtos);
+		updatecontactstudent.setName(studentContactDto.getName());
+		updatecontactstudent.setPhoneNumber(studentContactDto.getPhoneNumber());
+		updatecontactstudent.setRegionAddress(studentContactDto.getRegionAddress());
+		updatecontactstudent.setRelationship(studentContactDto.getRelationship());
+		updatecontactstudent.setTypeOfContact(studentContactDto.getTypeOfContact());
+		updatecontactstudent.setZipcodeAddress(studentContactDto.getZipcodeAddress());
+		
+		studentContactServicewsEndpoint = studentContactServicews.getStudentContactServicewsImplPort();
+
+		updatecontactstudent.setIdStudentContact(studentContactDto.getIdStudentContact());
+		updatecontactstudent = studentContactServicewsEndpoint.updateStudentContactServicews(updatecontactstudent);
+		
+		render2 = false;
+		studentContactDto = new StudentContactDto();
+	}
 	
 @PostConstruct
 public void init() {
@@ -598,6 +849,7 @@ public void init() {
 
 						
 			listStudents = studentServicewsEndpoint.searchStudentServicews(studentDto);
+			//listDataStudent = studentDataDtoServicewsEndpoint.searchStudentDataDtoServicews();
 
 			logger.debug("end init");
 
