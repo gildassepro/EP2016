@@ -22,13 +22,7 @@
 										update="@([id$=updatmenu])" onclick="PF('updatemenu').show()"
 										value="#{messages.label_dupliquer}" icon="fa fa-fw fa-copy">
 									</p:commandButton>
-									<p:commandButton id="printe"
-										update="@([id$=listmenu]) forme fdial"
-										styleClass="btn btn-primary submit-button"
-										title="#{messages.label_print}"
-										value="#{messages.label_print}"
-										onclick="PF('confirmation').show()" icon="fa fa-fw fa-print">
-									</p:commandButton>
+									
 									<p:commandButton id="modifier" styleClass="btn btn-success"
 										title="#{messages.label_modifier}"
 										action="#{menuSearchServiceBean.initDualList('2')}"
@@ -46,6 +40,7 @@
 										styleClass="btn btn-primary submit-button"
 										icon="fa fa-fw fa-check-circle"
 										action="#{menuSearchServiceBean.duppMenu()}"
+										disabled="#{menuSearchServiceBean.test}"
 										rendered="#{menuSearchServiceBean.isAction()}"
 										value="#{messages.label_dupliquer}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatemenu').hide()"
@@ -53,6 +48,7 @@
 									</p:commandButton>
 									<p:commandButton id="modif" icon="fa fa-fw fa-check-circle"
 										styleClass="btn btn-primary submit-button"
+										disabled="#{menuSearchServiceBean.test}"
 										action="#{menuSearchServiceBean.modifMenu()}"
 										rendered="#{!menuSearchServiceBean.isAction()}"
 										value="#{messages.label_modifier}"

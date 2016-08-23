@@ -41,24 +41,19 @@
 										title="#{messages.label_supprimer1}"
 										onclick="PF('confirmation').show()" icon="fa fa-fw fa-remove">
 									</p:commandButton>
-									<p:commandButton id="printe"
-										update="@([id$=listzipcode]) forme fdial"
-										styleClass="btn btn-primary submit-button"
-										title="#{messages.label_print}"
-										value="#{messages.label_print}"
-										onclick="PF('confirmation').show()" icon="fa fa-fw fa-print">
-									</p:commandButton>
 
 									<p:commandButton value="#{messages.label_modifier}"
 										styleClass="btn btn-success"
 										rendered="#{!zipCodeSearchServiceBean.isAction()}"
 										icon="fa fa-fw fa-check-circle"
+										disabled="#{zipCodeSearchServiceBean.test}"
 										action="#{zipCodeSearchServiceBean.updateZipCode()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatezipcode').hide()"
 										update="forme fdial growl" />
 									<p:commandButton value="#{messages.label_create}"
 										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
 										rendered="#{zipCodeSearchServiceBean.isAction()}"
+										disabled="#{zipCodeSearchServiceBean.test}"
 										action="#{zipCodeSearchServiceBean.createZipCode()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatezipcode').hide()"
 										update="forme fdial growl" />

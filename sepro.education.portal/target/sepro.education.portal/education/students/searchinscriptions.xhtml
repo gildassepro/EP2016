@@ -46,6 +46,7 @@
 										actionListener="#{buttonView.save}" icon="ui-icon-gear">
 										<p:menuitem value="#{messages.label_validate}"  
 											actionListener="#{prospectSearchServiceBean.CreateStudent()}"
+											update="@([id$=liststudents]) forme"
 											icon="ui-icon-circle-check" />
 											<p:separator />
 										<p:menuitem value="#{messages.label_reject}"

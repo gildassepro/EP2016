@@ -850,6 +850,7 @@ public void init() {
 						
 			listStudents = studentServicewsEndpoint.searchStudentServicews(studentDto);
 			//listDataStudent = studentDataDtoServicewsEndpoint.searchStudentDataDtoServicews();
+			
 
 			logger.debug("end init");
 

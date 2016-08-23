@@ -161,6 +161,7 @@ public class TeacherSearchServiceBean implements Serializable {
 	private boolean render4 = true;
 	private boolean render5 = true;
 	private boolean testdetail = true;
+	private boolean test = true;
 	private String maskphonformatteacher;
 
 	private UploadedFile myfile;
@@ -174,6 +175,18 @@ public class TeacherSearchServiceBean implements Serializable {
 	
 	
 	
+	public boolean isTest() {
+		return test;
+	}
+
+
+
+	public void setTest(boolean test) {
+		this.test = test;
+	}
+
+
+
 	public boolean isRender4() {
 		return render4;
 	}
@@ -799,6 +812,7 @@ public void onchangeZipCode(){
 			cvteacherDto = selectedcvteacherDto;
 			render2 = true;
 			render4 = false;
+			test = false;
 			initUpdatecvprof();
 		}
 
@@ -806,6 +820,7 @@ public void onchangeZipCode(){
 			cvteacherDto = new CvteacherDto();
 			identityTeacherDto = identityTeacherDtos;
 			render2 = true;
+			test = false;
 			render4 = false;
 
 			try {
@@ -857,6 +872,7 @@ public void onchangeZipCode(){
 			action = true;
 			render2 = true;
 			render5 = false;
+			test = false;
 			initUpdateteachermodule();
 		}
 
@@ -872,6 +888,7 @@ public void onchangeZipCode(){
 			listfiliere = new ArrayList<PopuplistDto>();
 			listanneeacademique = new ArrayList<PopuplistDto>();
 			action = true;
+			test = false;
 			render2 = true;
 			render5 = false;
 			initCreatedetailprof();
@@ -1338,6 +1355,7 @@ public void onchangeZipCode(){
 			action4 = true;
 			action3= false;
 			render2 = true;
+			test = false;
 			render3= false;
 
 			initUpdate();
@@ -1356,6 +1374,7 @@ public void onchangeZipCode(){
 			action3= false;
 			render2 = true;
 			render3= false;
+			test = false;
 
 			initCreate();
 		}

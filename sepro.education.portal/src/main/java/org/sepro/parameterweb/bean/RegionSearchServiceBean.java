@@ -58,6 +58,7 @@ public class RegionSearchServiceBean implements Serializable {
 	
 	private boolean action2 = false;
 	private boolean action3 = true;
+	private boolean test = true;
 	private RegionDto regionDto = new RegionDto();
 
 	
@@ -65,6 +66,14 @@ public class RegionSearchServiceBean implements Serializable {
 	
 	
 	
+	public boolean isTest() {
+		return test;
+	}
+
+	public void setTest(boolean test) {
+		this.test = test;
+	}
+
 	public boolean isAction3() {
 		return action3;
 	}
@@ -206,6 +215,7 @@ public class RegionSearchServiceBean implements Serializable {
 			listCountry = new ArrayList<CountryDto>();
 			action2 = true;
 			action3= false;
+			test = false;
 			initUpdate();
 			return null;
 		} else {
@@ -213,6 +223,7 @@ public class RegionSearchServiceBean implements Serializable {
 			listCountry = new ArrayList<CountryDto>();
 			action2 = true;
 			action3= false;
+			test = false;
 			initCreate();
 			return null;
 		}

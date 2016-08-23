@@ -86,9 +86,18 @@ public class ClasseSearchServiceBean implements Serializable {
 	private boolean action3 = true;
 	private boolean action4 = true;
 	private boolean test = false;
+	private boolean test2 = true;
 
 	
 	
+	public boolean isTest2() {
+		return test2;
+	}
+
+	public void setTest2(boolean test2) {
+		this.test2 = test2;
+	}
+
 	public boolean isAction4() {
 		return action4;
 	}
@@ -349,6 +358,7 @@ public class ClasseSearchServiceBean implements Serializable {
 			listjourdestination = new ArrayList<DaysofWeekDto>();
 			action2 = true;
 			action3= false;
+			test2 = false;
 			initUpdate();
 		} else {
 			classeDto = new ClasseDto();
@@ -359,6 +369,7 @@ public class ClasseSearchServiceBean implements Serializable {
 			listjourdestination = new ArrayList<DaysofWeekDto>();
 			action2 = true;
 			action3= false;
+			test2 = false;
 			initCreate();
 		}
 	}
@@ -369,6 +380,7 @@ public class ClasseSearchServiceBean implements Serializable {
 			classeDto = classDto;
 			action2 = true;
 			action4 = false;
+			test2 = false;
 			
 			initUpdateInventaire();
 		} else {
@@ -376,6 +388,7 @@ public class ClasseSearchServiceBean implements Serializable {
 			classeDto = classDto;
 			action2 = true;
 			action4 = false;
+			test2 = false;
 			try {
 
 				if (classDto != null) {

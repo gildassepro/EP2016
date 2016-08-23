@@ -44,9 +44,18 @@ public class ProfilSearchServiceBean implements Serializable {
 	private boolean action = false;
 	private boolean action2 = false;
 	private boolean action3 = true;
+	private boolean test = true;
 
 	
 	
+	public boolean isTest() {
+		return test;
+	}
+
+	public void setTest(boolean test) {
+		this.test = test;
+	}
+
 	public boolean isAction2() {
 		return action2;
 	}
@@ -211,6 +220,7 @@ public class ProfilSearchServiceBean implements Serializable {
 			listModuleDestination = new ArrayList<ModuleDto>();
 			action2 = true;
 			action3= false;
+			test = false;
 			initUpdate();
 		} else {
 			profilDto = new ProfileDto();
@@ -218,6 +228,7 @@ public class ProfilSearchServiceBean implements Serializable {
 			listModuleDestination = new ArrayList<ModuleDto>();
 			action2 = true;
 			action3= false;
+			test = false;
 			initCreate();
 		}
 		logger.debug("DEBUT initDualList +++++++++++++");

@@ -79,12 +79,14 @@
 									<p:commandButton value="#{messages.label_modifier}"
 										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
 										rendered="#{!teacherSearchServiceBean.isAction()}"
+										disabled="#{teacherSearchServiceBean.test}"
 										action="#{teacherSearchServiceBean.updateProf()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprof').hide()"
 										update="forme fdial growl" />
 									<p:commandButton value="#{messages.label_create}"
 										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
 										rendered="#{teacherSearchServiceBean.isAction()}"
+										disabled="#{teacherSearchServiceBean.test}"
 										action="#{teacherSearchServiceBean.createProf()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprof').hide()"
 										update="forme fdial growl" />
@@ -93,6 +95,7 @@
 										action="#{teacherSearchServiceBean.enregistrerDetailprof()}"
 										rendered="#{teacherSearchServiceBean.isAction2()}"
 										value="#{messages.label_enregistrer}"
+										disabled="#{teacherSearchServiceBean.test}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprofdetail').show()"
 										title="#{messages.label_enregistrer}"
 										update="@([id$=formdatatabledetail]) growl @([id$=fdialfiel])"

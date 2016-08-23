@@ -57,9 +57,18 @@ public class ZipCodeSearchServiceBean implements Serializable {
 	
 	private boolean action2 = false;
 	private boolean action3 = true;
+	private boolean test = true;
 
 	
 	
+	public boolean isTest() {
+		return test;
+	}
+
+	public void setTest(boolean test) {
+		this.test = test;
+	}
+
 	public boolean isAction2() {
 		return action2;
 	}
@@ -201,11 +210,13 @@ public class ZipCodeSearchServiceBean implements Serializable {
 			listCity = new ArrayList<CityDto>();
 			action2 = true;
 			action3= false;
+			test = false;
 			initUpdate();
 		} else {
 			zipcodeDto = new ZipcodeDto();
 			listCity = new ArrayList<CityDto>();
 			action2 = true;
+			test = false;
 			action3= false;
 			initCreate();
 		}

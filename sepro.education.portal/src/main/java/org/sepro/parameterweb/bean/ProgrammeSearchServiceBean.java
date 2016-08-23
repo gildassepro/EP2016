@@ -134,6 +134,7 @@ public class ProgrammeSearchServiceBean implements Serializable {
 	private boolean action = false;
 	private boolean action2 = false;
 	private boolean action3 = true;
+	private boolean test = true;
 	public boolean typeOfCourse;
 	public static JasperDesign jasperDesign;
     public static JasperPrint jasperPrint;
@@ -146,6 +147,14 @@ public class ProgrammeSearchServiceBean implements Serializable {
     
     
     
+	public boolean isTest() {
+		return test;
+	}
+
+	public void setTest(boolean test) {
+		this.test = test;
+	}
+
 	public boolean isAction2() {
 		return action2;
 	}
@@ -482,6 +491,7 @@ public class ProgrammeSearchServiceBean implements Serializable {
 			listCurriculum = new ArrayList<CurriculumDto>();
 			action2 = true;
 			action3= false;
+			test = false;
 			initUpdate();
 			return null;
 
@@ -492,6 +502,7 @@ public class ProgrammeSearchServiceBean implements Serializable {
 			listPopuplistFIL = new ArrayList<PopuplistDto>();
 			listCurriculum = new ArrayList<CurriculumDto>();
 			action2 = true;
+			test = false;
 			action3= false;
 			initCreate();
 		}

@@ -39,8 +39,17 @@ public class PhoneFormatSearchServiceBean implements Serializable {
 	private boolean action = false;
 	private boolean action2 = false;
 	private boolean action3 = true;
+	private boolean test = true;
 
 	
+	public boolean isTest() {
+		return test;
+	}
+
+	public void setTest(boolean test) {
+		this.test = test;
+	}
+
 	public boolean isAction2() {
 		return action2;
 	}
@@ -94,11 +103,13 @@ public class PhoneFormatSearchServiceBean implements Serializable {
 			phoneformatDto = phoneformaDto;
 			action2 = true;
 			action3= false;
+			test = false;
 			initUpdate();
 		} else {
 			phoneformatDto = new PhoneFormatDto();
 			action2 = true;
 			action3= false;
+			test = false;
 			initCreate();
 		}
 	}

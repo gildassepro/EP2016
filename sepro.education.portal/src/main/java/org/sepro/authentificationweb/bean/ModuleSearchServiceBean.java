@@ -44,10 +44,19 @@ public class ModuleSearchServiceBean implements Serializable {
 	private boolean action = false;
 	private boolean action2 = false;
 	private boolean action3 = true;
+	private boolean test = true;
 	private String description = new String();
 
 	
 	
+	public boolean isTest() {
+		return test;
+	}
+
+	public void setTest(boolean test) {
+		this.test = test;
+	}
+
 	public ModuleDto getModuleDtos() {
 		return moduleDtos;
 	}
@@ -218,12 +227,14 @@ public class ModuleSearchServiceBean implements Serializable {
 			action = true;
 			action2 = true;
 			action3= false;
+			test = false;
 			initUpdate();
 		} else {
 			moduleDto = moduleDtos;
 			action = false;
 			action2 = true;
 			action3= false;
+			test = false;
 			initCreate();
 		}
 	}

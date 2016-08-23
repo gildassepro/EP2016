@@ -973,6 +973,7 @@ public class ProspectSearchServiceBean implements Serializable {
 			
 			for(int i = 0; i< listStudentIdentity.size(); i++ ) {
 				StudentDto createstudent = new StudentDto();
+				InscriptionSteponeDto inscrit = new InscriptionSteponeDto();
 
 				createstudent.setAddressLigne1(listStudentIdentity.get(i).getAddressLigne1());
 				createstudent.setAddressLigne2(listStudentIdentity.get(i).getAddressLigne2());
@@ -991,6 +992,7 @@ public class ProspectSearchServiceBean implements Serializable {
 				
 				createstudent.setInscriptionAuthentification(listStudentIdentity.get(i).getInscriptionAuthentification());
 				createstudent.setMaritalStatus(listStudentIdentity.get(i).getMaritalStatus());
+				
 				createstudent.setName(listStudentIdentity.get(i).getName());
 				createstudent.setNationality(listStudentIdentity.get(i).getNationality());
 				createstudent.setRegionAddress(listStudentIdentity.get(i).getRegionAddress());
@@ -1002,6 +1004,40 @@ public class ProspectSearchServiceBean implements Serializable {
 				studentServicewsEndpoint = studentServicews
 						.getStudentServicewsImplPort();
 				createstudent = studentServicewsEndpoint.createStudentServicews(createstudent);
+				
+//				listStudentIdentity.get(i).setStepIndicator(3L);
+				
+				
+				inscrit.setAddressLigne1(listStudentIdentity.get(i).getAddressLigne1());
+				inscrit.setAddressLigne2(listStudentIdentity.get(i).getAddressLigne2());
+				inscrit.setAddressLigne3(listStudentIdentity.get(i).getAddressLigne3());
+				inscrit.setAddressLigne4(listStudentIdentity.get(i).getAddressLigne4());
+				inscrit.setBirthday(listStudentIdentity.get(i).getBirthday());
+				inscrit.setCityAddress(listStudentIdentity.get(i).getCityAddress());
+				inscrit.setCountryAddress(listStudentIdentity.get(i).getCountryAddress());
+				inscrit.setCountryOfBirthday(listStudentIdentity.get(i).getCountryOfBirthday());
+				inscrit.setFirstName(listStudentIdentity.get(i).getName());
+				inscrit.setIdentityNumber(listStudentIdentity.get(i).getIdentityNumber());
+				inscrit.setInscriptionAuthentification(listStudentIdentity.get(i).getInscriptionAuthentification());
+				inscrit.setZipcodeAddress(listStudentIdentity.get(i).getZipcodeAddress());
+				inscrit.setTypeOfDocument(listStudentIdentity.get(i).getTypeOfDocument());
+				inscrit.setStepStartDate(listStudentIdentity.get(i).getStepStartDate());
+				inscrit.setStepIndicator(3L);
+				inscrit.setSexe(listStudentIdentity.get(i).getSexe());
+				inscrit.setRegionAddress(listStudentIdentity.get(i).getRegionAddress());
+				inscrit.setPlaceOfBirthday(listStudentIdentity.get(i).getPlaceOfBirthday());
+				inscrit.setPhoneNumber(listStudentIdentity.get(i).getPhoneNumber());
+				inscrit.setNationality(listStudentIdentity.get(i).getNationality());
+				inscrit.setMaritalStatus(listStudentIdentity.get(i).getMaritalStatus());
+				inscrit.setName(listStudentIdentity.get(i).getName());
+				
+			
+				
+				inscriptionSteponeServicewsEndpoint = inscriptionSteponeServicews.getInscriptionSteponeServicewsImplPort();
+				inscrit.setIdInscriptionStepone(listStudentIdentity.get(i).getIdInscriptionStepone());
+				inscrit = inscriptionSteponeServicewsEndpoint.updateInscriptionSteponeServicews(inscrit);
+				
+
 
 				
 			}
@@ -1010,6 +1046,7 @@ public class ProspectSearchServiceBean implements Serializable {
 			
 			for(int i = 0; i< listInscriptionSteptwo.size(); i++ ) {
 				StudentContactDto createstudentcontact = new StudentContactDto();
+				InscriptionSteptwoDto inscrittwo = new InscriptionSteptwoDto();
 				
 				studentDtos.setInscriptionAuthentification(inscAuthentificationDto);
 				listStudents = studentServicewsEndpoint.searchStudentServicews(studentDtos);
@@ -1036,6 +1073,33 @@ public class ProspectSearchServiceBean implements Serializable {
 				studentContactServicewsEndpoint = studentContactServicews.getStudentContactServicewsImplPort();
 				
 				createstudentcontact = studentContactServicewsEndpoint.createStudentContactServicews(createstudentcontact);
+				
+				
+				
+				
+				
+				inscrittwo.setAddressLigne1(listInscriptionSteptwo.get(i).getAddressLigne1());
+				inscrittwo.setAddressLigne2(listInscriptionSteptwo.get(i).getAddressLigne2());
+				inscrittwo.setAddressLigne3(listInscriptionSteptwo.get(i).getAddressLigne3());
+				inscrittwo.setAddressLigne4(listInscriptionSteptwo.get(i).getAddressLigne4());
+				inscrittwo.setCityAddress(listInscriptionSteptwo.get(i).getCityAddress());
+				inscrittwo.setCountryAddress(listInscriptionSteptwo.get(i).getCountryAddress());
+				inscrittwo.setEmailAddress(listInscriptionSteptwo.get(i).getEmailAddress());
+				inscrittwo.setFirstName(listInscriptionSteptwo.get(i).getFirstName());
+				inscrittwo.setInscriptionAuthentification(listInscriptionSteptwo.get(i).getInscriptionAuthentification());
+				inscrittwo.setName(listInscriptionSteptwo.get(i).getName());
+				inscrittwo.setPhoneNumber(listInscriptionSteptwo.get(i).getPhoneNumber());
+				inscrittwo.setRegionAddress(listInscriptionSteptwo.get(i).getRegionAddress());
+				inscrittwo.setZipcodeAddress(listInscriptionSteptwo.get(i).getZipcodeAddress());
+				inscrittwo.setTypeOfContact(listInscriptionSteptwo.get(i).getTypeOfContact());
+				inscrittwo.setStepStartDate(listInscriptionSteptwo.get(i).getStepStartDate());
+				inscrittwo.setStepIndicator(3L);
+				inscrittwo.setRelationship(listInscriptionSteptwo.get(i).getRelationship());
+				
+				
+               inscriptionSteptwoServicewsEndpoint = inscriptionSteptwoServicews.getInscriptionSteptwoServicewsImplPort();
+               inscrittwo.setIdInscriptionSteptwo(listInscriptionSteptwo.get(i).getIdInscriptionSteptwo());
+                inscrittwo = inscriptionSteptwoServicewsEndpoint.updateInscriptionSteptwoServicews(inscrittwo);
 
 				
 			}
@@ -1043,6 +1107,7 @@ public class ProspectSearchServiceBean implements Serializable {
 			
 			for(int i = 0; i< listInscriptionStepfour.size(); i++ ) {
 				StudentCVDto createstudentcv = new StudentCVDto();
+				InscriptionStepfourDto inscripfour = new InscriptionStepfourDto();
 				
 				studentDtos.setInscriptionAuthentification(inscAuthentificationDto);
 				listStudents1 = studentServicewsEndpoint.searchStudentServicews(studentDtos);
@@ -1061,6 +1126,23 @@ public class ProspectSearchServiceBean implements Serializable {
 			
 				studentCVServicewsEndpoint = studentCVServicews.getStudentCVServicewsImplPort();
 				createstudentcv = studentCVServicewsEndpoint.createStudentCVServicews(createstudentcv);
+				
+				inscripfour.setContactEmail(listInscriptionStepfour.get(i).getContactEmail());
+				inscripfour.setContactName(listInscriptionStepfour.get(i).getContactName());
+				inscripfour.setContactTelephoneNumber(listInscriptionStepfour.get(i).getContactTelephoneNumber());
+				inscripfour.setDiploma(listInscriptionStepfour.get(i).getDiploma());
+				inscripfour.setEnDate(listInscriptionStepfour.get(i).getEnDate());
+				inscripfour.setGrade(listInscriptionStepfour.get(i).getGrade());
+				inscripfour.setInscriptionAuthentification(listInscriptionStepfour.get(i).getInscriptionAuthentification());
+				inscripfour.setNameOfScool(listInscriptionStepfour.get(i).getNameOfScool());
+				inscripfour.setStartDate(listInscriptionStepfour.get(i).getStartDate());
+				inscripfour.setStepIndicator(3L);
+				inscripfour.setTypeOfContact(listInscriptionStepfour.get(i).getTypeOfContact());
+			
+				
+				inscriptionStepfourServicewsEndpoint = inscriptionStepfourServicews.getInscriptionStepfourServicewsImplPort();
+				inscripfour.setIdInscriptionStepfour(listInscriptionStepfour.get(i).getIdInscriptionStepfour());
+				inscripfour = inscriptionStepfourServicewsEndpoint.updateInscriptionStepfourServicews(inscripfour);
 				
 				
 				

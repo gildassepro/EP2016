@@ -35,23 +35,25 @@
 										onclick="PF('confirmation').show()" icon="fa fa-fw fa-remove">
 									</p:commandButton>
 									<p:commandButton id="printe"
-										update="@([id$=listmatiere]) forme fdial"
 										styleClass="btn btn-primary submit-button"
 										title="#{messages.label_print}"
 										value="#{messages.label_print}"
-										onclick="PF('confirmation').show()" icon="fa fa-fw fa-print">
+										icon="fa fa-fw fa-print">
+										<p:dataExporter type="pdf" fileName="matieres"
+											pageOnly="true" target="listmatiere" />
 									</p:commandButton>
-
-
+									
 									<p:commandButton value="#{messages.label_modifier}"
 										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
 										rendered="#{!matiereSearchServiceBean.isAction()}"
 										action="#{matiereSearchServiceBean.updateMatiere()}"
+										disabled="#{matiereSearchServiceBean.test}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatematiere').hide()"
 										update="forme fdial growl" />
 									<p:commandButton value="#{messages.label_create}"
 										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
 										rendered="#{matiereSearchServiceBean.isAction()}"
+										disabled="#{matiereSearchServiceBean.test}"
 										action="#{matiereSearchServiceBean.createMatiere()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatematiere').hide()"
 										update="forme fdial growl" />

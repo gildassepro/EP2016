@@ -49,12 +49,14 @@
 									<p:commandButton value="#{messages.label_modifier}"
 										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
 										rendered="#{!programmeCalendarCreateServiceBean.isAction()}"
+										disabled="#{programmeCalendarCreateServiceBean.test2}"
 										action="#{programmeCalendarCreateServiceBean.updateProgrammeCalendar()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprogrammcalendar').hide()"
 										update="formlistprogrammecalendar fdialprogramme growl" />
 									<p:commandButton value="#{messages.label_create}"
 										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
 										rendered="#{programmeCalendarCreateServiceBean.isAction()}"
+										disabled="#{programmeCalendarCreateServiceBean.test2}"
 										action="#{programmeCalendarCreateServiceBean.saveProgrammeCalendar()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprogrammcalendar').hide()"
 										update="formlistprogrammecalendar fdialprogramme growl" />

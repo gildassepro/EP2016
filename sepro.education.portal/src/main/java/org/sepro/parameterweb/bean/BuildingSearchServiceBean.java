@@ -63,6 +63,7 @@ public class BuildingSearchServiceBean implements Serializable {
 	private boolean action = false;
 	private boolean action2 = false;
 	private boolean action3 = true;
+	private boolean test = true;
 	private List<BuildingDto> listBuilding = new ArrayList<BuildingDto>();
 	private BuildingDto buildingDto = new BuildingDto();
 	private List<CleanHoursDto> listCleanHours = new ArrayList<CleanHoursDto>();
@@ -74,6 +75,14 @@ public class BuildingSearchServiceBean implements Serializable {
 	
 	
 	
+	public boolean isTest() {
+		return test;
+	}
+
+	public void setTest(boolean test) {
+		this.test = test;
+	}
+
 	public boolean isAction2() {
 		return action2;
 	}
@@ -277,6 +286,7 @@ public class BuildingSearchServiceBean implements Serializable {
 			listCleanHoursDestination = new ArrayList<CleanHoursDto>();
 			action2 = true;
 			action3= false;
+			test = false;
 			initUpdate();
 		} else {
 			buildingDto = new BuildingDto();
@@ -286,6 +296,7 @@ public class BuildingSearchServiceBean implements Serializable {
 			listCleanHoursDestination = new ArrayList<CleanHoursDto>();
 			action2 = true;
 			action3= false;
+			test = false;
 			initCreate();
 		}
 		logger.debug("FIN initDualList +++++++++++++");

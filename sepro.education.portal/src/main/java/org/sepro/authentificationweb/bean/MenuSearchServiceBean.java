@@ -47,10 +47,19 @@ public class MenuSearchServiceBean implements Serializable {
 	private boolean action = true;
 	private boolean action2 = false;
 	private boolean action3 = true;
+	private boolean test = true;
 	private String description = new String();
 
 	
 	
+	public boolean isTest() {
+		return test;
+	}
+
+	public void setTest(boolean test) {
+		this.test = test;
+	}
+
 	public MenuDto getMenuDtos() {
 		return menuDtos;
 	}
@@ -264,12 +273,14 @@ public class MenuSearchServiceBean implements Serializable {
 			action = true;
 			action2 = true;
 			action3= false;
+			test = false;
 			initUpdate();
 		} else {
 			menuDto = menuDtos;
 			action = false;
 			action2 = true;
 			action3= false;
+			test = false;
 			initCreate();
 		}
 		

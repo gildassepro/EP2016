@@ -26,13 +26,7 @@
 										onclick="PF('updatesousmenu').show()"
 										value="#{messages.label_dupliquer}" icon="fa fa-fw fa-copy">
 									</p:commandButton>
-									<p:commandButton id="printe"
-										update="@([id$=listmodule]) forme fdial"
-										styleClass="btn btn-primary submit-button"
-										title="#{messages.label_print}"
-										value="#{messages.label_print}"
-										onclick="PF('confirmation').show()" icon="fa fa-fw fa-print">
-									</p:commandButton>
+									
 									<p:commandButton id="modifier" styleClass="btn btn-success"
 										title="#{messages.label_modifier}"
 										action="#{childMenuSearchServiceBean.initDualList('1')}"
@@ -52,6 +46,7 @@
 										icon="fa fa-fw fa-check-circle"
 										action="#{childMenuSearchServiceBean.duppSousMenu()}"
 										rendered="#{childMenuSearchServiceBean.isAction()}"
+										disabled="#{childMenuSearchServiceBean.test}"
 										value="#{messages.label_dupliquer}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatesousmenu').hide()"
 										update="forme fdial growl">
@@ -60,6 +55,7 @@
 										styleClass="btn btn-primary submit-button"
 										action="#{childMenuSearchServiceBean.modifSousMenu()}"
 										rendered="#{!childMenuSearchServiceBean.isAction()}"
+										disabled="#{childMenuSearchServiceBean.test}"
 										value="#{messages.label_modifier}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatesousmenu').hide()"
 										update="forme fdial growl">

@@ -39,13 +39,7 @@
 										title="#{messages.label_supprimer1}"
 										onclick="PF('confirmation').show()" icon="fa fa-fw fa-remove">
 									</p:commandButton>
-									<p:commandButton id="printe"
-										update="@([id$=Listprofiles]) forme fdial"
-										styleClass="btn btn-primary submit-button"
-										title="#{messages.label_print}"
-										value="#{messages.label_print}"
-										onclick="PF('confirmation').show()" icon="fa fa-fw fa-print">
-									</p:commandButton>
+									
 									<p:splitButton value="#{messages.label_options}"
 										actionListener="#{buttonView.save}" icon="ui-icon-gear">
 										<p:menuitem value="Update"
@@ -68,12 +62,14 @@
 									<p:commandButton value="#{messages.label_modifier}"
 										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
 										rendered="#{!profilSearchServiceBean.isAction()}"
+										disabled="#{profilSearchServiceBean.test}"
 										action="#{profilSearchServiceBean.updateProfil()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprofile').hide()"
 										update="forme fdial growl" />
 									<p:commandButton value="#{messages.label_create}"
 										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
 										rendered="#{profilSearchServiceBean.isAction()}"
+										disabled="#{profilSearchServiceBean.test}"
 										action="#{profilSearchServiceBean.createProfil()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprofile').hide()"
 										update="forme fdial growl" />

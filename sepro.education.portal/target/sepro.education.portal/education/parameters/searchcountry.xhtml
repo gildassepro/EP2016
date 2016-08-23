@@ -35,23 +35,19 @@
 										title="#{messages.label_supprimer1}"
 										onclick="PF('confirmation').show()" icon="fa fa-fw fa-remove">
 									</p:commandButton>
-									<p:commandButton id="printe"
-										update="@([id$=listcountrys]) forme fdial"
-										styleClass="btn btn-primary submit-button"
-										title="#{messages.label_print}"
-										value="#{messages.label_print}"
-										onclick="PF('confirmation').show()" icon="fa fa-fw fa-print">
-									</p:commandButton>
+									
 
 									<p:commandButton value="#{messages.label_modifier}"
 										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
 										rendered="#{!countrySearchServiceBean.isAction()}"
 										action="#{countrySearchServiceBean.updateCountry()}"
+										disabled="#{countrySearchServiceBean.test}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatecountry').hide()"
 										update="forme fdial growl" />
 									<p:commandButton value="#{messages.label_create}"
 										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
 										rendered="#{countrySearchServiceBean.isAction()}"
+										disabled="#{countrySearchServiceBean.test}"
 										action="#{countrySearchServiceBean.createCountry()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatecountry').hide()"
 										update="forme fdial growl" />

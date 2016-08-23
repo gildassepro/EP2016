@@ -54,9 +54,18 @@ public class UserSearchServiceBean implements Serializable {
 	private boolean enabled;
 	private boolean action2 = false;
 	private boolean action3 = true;
+	private boolean test = true;
 
 	
 	
+	public boolean isTest() {
+		return test;
+	}
+
+	public void setTest(boolean test) {
+		this.test = test;
+	}
+
 	public boolean isAction2() {
 		return action2;
 	}
@@ -239,11 +248,13 @@ public class UserSearchServiceBean implements Serializable {
 			listProfile = new ArrayList<ProfileDto>();
 			action2 = true;
 			action3= false;
+			test = false;
 			initUpdate();
 		} else {
 			userDto = new UserDto();
 			listProfile = new ArrayList<ProfileDto>();
 			action2 = true;
+			test = false;
 			action3= false;
 			initCreate();
 
