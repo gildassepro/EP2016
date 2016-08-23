@@ -1136,6 +1136,8 @@ public class ProspectSearchServiceBean implements Serializable {
 				inscripfour.setInscriptionAuthentification(listInscriptionStepfour.get(i).getInscriptionAuthentification());
 				inscripfour.setNameOfScool(listInscriptionStepfour.get(i).getNameOfScool());
 				inscripfour.setStartDate(listInscriptionStepfour.get(i).getStartDate());
+				logger.debug("@@@@+++++ AFFICHAGE DATE STEP FOUR   +++++@@@@@@"+listInscriptionStepfour.get(i).getStartDate());
+				logger.debug("@@@@+++++ AFFICHAGE DATE STEP FOUR   +++++@@@@@@"+listInscriptionStepfour.get(i).getStartDate());
 				inscripfour.setStepIndicator(3L);
 				inscripfour.setTypeOfContact(listInscriptionStepfour.get(i).getTypeOfContact());
 			
@@ -1201,17 +1203,37 @@ public class ProspectSearchServiceBean implements Serializable {
 			
 			for(int i = 0; i< listStudentIdentity.size(); i++ ) {
 				
-				InscriptionSteponeDto inscriptionStepone = new InscriptionSteponeDto();
-				logger.debug("********TAILLE LISTES STEP okkkookokokoo**********"+listStudentIdentity.get(i).getIdInscriptionStepone());
-				logger.debug("********TAILLE LISTES STEP cccccccccc**********"+listStudentIdentity.get(i).getStepStartDate());
+				InscriptionSteponeDto rejectstepone = new InscriptionSteponeDto();
 				
-				inscriptionStepone.setStepIndicator(1L);
-				inscriptionStepone.setInscriptionAuthentification(listStudentIdentity.get(i).getInscriptionAuthentification());
-				inscriptionStepone.setStepStartDate(listStudentIdentity.get(i).getStepStartDate());
+				
+				rejectstepone.setAddressLigne1(listStudentIdentity.get(i).getAddressLigne1());
+				rejectstepone.setAddressLigne2(listStudentIdentity.get(i).getAddressLigne2());
+				rejectstepone.setAddressLigne3(listStudentIdentity.get(i).getAddressLigne3());
+				rejectstepone.setAddressLigne4(listStudentIdentity.get(i).getAddressLigne4());
+				rejectstepone.setBirthday(listStudentIdentity.get(i).getBirthday());
+				rejectstepone.setCityAddress(listStudentIdentity.get(i).getCityAddress());
+				rejectstepone.setCountryAddress(listStudentIdentity.get(i).getCountryAddress());
+				rejectstepone.setCountryOfBirthday(listStudentIdentity.get(i).getCountryOfBirthday());
+				rejectstepone.setFirstName(listStudentIdentity.get(i).getName());
+				rejectstepone.setIdentityNumber(listStudentIdentity.get(i).getIdentityNumber());
+				rejectstepone.setInscriptionAuthentification(listStudentIdentity.get(i).getInscriptionAuthentification());
+				rejectstepone.setZipcodeAddress(listStudentIdentity.get(i).getZipcodeAddress());
+				rejectstepone.setTypeOfDocument(listStudentIdentity.get(i).getTypeOfDocument());
+				rejectstepone.setStepStartDate(listStudentIdentity.get(i).getStepStartDate());
+				rejectstepone.setStepIndicator(1L);
+				rejectstepone.setSexe(listStudentIdentity.get(i).getSexe());
+				rejectstepone.setRegionAddress(listStudentIdentity.get(i).getRegionAddress());
+				rejectstepone.setPlaceOfBirthday(listStudentIdentity.get(i).getPlaceOfBirthday());
+				rejectstepone.setPhoneNumber(listStudentIdentity.get(i).getPhoneNumber());
+				rejectstepone.setNationality(listStudentIdentity.get(i).getNationality());
+				rejectstepone.setMaritalStatus(listStudentIdentity.get(i).getMaritalStatus());
+				rejectstepone.setName(listStudentIdentity.get(i).getName());
+				
+			
+				
 				inscriptionSteponeServicewsEndpoint = inscriptionSteponeServicews.getInscriptionSteponeServicewsImplPort();
-				
-				inscriptionStepone.setIdInscriptionStepone(listStudentIdentity.get(i).getIdInscriptionStepone());
-				inscriptionStepone = inscriptionSteponeServicewsEndpoint.updateInscriptionSteponeServicews(inscriptionStepone);	
+				rejectstepone.setIdInscriptionStepone(listStudentIdentity.get(i).getIdInscriptionStepone());
+				rejectstepone = inscriptionSteponeServicewsEndpoint.updateInscriptionSteponeServicews(rejectstepone);
 
 				
 			}
@@ -1219,43 +1241,54 @@ public class ProspectSearchServiceBean implements Serializable {
 				
 			
 			for(int i = 0; i< listInscriptionSteptwo.size(); i++ ) {
-				InscriptionSteptwoDto inscriptionSteptwo = new InscriptionSteptwoDto();
-				inscriptionSteptwo.setStepIndicator(1L);
+				InscriptionSteptwoDto rejectsteptwo = new InscriptionSteptwoDto();
 				
-				inscriptionSteptwo.setInscriptionAuthentification(listInscriptionSteptwo.get(i).getInscriptionAuthentification());
-				inscriptionSteptwo.setStepStartDate(listInscriptionSteptwo.get(i).getStepStartDate());
-				inscriptionSteptwoServicewsEndpoint = inscriptionSteptwoServicews.getInscriptionSteptwoServicewsImplPort();
+				rejectsteptwo.setAddressLigne1(listInscriptionSteptwo.get(i).getAddressLigne1());
+				rejectsteptwo.setAddressLigne2(listInscriptionSteptwo.get(i).getAddressLigne2());
+				rejectsteptwo.setAddressLigne3(listInscriptionSteptwo.get(i).getAddressLigne3());
+				rejectsteptwo.setAddressLigne4(listInscriptionSteptwo.get(i).getAddressLigne4());
+				rejectsteptwo.setCityAddress(listInscriptionSteptwo.get(i).getCityAddress());
+				rejectsteptwo.setCountryAddress(listInscriptionSteptwo.get(i).getCountryAddress());
+				rejectsteptwo.setEmailAddress(listInscriptionSteptwo.get(i).getEmailAddress());
+				rejectsteptwo.setFirstName(listInscriptionSteptwo.get(i).getFirstName());
+				rejectsteptwo.setInscriptionAuthentification(listInscriptionSteptwo.get(i).getInscriptionAuthentification());
+				rejectsteptwo.setName(listInscriptionSteptwo.get(i).getName());
+				rejectsteptwo.setPhoneNumber(listInscriptionSteptwo.get(i).getPhoneNumber());
+				rejectsteptwo.setRegionAddress(listInscriptionSteptwo.get(i).getRegionAddress());
+				rejectsteptwo.setZipcodeAddress(listInscriptionSteptwo.get(i).getZipcodeAddress());
+				rejectsteptwo.setTypeOfContact(listInscriptionSteptwo.get(i).getTypeOfContact());
+				rejectsteptwo.setStepStartDate(listInscriptionSteptwo.get(i).getStepStartDate());
+				rejectsteptwo.setStepIndicator(1L);
+				rejectsteptwo.setRelationship(listInscriptionSteptwo.get(i).getRelationship());
 				
-				inscriptionSteptwo.setIdInscriptionSteptwo(listInscriptionSteptwo.get(i).getIdInscriptionSteptwo());
-				inscriptionSteptwo = inscriptionSteptwoServicewsEndpoint.updateInscriptionSteptwoServicews(inscriptionSteptwo);
+				
+               inscriptionSteptwoServicewsEndpoint = inscriptionSteptwoServicews.getInscriptionSteptwoServicewsImplPort();
+               rejectsteptwo.setIdInscriptionSteptwo(listInscriptionSteptwo.get(i).getIdInscriptionSteptwo());
+               rejectsteptwo = inscriptionSteptwoServicewsEndpoint.updateInscriptionSteptwoServicews(rejectsteptwo);
 						
 			}
 			
-			for(int i = 0; i< listInscriptionSteptree.size(); i++ ) {
-				InscriptionSteptreeDto inscriptionSteptree = new InscriptionSteptreeDto();
-				inscriptionSteptree.setStepIndicator(1L);
-				
-				
-				inscriptionSteptree.setInscriptionAuthentification(listInscriptionSteptree.get(i).getInscriptionAuthentification());
-				inscriptionSteptree.setStepStartDate(listInscriptionSteptree.get(i).getStepStartDate());
-				inscriptionSteptreeServicewsEndpoint = inscriptionSteptreeServicews.getInscriptionSteptreeServicewsImplPort();
-				
-				inscriptionSteptree.setIdInscriptionSteptree(listInscriptionSteptree.get(i).getIdInscriptionSteptree());
-				inscriptionSteptree = inscriptionSteptreeServicewsEndpoint.updateInscriptionSteptreeServicews(inscriptionSteptree);
-						
-			}
+			
 			
 			for(int i = 0; i< listInscriptionStepfour.size(); i++ ) {
-				InscriptionStepfourDto inscriptionStepfour = new InscriptionStepfourDto();
-				inscriptionStepfour.setStepIndicator(1L);
+				InscriptionStepfourDto rejectstepfour = new InscriptionStepfourDto();
 				
+				rejectstepfour.setContactEmail(listInscriptionStepfour.get(i).getContactEmail());
+				rejectstepfour.setContactName(listInscriptionStepfour.get(i).getContactName());
+				rejectstepfour.setContactTelephoneNumber(listInscriptionStepfour.get(i).getContactTelephoneNumber());
+				rejectstepfour.setDiploma(listInscriptionStepfour.get(i).getDiploma());
+				rejectstepfour.setEnDate(listInscriptionStepfour.get(i).getEnDate());
+				rejectstepfour.setGrade(listInscriptionStepfour.get(i).getGrade());
+				rejectstepfour.setInscriptionAuthentification(listInscriptionStepfour.get(i).getInscriptionAuthentification());
+				rejectstepfour.setNameOfScool(listInscriptionStepfour.get(i).getNameOfScool());
+				rejectstepfour.setStartDate(listInscriptionStepfour.get(i).getStartDate());
+				rejectstepfour.setStepIndicator(1L);
+				rejectstepfour.setTypeOfContact(listInscriptionStepfour.get(i).getTypeOfContact());
+			
 				
-				inscriptionStepfour.setInscriptionAuthentification(listInscriptionStepfour.get(i).getInscriptionAuthentification());
-				inscriptionStepfour.setStepStartDate(listInscriptionStepfour.get(i).getStepStartDate());
 				inscriptionStepfourServicewsEndpoint = inscriptionStepfourServicews.getInscriptionStepfourServicewsImplPort();
-				
-				inscriptionStepfour.setIdInscriptionStepfour(listInscriptionStepfour.get(i).getIdInscriptionStepfour());
-				inscriptionStepfour = inscriptionStepfourServicewsEndpoint.updateInscriptionStepfourServicews(inscriptionStepfour);
+				rejectstepfour.setIdInscriptionStepfour(listInscriptionStepfour.get(i).getIdInscriptionStepfour());
+				rejectstepfour = inscriptionStepfourServicewsEndpoint.updateInscriptionStepfourServicews(rejectstepfour);
 						
 			}
 					

@@ -55,12 +55,12 @@
 										onclick="PF('confirmation').show()" icon="fa fa-fw fa-remove">
 									</p:commandButton>
 									
-									<p:commandButton id="printes"
-										styleClass="btn btn-primary submit-button"
+									<p:commandButton id="printe"
+									styleClass="btn btn-primary submit-button"
 										title="#{messages.label_print}"
-										value="#{messages.label_print}" style="display:block;margin-bottom: 20px"
+										value="#{messages.label_print}"
 										icon="fa fa-fw fa-print">
-										<p:printer target="liststudents" />
+										<p:dataExporter type="pdf" fileName="student" pageOnly="true" target="liststudents" />
 									</p:commandButton>
 									
 									<p:commandButton id="detail" styleClass="btn btn-primary"
