@@ -18,6 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
+ *         &lt;element name="classeProgrammDto" type="{http://serviceapi.studentweb.sepro.org/}classeProgrammDto" minOccurs="0"/>
  *         &lt;element name="studentCVDto" minOccurs="0">
  *           &lt;complexType>
  *             &lt;complexContent>
@@ -51,15 +52,41 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "studentDataDto", propOrder = {
+    "classeProgrammDto",
     "studentCVDto",
     "studentContactDto",
     "studentDto"
 })
 public class StudentDataDto {
 
+    protected ClasseProgrammDto classeProgrammDto;
     protected StudentDataDto.StudentCVDto studentCVDto;
     protected StudentDataDto.StudentContactDto studentContactDto;
     protected StudentDto studentDto;
+
+    /**
+     * Obtient la valeur de la propriété classeProgrammDto.
+     * 
+     * @return
+     *     possible object is
+     *     {@link ClasseProgrammDto }
+     *     
+     */
+    public ClasseProgrammDto getClasseProgrammDto() {
+        return classeProgrammDto;
+    }
+
+    /**
+     * Définit la valeur de la propriété classeProgrammDto.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ClasseProgrammDto }
+     *     
+     */
+    public void setClasseProgrammDto(ClasseProgrammDto value) {
+        this.classeProgrammDto = value;
+    }
 
     /**
      * Obtient la valeur de la propriété studentCVDto.

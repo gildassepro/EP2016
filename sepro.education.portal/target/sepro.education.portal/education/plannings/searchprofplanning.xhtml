@@ -1,0 +1,167 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:uf="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+	template="/templates/template.xhtml">
+	<ui:define name="content">
+		<p:growl id="growl" showDetail="true" sticky="false" />
+		<div class="container-fluid">
+			<b:row>
+				<div class="messages">
+					<p:messages for="classename" id="classname"></p:messages>
+				</div>
+
+				<h:form id="forme">
+					<p:accordionPanel>
+						<p:tab title="#{messages.label_msg_activity_prof}">
+						
+							<b:row styleClass="listPage">
+
+								<div id="menubutton">
+									
+									<p:commandButton id="printe"
+									styleClass="btn btn-primary submit-button"
+										title="#{messages.label_print}"
+										value="#{messages.label_print}"
+										icon="fa fa-fw fa-print">
+										<p:dataExporter type="pdf" fileName="programmes" pageOnly="true" target="" />
+									</p:commandButton>
+
+									<p:commandButton value="#{messages.label_modifier}"
+										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
+										rendered="#{!programmeSearchServiceBean.isAction()}"
+										disabled="#{programmeSearchServiceBean.test}"
+										action="#{programmeSearchServiceBean.updateProgramme()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprogramm').hide()"
+										update="forme fdial growl" />
+									<p:commandButton value="#{messages.label_create}"
+										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
+										rendered="#{programmeSearchServiceBean.isAction()}"
+										disabled="#{programmeSearchServiceBean.test}"
+										action="#{programmeSearchServiceBean.createProgramme()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateprogramm').hide()"
+										update="forme fdial growl" />
+									<p:splitButton value="#{messages.label_options}"
+										actionListener="#{buttonView.save}" icon="ui-icon-gear">
+										<p:menuitem value="Update"
+											actionListener="#{buttonView.update}"
+											icon="ui-icon-arrowrefresh-1-w" />
+										<p:menuitem value="Delete"
+											actionListener="#{buttonView.delete}" ajax="false"
+											icon="ui-icon-close" />
+										<p:separator />
+										<p:menuitem value="Homepage" icon="ui-icon-extlink" />
+									</p:splitButton>
+									<p:commandButton id="past"
+										styleClass="btn btn-primary submit-button" ajax="false"
+										action="createactivities.xhtml?faces-redirect=true"
+										immediate="true"
+										icon="fa fa-fw fa-arrow-left">
+									</p:commandButton>
+
+								</div>
+
+								<p:panel id="updatprogramm" widgetVar="updateprogramm"
+									>
+
+									<h:form id="fdial">
+										<h3 style="margin-top: 0">
+											<p:outputLabel value="#{messages.label_create_student_class}"
+												rendered="#{programmeSearchServiceBean.isAction()}" />
+											<p:outputLabel value="#{messages.label_msg_activity_prof}"
+												rendered="#{!programmeSearchServiceBean.isAction()}" />
+										</h3>
+
+										<div class="ui-grid ui-grid-responsive wrap class">
+											<div class="col-xs-12">
+
+												<div class="row">
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_academic_years}:" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:selectOneMenu id="selectcurriculum"
+															styleClass="form-text" immediate="true"
+															value="#{programmeSearchServiceBean.programmeDto.academicGrade}"
+															converter="entityConverter"
+															placeholder="#{messages.label_subestablishment}"
+															required="true"
+															requiredMessage="#{messages.label_curriculum_requeried}">
+															<f:selectItem
+																itemLabel="#{programmeSearchServiceBean.programmeDto.academicGrade.value}"
+																itemValue="#{programmeSearchServiceBean.programmeDto.academicGrade}"
+																label="#{messages.label_curriculum}" />
+															<f:selectItems
+																value="#{programmeSearchServiceBean.listPopuplistFIL}"
+																var="academicGrade" itemValue="#{academicGrade}"
+																itemLabel="#{academicGrade.value}" />
+														</p:selectOneMenu>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_msg_classname}:" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:selectOneMenu id="selectprogrammecursus"
+															styleClass="form-text" immediate="true"
+															value="#{programmeSearchServiceBean.programmeDto.curriculum}"
+															converter="entityConverter"
+															placeholder="#{messages.label_programme_status}"
+															required="true"
+															requiredMessage="#{messages.label_cursusname_requeried}">
+															<f:selectItem
+																itemLabel="#{programmeSearchServiceBean.programmeDto.curriculum.nameCurriculum}"
+																itemValue="#{programmeSearchServiceBean.programmeDto.curriculum}"
+																label="#{messages.label_cursus}" />
+															<f:selectItems
+																value="#{programmeSearchServiceBean.listCurriculum}"
+																var="curriculum" itemValue="#{curriculum}"
+																itemLabel="#{curriculum.nameCurriculum}" />
+														</p:selectOneMenu>
+													</div>
+												</div>
+											</div>
+										</div>
+										<br></br>
+										
+										<div class="ui-grid ui-grid-responsive">
+											<p:dataTable id="checkboxmodule"
+												value="#{programmeSearchServiceBean.listDesModuleAcademicSource}"
+												var="moduleprogramme"
+												selection="#{programmeSearchServiceBean.selectedAcademicmodule}"
+												rowKey="#{moduleprogramme.idAcademicModule}"
+												style="margin-bottom:0">
+												<f:facet name="header">
+						            #{messages.label_msg_activitie}
+						        </f:facet>
+												<p:column selectionMode="multiple"
+													style="width:16px;text-align:center" />
+												<p:column headerText="#{messages.label_number_inscription}">
+													<h:outputText value="#{moduleprogramme.moduleName}" />
+												</p:column>
+												<p:column headerText="#{messages.label_name}">
+													<h:outputText value="#{moduleprogramme.moduleName}" />
+												</p:column>
+												<p:column headerText="#{messages.label_surname}">
+													<h:outputText value="#{moduleprogramme.moduleName}" />
+												</p:column>
+												<p:column headerText="#{messages.labeldatedenaiss}">
+													<h:outputText value="#{moduleprogramme.moduleName}" />
+												</p:column>
+											</p:dataTable>
+										</div>
+									</h:form>
+								</p:panel>
+
+							</b:row>
+						</p:tab>
+					</p:accordionPanel>
+				</h:form>
+			</b:row>
+		</div>
+	</ui:define>
+</ui:composition>
+

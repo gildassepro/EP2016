@@ -1,0 +1,313 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:uf="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+	template="/templates/template.xhtml">
+	<ui:define name="content">
+		<p:growl id="growl" showDetail="true" sticky="false" />
+		<div class="container-fluid">
+			<b:row>
+				<div class="messages">
+					<p:messages for="classename" id="classname"></p:messages>
+				</div>
+
+				<h:form id="forme">
+					<p:accordionPanel>
+						<p:tab title="#{messages.label_msg_student_class}">
+							<b:row styleClass="listPage">
+
+								<div id="menubutton">
+									<p:commandButton id="adde"
+										styleClass="btn btn-primary submit-button"
+										value="#{messages.label_new}" title="#{messages.label_new}"
+										action="#{studentClassSearchServiceBean.initDualList('2')}"
+										update="@([id$=updatstudentclass]) forme fdial"
+										onclick="PF('updatestudentclass').show()" icon="fa fa-fw fa-plus">
+									</p:commandButton>
+									<p:commandButton id="modifse" styleClass="btn btn-success"
+										value="#{messages.label_modifier}"
+										update="@([id$=updatstudentclass]) forme fdial"
+										onclick="PF('updatestudentclass').show()"
+										icon="fa fa-fw fa-pencil"
+										action="#{studentClassSearchServiceBean.initDualList('1')}">
+									</p:commandButton>
+									<p:commandButton id="deletee" process="@([id$=listclass])"
+										styleClass="btn btn-danger"
+										value="#{messages.label_supprimer1}"
+										title="#{messages.label_supprimer1}"
+										onclick="PF('confirmation').show()" icon="fa fa-fw fa-remove">
+									</p:commandButton>
+									<p:commandButton id="printe"
+									styleClass="btn btn-primary submit-button"
+										title="#{messages.label_print}"
+										value="#{messages.label_print}"
+										icon="fa fa-fw fa-print">
+										<p:dataExporter type="pdf" fileName="programmes" pageOnly="true" target="listclass" />
+									</p:commandButton>
+
+									<p:commandButton value="#{messages.label_modifier}"
+										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
+										rendered="#{!studentClassSearchServiceBean.isAction()}"
+										disabled="#{studentClassSearchServiceBean.test}"
+										action="#{studentClassSearchServiceBean.createClass()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatestudentclass').hide()"
+										update="forme fdial growl" />
+									<p:commandButton value="#{messages.label_create}"
+										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
+										rendered="#{studentClassSearchServiceBean.isAction()}"
+										disabled="#{studentClassSearchServiceBean.test}"
+										action="#{studentClassSearchServiceBean.updateClass()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatestudentclass').hide()"
+										update="forme fdial growl" />
+									<p:splitButton value="#{messages.label_options}"
+										actionListener="#{buttonView.save}" icon="ui-icon-gear">
+										<p:menuitem value="Update"
+											actionListener="#{buttonView.update}"
+											icon="ui-icon-arrowrefresh-1-w" />
+										<p:menuitem value="Delete"
+											actionListener="#{buttonView.delete}" ajax="false"
+											icon="ui-icon-close" />
+										<p:separator />
+										<p:menuitem value="Homepage" icon="ui-icon-extlink" />
+									</p:splitButton>
+									<p:commandButton id="past"
+										styleClass="btn btn-primary submit-button" ajax="false"
+										action="searchstudentclass.xhtml?faces-redirect=true"
+										immediate="true" update="@([id$=listclass]) forme fdial"
+										icon="fa fa-fw fa-arrow-left">
+									</p:commandButton>
+
+								</div>
+
+								<p:panel id="updatstudentclass" widgetVar="updatestudentclass"
+									rendered="#{!studentClassSearchServiceBean.isAction3()}">
+
+									<h:form id="fdial">
+										<h3 style="margin-top: 0">
+											<p:outputLabel value="#{messages.label_create_student_class}"
+												rendered="#{studentClassSearchServiceBean.isAction()}" />
+											<p:outputLabel value="#{messages.label_update_student_class}"
+												rendered="#{!studentClassSearchServiceBean.isAction()}" />
+										</h3>
+
+										<div class="ui-grid ui-grid-responsive wrap class">
+											<div class="col-xs-12">
+												<div class="row">
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_msg_student_nameclass}" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:inputText id="classename" styleClass="form-text"
+															immediate="true"
+															value="#{studentClassSearchServiceBean.classeProgrammDto.classeName}"
+															placeholder="#{messages.label_msg_student_nameclass}"
+															required="true"
+															requiredMessage="#{messages.label_programmename_requeried}">
+															<p:ajax update="classname" event="keyup" />
+														</p:inputText>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_programm_calendar}" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:selectOneMenu id="selectprogrammecalendar"
+															styleClass="form-text" immediate="true"
+															value="#{studentClassSearchServiceBean.classeProgrammDto.programmeCalendar}"
+															converter="entityConverter"
+															placeholder="#{messages.label_academic_years}"
+															required="true"
+															requiredMessage="#{messages.label_academic_years_requeried}">
+															<f:selectItem
+																itemLabel="#{studentClassSearchServiceBean.classeProgrammDto.programmeCalendar.programme.nameProgramme}"
+																itemValue="#{studentClassSearchServiceBean.classeProgrammDto.programmeCalendar}"
+																label="#{messages.labelestablishment}" />
+															<f:selectItems
+																value="#{studentClassSearchServiceBean.listProgrammeCalendar}"
+																var="pcalendar" itemValue="#{pcalendar}"
+																itemLabel="#{pcalendar.programme.nameProgramme}" />
+														</p:selectOneMenu>
+													</div>
+												</div>
+
+
+												<div class="row">
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_academic_years}:" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:selectOneMenu id="selectcurriculum"
+															styleClass="form-text" immediate="true"
+															value="#{studentClassSearchServiceBean.classeProgrammDto.academicYear}"
+															converter="entityConverter"
+															placeholder="#{messages.label_subestablishment}"
+															required="true"
+															requiredMessage="#{messages.label_curriculum_requeried}">
+															<f:selectItem
+																itemLabel="#{studentClassSearchServiceBean.classeProgrammDto.academicYear.value}"
+																itemValue="#{studentClassSearchServiceBean.classeProgrammDto.academicYear}"
+																label="#{messages.label_curriculum}" />
+															<f:selectItems
+																value="#{studentClassSearchServiceBean.listAcademicYear}"
+																var="academicYear" itemValue="#{academicYear}"
+																itemLabel="#{academicYear.value}" />
+														</p:selectOneMenu>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_curriculum}:" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:selectOneMenu id="selectclassfiliere"
+															styleClass="form-text" immediate="true"
+															value="#{studentClassSearchServiceBean.classeProgrammDto.academicSector}"
+															converter="entityConverter"
+															placeholder="#{messages.label_programme_status}"
+															required="true"
+															requiredMessage="#{messages.label_cursusname_requeried}">
+															<f:selectItem
+																itemLabel="#{studentClassSearchServiceBean.classeProgrammDto.academicSector.value}"
+																itemValue="#{studentClassSearchServiceBean.classeProgrammDto.academicSector}"
+																label="#{messages.label_cursus}" />
+															<f:selectItems
+																value="#{studentClassSearchServiceBean.listFiliere}"
+																var="academicSector" itemValue="#{academicSector}"
+																itemLabel="#{academicSector.value}" />
+														</p:selectOneMenu>
+													</div>
+												</div>
+											</div>
+										</div>
+										<br></br>
+												<div class="row">
+													<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+														<p:commandButton 
+															styleClass="btn btn-primary submit-button"
+															value="#{messages.label_enregistrer}"
+															disabled="#{!studentClassSearchServiceBean.testtable}"
+															rendered="#{!studentClassSearchServiceBean.isAction2()}"
+															action="#{studentClassSearchServiceBean.createClass()}"
+															update="@([id$=formdatatablecontact]) growl"
+															/>
+														
+														<p:commandButton 
+															action="#{studentClassSearchServiceBean.createClass()}"
+															update="@([id$=listclass]) growl"
+															rendered="#{studentClassSearchServiceBean.isAction2()}"
+															styleClass="btn btn-danger"
+															value="#{messages.label_enregistrer}"/>
+														
+													</div>
+												</div>
+											<br></br>
+
+										<div class="ui-grid ui-grid-responsive">
+										
+											<p:dataTable id="checkboxmodule"
+												rendered="#{!studentClassSearchServiceBean.testtable}"
+												value="#{studentClassSearchServiceBean.listeStudentInscritp}"
+												var="studenties"
+												selection="#{studentClassSearchServiceBean.listeStudentInscritp}"
+												rowKey="#{studenties.idStudent}"
+												style="margin-bottom:0">
+												<f:facet name="header">
+						            #{messages.label_msg_student_msglist}
+						        </f:facet>
+												<p:column selectionMode="multiple"
+													style="width:16px;text-align:center" />
+												<p:column headerText="#{messages.label_number_inscription}">
+													<h:outputText value="#{studenties.inscriptionAuthentification.idInscription}" />
+												</p:column>
+												<p:column headerText="#{messages.label_name}">
+													<h:outputText value="#{studenties.name}" />
+												</p:column>
+												<p:column headerText="#{messages.label_surname}">
+													<h:outputText value="#{studenties.firstName}" />
+												</p:column>
+												<p:column headerText="#{messages.labeldatedenaiss}">
+													<h:outputText value="#{studenties.birthday}" />
+												</p:column>
+											</p:dataTable>
+										</div>
+									</h:form>
+								</p:panel>
+
+								<p:dataTable id="listclass"
+									value="#{studentClassSearchServiceBean.listClass}"
+									rendered="#{!studentClassSearchServiceBean.isAction2()}"
+									var="studentclasses" widgetVar="studentclassesTable"
+									emptyMessage="#{messages.label_empty}"
+									styleClass="listeTable table-responsive filterable"
+									selection="#{studentClassSearchServiceBean.classeProgrammDtos}"
+									tableStyleClass="table table-striped table-condensed table-hover"
+									rowKey="#{studentclasses.idClasseProgramm}" selectionMode="single"
+									paginator="true" paginatorPosition="bottom"
+									paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
+									rows="10" filterBy="#{studentclasses.classeName}">
+									
+									<p:column priority="3" filterBy="#{studentclasses.classeName}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_msg_student_nameclass}" />
+										</f:facet>
+										<h:outputText value="#{studentclasses.classeName}"></h:outputText>
+									</p:column>
+
+									<p:column priority="2"
+										filterBy="#{studentclasses.programmeCalendar.programme.nameProgramme}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_programm_calendar}" />
+										</f:facet>
+										<h:outputText value="#{studentclasses.programmeCalendar.programme.nameProgramme}"></h:outputText>
+									</p:column>
+
+									<p:column priority="4"
+										filterBy="#{studentclasses.academicYear.value}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_academic_years}" />
+										</f:facet>
+										<h:outputText value="#{studentclasses.academicYear.value}"></h:outputText>
+									</p:column>
+
+									<p:column priority="1"
+										filterBy="#{studentclasses.academicSector.value}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_curriculum}" />
+										</f:facet>
+										<h:outputText value="#{studentclasses.academicSector.value}"></h:outputText>
+									</p:column>
+
+								</p:dataTable>
+								<p:confirmDialog
+									message="#{messages.label_msg_alerte_supression}"
+									header="Confirmation" widgetVar="confirmation">
+									<p:commandButton value="#{messages.label_msg_confirmOui}"
+										onclick="PF('confirmation').hide()"
+										action="#{studentClassSearchServiceBean.supprimerClass()}"
+										update="forme growl" />
+									<p:commandButton value="#{messages.label_msg_confirmNon}"
+										onclick="PF('confirmation').hide()" type="button" />
+								</p:confirmDialog>
+
+								<p:contextMenu for="listclass">
+									<p:menuitem value="Modifier" icon="ui-icon-search" />
+									<p:menuitem value="Supprimer" icon="ui-icon-search" />
+									<p:separator />
+									<p:menuitem value="Détails" icon="ui-icon-close" />
+								</p:contextMenu>
+							</b:row>
+						</p:tab>
+					</p:accordionPanel>
+				</h:form>
+			</b:row>
+		</div>
+	</ui:define>
+</ui:composition>
+

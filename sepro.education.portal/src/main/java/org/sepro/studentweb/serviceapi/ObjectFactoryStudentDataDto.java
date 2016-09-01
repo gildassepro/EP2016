@@ -67,6 +67,14 @@ public class ObjectFactoryStudentDataDto {
     }
 
     /**
+     * Create an instance of {@link ClasseProgrammDto }
+     * 
+     */
+    public ClasseProgrammDto createClasseProgrammDto() {
+        return new ClasseProgrammDto();
+    }
+
+    /**
      * Create an instance of {@link org.sepro.studentweb.serviceapi.StudentCVDto }
      * 
      */

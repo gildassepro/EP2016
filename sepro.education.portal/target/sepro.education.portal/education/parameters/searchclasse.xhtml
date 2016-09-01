@@ -52,7 +52,7 @@
 									</p:commandButton>
 
 									<p:commandButton id="detel" styleClass="btn btn-primary"
-										value="#{messages.label_modifier}"
+										value="#{messages.label_modifier}" 
 										update="@([id$=updatinventoryclasse]) forme fdial"
 										onclick="PF('updateinventoryclasse').show()"
 										icon="fa fa-fw fa-list-alt"
@@ -101,7 +101,7 @@
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateinventoryclasse').show()"
 										value="SAVE"
 										action="#{classeSearchServiceBean.createInventaire()}"
-										update="@([id$=listMateriels]) growl">
+										update="fdialinventaire:listMateriels growl">
 									</p:commandButton>
 
 									<p:commandButton id="modifmateriel"
@@ -111,7 +111,7 @@
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateinventoryclasse').show()"
 										value="SAVE"	
 										action="#{classeSearchServiceBean.updateInventaire()}"
-										update="@([id$=listMateriels]) growl">
+										update="fdialinventaire:listMateriels growl">
 									</p:commandButton>
 
 								</div>

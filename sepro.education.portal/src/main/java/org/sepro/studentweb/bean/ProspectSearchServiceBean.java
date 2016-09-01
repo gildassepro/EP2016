@@ -1132,6 +1132,7 @@ public class ProspectSearchServiceBean implements Serializable {
 				inscripfour.setContactTelephoneNumber(listInscriptionStepfour.get(i).getContactTelephoneNumber());
 				inscripfour.setDiploma(listInscriptionStepfour.get(i).getDiploma());
 				inscripfour.setEnDate(listInscriptionStepfour.get(i).getEnDate());
+				inscripfour.setStepStartDate(listInscriptionStepfour.get(i).getStepStartDate());
 				inscripfour.setGrade(listInscriptionStepfour.get(i).getGrade());
 				inscripfour.setInscriptionAuthentification(listInscriptionStepfour.get(i).getInscriptionAuthentification());
 				inscripfour.setNameOfScool(listInscriptionStepfour.get(i).getNameOfScool());
@@ -1279,6 +1280,7 @@ public class ProspectSearchServiceBean implements Serializable {
 				rejectstepfour.setDiploma(listInscriptionStepfour.get(i).getDiploma());
 				rejectstepfour.setEnDate(listInscriptionStepfour.get(i).getEnDate());
 				rejectstepfour.setGrade(listInscriptionStepfour.get(i).getGrade());
+				rejectstepfour.setStepStartDate(listInscriptionStepfour.get(i).getStepStartDate());
 				rejectstepfour.setInscriptionAuthentification(listInscriptionStepfour.get(i).getInscriptionAuthentification());
 				rejectstepfour.setNameOfScool(listInscriptionStepfour.get(i).getNameOfScool());
 				rejectstepfour.setStartDate(listInscriptionStepfour.get(i).getStartDate());

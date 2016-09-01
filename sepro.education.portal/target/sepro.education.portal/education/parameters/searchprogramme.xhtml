@@ -42,7 +42,7 @@
 									<p:commandButton id="printe"
 									styleClass="btn btn-primary submit-button"
 										title="#{messages.label_print}"
-										value="#{messages.label_print}" style="display:block;margin-bottom: 20px"
+										value="#{messages.label_print}"
 										icon="fa fa-fw fa-print">
 										<p:dataExporter type="pdf" fileName="programmes" pageOnly="true" target="listprogramm" />
 									</p:commandButton>
@@ -215,31 +215,7 @@
 									paginator="true" paginatorPosition="bottom"
 									paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
 									rows="10" filterBy="#{programmes.nameProgramme}">
-									<f:facet name="{Exporters}">
-										<h:commandLink>
-											<p:graphicImage name="/resources/images/excel.png" width="24" />
-											<p:dataExporter type="xls" target="listprogramm"
-												fileName="listProgramme" />
-										</h:commandLink>
-
-										<h:commandLink>
-											<p:graphicImage name="/resources/images/pdf.png" width="24" />
-											<p:dataExporter type="pdf" target="listprogramm"
-												fileName="listProgramme" />
-										</h:commandLink>
-
-										<h:commandLink>
-											<p:graphicImage name="/resources/images/csv.png" width="24" />
-											<p:dataExporter type="csv" target="listprogramm"
-												fileName="listProgramme" />
-										</h:commandLink>
-
-										<h:commandLink>
-											<p:graphicImage name="/resources/images/xml.png" width="24" />
-											<p:dataExporter type="xml" target="listprogramm"
-												fileName="listProgramme" />
-										</h:commandLink>
-									</f:facet>
+									
 									<p:column priority="3" filterBy="#{programmes.nameProgramme}"
 										filterMatchMode="contains">
 										<f:facet name="header">
