@@ -51,261 +51,471 @@ public class StudentClassSearchServiceBean implements Serializable {
 			.getExternalContext().getRequestLocale();
 	ResourceBundle rb = ResourceBundle.getBundle(
 			"sepro.education.language.messages", locale);
-	private Logger logger = Logger.getLogger(StudentClassSearchServiceBean.class);
-	
+	private Logger logger = Logger
+			.getLogger(StudentClassSearchServiceBean.class);
+
 	private StudentClasseServicewsEndpoint studentClasseServicewsEndpoint;
 	private StudentClasseServicews studentClasseServicews = new StudentClasseServicews();
-	
+
 	private StudentServicewsEndpoint studentServicewsEndpoint;
 	private StudentServicews studentServicews = new StudentServicews();
 	private List<StudentDto> listeStudentInscritp = new ArrayList<StudentDto>();
+	private List<StudentDto> selectedlistEtudiantClass = new ArrayList<StudentDto>();
 	private StudentDto studentDto = new StudentDto();
-	
+
 	private StudentDataDtoServicewsEndpoint studentDataDtoServicewsEndpoint;
 	private StudentDataDtoServicews studentDataDtoServicews = new StudentDataDtoServicews();
-	
-	
+
 	private ProgrammeCalendarDtoServicewsEndpoint programmeCalendarDtoServicewsEndpoint;
 	private ProgrammeCalendarDtoServicews programmeCalendarDtoServicews = new ProgrammeCalendarDtoServicews();
 	private List<ProgrammeCalendarDto> listProgrammeCalendar = new ArrayList<ProgrammeCalendarDto>();
-	
-	
+
 	private ClasseProgrammServicewsEndpoint classeProgrammServicewsEndpoint;
 	private ClasseProgrammServicews classeProgrammServicews = new ClasseProgrammServicews();
-	
+
 	private PopuplistDtoServicewsEndpoint popuplistDtoServicewsEndpoint;
 	private PopuplistDtoServicews popuplistDtoServicews = new PopuplistDtoServicews();
-	
+
 	private ClasseProgrammDto classeProgrammDto = new ClasseProgrammDto();
 	private ClasseProgrammDto classeProgrammDtos = new ClasseProgrammDto();
+	private ClasseProgrammDto classeProgrammDtost = new ClasseProgrammDto();
+	private ClasseProgrammDto classeProgrammDtos2 = new ClasseProgrammDto();
 	private List<ClasseProgrammDto> listClass = new ArrayList<ClasseProgrammDto>();
-	
+
 	private StudentClasseDto studentClasseDto = new StudentClasseDto();
 	private StudentClasseDto studentClasseDtos = new StudentClasseDto();
+	private StudentClasseDto studentClasseDtos2 = new StudentClasseDto();
 	private List<StudentClasseDto> listEtudiantClass = new ArrayList<StudentClasseDto>();
 	
-	
+
 	private List<PopuplistDto> listAcademicYear = new ArrayList<PopuplistDto>();
 	private List<PopuplistDto> listFiliere = new ArrayList<PopuplistDto>();
-	
+
 	public boolean status;
 	private boolean action = false;
+
 	private boolean action2 = false;
 	private boolean action3 = true;
+	private boolean action4 = false;
 	private boolean test = true;
 	private boolean testtable = true;
+	private boolean testbutton = false;
+
 	
 	
+	public StudentClasseDto getStudentClasseDtos2() {
+		return studentClasseDtos2;
+	}
+
+	public void setStudentClasseDtos2(StudentClasseDto studentClasseDtos2) {
+		this.studentClasseDtos2 = studentClasseDtos2;
+	}
+
+	public ClasseProgrammDto getClasseProgrammDtos2() {
+		return classeProgrammDtos2;
+	}
+
+	public void setClasseProgrammDtos2(ClasseProgrammDto classeProgrammDtos2) {
+		this.classeProgrammDtos2 = classeProgrammDtos2;
+	}
+
 	
-	
+
+	public List<StudentDto> getSelectedlistEtudiantClass() {
+		return selectedlistEtudiantClass;
+	}
+
+	public void setSelectedlistEtudiantClass(
+			List<StudentDto> selectedlistEtudiantClass) {
+		this.selectedlistEtudiantClass = selectedlistEtudiantClass;
+	}
+
+	public ClasseProgrammDto getClasseProgrammDtost() {
+		return classeProgrammDtost;
+	}
+
+	public void setClasseProgrammDtost(ClasseProgrammDto classeProgrammDtost) {
+		this.classeProgrammDtost = classeProgrammDtost;
+	}
+
+	public boolean isAction4() {
+		return action4;
+	}
+
+	public void setAction4(boolean action4) {
+		this.action4 = action4;
+	}
+
+	public StudentDto getStudentDto() {
+		return studentDto;
+	}
+
+	public void setStudentDto(StudentDto studentDto) {
+		this.studentDto = studentDto;
+	}
+
+	public boolean isTestbutton() {
+		return testbutton;
+	}
+
+	public void setTestbutton(boolean testbutton) {
+		this.testbutton = testbutton;
+	}
+
 	public List<StudentDto> getListeStudentInscritp() {
 		return listeStudentInscritp;
 	}
+
 	public void setListeStudentInscritp(List<StudentDto> listeStudentInscritp) {
 		this.listeStudentInscritp = listeStudentInscritp;
 	}
+
 	public boolean isAction3() {
 		return action3;
 	}
+
 	public void setAction3(boolean action3) {
 		this.action3 = action3;
 	}
+
 	public List<ProgrammeCalendarDto> getListProgrammeCalendar() {
 		return listProgrammeCalendar;
 	}
+
 	public void setListProgrammeCalendar(
 			List<ProgrammeCalendarDto> listProgrammeCalendar) {
 		this.listProgrammeCalendar = listProgrammeCalendar;
 	}
+
 	public boolean isTesttable() {
 		return testtable;
 	}
+
 	public void setTesttable(boolean testtable) {
 		this.testtable = testtable;
 	}
+
 	public boolean isTest() {
 		return test;
 	}
+
 	public void setTest(boolean test) {
 		this.test = test;
 	}
+
 	public ClasseProgrammDto getClasseProgrammDto() {
 		return classeProgrammDto;
 	}
+
 	public void setClasseProgrammDto(ClasseProgrammDto classeProgrammDto) {
 		this.classeProgrammDto = classeProgrammDto;
 	}
+
 	public ClasseProgrammDto getClasseProgrammDtos() {
 		return classeProgrammDtos;
 	}
+
 	public void setClasseProgrammDtos(ClasseProgrammDto classeProgrammDtos) {
 		this.classeProgrammDtos = classeProgrammDtos;
 	}
+
 	public List<ClasseProgrammDto> getListClass() {
 		return listClass;
 	}
+
 	public void setListClass(List<ClasseProgrammDto> listClass) {
 		this.listClass = listClass;
 	}
+
 	public StudentClasseDto getStudentClasseDto() {
 		return studentClasseDto;
 	}
+
 	public void setStudentClasseDto(StudentClasseDto studentClasseDto) {
 		this.studentClasseDto = studentClasseDto;
 	}
+
 	public StudentClasseDto getStudentClasseDtos() {
 		return studentClasseDtos;
 	}
+
 	public void setStudentClasseDtos(StudentClasseDto studentClasseDtos) {
 		this.studentClasseDtos = studentClasseDtos;
 	}
+
 	public List<StudentClasseDto> getListEtudiantClass() {
+		if(classeProgrammDtos != null){
+			logger.debug("@@@@@++ JE SUIS DANS LE GETLISTETUDIANT ++@@@@@");
+			studentClasseDtos2.setClasseProgramm(classeProgrammDtos);
+			listEtudiantClass = studentClasseServicewsEndpoint.searchStudentClasseServicews(studentClasseDtos2);
+			logger.debug("@@@@++++ LISTE LISTE ETUDIANT ++++@@@"+listEtudiantClass.size());
+			logger.debug("@@@@++++ LISTE LISTE ETUDIANT ++++@@@"+listEtudiantClass.size());
+		}
 		return listEtudiantClass;
 	}
+
 	public void setListEtudiantClass(List<StudentClasseDto> listEtudiantClass) {
 		this.listEtudiantClass = listEtudiantClass;
 	}
+
 	public boolean isAction() {
 		return action;
 	}
+
 	public void setAction(boolean action) {
 		this.action = action;
 	}
+
 	public boolean isAction2() {
 		return action2;
 	}
+
 	public void setAction2(boolean action2) {
 		this.action2 = action2;
 	}
-	
-	
-	
-	
+
 	public List<PopuplistDto> getListAcademicYear() {
 		return listAcademicYear;
 	}
+
 	public void setListAcademicYear(List<PopuplistDto> listAcademicYear) {
 		this.listAcademicYear = listAcademicYear;
 	}
+
 	public List<PopuplistDto> getListFiliere() {
 		return listFiliere;
 	}
+
 	public void setListFiliere(List<PopuplistDto> listFiliere) {
 		this.listFiliere = listFiliere;
 	}
-	
-	
-	
+
 	public void initDualList(String baction) {
 		if (baction.equals("1")) {
-			
+			classeProgrammDto = classeProgrammDtos;
 			studentClasseDto = studentClasseDtos;
+
+			listEtudiantClass = new ArrayList<StudentClasseDto>();
 			action2 = true;
 			test = false;
 			action3 = false;
 			testtable = false;
-			
+			testbutton = true;
+			selectedlistEtudiantClass = new ArrayList<StudentDto>();
 			listAcademicYear = new ArrayList<PopuplistDto>();
 			listFiliere = new ArrayList<PopuplistDto>();
-			
+
 			initUpdateStudentClass();
 
 		} else {
-			studentClasseDto = new StudentClasseDto();
 			
+			
+			studentClasseDto = new StudentClasseDto();
+			classeProgrammDto = new ClasseProgrammDto();
 			action2 = true;
 			action3 = false;
 			test = false;
 			testtable = true;
-			
+			testbutton = true;
+			selectedlistEtudiantClass = new ArrayList<StudentDto>();
+			listEtudiantClass = new ArrayList<StudentClasseDto>();
 			listAcademicYear = new ArrayList<PopuplistDto>();
 			listFiliere = new ArrayList<PopuplistDto>();
-			
-			
-			initCreateStudentClasse();	
+
+			initCreateStudentClasse();
 
 		}
 
 	}
-	
-	public void initUpdateStudentClass(){
-		popuplistDtoServicewsEndpoint = popuplistDtoServicews
-				.getPopuplistDtoServicewsImplPort();
-	   programmeCalendarDtoServicewsEndpoint = programmeCalendarDtoServicews.getProgrammeCalendarDtoServicewsImplPort();
-		
-		listAcademicYear = popuplistDtoServicewsEndpoint.searchPopuplistDtoServicews("academic_years");
-		listFiliere = popuplistDtoServicewsEndpoint.searchPopuplistDtoServicews("filiere");
-		listProgrammeCalendar = programmeCalendarDtoServicewsEndpoint.getAllProgrammeCalendarServicews();
-		
-	}
-	
-   public void initCreateStudentClasse(){
-	   popuplistDtoServicewsEndpoint = popuplistDtoServicews
-				.getPopuplistDtoServicewsImplPort();
-	   programmeCalendarDtoServicewsEndpoint = programmeCalendarDtoServicews.getProgrammeCalendarDtoServicewsImplPort();
-	   studentServicewsEndpoint = studentServicews.getStudentServicewsImplPort();
-		
-		listAcademicYear = popuplistDtoServicewsEndpoint.searchPopuplistDtoServicews("academic_years");
-		listFiliere = popuplistDtoServicewsEndpoint.searchPopuplistDtoServicews("filiere");
-		listProgrammeCalendar = programmeCalendarDtoServicewsEndpoint.getAllProgrammeCalendarServicews();
-		listeStudentInscritp = studentServicewsEndpoint.searchStudentServicews(studentDto);
-	}
-   
-   public void createClass(){
-	   ClasseProgrammDto createClass = new ClasseProgrammDto();
-	   
-	   createClass.setAcademicSector(classeProgrammDto.getAcademicSector());
-	   createClass.setAcademicYear(classeProgrammDto.getAcademicYear());
-	   createClass.setClasseName(classeProgrammDto.getClasseName());
-	   createClass.setProgrammeCalendar(classeProgrammDto.getProgrammeCalendar());
-	   
-	   createClass = classeProgrammServicewsEndpoint.createClasseProgrammServicews(createClass);
-	   ActiveDatatable();
-   }
-   
-   public void ActiveDatatable(){
-	   logger.debug("@@@@DEBUT@@@@@@");
-	   testtable = false;  
-	   logger.debug("@@@@FIN@@@@@@");
-   }
-   
-   public void supprimerClass(){
-	   
-   }
-   
-   public void updateClass() {
-	   
-   }
-   
-//   public void onTransfer(TransferEvent event) {
-//       StringBuilder builder = new StringBuilder();
-//       for(Object item : event.getItems()) {
-//           builder.append(((Theme) item).getName()).append("<br />");
-//       }
-//        
-//       FacesMessage msg = new FacesMessage();
-//       msg.setSeverity(FacesMessage.SEVERITY_INFO);
-//       msg.setSummary("Items Transferred");
-//       msg.setDetail(builder.toString());
-//        
-//       FacesContext.getCurrentInstance().addMessage(null, msg);
-//   } 
 
-   public void onSelect(SelectEvent event) {
-       FacesContext context = FacesContext.getCurrentInstance();
-       context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Item Selected", event.getObject().toString()));
-   }
-    
-   public void onUnselect(UnselectEvent event) {
-       FacesContext context = FacesContext.getCurrentInstance();
-       context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Item Unselected", event.getObject().toString()));
-   }
-    
-   public void onReorder() {
-       FacesContext context = FacesContext.getCurrentInstance();
-       context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "List Reordered", null));
-   }
-	
+	public void initUpdateStudentClass() {
+		logger.debug("@@@BEGIN INIT UPDATE @@@@");
+		try {
+
+			action = false;
+			popuplistDtoServicewsEndpoint = popuplistDtoServicews
+					.getPopuplistDtoServicewsImplPort();
+			studentServicewsEndpoint = studentServicews
+					.getStudentServicewsImplPort();
+			programmeCalendarDtoServicewsEndpoint = programmeCalendarDtoServicews
+					.getProgrammeCalendarDtoServicewsImplPort();
+
+			listAcademicYear = popuplistDtoServicewsEndpoint
+					.searchPopuplistDtoServicews("academic_years");
+			listFiliere = popuplistDtoServicewsEndpoint
+					.searchPopuplistDtoServicews("filiere");
+			listProgrammeCalendar = programmeCalendarDtoServicewsEndpoint
+					.getAllProgrammeCalendarServicews();
+			listeStudentInscritp = studentServicewsEndpoint
+					.searchStudentServicews(studentDto);
+
+		} catch (Exception ex) {
+
+		}
+		logger.debug("@@@FIN INIT UPDATE @@@@");
+	}
+
+	public void initCreateStudentClasse() {
+
+		try {
+			logger.debug("@@@@BEGIN INITCREATE@@@@");
+			action = true;
+
+			popuplistDtoServicewsEndpoint = popuplistDtoServicews
+					.getPopuplistDtoServicewsImplPort();
+			programmeCalendarDtoServicewsEndpoint = programmeCalendarDtoServicews
+					.getProgrammeCalendarDtoServicewsImplPort();
+			studentServicewsEndpoint = studentServicews
+					.getStudentServicewsImplPort();
+
+			listAcademicYear = popuplistDtoServicewsEndpoint
+					.searchPopuplistDtoServicews("academic_years");
+			listFiliere = popuplistDtoServicewsEndpoint
+					.searchPopuplistDtoServicews("filiere");
+			listProgrammeCalendar = programmeCalendarDtoServicewsEndpoint
+					.getAllProgrammeCalendarServicews();
+			listeStudentInscritp = studentServicewsEndpoint
+					.searchStudentServicews(studentDto);
+
+		} catch (Exception ex) {
+
+		}
+
+	}
+
+	public void createClass() {
+		ClasseProgrammDto createClass = new ClasseProgrammDto();
+
+		createClass.setAcademicSector(classeProgrammDto.getAcademicSector());
+		createClass.setAcademicYear(classeProgrammDto.getAcademicYear());
+		createClass.setClasseName(classeProgrammDto.getClasseName());
+		createClass.setNombreEleve(classeProgrammDto.getNombreEleve());
+		createClass.setProgrammeCalendar(classeProgrammDto
+				.getProgrammeCalendar());
+
+		classeProgrammServicewsEndpoint = classeProgrammServicews
+				.getClasseProgrammServicewsImplPort();
+		createClass = classeProgrammServicewsEndpoint
+				.createClasseProgrammServicews(createClass);
+		
+		classeProgrammDtost.setIdClasseProgramm(createClass.getIdClasseProgramm());
+		ActiveDatatable();
+	}
+
+	public void ActiveDatatable() {
+		logger.debug("@@@@DEBUT@@@@@@");
+		testtable = false;
+		testbutton = false;
+		logger.debug("@@@@FIN@@@@@@");
+	}
+
+	public void supprimerClass() {
+
+	}
+
+	public void updateClass() {
+		logger.debug("@@@@DEBUT MODIFICATION CLASSE@@@@@");
+		try {
+
+			ClasseProgrammDto updateClass = new ClasseProgrammDto();
+
+			updateClass
+					.setAcademicSector(classeProgrammDto.getAcademicSector());
+			updateClass.setAcademicYear(classeProgrammDto.getAcademicYear());
+			updateClass.setClasseName(classeProgrammDto.getClasseName());
+			updateClass.setNombreEleve(classeProgrammDto.getNombreEleve());
+			logger.debug("@@@@@@@AFFICHAGE DU NOMBRE D ELEVE@@@@@@"
+					+ classeProgrammDto.getNombreEleve());
+			logger.debug("@@@@@@@AFFICHAGE DU NOMBRE D ELEVE@@@@@@"
+					+ classeProgrammDto.getNombreEleve());
+			updateClass.setProgrammeCalendar(classeProgrammDto
+					.getProgrammeCalendar());
+			classeProgrammServicewsEndpoint = classeProgrammServicews
+					.getClasseProgrammServicewsImplPort();
+
+			updateClass.setIdClasseProgramm(classeProgrammDto
+					.getIdClasseProgramm());
+			updateClass = classeProgrammServicewsEndpoint
+					.updateClasseProgrammServicews(updateClass);
+		} catch (Exception ex) {
+
+		}
+		logger.debug("@@@@FIN MODIFICATION CLASSE@@@@@");
+
+	}
+
+	public void createStudentClasse() {
+		logger.debug("++++@@@@ BEGIN CREATE STUDENT CLASSE @@@+++++++");
+		try {
+			StudentClasseDto createStudentClass = new StudentClasseDto();
+			logger.debug("@@@@++++  AFFICHAGE CLASSPROGRAMME  ++++++@@@@@"+classeProgrammDtost);
+			createStudentClass.setClasseProgramm(classeProgrammDtost);
+			
+			
+			
+//			for(int i =0, i < selectedlistEtudiantClass,){
+//				
+//			}
+		} catch (Exception ex) {
+
+		}
+		logger.debug("++++@@@@ FIN CREATE STUDENT CLASSE @@@+++++++");
+	}
+
+	public void updateStudentClasse() {
+		logger.debug("++++@@@@ BEGIN UPDATE STUDENT CLASSE @@@+++++++");
+		
+			for(int i = 0; i< selectedlistEtudiantClass.size(); i++ ){
+				
+				StudentClasseDto updateStudentClass = new StudentClasseDto();
+				StudentDto studentost = new StudentDto();
+				studentost.setIdStudent(selectedlistEtudiantClass.get(i).getIdStudent());
+								
+				logger.debug("@@@@++++  AFFICHAGE CLASSPROGRAMME  ++++++@@@@@"+classeProgrammDto);
+				logger.debug("@@@@++++  AFFICHAGE TAILLE LISTE  ++++++@@@@@"+selectedlistEtudiantClass.size());
+				updateStudentClass.setClasseProgramm(classeProgrammDto);
+				logger.debug("@@@@++++  CLASS PROGRAMME  ++++++@@@@@"+classeProgrammDto.getClasseName());
+				updateStudentClass.setStudent(studentost);
+				studentClasseServicewsEndpoint = studentClasseServicews.getStudentClasseServicewsImplPort();
+				
+				updateStudentClass = studentClasseServicewsEndpoint.createStudentClasseServicews(updateStudentClass);	
+			}
+			
+		logger.debug("++++@@@@ FIN UPDATE STUDENT CLASSE @@@+++++++");
+	}
+
+	// public void onTransfer(TransferEvent event) {
+	// StringBuilder builder = new StringBuilder();
+	// for(Object item : event.getItems()) {
+	// builder.append(((Theme) item).getName()).append("<br />");
+	// }
+	//
+	// FacesMessage msg = new FacesMessage();
+	// msg.setSeverity(FacesMessage.SEVERITY_INFO);
+	// msg.setSummary("Items Transferred");
+	// msg.setDetail(builder.toString());
+	//
+	// FacesContext.getCurrentInstance().addMessage(null, msg);
+	// }
+
+	public void onSelect(SelectEvent event) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"Item Selected", event.getObject().toString()));
+	}
+
+	public void onUnselect(UnselectEvent event) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"Item Unselected", event.getObject().toString()));
+	}
+
+	public void onReorder() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"List Reordered", null));
+	}
+
 	@PostConstruct
 	public void init() {
 		logger.setLevel(Level.DEBUG);
@@ -313,9 +523,11 @@ public class StudentClassSearchServiceBean implements Serializable {
 
 			logger.debug("begin init");
 
-			classeProgrammServicewsEndpoint = classeProgrammServicews.getClasseProgrammServicewsImplPort();
-			listClass = classeProgrammServicewsEndpoint.searchClasseProgrammServicews(classeProgrammDto);
-			
+			classeProgrammServicewsEndpoint = classeProgrammServicews
+					.getClasseProgrammServicewsImplPort();
+			listClass = classeProgrammServicewsEndpoint
+					.searchClasseProgrammServicews(classeProgrammDto);
+
 			logger.debug("end init");
 
 		} catch (Exception e) {

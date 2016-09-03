@@ -94,26 +94,6 @@
 										icon="fa fa-fw fa-arrow-left">
 									</p:commandButton>
 
-									<p:commandButton id="savemateriel"
-										rendered="#{classeSearchServiceBean.isTest()}"
-										styleClass="btn btn-success"
-										disabled="#{classeSearchServiceBean.test2}"
-										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateinventoryclasse').show()"
-										value="SAVE"
-										action="#{classeSearchServiceBean.createInventaire()}"
-										update="fdialinventaire:listMateriels growl">
-									</p:commandButton>
-
-									<p:commandButton id="modifmateriel"
-										rendered="#{!classeSearchServiceBean.isTest()}"
-										styleClass="btn btn-primary"
-										disabled="#{classeSearchServiceBean.test2}"
-										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateinventoryclasse').show()"
-										value="SAVE"	
-										action="#{classeSearchServiceBean.updateInventaire()}"
-										update="fdialinventaire:listMateriels growl">
-									</p:commandButton>
-
 								</div>
 								<p:panel id="updatclasse" widgetVar="updateclasse"
 									rendered="#{!classeSearchServiceBean.isAction3()}">
@@ -354,26 +334,26 @@
 													</div>
 												</div>
 											</div>
-<!-- 											<div class="col-xs-2"> -->
-<!-- 												<div class="button-wrapper"> -->
-<!-- 													<p:commandButton value="#{messages.label_create}" -->
-<!-- 														styleClass="btn btn-primary" -->
-<!-- 														rendered="#{classeSearchServiceBean.isTest()}" -->
-<!-- 														action="#{classeSearchServiceBean.createInventaire()}" -->
-<!-- 														oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateinventoryclasse').show()" -->
-<!-- 														update="fdialinventaire listMateriels growl"> -->
-<!-- 													</p:commandButton> -->
-<!-- 													<p:commandButton value="#{messages.label_modifier}" -->
-<!-- 														styleClass="btn btn-primary" -->
-<!-- 														rendered="#{!classeSearchServiceBean.isTest()}" -->
-<!-- 														action="#{classeSearchServiceBean.updateInventaire()}" -->
-<!-- 														oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updateinventoryclasse').show()" -->
-<!-- 														update="fdialinventaire listMateriels growl"> -->
-<!-- 													</p:commandButton> -->
-<!-- 												</div> -->
-<!-- 											</div> -->
+ 											<div class="col-xs-2"> 
+ 												<div class="button-wrapper"> 
+ 													<p:commandButton value="#{messages.label_create}"
+ 														styleClass="btn btn-primary"
+														rendered="#{classeSearchServiceBean.isTest()}"
+														action="#{classeSearchServiceBean.createInventaire()}"
+ 														update="@([id$=listMateriels]) growl"
+ 														>
+ 													</p:commandButton> 
+ 													<p:commandButton value="#{messages.label_modifier}" 
+ 														styleClass="btn btn-primary"
+ 														rendered="#{!classeSearchServiceBean.isTest()}" 
+ 														action="#{classeSearchServiceBean.updateInventaire()}"
+ 														update="@([id$=listMateriels]) growl"
+ 														>
+ 													</p:commandButton>
+ 												</div> 
+ 											</div> 
 										</div>
-
+										
 										<b:row styleClass="listPage">
 											<p:dataTable id="listMateriels"
 												value="#{classeSearchServiceBean.listinventaire}"
@@ -440,6 +420,7 @@
 												<p:menuitem value="Détails" icon="ui-icon-close" />
 											</p:contextMenu>
 										</b:row>
+										
 									</h:form>
 								</p:panel>
 								<p:dataTable id="listclasses"

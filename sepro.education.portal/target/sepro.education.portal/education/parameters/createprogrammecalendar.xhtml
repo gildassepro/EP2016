@@ -36,7 +36,7 @@
 										styleClass="btn btn-danger"
 										value="#{messages.label_supprimer1}"
 										title="#{messages.label_supprimer1}"
-										onclick="PF('confirmation').show()" icon="fa fa-fw fa-remove">
+										onclick="PF('confirmationv').show()" icon="fa fa-fw fa-remove">
 									</p:commandButton>
 									<p:commandButton id="printe"
 										update="@([id$=listprogrammecalendar]) formlistprogrammecalendar fdialprogramme"
@@ -277,6 +277,7 @@
 													</p:column>
 
 												</p:dataTable>
+
 												<p:contextMenu for="listModuleProgramm">
 													<p:menuitem value="Modifier" icon="ui-icon-search" />
 													<p:menuitem value="Supprimer" icon="ui-icon-search" />
@@ -337,6 +338,16 @@
 										<h:outputText value="#{programmcalendar.endDate}"></h:outputText>
 									</p:column>
 								</p:dataTable>
+								<p:confirmDialog
+									message="#{messages.label_msg_alerte_supression}"
+									header="Confirmation" widgetVar="confirmationv">
+									<p:commandButton value="#{messages.label_msg_confirmOui}"
+										onclick="PF('confirmationv').hide()"
+										action="#{programmeCalendarCreateServiceBean.supprimerProgrammeCalendar()}"
+										update="formlistprogrammecalendar growl" />
+									<p:commandButton value="#{messages.label_msg_confirmNon}"
+										onclick="PF('confirmationv').hide()" type="button" />
+								</p:confirmDialog>
 								<p:contextMenu for="listprogrammecalendar">
 									<p:menuitem value="Modifier" icon="ui-icon-search" />
 									<p:menuitem value="Supprimer" icon="ui-icon-search" />

@@ -11,6 +11,7 @@
 			<b:row>
 				<div class="messages">
 					<p:messages for="classename" id="classname"></p:messages>
+					<p:messages for="nombrestudent" id="nombrestu"></p:messages>
 				</div>
 
 				<h:form id="forme">
@@ -51,16 +52,17 @@
 										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
 										rendered="#{!studentClassSearchServiceBean.isAction()}"
 										disabled="#{studentClassSearchServiceBean.test}"
-										action="#{studentClassSearchServiceBean.createClass()}"
+										action="#{studentClassSearchServiceBean.updateStudentClasse()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatestudentclass').hide()"
 										update="forme fdial growl" />
 									<p:commandButton value="#{messages.label_create}"
-										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
+										styleClass="btn btn-danger" icon="fa fa-fw fa-check-circle"
 										rendered="#{studentClassSearchServiceBean.isAction()}"
 										disabled="#{studentClassSearchServiceBean.test}"
-										action="#{studentClassSearchServiceBean.updateClass()}"
+										action="#{studentClassSearchServiceBean.createStudentClasse()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatestudentclass').hide()"
 										update="forme fdial growl" />
+										
 									<p:splitButton value="#{messages.label_options}"
 										actionListener="#{buttonView.save}" icon="ui-icon-gear">
 										<p:menuitem value="Update"
@@ -86,10 +88,10 @@
 
 									<h:form id="fdial">
 										<h3 style="margin-top: 0">
+											<p:outputLabel value="#{messages.label_update_student_class}" 
+												rendered="#{!studentClassSearchServiceBean.isAction()}" />
 											<p:outputLabel value="#{messages.label_create_student_class}"
 												rendered="#{studentClassSearchServiceBean.isAction()}" />
-											<p:outputLabel value="#{messages.label_update_student_class}"
-												rendered="#{!studentClassSearchServiceBean.isAction()}" />
 										</h3>
 
 										<div class="ui-grid ui-grid-responsive wrap class">
@@ -102,6 +104,7 @@
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:inputText id="classename" styleClass="form-text"
 															immediate="true"
+															disabled="#{!studentClassSearchServiceBean.testbutton}"
 															value="#{studentClassSearchServiceBean.classeProgrammDto.classeName}"
 															placeholder="#{messages.label_msg_student_nameclass}"
 															required="true"
@@ -116,6 +119,7 @@
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:selectOneMenu id="selectprogrammecalendar"
 															styleClass="form-text" immediate="true"
+															disabled="#{!studentClassSearchServiceBean.testbutton}"
 															value="#{studentClassSearchServiceBean.classeProgrammDto.programmeCalendar}"
 															converter="entityConverter"
 															placeholder="#{messages.label_academic_years}"
@@ -141,6 +145,7 @@
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:selectOneMenu id="selectcurriculum"
+														   disabled="#{!studentClassSearchServiceBean.testbutton}"
 															styleClass="form-text" immediate="true"
 															value="#{studentClassSearchServiceBean.classeProgrammDto.academicYear}"
 															converter="entityConverter"
@@ -164,6 +169,7 @@
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:selectOneMenu id="selectclassfiliere"
 															styleClass="form-text" immediate="true"
+															disabled="#{!studentClassSearchServiceBean.testbutton}"
 															value="#{studentClassSearchServiceBean.classeProgrammDto.academicSector}"
 															converter="entityConverter"
 															placeholder="#{messages.label_programme_status}"
@@ -180,6 +186,29 @@
 														</p:selectOneMenu>
 													</div>
 												</div>
+												
+												<div class="row">
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_msg_nbre_student}:" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:inputText id="nombrestudent" styleClass="form-text"
+															immediate="true"
+															disabled="#{!studentClassSearchServiceBean.testbutton}"
+															value="#{studentClassSearchServiceBean.classeProgrammDto.nombreEleve}"
+															placeholder="#{messages.label_msg_nbre_student}"
+															required="true"
+															requiredMessage="#{messages.label_msg_nbre_student}">
+															
+														</p:inputText>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">	
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+													</div>
+												</div>
+												
 											</div>
 										</div>
 										<br></br>
@@ -188,16 +217,17 @@
 														<p:commandButton 
 															styleClass="btn btn-primary submit-button"
 															value="#{messages.label_enregistrer}"
-															disabled="#{!studentClassSearchServiceBean.testtable}"
-															rendered="#{!studentClassSearchServiceBean.isAction2()}"
-															action="#{studentClassSearchServiceBean.createClass()}"
-															update="@([id$=formdatatablecontact]) growl"
+															disabled="#{!studentClassSearchServiceBean.testbutton}"
+															rendered="#{!studentClassSearchServiceBean.isAction()}"
+															action="#{studentClassSearchServiceBean.updateClass()}"
+															update="forme growl"
 															/>
 														
 														<p:commandButton 
 															action="#{studentClassSearchServiceBean.createClass()}"
-															update="@([id$=listclass]) growl"
-															rendered="#{studentClassSearchServiceBean.isAction2()}"
+															update="forme growl"
+															disabled="#{!studentClassSearchServiceBean.testtable}"
+															rendered="#{studentClassSearchServiceBean.isAction()}"
 															styleClass="btn btn-danger"
 															value="#{messages.label_enregistrer}"/>
 														
@@ -211,7 +241,7 @@
 												rendered="#{!studentClassSearchServiceBean.testtable}"
 												value="#{studentClassSearchServiceBean.listeStudentInscritp}"
 												var="studenties"
-												selection="#{studentClassSearchServiceBean.listeStudentInscritp}"
+												selection="#{studentClassSearchServiceBean.selectedlistEtudiantClass}"
 												rowKey="#{studenties.idStudent}"
 												style="margin-bottom:0">
 												<f:facet name="header">
@@ -282,6 +312,23 @@
 											<p:outputLabel value="#{messages.label_curriculum}" />
 										</f:facet>
 										<h:outputText value="#{studentclasses.academicSector.value}"></h:outputText>
+									</p:column>
+									
+									<p:column priority="4"
+										filterBy="#{studentclasses.nombreEleve}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_msg_nbre_student}" />
+										</f:facet>
+										<h:outputText value="#{studentclasses.nombreEleve}"></h:outputText>
+									</p:column>
+									<p:column priority="4"
+										filterBy="#{studentclasses.teacherResponsable.name}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{messages.label_msg_responsable_teacher}" />
+										</f:facet>
+										<h:outputText value="#{studentclasses.teacherResponsable.name}"></h:outputText>
 									</p:column>
 
 								</p:dataTable>
