@@ -38,7 +38,7 @@
 										styleClass="btn btn-danger"
 										value="#{messages.label_supprimer1}"
 										title="#{messages.label_supprimer1}"
-										onclick="PF('confirmation').show()" icon="fa fa-fw fa-remove">
+										onclick="PF('confirmationdelete').show()" icon="fa fa-fw fa-remove">
 									</p:commandButton>
 									<p:commandButton id="printe"
 									styleClass="btn btn-primary submit-button"
@@ -334,13 +334,13 @@
 								</p:dataTable>
 								<p:confirmDialog
 									message="#{messages.label_msg_alerte_supression}"
-									header="Confirmation" widgetVar="confirmation">
+									header="Confirmation" widgetVar="confirmationdelete">
 									<p:commandButton value="#{messages.label_msg_confirmOui}"
-										onclick="PF('confirmation').hide()"
+										onclick="PF('confirmationdelete').hide()"
 										action="#{studentClassSearchServiceBean.supprimerClass()}"
 										update="forme growl" />
 									<p:commandButton value="#{messages.label_msg_confirmNon}"
-										onclick="PF('confirmation').hide()" type="button" />
+										onclick="PF('confirmationdelete').hide()" type="button" />
 								</p:confirmDialog>
 
 								<p:contextMenu for="listclass">

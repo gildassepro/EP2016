@@ -41,6 +41,9 @@ import org.sepro.studentweb.serviceimpl.StudentDataDtoServicews;
 import org.sepro.studentweb.serviceimpl.StudentDataDtoServicewsEndpoint;
 import org.sepro.studentweb.serviceimpl.StudentServicews;
 import org.sepro.studentweb.serviceimpl.StudentServicewsEndpoint;
+import org.sepro.teacherweb.serviceapi.IdentityTeacherDto;
+import org.sepro.teacherweb.serviceimpl.IdentityTeacherServicews;
+import org.sepro.teacherweb.serviceimpl.IdentityTeacherServicewsEndpoint;
 
 @ManagedBean
 @ViewScoped
@@ -62,9 +65,11 @@ public class StudentClassSearchServiceBean implements Serializable {
 	private List<StudentDto> listeStudentInscritp = new ArrayList<StudentDto>();
 	private List<StudentDto> selectedlistEtudiantClass = new ArrayList<StudentDto>();
 	private StudentDto studentDto = new StudentDto();
+	private StudentDto studentDtos = new StudentDto();
 
 	private StudentDataDtoServicewsEndpoint studentDataDtoServicewsEndpoint;
 	private StudentDataDtoServicews studentDataDtoServicews = new StudentDataDtoServicews();
+	
 
 	private ProgrammeCalendarDtoServicewsEndpoint programmeCalendarDtoServicewsEndpoint;
 	private ProgrammeCalendarDtoServicews programmeCalendarDtoServicews = new ProgrammeCalendarDtoServicews();
@@ -75,6 +80,7 @@ public class StudentClassSearchServiceBean implements Serializable {
 
 	private PopuplistDtoServicewsEndpoint popuplistDtoServicewsEndpoint;
 	private PopuplistDtoServicews popuplistDtoServicews = new PopuplistDtoServicews();
+	
 
 	private ClasseProgrammDto classeProgrammDto = new ClasseProgrammDto();
 	private ClasseProgrammDto classeProgrammDtos = new ClasseProgrammDto();
@@ -86,7 +92,6 @@ public class StudentClassSearchServiceBean implements Serializable {
 	private StudentClasseDto studentClasseDtos = new StudentClasseDto();
 	private StudentClasseDto studentClasseDtos2 = new StudentClasseDto();
 	private List<StudentClasseDto> listEtudiantClass = new ArrayList<StudentClasseDto>();
-	
 
 	private List<PopuplistDto> listAcademicYear = new ArrayList<PopuplistDto>();
 	private List<PopuplistDto> listFiliere = new ArrayList<PopuplistDto>();
@@ -103,6 +108,16 @@ public class StudentClassSearchServiceBean implements Serializable {
 
 	
 	
+	public StudentDto getStudentDtos() {
+		return studentDtos;
+	}
+
+	public void setStudentDtos(StudentDto studentDtos) {
+		this.studentDtos = studentDtos;
+	}
+
+	
+
 	public StudentClasseDto getStudentClasseDtos2() {
 		return studentClasseDtos2;
 	}
@@ -118,8 +133,6 @@ public class StudentClassSearchServiceBean implements Serializable {
 	public void setClasseProgrammDtos2(ClasseProgrammDto classeProgrammDtos2) {
 		this.classeProgrammDtos2 = classeProgrammDtos2;
 	}
-
-	
 
 	public List<StudentDto> getSelectedlistEtudiantClass() {
 		return selectedlistEtudiantClass;
@@ -244,12 +257,15 @@ public class StudentClassSearchServiceBean implements Serializable {
 	}
 
 	public List<StudentClasseDto> getListEtudiantClass() {
-		if(classeProgrammDtos != null){
+		if (classeProgrammDtos != null) {
 			logger.debug("@@@@@++ JE SUIS DANS LE GETLISTETUDIANT ++@@@@@");
 			studentClasseDtos2.setClasseProgramm(classeProgrammDtos);
-			listEtudiantClass = studentClasseServicewsEndpoint.searchStudentClasseServicews(studentClasseDtos2);
-			logger.debug("@@@@++++ LISTE LISTE ETUDIANT ++++@@@"+listEtudiantClass.size());
-			logger.debug("@@@@++++ LISTE LISTE ETUDIANT ++++@@@"+listEtudiantClass.size());
+			listEtudiantClass = studentClasseServicewsEndpoint
+					.searchStudentClasseServicews(studentClasseDtos2);
+			logger.debug("@@@@++++ LISTE LISTE ETUDIANT ++++@@@"
+					+ listEtudiantClass.size());
+			logger.debug("@@@@++++ LISTE LISTE ETUDIANT ++++@@@"
+					+ listEtudiantClass.size());
 		}
 		return listEtudiantClass;
 	}
@@ -294,7 +310,6 @@ public class StudentClassSearchServiceBean implements Serializable {
 		if (baction.equals("1")) {
 			classeProgrammDto = classeProgrammDtos;
 			studentClasseDto = studentClasseDtos;
-
 			listEtudiantClass = new ArrayList<StudentClasseDto>();
 			action2 = true;
 			test = false;
@@ -304,12 +319,13 @@ public class StudentClassSearchServiceBean implements Serializable {
 			selectedlistEtudiantClass = new ArrayList<StudentDto>();
 			listAcademicYear = new ArrayList<PopuplistDto>();
 			listFiliere = new ArrayList<PopuplistDto>();
+			
+			
 
 			initUpdateStudentClass();
 
 		} else {
-			
-			
+
 			studentClasseDto = new StudentClasseDto();
 			classeProgrammDto = new ClasseProgrammDto();
 			action2 = true;
@@ -348,6 +364,9 @@ public class StudentClassSearchServiceBean implements Serializable {
 					.getAllProgrammeCalendarServicews();
 			listeStudentInscritp = studentServicewsEndpoint
 					.searchStudentServicews(studentDto);
+			
+			studentDtos.setIdStudent(studentClasseDto.getStudent().getIdStudent());
+			selectedlistEtudiantClass = studentServicewsEndpoint.searchStudentServicews(studentDtos);
 
 		} catch (Exception ex) {
 
@@ -384,6 +403,7 @@ public class StudentClassSearchServiceBean implements Serializable {
 	}
 
 	public void createClass() {
+		FacesMessage msg = null;
 		ClasseProgrammDto createClass = new ClasseProgrammDto();
 
 		createClass.setAcademicSector(classeProgrammDto.getAcademicSector());
@@ -397,9 +417,16 @@ public class StudentClassSearchServiceBean implements Serializable {
 				.getClasseProgrammServicewsImplPort();
 		createClass = classeProgrammServicewsEndpoint
 				.createClasseProgrammServicews(createClass);
-		
-		classeProgrammDtost.setIdClasseProgramm(createClass.getIdClasseProgramm());
+
+		classeProgrammDtost.setIdClasseProgramm(createClass
+				.getIdClasseProgramm());
 		ActiveDatatable();
+		msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+				rb.getString("label_succesful"),
+				rb.getString("label_msg_create_class_programm"));
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, msg);
+		
 	}
 
 	public void ActiveDatatable() {
@@ -409,12 +436,31 @@ public class StudentClassSearchServiceBean implements Serializable {
 		logger.debug("@@@@FIN@@@@@@");
 	}
 
-	public void supprimerClass() {
+	public String supprimerClass() {
+		FacesMessage msg = null;
+		try {
+			classeProgrammServicewsEndpoint
+					.deleteClasseProgrammServicews(classeProgrammDtos);
+			init();
+		} catch (Exception ex) {
+			msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					rb.getString("label_warn"), rb.getString("label_msg_failed_delete_class_programm"));
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, msg);
 
+			return null;
+		}
+		msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+				rb.getString("label_succesful"),
+				rb.getString("label_msg_delete_class_programm"));
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, msg);
+		return null;
 	}
 
 	public void updateClass() {
 		logger.debug("@@@@DEBUT MODIFICATION CLASSE@@@@@");
+		FacesMessage msg = null;
 		try {
 
 			ClasseProgrammDto updateClass = new ClasseProgrammDto();
@@ -424,10 +470,6 @@ public class StudentClassSearchServiceBean implements Serializable {
 			updateClass.setAcademicYear(classeProgrammDto.getAcademicYear());
 			updateClass.setClasseName(classeProgrammDto.getClasseName());
 			updateClass.setNombreEleve(classeProgrammDto.getNombreEleve());
-			logger.debug("@@@@@@@AFFICHAGE DU NOMBRE D ELEVE@@@@@@"
-					+ classeProgrammDto.getNombreEleve());
-			logger.debug("@@@@@@@AFFICHAGE DU NOMBRE D ELEVE@@@@@@"
-					+ classeProgrammDto.getNombreEleve());
 			updateClass.setProgrammeCalendar(classeProgrammDto
 					.getProgrammeCalendar());
 			classeProgrammServicewsEndpoint = classeProgrammServicews
@@ -438,50 +480,99 @@ public class StudentClassSearchServiceBean implements Serializable {
 			updateClass = classeProgrammServicewsEndpoint
 					.updateClasseProgrammServicews(updateClass);
 		} catch (Exception ex) {
-
+			
 		}
+		msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+				rb.getString("label_succesful"),
+				rb.getString("label_msg_update_class_programm"));
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, msg);
 		logger.debug("@@@@FIN MODIFICATION CLASSE@@@@@");
 
 	}
 
-	public void createStudentClasse() {
+	public String createStudentClasse() {
+		FacesMessage msg = null;
 		logger.debug("++++@@@@ BEGIN CREATE STUDENT CLASSE @@@+++++++");
+		
 		try {
-			StudentClasseDto createStudentClass = new StudentClasseDto();
-			logger.debug("@@@@++++  AFFICHAGE CLASSPROGRAMME  ++++++@@@@@"+classeProgrammDtost);
-			createStudentClass.setClasseProgramm(classeProgrammDtost);
-			
-			
-			
-//			for(int i =0, i < selectedlistEtudiantClass,){
-//				
-//			}
-		} catch (Exception ex) {
+			for (int i = 0; i < selectedlistEtudiantClass.size(); i++) {
 
+				StudentClasseDto createStudentClass = new StudentClasseDto();
+				StudentDto studentost = new StudentDto();
+				createStudentClass.setClasseProgramm(classeProgrammDtost);	
+				
+				studentost.setIdStudent(selectedlistEtudiantClass.get(i)
+						.getIdStudent());
+				createStudentClass.setStudent(studentost);
+				studentClasseServicewsEndpoint = studentClasseServicews
+						.getStudentClasseServicewsImplPort();
+
+				createStudentClass = studentClasseServicewsEndpoint
+						.createStudentClasseServicews(createStudentClass);
+			}
+		} catch (Exception e) {
+			msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					rb.getString("label_warn"), rb.getString("label_msg_failed_delete_class_programm"));
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, msg);
+
+			return null;
 		}
+		
+		msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+				rb.getString("label_succesful"),
+				rb.getString("label_msg_add_student_class"));
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, msg);
 		logger.debug("++++@@@@ FIN CREATE STUDENT CLASSE @@@+++++++");
+		return null;
+		
 	}
 
-	public void updateStudentClasse() {
+	public String updateStudentClasse() {
+		FacesMessage msg = null;
 		logger.debug("++++@@@@ BEGIN UPDATE STUDENT CLASSE @@@+++++++");
-		
-			for(int i = 0; i< selectedlistEtudiantClass.size(); i++ ){
-				
+		try {
+			for (int i = 0; i < selectedlistEtudiantClass.size(); i++) {
+
 				StudentClasseDto updateStudentClass = new StudentClasseDto();
 				StudentDto studentost = new StudentDto();
-				studentost.setIdStudent(selectedlistEtudiantClass.get(i).getIdStudent());
-								
-				logger.debug("@@@@++++  AFFICHAGE CLASSPROGRAMME  ++++++@@@@@"+classeProgrammDto);
-				logger.debug("@@@@++++  AFFICHAGE TAILLE LISTE  ++++++@@@@@"+selectedlistEtudiantClass.size());
+				studentost.setIdStudent(selectedlistEtudiantClass.get(i)
+						.getIdStudent());
+
+				logger.debug("@@@@++++  AFFICHAGE CLASSPROGRAMME  ++++++@@@@@"
+						+ classeProgrammDto);
+				logger.debug("@@@@++++  AFFICHAGE TAILLE LISTE  ++++++@@@@@"
+						+ selectedlistEtudiantClass.size());
 				updateStudentClass.setClasseProgramm(classeProgrammDto);
-				logger.debug("@@@@++++  CLASS PROGRAMME  ++++++@@@@@"+classeProgrammDto.getClasseName());
+				logger.debug("@@@@++++  CLASS PROGRAMME  ++++++@@@@@"
+						+ classeProgrammDto.getClasseName());
 				updateStudentClass.setStudent(studentost);
-				studentClasseServicewsEndpoint = studentClasseServicews.getStudentClasseServicewsImplPort();
-				
-				updateStudentClass = studentClasseServicewsEndpoint.createStudentClasseServicews(updateStudentClass);	
+				studentClasseServicewsEndpoint = studentClasseServicews
+						.getStudentClasseServicewsImplPort();
+
+				updateStudentClass = studentClasseServicewsEndpoint
+						.createStudentClasseServicews(updateStudentClass);
 			}
-			
+		} catch (Exception e) {
+			msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					rb.getString("label_warn"), rb.getString("label_msg_failed_delete_class_programm"));
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, msg);
+
+			return null;
+		}
+		
+		msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+				rb.getString("label_succesful"),
+				rb.getString("label_msg_add_student_class"));
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, msg);
 		logger.debug("++++@@@@ FIN UPDATE STUDENT CLASSE @@@+++++++");
+		return null;
+		
+		
 	}
 
 	// public void onTransfer(TransferEvent event) {

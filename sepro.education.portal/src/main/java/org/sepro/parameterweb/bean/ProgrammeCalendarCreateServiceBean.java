@@ -76,7 +76,8 @@ public class ProgrammeCalendarCreateServiceBean implements Serializable {
 
 	private AcademicModuleDtoServicews academicModuleDtoServicews = new AcademicModuleDtoServicews();
 	private AcademicModuleDtoServicewsEndpoint academicModuleDtoServicewsEndpoint;
-	private List<AcademicModuleDto> listModulesAcademique = new ArrayList<AcademicModuleDto>();
+	private List<AcademicModuleDto> listModulesAcademique = new ArrayList<AcademicModuleDto>();  
+	private List<AcademicModuleDto> selectedlistAcademicModule = new ArrayList<AcademicModuleDto>();
 	private AcademicModuleDto academicModuleDto = new AcademicModuleDto();
 	private List<AcademicModuleDto> selectedAcademicmodule = new ArrayList<AcademicModuleDto>();
 
@@ -99,6 +100,15 @@ public class ProgrammeCalendarCreateServiceBean implements Serializable {
 
 	
 	
+	public List<AcademicModuleDto> getSelectedlistAcademicModule() {
+		return selectedlistAcademicModule;
+	}
+
+	public void setSelectedlistAcademicModule(
+			List<AcademicModuleDto> selectedlistAcademicModule) {
+		this.selectedlistAcademicModule = selectedlistAcademicModule;
+	}
+
 	public boolean isTest2() {
 		return test2;
 	}
@@ -306,6 +316,25 @@ public class ProgrammeCalendarCreateServiceBean implements Serializable {
 
 		else
 			test = true;
+	}
+	
+	public void updateModuleProgramme(){
+logger.debug("@@@@@@ JE SUIS LA @@@@@@@@@@@@@@");
+		
+		academicModuleDtoServicewsEndpoint = academicModuleDtoServicews.getAcademicModuleDtoServicewsImplPort();
+		selectedlistAcademicModule = academicModuleDtoServicewsEndpoint.getAllAcademicModuleServicews();
+		
+		for(AcademicModuleDto academic : programmeCalendarDto.getProgramme().getAcademicmodule().getAcademicmodule()){
+			for(AcademicModuleDto academics : selectedlistAcademicModule){
+				if(academics.getIdAcademicModule() == academic.getIdAcademicModule()){
+					selectedAcademicmodule.add(academics);
+					break;
+				}
+			}
+			
+		}
+		
+		logger.debug("@@@@@@ JE SUIS A LA FIN @@@@@@@@@@@@@@");
 	}
 	
 	
@@ -537,8 +566,8 @@ public class ProgrammeCalendarCreateServiceBean implements Serializable {
 
 			academicModuleDtoServicewsEndpoint = academicModuleDtoServicews
 					.getAcademicModuleDtoServicewsImplPort();
-			selectedAcademicmodule = academicModuleDtoServicewsEndpoint
-					.getAllAcademicModuleServicews();
+//			selectedAcademicmodule = academicModuleDtoServicewsEndpoint
+//					.getAllAcademicModuleServicews();
 
 			popuplistDtoServicewsEndpoint = popuplistDtoServicews
 					.getPopuplistDtoServicewsImplPort();
