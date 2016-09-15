@@ -64,7 +64,7 @@
 											itemLabel="#{classeProgramm.classeName}" />
 										<p:ajax event="valueChange"
 											listener="#{planningSearchServiceBean.updatePlanningClasse()}"
-											update="@([id$=listplanclasse])" />
+											update="forme @([id$=listplanclasse])" />
 										<p:ajax event="select"
 											listener="#{planningSearchServiceBean.onSelect}"
 											update="forme growl" />
@@ -76,7 +76,7 @@
 					<br></br>
 					<h:panelGrid columnClasses="value">
 						<p:schedule id="listplanclasse"
-							value="#{planningSearchServiceBean.planningclasse}" />
+							value="#{planningSearchServiceBean.eventClasse}" />
 
 					</h:panelGrid>
 				</h:form>

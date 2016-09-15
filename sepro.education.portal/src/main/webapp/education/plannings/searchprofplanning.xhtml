@@ -63,10 +63,10 @@
 										<f:selectItems
 											value="#{planningSearchServiceBean.listeTeacherEvent}"
 											var="teacherevent" itemValue="#{teacherevent}"
-											itemLabel="#{teacherevent.firstName}" />
+											itemLabel="#{teacherevent.firstName} #{teacherevent.name}" />
 										<p:ajax event="valueChange"
 											listener="#{planningSearchServiceBean.updatePlanningProf()}"
-											update="@([id$=listplanprof])" />
+											update="forme @([id$=listplanprof])"/>
 										<p:ajax event="select"
 											listener="#{planningSearchServiceBean.onSelect}"
 											update="forme growl" />
@@ -80,7 +80,7 @@
 
 					<h:panelGrid columnClasses="value">
 						<p:schedule id="listplanprof"
-							value="#{planningSearchServiceBean.planningprof}" />
+							value="#{planningSearchServiceBean.eventProf}" />
 					</h:panelGrid>
 				</h:form>
 			</b:row>

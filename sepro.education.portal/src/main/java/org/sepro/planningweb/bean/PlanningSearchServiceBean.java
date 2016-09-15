@@ -16,8 +16,10 @@ import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.apache.poi.ss.formula.functions.Today;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
+import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.LazyScheduleModel;
 import org.primefaces.model.ScheduleModel;
 import org.sepro.parameterweb.serviceapi.AcademicModuleDto;
@@ -50,6 +52,8 @@ import org.sepro.studentweb.serviceimpl.StudentEventsServicewsEndpoint;
 import org.sepro.teacherweb.serviceapi.IdentityTeacherDto;
 import org.sepro.teacherweb.serviceimpl.IdentityTeacherServicews;
 import org.sepro.teacherweb.serviceimpl.IdentityTeacherServicewsEndpoint;
+
+import sepro.education.web.util.XMLCalendarToDate;
 
 @ManagedBean
 @ViewScoped
@@ -131,9 +135,30 @@ public class PlanningSearchServiceBean implements Serializable {
 	private boolean test = true;
 	private ScheduleModel planningprof;
 	private ScheduleModel planningclasse;
+	
+	private ScheduleModel eventClasse;
+	private ScheduleModel eventProf;
+	
+	private ScheduleModel eventModel;
 
 	
 	
+	public ScheduleModel getEventProf() {
+		return eventProf;
+	}
+
+	public void setEventProf(ScheduleModel eventProf) {
+		this.eventProf = eventProf;
+	}
+
+	public ScheduleModel getEventClasse() {
+		return eventClasse;
+	}
+
+	public void setEventClasse(ScheduleModel eventClasse) {
+		this.eventClasse = eventClasse;
+	}
+
 	public List<StudentEventsDto> getListClasseEvent() {
 		return listClasseEvent;
 	}
@@ -398,32 +423,12 @@ public class PlanningSearchServiceBean implements Serializable {
 			// listAcademicModule =
 			// academicModuleDtoServicewsEndpoint.getAllAcademicModuleServicews();
 
-			planningprof = new LazyScheduleModel() {
-
-				@Override
-				public void loadEvents(Date start, Date end) {
-					Date random = getRandomDate(start);
-					addEvent(new DefaultScheduleEvent("Anglais 2", random,
-							random));
-
-					random = getRandomDate(start);
-					addEvent(new DefaultScheduleEvent("Science Politique",
-							random, random));
-				}
-			};
-
-			planningclasse = new LazyScheduleModel() {
-
-				@Override
-				public void loadEvents(Date start, Date end) {
-					Date random = getRandomDate(start);
-					addEvent(new DefaultScheduleEvent("Math", random, random));
-
-					random = getRandomDate(start);
-					addEvent(new DefaultScheduleEvent("Reseaux Informatique",
-							random, random));
-				}
-			};
+			eventClasse = new DefaultScheduleModel();
+			eventClasse.addEvent(new DefaultScheduleEvent("TODAY", today1Pm(), today6Pm() ));
+			
+			eventProf = new DefaultScheduleModel();
+			eventProf.addEvent(new DefaultScheduleEvent("TODAY", today1Pm(), today6Pm() ));
+			
 
 			logger.debug("end init");
 
@@ -432,7 +437,30 @@ public class PlanningSearchServiceBean implements Serializable {
 		}
 
 	}
+	
+	private Calendar today() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), 0, 0, 0);
+ 
+        return calendar;
+    }
 
+	private Date today1Pm() {
+        Calendar t = (Calendar) today().clone();
+        t.set(Calendar.AM_PM, Calendar.PM);
+        t.set(Calendar.HOUR, 1);
+         
+        return t.getTime();
+    }
+	
+	private Date today6Pm() {
+        Calendar t = (Calendar) today().clone(); 
+        t.set(Calendar.AM_PM, Calendar.PM);
+        t.set(Calendar.HOUR, 6);
+         
+        return t.getTime();
+    }
+	
 	public void updatePlanningClasse() {
 		logger.debug("@@@@@@@ DEBUT UPDATE PLALNNING CLASSE @@@@@"
 				+ selectedEventsClasse.getClasseProgramm().getClasseName());
@@ -442,33 +470,21 @@ public class PlanningSearchServiceBean implements Serializable {
 		if(selectedEventsClasse.getClasseProgramm().getIdClasseProgramm() != null){
 			selectedEventsClasse.setClasseProgramm(selectedEventsClasse.getClasseProgramm());
 			listClasseEvent = studentEventsServicewsEndpoint.searchStudentEventsServicews(selectedEventsClasse);
-			
-			planningclasse = new LazyScheduleModel() {
-
-//				@Override
-//				public void loadEvents(Date start, Date end) {
-//					
-//					for (int i = 0; i < listClasseEvent.size(); i ++){
-//						clear();
-//						String title = listClasseEvent.get(i).getAcademicModule().getModuleName();
-//						Date startDate = listClasseEvent.get(i).getStartDate();
-//						Date endDate = listClasseEvent.get(i).getEnDate();
-//						
-//						addEvent(new DefaultScheduleEvent(title, startDate, endDate));
-//
-//						
-//					}	
-//					
-//				}
-			};
-			
+				
+				for (int i = 0; i < listClasseEvent.size(); i ++){
+					eventClasse = new DefaultScheduleModel();
+					eventClasse.addEvent(new DefaultScheduleEvent(listClasseEvent.get(i).getTitle()+ " " + listClasseEvent.get(i).getRoom().getNameOfClass(), XMLCalendarToDate.toDate(listClasseEvent.get(i).getStartDate()), XMLCalendarToDate.toDate(listClasseEvent.get(i).getEnDate())));
+						
+				}	
 			
 			
 		}
-
 		logger.debug("@@@@@@@ FIN UPDATE PLALNNING CLASSE @@@@@"
 				+ selectedEventsClasse.getClasseProgramm().getClasseName());
+		
 	}
+	
+
 
 	public void updatePlanningProf() {
 		logger.debug("@@@@@@@ DEBUT UPDATE PLALNNING PROF @@@@@"
@@ -480,22 +496,13 @@ public class PlanningSearchServiceBean implements Serializable {
 			selectedEventsProf.setTeacher(selectedEventsProf.getTeacher());
 			listProfEvent = studentEventsServicewsEndpoint.searchStudentEventsServicews(selectedEventsProf);
 			
-			planningprof = new LazyScheduleModel() {
-
-				//@Override
-//				public void loadEvents(Date start, Date end) {
-//					
-//					for(int j = 0; j < listProfEvent.size(); j ++){
-//						clear();
-//						String title = listProfEvent.get(j).getTeacher().getName() + ""+ listProfEvent.get(j).getTeacher().getFirstName();
-//						Date startDate = listProfEvent.get(j).getStartDate();
-//						Date endDate = listProfEvent.get(j).getEnDate();
-//						addEvent(new DefaultScheduleEvent(title, startDate, endDate));
-//						
-//					}
-//					
-//				}
-			};
+			for (int j = 0; j < listProfEvent.size(); j ++){
+				eventProf = new DefaultScheduleModel();
+				eventProf.addEvent(new DefaultScheduleEvent(listProfEvent.get(j).getTitle() + " " + listProfEvent.get(j).getClasseProgramm().getClasseName()+ " " + listProfEvent.get(j).getRoom().getNameOfClass(), XMLCalendarToDate.toDate(listProfEvent.get(j).getStartDate()), XMLCalendarToDate.toDate(listProfEvent.get(j).getEnDate())));
+					
+			}
+			
+			
 			
 		}
 

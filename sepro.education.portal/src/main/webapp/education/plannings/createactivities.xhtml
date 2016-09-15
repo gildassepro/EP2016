@@ -253,7 +253,7 @@
 															<f:selectItems
 																value="#{activitieSearchServiceBean.listeTeacherEvent}"
 																var="teacherevent" itemValue="#{teacherevent}"
-																itemLabel="#{teacherevent.firstName}" />
+																itemLabel="#{teacherevent.firstName} #{teacherevent.name}" />
 														</p:selectOneMenu>
 													</f:facet>
 													<h:outputText value="#{events.teacher.firstName}" />

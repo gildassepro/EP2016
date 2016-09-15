@@ -346,9 +346,8 @@ public class StudentClassSearchServiceBean implements Serializable {
 
 	public void initUpdateStudentClass() {
 		logger.debug("@@@BEGIN INIT UPDATE @@@@");
+		action = false;
 		try {
-
-			action = false;
 			popuplistDtoServicewsEndpoint = popuplistDtoServicews
 					.getPopuplistDtoServicewsImplPort();
 			studentServicewsEndpoint = studentServicews
@@ -365,6 +364,7 @@ public class StudentClassSearchServiceBean implements Serializable {
 			listeStudentInscritp = studentServicewsEndpoint
 					.searchStudentServicews(studentDto);
 			
+			studentClasseDto.setClasseProgramm(classeProgrammDtos);
 			studentDtos.setIdStudent(studentClasseDto.getStudent().getIdStudent());
 			selectedlistEtudiantClass = studentServicewsEndpoint.searchStudentServicews(studentDtos);
 
@@ -375,10 +375,10 @@ public class StudentClassSearchServiceBean implements Serializable {
 	}
 
 	public void initCreateStudentClasse() {
-
+		action = true;
 		try {
 			logger.debug("@@@@BEGIN INITCREATE@@@@");
-			action = true;
+			
 
 			popuplistDtoServicewsEndpoint = popuplistDtoServicews
 					.getPopuplistDtoServicewsImplPort();
@@ -395,6 +395,7 @@ public class StudentClassSearchServiceBean implements Serializable {
 					.getAllProgrammeCalendarServicews();
 			listeStudentInscritp = studentServicewsEndpoint
 					.searchStudentServicews(studentDto);
+			
 
 		} catch (Exception ex) {
 
@@ -605,6 +606,10 @@ public class StudentClassSearchServiceBean implements Serializable {
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 				"List Reordered", null));
+	}
+	
+	public void updateListStudentSector() {
+		logger.debug("@@@@@@ DANS LE UPDATE LISTE STUDENT FILIERE @@@@@@@");
 	}
 
 	@PostConstruct

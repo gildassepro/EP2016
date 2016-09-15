@@ -41,12 +41,15 @@ import org.sepro.studentweb.serviceapi.StudentCVDto;
 import org.sepro.studentweb.serviceapi.StudentContactDto;
 import org.sepro.studentweb.serviceapi.StudentDataDto;
 import org.sepro.studentweb.serviceapi.StudentDto;
+import org.sepro.studentweb.serviceapi.StudentProgramDto;
 import org.sepro.studentweb.serviceimpl.StudentCVServicews;
 import org.sepro.studentweb.serviceimpl.StudentCVServicewsEndpoint;
 import org.sepro.studentweb.serviceimpl.StudentContactServicews;
 import org.sepro.studentweb.serviceimpl.StudentContactServicewsEndpoint;
 import org.sepro.studentweb.serviceimpl.StudentDataDtoServicews;
 import org.sepro.studentweb.serviceimpl.StudentDataDtoServicewsEndpoint;
+import org.sepro.studentweb.serviceimpl.StudentProgramServicews;
+import org.sepro.studentweb.serviceimpl.StudentProgramServicewsEndpoint;
 import org.sepro.studentweb.serviceimpl.StudentServicews;
 import org.sepro.studentweb.serviceimpl.StudentServicewsEndpoint;
 
@@ -74,6 +77,10 @@ public class StudentSearchServiceBean implements Serializable {
 
 	private StudentDataDtoServicews studentDataDtoServicews = new StudentDataDtoServicews();
 	private StudentDataDtoServicewsEndpoint studentDataDtoServicewsEndpoint;
+	
+	private StudentProgramServicewsEndpoint studentProgramServicewsEndpoint;
+	private StudentProgramServicews studentProgramServicews =  new StudentProgramServicews();
+	
 	private StudentDataDto studentDataDto = new StudentDataDto();
 	private StudentDataDto studentDataDtos = new StudentDataDto();
 	private List<StudentDataDto> listDataStudent = new ArrayList<StudentDataDto>();
@@ -87,6 +94,10 @@ public class StudentSearchServiceBean implements Serializable {
 	private StudentCVDto studentCVDtos = new StudentCVDto();
 	private List<StudentCVDto> listCVstudent = new ArrayList<StudentCVDto>();
 	private List<StudentCVDto> listCVstudent1 = new ArrayList<StudentCVDto>();
+	
+	private StudentProgramDto studentProgramDto = new StudentProgramDto();
+	private StudentProgramDto studentProgramDtos = new StudentProgramDto();
+	private List<StudentProgramDto> listSearchStudent = new ArrayList<StudentProgramDto>();
 
 	private StudentDto studentDto = new StudentDto();
 	private StudentDto studentDtos = new StudentDto();
@@ -148,6 +159,32 @@ public class StudentSearchServiceBean implements Serializable {
 	private String maskphonformat;
 	private String maskphonformatparent;
 	private boolean testmodifier = true;
+
+	
+	
+	public List<StudentProgramDto> getListSearchStudent() {
+		return listSearchStudent;
+	}
+
+	public void setListSearchStudent(List<StudentProgramDto> listSearchStudent) {
+		this.listSearchStudent = listSearchStudent;
+	}
+
+	public StudentProgramDto getStudentProgramDto() {
+		return studentProgramDto;
+	}
+
+	public void setStudentProgramDto(StudentProgramDto studentProgramDto) {
+		this.studentProgramDto = studentProgramDto;
+	}
+
+	public StudentProgramDto getStudentProgramDtos() {
+		return studentProgramDtos;
+	}
+
+	public void setStudentProgramDtos(StudentProgramDto studentProgramDtos) {
+		this.studentProgramDtos = studentProgramDtos;
+	}
 
 	public StudentDataDto getStudentDataDto() {
 		return studentDataDto;
@@ -512,8 +549,9 @@ public class StudentSearchServiceBean implements Serializable {
 
 	public void initDualListPro(String daction) {
 		if (daction.equals("1")) {
-
+			studentDtos.setIdStudent(studentProgramDtos.getStudentDto().getIdStudent());
 			studentDto = studentDtos;
+			studentProgramDto = studentProgramDtos;
 			action2 = true;
 			action3 = false;
 
@@ -747,6 +785,7 @@ public class StudentSearchServiceBean implements Serializable {
 	public void initUpdateStudent() {
 		studentServicewsEndpoint = studentServicews
 				.getStudentServicewsImplPort();
+		studentProgramServicewsEndpoint = studentProgramServicews.getStudentProgramServicewsImplPort();
 		studentContactServicewsEndpoint = studentContactServicews
 				.getStudentContactServicewsImplPort();
 		studentCVServicewsEndpoint = studentCVServicews
@@ -792,7 +831,8 @@ public class StudentSearchServiceBean implements Serializable {
 		//
 		// logger.debug("***********STUDENT***************"+studentDtos.getIdStudent());
 		// logger.debug("***********STUDENT***************"+studentDtos.getIdStudent());
-
+		studentDtos.setIdStudent(studentProgramDtos.getStudentDto().getIdStudent());
+		
 		studentContactDtos.setStudent(studentDtos);
 		studentCVDtos.setStudent(studentDtos);
 
@@ -811,26 +851,26 @@ public class StudentSearchServiceBean implements Serializable {
 		try {
 			logger.debug("@@@@@@@@ debut student 1");
 			StudentDto modifstudent = new StudentDto();
-			modifstudent.setBirthday(studentDto.getBirthday());
-			modifstudent.setCityAddress(studentDto.getCityAddress());
-			modifstudent.setCountryAddress(studentDto.getCountryAddress());
+			modifstudent.setBirthday(studentProgramDto.getStudentDto().getBirthday());
+			modifstudent.setCityAddress(studentProgramDto.getStudentDto().getCityAddress());
+			modifstudent.setCountryAddress(studentProgramDto.getStudentDto().getCountryAddress());
 			modifstudent
-					.setCountryOfBirthday(studentDto.getCountryOfBirthday());
-			modifstudent.setFirstName(studentDto.getFirstName());
-			modifstudent.setIdentityNumber(studentDto.getIdentityNumber());
-			modifstudent.setInscriptionAuthentification(studentDto
+					.setCountryOfBirthday(studentProgramDto.getStudentDto().getCountryOfBirthday());
+			modifstudent.setFirstName(studentProgramDto.getStudentDto().getFirstName());
+			modifstudent.setIdentityNumber(studentProgramDto.getStudentDto().getIdentityNumber());
+			modifstudent.setInscriptionAuthentification(studentProgramDto.getStudentDto()
 					.getInscriptionAuthentification());
-			modifstudent.setMaritalStatus(studentDto.getMaritalStatus());
-			modifstudent.setName(studentDto.getName());
-			modifstudent.setNationality(studentDto.getNationality());
-			modifstudent.setPhoneNumber(studentDto.getPhoneNumber());
-			modifstudent.setPlaceOfBirthday(studentDto.getPlaceOfBirthday());
-			modifstudent.setRegionAddress(studentDto.getRegionAddress());
-			modifstudent.setSexe(studentDto.getSexe());
-			modifstudent.setTypeOfDocument(studentDto.getTypeOfDocument());
-			modifstudent.setZipcodeAddress(studentDto.getZipcodeAddress());
+			modifstudent.setMaritalStatus(studentProgramDto.getStudentDto().getMaritalStatus());
+			modifstudent.setName(studentProgramDto.getStudentDto().getName());
+			modifstudent.setNationality(studentProgramDto.getStudentDto().getNationality());
+			modifstudent.setPhoneNumber(studentProgramDto.getStudentDto().getPhoneNumber());
+			modifstudent.setPlaceOfBirthday(studentProgramDto.getStudentDto().getPlaceOfBirthday());
+			modifstudent.setRegionAddress(studentProgramDto.getStudentDto().getRegionAddress());
+			modifstudent.setSexe(studentProgramDto.getStudentDto().getSexe());
+			modifstudent.setTypeOfDocument(studentProgramDto.getStudentDto().getTypeOfDocument());
+			modifstudent.setZipcodeAddress(studentProgramDto.getStudentDto().getZipcodeAddress());
 
-			modifstudent.setIdStudent(studentDto.getIdStudent());
+			modifstudent.setIdStudent(studentProgramDto.getStudentDto().getIdStudent());
 			studentServicewsEndpoint = studentServicews
 					.getStudentServicewsImplPort();
 
@@ -989,7 +1029,7 @@ public class StudentSearchServiceBean implements Serializable {
 		try {
 
 			logger.debug("begin init");
-
+			studentProgramServicewsEndpoint = studentProgramServicews.getStudentProgramServicewsImplPort();
 			studentServicewsEndpoint = studentServicews
 					.getStudentServicewsImplPort();
 			countryServicewsEndpoint = countryServicews
@@ -1024,6 +1064,8 @@ public class StudentSearchServiceBean implements Serializable {
 
 			listStudents = studentServicewsEndpoint
 					.searchStudentServicews(studentDto);
+			
+			listSearchStudent = studentProgramServicewsEndpoint.searchStudentProgramDtoServicews();
 			// listDataStudent =
 			// studentDataDtoServicewsEndpoint.searchStudentDataDtoServicews();
 
@@ -1037,96 +1079,96 @@ public class StudentSearchServiceBean implements Serializable {
 
 	public void maskPhone() {
 
-		if (studentDto.getCountryAddress().getIdCountry() != null) {
+		if (studentProgramDto.getStudentDto().getCountryAddress().getIdCountry() != null) {
 
 			regionServicewsEndpoint = regionServicews
 					.getRegionServicewsImplPort();
 			countryServicewsEndpoint = countryServicews
 					.getCountryServicewsImplPort();
 			RegionDto regionsearch = new RegionDto();
-			regionsearch.setCountry(studentDto.getCountryAddress());
+			regionsearch.setCountry(studentProgramDto.getStudentDto().getCountryAddress());
 			listRegion = regionServicewsEndpoint
 					.searchRegionServicews(regionsearch);
 
 		}
 
-		if (studentDto.getCountryAddress().getIdCountry() != null) {
+		if (studentProgramDto.getStudentDto().getCountryAddress().getIdCountry() != null) {
 			maskphonformat = "("
-					+ studentDto.getCountryAddress().getMobilePhoneFormat()
+					+ studentProgramDto.getStudentDto().getCountryAddress().getMobilePhoneFormat()
 							.getIndicatif() + ")";
 		}
 
-		if (studentDto.getCountryAddress().getMobilePhoneFormat()
+		if (studentProgramDto.getStudentDto().getCountryAddress().getMobilePhoneFormat()
 				.getNbrOfDigitBloc1() > 0) {
 			maskphonformat = maskphonformat
-					+ FormatNumberPhoneUtil.getFormat(studentDto
+					+ FormatNumberPhoneUtil.getFormat(studentProgramDto.getStudentDto()
 							.getCountryAddress().getMobilePhoneFormat()
 							.getNbrOfDigitBloc1());
 		}
-		if (studentDto.getCountryAddress().getMobilePhoneFormat()
+		if (studentProgramDto.getStudentDto().getCountryAddress().getMobilePhoneFormat()
 				.getNbrOfDigitBloc2() > 0) {
 			maskphonformat = maskphonformat
-					+ FormatNumberPhoneUtil.getFormat(studentDto
+					+ FormatNumberPhoneUtil.getFormat(studentProgramDto.getStudentDto()
 							.getCountryAddress().getMobilePhoneFormat()
 							.getNbrOfDigitBloc2());
 		}
-		if (studentDto.getCountryAddress().getMobilePhoneFormat()
+		if (studentProgramDto.getStudentDto().getCountryAddress().getMobilePhoneFormat()
 				.getNbrOfDigitBloc3() > 0) {
 			maskphonformat = maskphonformat
-					+ FormatNumberPhoneUtil.getFormat(studentDto
+					+ FormatNumberPhoneUtil.getFormat(studentProgramDto.getStudentDto()
 							.getCountryAddress().getMobilePhoneFormat()
 							.getNbrOfDigitBloc3());
 		}
-		if (studentDto.getCountryAddress().getMobilePhoneFormat()
+		if (studentProgramDto.getStudentDto().getCountryAddress().getMobilePhoneFormat()
 				.getNbrOfDigitBloc4() > 0) {
 			maskphonformat = maskphonformat
-					+ FormatNumberPhoneUtil.getFormat(studentDto
+					+ FormatNumberPhoneUtil.getFormat(studentProgramDto.getStudentDto()
 							.getCountryAddress().getMobilePhoneFormat()
 							.getNbrOfDigitBloc4());
 		}
-		if (studentDto.getCountryAddress().getMobilePhoneFormat()
+		if (studentProgramDto.getStudentDto().getCountryAddress().getMobilePhoneFormat()
 				.getNbrOfDigitBloc5() > 0) {
 			maskphonformat = maskphonformat
-					+ FormatNumberPhoneUtil.getFormat(studentDto
+					+ FormatNumberPhoneUtil.getFormat(studentProgramDto.getStudentDto()
 							.getCountryAddress().getMobilePhoneFormat()
 							.getNbrOfDigitBloc5());
 		}
-		if (studentDto.getCountryAddress().getMobilePhoneFormat()
+		if (studentProgramDto.getStudentDto().getCountryAddress().getMobilePhoneFormat()
 				.getNbrOfDigitBloc6() > 0) {
 			maskphonformat = maskphonformat
-					+ FormatNumberPhoneUtil.getFormat(studentDto
+					+ FormatNumberPhoneUtil.getFormat(studentProgramDto.getStudentDto()
 							.getCountryAddress().getMobilePhoneFormat()
 							.getNbrOfDigitBloc6());
 		}
-		if (studentDto.getCountryAddress().getMobilePhoneFormat()
+		if (studentProgramDto.getStudentDto().getCountryAddress().getMobilePhoneFormat()
 				.getNbrOfDigitBloc7() > 0) {
 			maskphonformat = maskphonformat
-					+ FormatNumberPhoneUtil.getFormat(studentDto
+					+ FormatNumberPhoneUtil.getFormat(studentProgramDto.getStudentDto()
 							.getCountryAddress().getMobilePhoneFormat()
 							.getNbrOfDigitBloc7());
 		}
-		if (studentDto.getCountryAddress().getMobilePhoneFormat()
+		if (studentProgramDto.getStudentDto().getCountryAddress().getMobilePhoneFormat()
 				.getNbrOfDigitBloc8() > 0) {
 			maskphonformat = maskphonformat
-					+ FormatNumberPhoneUtil.getFormat(studentDto
+					+ FormatNumberPhoneUtil.getFormat(studentProgramDto.getStudentDto()
 							.getCountryAddress().getMobilePhoneFormat()
 							.getNbrOfDigitBloc8());
 		}
-		if (studentDto.getCountryAddress().getMobilePhoneFormat()
+		if (studentProgramDto.getStudentDto().getCountryAddress().getMobilePhoneFormat()
 				.getNbrOfDigitBloc9() > 0) {
 			maskphonformat = maskphonformat
-					+ FormatNumberPhoneUtil.getFormat(studentDto
+					+ FormatNumberPhoneUtil.getFormat(studentProgramDto.getStudentDto()
 							.getCountryAddress().getMobilePhoneFormat()
 							.getNbrOfDigitBloc9());
 		}
-		if (studentDto.getCountryAddress().getMobilePhoneFormat()
+		if (studentProgramDto.getStudentDto().getCountryAddress().getMobilePhoneFormat()
 				.getNbrOfDigitBloc10() > 0) {
 			maskphonformat = maskphonformat
-					+ FormatNumberPhoneUtil.getFormat(studentDto
+					+ FormatNumberPhoneUtil.getFormat(studentProgramDto.getStudentDto()
 							.getCountryAddress().getMobilePhoneFormat()
 							.getNbrOfDigitBloc10());
 		}
-		studentDto.setPhoneNumber("221");
+		studentProgramDto.getStudentDto().setPhoneNumber("221");
 		logger.debug("maskphonformat:" + maskphonformat);
 
 	}
@@ -1231,17 +1273,17 @@ public class StudentSearchServiceBean implements Serializable {
 	}
 
 	public void updateListville() {
-		if (studentDto.getRegionAddress().getIdRegion() != null) {
+		if (studentProgramDto.getStudentDto().getRegionAddress().getIdRegion() != null) {
 			CityDto citysearch = new CityDto();
-			citysearch.setRegion(studentDto.getRegionAddress());
+			citysearch.setRegion(studentProgramDto.getStudentDto().getRegionAddress());
 			listCity = cityServicewsEndpoint.searchCityServicews(citysearch);
 		}
 	}
 
 	public void updateListzipcode() {
-		if (studentDto.getRegionAddress().getIdRegion() != null) {
+		if (studentProgramDto.getStudentDto().getRegionAddress().getIdRegion() != null) {
 			ZipcodeDto zipcodesearch = new ZipcodeDto();
-			zipcodesearch.setCity(studentDto.getCityAddress());
+			zipcodesearch.setCity(studentProgramDto.getStudentDto().getCityAddress());
 			listZipcode = zipServicewsEndpoint
 					.searchZipcodeServicews(zipcodesearch);
 		}

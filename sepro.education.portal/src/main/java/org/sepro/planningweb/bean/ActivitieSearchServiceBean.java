@@ -310,8 +310,8 @@ public class ActivitieSearchServiceBean implements Serializable {
 		this.listAcademicYear = listAcademicYear;
 	}
 	
-	public String updateModulesProgrammes(){
-		
+	public void updateModulesProgrammes(){
+		logger.debug(Level.DEBUG);
 		logger.debug("@@@@@@ JE SUIS LA @@@@@@@@@@@@@@");
 		try{
 			academicModuleDtoServicewsEndpoint = academicModuleDtoServicews.getAcademicModuleDtoServicewsImplPort();
@@ -330,18 +330,16 @@ public class ActivitieSearchServiceBean implements Serializable {
 						break;
 						
 					}
-					return null;
+					
 				}
 				
 				
 			}
-			init();
+			logger.debug("@@@@@@ JE SUIS A LA FIN @@@@@@@@@@@@@@");
 			
 		}catch (Exception e) {
-			return null;
+			e.printStackTrace();
 		}
-		logger.debug("@@@@@@ JE SUIS A LA FIN @@@@@@@@@@@@@@");
-		return null;
 		
 	}
 	

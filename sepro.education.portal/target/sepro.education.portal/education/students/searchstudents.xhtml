@@ -98,7 +98,7 @@
 									<p:commandButton id="past"
 										styleClass="btn btn-primary submit-button" ajax="false"
 										action="searchstudents.xhtml?faces-redirect=true"
-										immediate="true" update="@([id$=liststudents]) forme"
+										update="@([id$=liststudents]) forme"
 										icon="fa fa-fw fa-arrow-left">
 									</p:commandButton>
 
@@ -124,8 +124,7 @@
 
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:inputText styleClass="form-control" id="name"
-																	
-																	value="#{studentSearchServiceBean.studentDto.name}"
+																	value="#{studentSearchServiceBean.studentProgramDto.studentDto.name}"
 																	placeholder="#{messages.label_name1}">
 																</p:inputText>
 															</div>
@@ -138,8 +137,7 @@
 
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:inputText styleClass="form-control" id="prenom1"
-																	
-																	value="#{studentSearchServiceBean.studentDto.firstName}"
+																	value="#{studentSearchServiceBean.studentProgramDto.studentDto.firstName}"
 																	placeholder="#{messages.label_firstName1}">
 
 																</p:inputText>
@@ -155,8 +153,8 @@
 															</div>
 
 															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:calendar id="datedenaissance" 
-																	value="#{studentSearchServiceBean.studentDto.birthday}"
+																<p:calendar id="datedenaissance"
+																	value="#{studentSearchServiceBean.studentProgramDto.studentDto.birthday}"
 																	placeholder="#{messages.label_birthday1}"
 																	showOn="button" pattern="MM/dd/yyyy">
 																	<f:converter converterId="dateConverter" />
@@ -172,8 +170,8 @@
 
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:inputText styleClass="form-control"
-																	id="lieunaissance" 
-																	value="#{studentSearchServiceBean.studentDto.placeOfBirthday}"
+																	id="lieunaissance"
+																	value="#{studentSearchServiceBean.studentProgramDto.studentDto.placeOfBirthday}"
 																	placeholder="#{messages.label_placeOfBirthday1}">
 
 																</p:inputText>
@@ -192,11 +190,11 @@
 
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:selectOneMenu styleClass="form-text" id="sexestuden"
-																	value="#{studentSearchServiceBean.studentDto.sexe}"
-																	 converter="entityConverter">
+																	value="#{studentSearchServiceBean.studentProgramDto.studentDto.sexe}"
+																	converter="entityConverter">
 																	<f:selectItem
-																		itemLabel="#{studentSearchServiceBean.studentDto.sexe.value}"
-																		itemValue="#{studentSearchServiceBean.studentDto.sexe}" />
+																		itemLabel="#{studentSearchServiceBean.studentProgramDto.studentDto.sexe.value}"
+																		itemValue="#{studentSearchServiceBean.studentProgramDto.studentDto.sexe}" />
 																	<f:selectItems
 																		value="#{studentSearchServiceBean.listsexe}"
 																		var="sexe" itemValue="#{sexe}"
@@ -216,12 +214,12 @@
 
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:selectOneMenu styleClass="form-text"
-																	id="documentidentitystudent" 
-																	value="#{studentSearchServiceBean.studentDto.typeOfDocument}"
+																	id="documentidentitystudent"
+																	value="#{studentSearchServiceBean.studentProgramDto.studentDto.typeOfDocument}"
 																	converter="entityConverter">
 																	<f:selectItem
-																		itemLabel="#{studentSearchServiceBean.studentDto.typeOfDocument.value}"
-																		itemValue="#{studentSearchServiceBean.studentDto.typeOfDocument}" />
+																		itemLabel="#{studentSearchServiceBean.studentProgramDto.studentDto.typeOfDocument.value}"
+																		itemValue="#{studentSearchServiceBean.studentProgramDto.studentDto.typeOfDocument}" />
 																	<f:selectItems
 																		value="#{studentSearchServiceBean.listdocumentidentity}"
 																		var="typeOfDocument" itemValue="#{typeOfDocument}"
@@ -239,7 +237,7 @@
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:inputText styleClass="form-control"
 																	id="identityNumber" maxlength="20"
-																	value="#{studentSearchServiceBean.studentDto.identityNumber}"
+																	value="#{studentSearchServiceBean.studentProgramDto.studentDto.identityNumber}"
 																	placeholder="#{messages.label_identityNumber1}"
 																	validatorMessage="#{messages.label_telephone1eta}">
 																	<f:validateRegex pattern="^[0-9]+$" />
@@ -255,12 +253,11 @@
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:selectOneMenu styleClass="form-text" id="pays"
-																	
-																	value="#{studentSearchServiceBean.studentDto.countryOfBirthday}"
+																	value="#{studentSearchServiceBean.studentProgramDto.studentDto.countryOfBirthday}"
 																	converter="entityConverter">
 																	<f:selectItem
-																		itemLabel="#{studentSearchServiceBean.studentDto.countryOfBirthday.countryName}"
-																		itemValue="#{studentSearchServiceBean.studentDto.countryOfBirthday}" />
+																		itemLabel="#{studentSearchServiceBean.studentProgramDto.studentDto.countryOfBirthday.countryName}"
+																		itemValue="#{studentSearchServiceBean.studentProgramDto.studentDto.countryOfBirthday}" />
 																	<f:selectItems
 																		value="#{studentSearchServiceBean.listCountry}"
 																		var="countryOfBirthday"
@@ -278,12 +275,12 @@
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:selectOneMenu styleClass="form-control"
-																	id="paysresidence" 
-																	value="#{studentSearchServiceBean.studentDto.countryAddress}"
+																	id="paysresidence"
+																	value="#{studentSearchServiceBean.studentProgramDto.studentDto.countryAddress}"
 																	converter="entityConverter">
 																	<f:selectItem
-																		itemLabel="#{studentSearchServiceBean.studentDto.countryAddress.countryName}"
-																		itemValue="#{studentSearchServiceBean.studentDto.countryAddress}" />
+																		itemLabel="#{studentSearchServiceBean.studentProgramDto.studentDto.countryAddress.countryName}"
+																		itemValue="#{studentSearchServiceBean.studentProgramDto.studentDto.countryAddress}" />
 																	<f:selectItems
 																		value="#{studentSearchServiceBean.listCountry}"
 																		var="countryAddress" itemValue="#{countryAddress}"
@@ -304,12 +301,11 @@
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:selectOneMenu styleClass="form-control" id="region1"
-																	
-																	value="#{studentSearchServiceBean.studentDto.regionAddress}"
+																	value="#{studentSearchServiceBean.studentProgramDto.studentDto.regionAddress}"
 																	converter="entityConverter">
 																	<f:selectItem
-																		itemLabel="#{studentSearchServiceBean.studentDto.regionAddress.regionName}"
-																		itemValue="#{studentSearchServiceBean.studentDto.regionAddress}"
+																		itemLabel="#{studentSearchServiceBean.studentProgramDto.studentDto.regionAddress.regionName}"
+																		itemValue="#{studentSearchServiceBean.studentProgramDto.studentDto.regionAddress}"
 																		label="#{messages.label_region}" />
 																	<f:selectItems
 																		value="#{studentSearchServiceBean.listRegion}"
@@ -327,12 +323,11 @@
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:selectOneMenu styleClass="form-control" id="city1"
-																	
-																	value="#{studentSearchServiceBean.studentDto.cityAddress}"
+																	value="#{studentSearchServiceBean.studentProgramDto.studentDto.cityAddress}"
 																	converter="entityConverter">
 																	<f:selectItem
-																		itemLabel="#{studentSearchServiceBean.studentDto.cityAddress.cityName}"
-																		itemValue="#{studentSearchServiceBean.studentDto.cityAddress}"
+																		itemLabel="#{studentSearchServiceBean.studentProgramDto.studentDto.cityAddress.cityName}"
+																		itemValue="#{studentSearchServiceBean.studentProgramDto.studentDto.cityAddress}"
 																		label="#{messages.label_region}" />
 																	<f:selectItems
 																		value="#{studentSearchServiceBean.listCity}"
@@ -352,12 +347,11 @@
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:selectOneMenu styleClass="form-control" id="zipcode1"
-																	
-																	value="#{studentSearchServiceBean.studentDto.zipcodeAddress}"
+																	value="#{studentSearchServiceBean.studentProgramDto.studentDto.zipcodeAddress}"
 																	converter="entityConverter">
 																	<f:selectItem
-																		itemLabel="#{studentSearchServiceBean.studentDto.zipcodeAddress.zipCode}"
-																		itemValue="#{studentSearchServiceBean.studentDto.zipcodeAddress}"
+																		itemLabel="#{studentSearchServiceBean.studentProgramDto.studentDto.zipcodeAddress.zipCode}"
+																		itemValue="#{studentSearchServiceBean.studentProgramDto.studentDto.zipcodeAddress}"
 																		label="#{messages.label_region}" />
 																	<f:selectItems
 																		value="#{studentSearchServiceBean.listZipcode}"
@@ -374,12 +368,12 @@
 
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:selectOneMenu styleClass="form-text"
-																	id="nationnalite" 
-																	value="#{studentSearchServiceBean.studentDto.nationality}"
+																	id="nationnalite"
+																	value="#{studentSearchServiceBean.studentProgramDto.studentDto.nationality}"
 																	converter="entityConverter">
 																	<f:selectItem
-																		itemLabel="#{studentSearchServiceBean.studentDto.nationality.value}"
-																		itemValue="#{studentSearchServiceBean.studentDto.nationality}" />
+																		itemLabel="#{studentSearchServiceBean.studentProgramDto.studentDto.nationality.value}"
+																		itemValue="#{studentSearchServiceBean.studentProgramDto.studentDto.nationality}" />
 																	<f:selectItems
 																		value="#{studentSearchServiceBean.listnationalite}"
 																		var="nationality" itemValue="#{nationality}"
@@ -397,9 +391,8 @@
 
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:inputMask styleClass="form-control" id="phone1"
-																	value="#{studentSearchServiceBean.studentDto.phoneNumber}"
+																	value="#{studentSearchServiceBean.studentProgramDto.studentDto.phoneNumber}"
 																	placeholder="#{messages.label_phoneNumber1}"
-																	
 																	validatorMessage="#{messages.label_telephone1eta}"
 																	mask="#{studentSearchServiceBean.maskphonformat}">
 
@@ -412,12 +405,11 @@
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:selectOneMenu styleClass="form-text" id="etatcivile"
-																	
-																	value="#{studentSearchServiceBean.studentDto.maritalStatus}"
+																	value="#{studentSearchServiceBean.studentProgramDto.studentDto.maritalStatus}"
 																	converter="entityConverter">
 																	<f:selectItem
-																		itemLabel="#{studentSearchServiceBean.studentDto.maritalStatus.value}"
-																		itemValue="#{studentSearchServiceBean.studentDto.maritalStatus}" />
+																		itemLabel="#{studentSearchServiceBean.studentProgramDto.studentDto.maritalStatus.value}"
+																		itemValue="#{studentSearchServiceBean.studentProgramDto.studentDto.maritalStatus}" />
 																	<f:selectItems
 																		value="#{studentSearchServiceBean.listetatcivile}"
 																		var="maritalStatus" itemValue="#{maritalStatus}"
@@ -436,8 +428,7 @@
 														<p:commandButton id="modifco" styleClass="btn btn-success"
 															value="#{messages.label_modifier}"
 															action="#{studentSearchServiceBean.updateIdentityStudent()}"
-															update="@([id$=updatdetailstudent]) forme growl"
-															>
+															update="@([id$=updatdetailstudent]) forme growl">
 														</p:commandButton>
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"></div>
@@ -459,7 +450,6 @@
 
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:inputText styleClass="form-control" id="nomc"
-																	
 																	value="#{studentSearchServiceBean.studentContactDto.name}"
 																	placeholder="#{messages.label_name1}">
 
@@ -473,7 +463,6 @@
 
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:inputText styleClass="form-control" id="prenomc"
-																	
 																	value="#{studentSearchServiceBean.studentContactDto.firstName}"
 																	placeholder="#{messages.label_firstName1}">
 
@@ -490,7 +479,6 @@
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:inputText styleClass="form-control" id="emailc"
-																	
 																	value="#{studentSearchServiceBean.studentContactDto.emailAddress}"
 																	placeholder="#{messages.label_emailAdd1}">
 
@@ -505,7 +493,6 @@
 
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:selectOneMenu styleClass="form-control" id="lienc"
-																	
 																	value="#{studentSearchServiceBean.studentContactDto.relationship}"
 																	converter="entityConverter">
 																	<f:selectItem
@@ -527,7 +514,7 @@
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:selectOneMenu styleClass="form-control"
-																	id="contactcountry" 
+																	id="contactcountry"
 																	value="#{studentSearchServiceBean.studentContactDto.countryAddress}"
 																	converter="entityConverter">
 																	<f:selectItem
@@ -550,7 +537,7 @@
 
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:selectOneMenu styleClass="form-control"
-																	id="contactregion" 
+																	id="contactregion"
 																	value="#{studentSearchServiceBean.studentContactDto.regionAddress}"
 																	converter="entityConverter">
 																	<f:selectItem
@@ -573,8 +560,8 @@
 																<span class="requireds">(*)</span>
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:selectOneMenu styleClass="form-control" id="contactcity"
-																	
+																<p:selectOneMenu styleClass="form-control"
+																	id="contactcity"
 																	value="#{studentSearchServiceBean.studentContactDto.cityAddress}"
 																	converter="entityConverter">
 																	<f:selectItem
@@ -596,7 +583,7 @@
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:selectOneMenu styleClass="form-control"
-																	id="contactzipcode" 
+																	id="contactzipcode"
 																	value="#{studentSearchServiceBean.studentContactDto.zipcodeAddress}"
 																	converter="entityConverter">
 																	<f:selectItem
@@ -620,7 +607,6 @@
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:inputMask styleClass="form-control" id="contactphone"
-																	
 																	value="#{studentSearchServiceBean.studentContactDto.phoneNumber}"
 																	placeholder="#{messages.label_phoneNumber1}"
 																	validatorMessage="#{messages.label_telephone1eta}"
@@ -634,7 +620,6 @@
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:selectOneMenu styleClass="form-text" id="typecontact"
-																	
 																	value="#{studentSearchServiceBean.studentContactDto.typeOfContact}"
 																	converter="entityConverter">
 																	<f:selectItem
@@ -657,21 +642,20 @@
 											<h:form id="formbuttons">
 												<div class="row">
 													<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-														<p:commandButton 
+														<p:commandButton
 															styleClass="btn btn-primary submit-button"
 															value="#{messages.label_enregistrer}"
 															rendered="#{!studentSearchServiceBean.isRender2()}"
 															action="#{studentSearchServiceBean.enregistrerStudentContact()}"
-															update="@([id$=formdatatablecontact]) growl"
-															/>
-														
-														<p:commandButton 
+															update="@([id$=formdatatablecontact]) growl" />
+
+														<p:commandButton
 															action="#{studentSearchServiceBean.updateStudentContact()}"
 															update="@([id$=formdatatablecontact]) growl"
 															rendered="#{studentSearchServiceBean.isRender2()}"
 															styleClass="btn btn-danger"
-															value="#{messages.label_enregistrer}"/>
-														
+															value="#{messages.label_enregistrer}" />
+
 													</div>
 												</div>
 											</h:form>
@@ -792,7 +776,7 @@
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:inputText styleClass="form-text" id="nom"
-																	immediate="true"
+																
 																	value="#{studentSearchServiceBean.studentCVDto.nameOfScool}">
 
 																</p:inputText>
@@ -803,7 +787,7 @@
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:inputText styleClass="form-text" id="dip"
-																	immediate="true" maxlength="128"
+																	maxlength="128"
 																	value="#{studentSearchServiceBean.studentCVDto.diploma}">
 
 																</p:inputText>
@@ -816,7 +800,7 @@
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:selectOneMenu styleClass="form-text"
-																	id="mentionobtain" immediate="true"
+																	id="mentionobtain"
 																	value="#{studentSearchServiceBean.studentCVDto.grade}"
 																	converter="entityConverter">
 																	<f:selectItem
@@ -835,7 +819,7 @@
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:inputText styleClass="form-text" id="contact"
-																	immediate="true"
+																	
 																	value="#{studentSearchServiceBean.studentCVDto.contactName}">
 
 																</p:inputText>
@@ -849,7 +833,7 @@
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:calendar id="buttonstart"
 																	value="#{studentSearchServiceBean.studentCVDto.startDate}"
-																	showOn="button" pattern="MM/dd/yyyy" immediate="true"
+																	showOn="button" pattern="MM/dd/yyyy"
 																	requiredMessage="#{messages.label_startDate_requeried}"
 																	placeholder="#{messages.label_labeldatedebut}">
 																	<f:converter converterId="dateConverter" />
@@ -861,7 +845,7 @@
 																<span class="requireds">(*)</span>
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:calendar id="buttonend" immediate="true"
+																<p:calendar id="buttonend"
 																	value="#{studentSearchServiceBean.studentCVDto.enDate}"
 																	showOn="button" pattern="MM/dd/yyyy"
 																	requiredMessage="#{messages.label_enDate_requeried}"
@@ -878,7 +862,7 @@
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:selectOneMenu styleClass="form-text" id="typecontact"
-																	immediate="true"
+																	
 																	value="#{studentSearchServiceBean.studentCVDto.typeOfContact}"
 																	converter="entityConverter">
 																	<f:selectItem
@@ -898,7 +882,7 @@
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:inputText styleClass="form-text" id="email"
-																	immediate="true"
+																	
 																	value="#{studentSearchServiceBean.studentCVDto.contactEmail}">
 
 																</p:inputText>
@@ -911,7 +895,7 @@
 															</div>
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:inputText styleClass="form-text" id="numcontact"
-																	immediate="true"
+																	
 																	value="#{studentSearchServiceBean.studentCVDto.contactTelephoneNumber}">
 
 
@@ -1078,53 +1062,57 @@
 
 
 								<p:dataTable id="liststudents"
-									value="#{studentSearchServiceBean.listStudents}" var="student"
-									widgetVar="studentTable" emptyMessage="#{messages.label_empty}"
+									value="#{studentSearchServiceBean.listSearchStudent}"
+									var="student" widgetVar="studentTable"
+									emptyMessage="#{messages.label_empty}"
 									rendered="#{!studentSearchServiceBean.isAction2()}"
-									selection="#{studentSearchServiceBean.studentDtos}"
+									selection="#{studentSearchServiceBean.studentProgramDtos}"
 									styleClass="listeTable table-responsive filterable"
 									tableStyleClass="table table-striped table-condensed table-hover"
-									rowKey="#{student.idStudent}" selectionMode="single"
+									rowKey="#{student.studentDto.idStudent}" selectionMode="single"
 									paginator="true" paginatorPosition="bottom"
 									paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
-									rows="10" filterBy="#{student.idStudent}">
+									rows="10" filterBy="#{student.studentDto.idStudent}">
 									<!-- 									<p:ajax event="rowSelect" listener="#{dtLazyView.onRowSelect}" -->
 									<!-- 										update=":forme:updatstudent" oncomplete="PF('updatstudent').show()" /> -->
 
 									<!-- 									<p:ajax event="rowSelect" listener="#{studentSearchServiceBean.onRowSelect}" -->
 									<!-- 										update="@([id$=updatdetailstudent])" oncomplete="PF('updatedetailstudent').show()" /> -->
 									<p:column priority="3" width="100"
-										filterBy="#{student.inscriptionAuthentification.idInscription}"
+										filterBy="#{student.studentDto.inscriptionAuthentification.idInscription}"
 										filterMatchMode="contains">
 										<f:facet name="header">
 											<p:outputLabel value="#{messages.label_number_inscription}" />
 										</f:facet>
 										<h:outputText
-											value="#{student.inscriptionAuthentification.idInscription}"></h:outputText>
+											value="#{student.studentDto.inscriptionAuthentification.idInscription}"></h:outputText>
 									</p:column>
 
-									<p:column priority="1" filterBy="#{student.name}"
+									<p:column priority="1" filterBy="#{student.studentDto.name}"
 										filterMatchMode="contains">
 										<f:facet name="header">
 											<p:outputLabel value="#{messages.label_name}" />
 										</f:facet>
-										<h:outputText value="#{student.name}"></h:outputText>
+										<h:outputText value="#{student.studentDto.name}"></h:outputText>
 									</p:column>
-									<p:column priority="1" filterBy="#{student.firstName}"
+									<p:column priority="1"
+										filterBy="#{student.studentDto.firstName}"
 										filterMatchMode="contains">
 										<f:facet name="header">
 											<p:outputLabel value="#{messages.label_surname}" />
 										</f:facet>
-										<h:outputText value="#{student.firstName}"></h:outputText>
+										<h:outputText value="#{student.studentDto.firstName}"></h:outputText>
 									</p:column>
 
 
-									<p:column priority="1" filterMatchMode="contains">
+									<p:column priority="1"
+										filterBy="#{student.inscriptionSteptreeDto.academicSector.value}"
+										filterMatchMode="contains">
 										<f:facet name="header">
 											<p:outputLabel value="#{messages.label_curriculum}" />
 										</f:facet>
-										<h:outputText>
-										</h:outputText>
+										<h:outputText
+											value="#{student.inscriptionSteptreeDto.academicSector.value}"></h:outputText>
 									</p:column>
 
 								</p:dataTable>
