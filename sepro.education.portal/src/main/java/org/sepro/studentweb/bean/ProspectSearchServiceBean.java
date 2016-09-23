@@ -166,6 +166,7 @@ public class ProspectSearchServiceBean implements Serializable {
 
 	private List<PopuplistDto> listfiliere = new ArrayList<PopuplistDto>();
 	private List<PopuplistDto> listanneeacademique = new ArrayList<PopuplistDto>();
+	
 
 	public boolean status;
 	private boolean action = false;
@@ -1388,6 +1389,8 @@ public class ProspectSearchServiceBean implements Serializable {
 
 			popuplistDtoServicewsEndpoint = popuplistDtoServicews
 					.getPopuplistDtoServicewsImplPort();
+			
+			listanneeacademique = popuplistDtoServicewsEndpoint.searchPopuplistDtoServicews("filiere");
 
 			listetatcivile = popuplistDtoServicewsEndpoint
 					.searchPopuplistDtoServicews("etatcivile");
@@ -1400,7 +1403,6 @@ public class ProspectSearchServiceBean implements Serializable {
 
 			listsexe = popuplistDtoServicewsEndpoint
 					.searchPopuplistDtoServicews("sexe");		
-
 			
 			listprospects = prospectServicewsEndpoint.searchProspectServicews();			
 				

@@ -9215,7 +9215,10 @@ body {
   font-weight: 400;
   color: #545454;
   font-weight: 400;
-  background-image:url("./../images/webdesign2.png");
+  background-image:url("./../images/studentback1.jpg");
+  background-size: cover;
+  -webkit-background-size: cover;
+  background-repeat: no-repeat;
   min-height: 100%;
   display: table;
   width: 100%;

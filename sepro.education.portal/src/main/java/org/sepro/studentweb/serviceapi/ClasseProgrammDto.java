@@ -1,6 +1,8 @@
 
 package org.sepro.studentweb.serviceapi;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -25,7 +27,17 @@ import org.sepro.teacherweb.serviceapi.IdentityTeacherDto;
  *         &lt;element name="classeName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="idClasseProgramm" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
  *         &lt;element name="nombreEleve" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
- *         &lt;element name="programmeCalendar" type="{http://serviceapi.parameterweb.sepro.org/}programmeCalendarDto" minOccurs="0"/>
+ *         &lt;element name="programmeCalendars" minOccurs="0">
+ *           &lt;complexType>
+ *             &lt;complexContent>
+ *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *                 &lt;sequence>
+ *                   &lt;element name="programmeCalendar" type="{http://serviceapi.parameterweb.sepro.org/}programmeCalendarDto" maxOccurs="unbounded" minOccurs="0"/>
+ *                 &lt;/sequence>
+ *               &lt;/restriction>
+ *             &lt;/complexContent>
+ *           &lt;/complexType>
+ *         &lt;/element>
  *         &lt;element name="studentResponsable" type="{http://serviceapi.studentweb.sepro.org/}studentDto" minOccurs="0"/>
  *         &lt;element name="teacherResponsable" type="{http://serviceapi.teacherweb.sepro.org/}identityTeacherDto" minOccurs="0"/>
  *       &lt;/sequence>
@@ -43,7 +55,7 @@ import org.sepro.teacherweb.serviceapi.IdentityTeacherDto;
     "classeName",
     "idClasseProgramm",
     "nombreEleve",
-    "programmeCalendar",
+    "programmeCalendars",
     "studentResponsable",
     "teacherResponsable"
 })
@@ -56,7 +68,7 @@ public class ClasseProgrammDto {
     protected String classeName;
     protected Long idClasseProgramm;
     protected Long nombreEleve;
-    protected ProgrammeCalendarDto programmeCalendar;
+    protected ClasseProgrammDto.ProgrammeCalendars programmeCalendars;
     protected StudentDto studentResponsable;
     protected IdentityTeacherDto teacherResponsable;
 
@@ -181,27 +193,27 @@ public class ClasseProgrammDto {
     }
 
     /**
-     * Obtient la valeur de la propriété programmeCalendar.
+     * Obtient la valeur de la propriété programmeCalendars.
      * 
      * @return
      *     possible object is
-     *     {@link ProgrammeCalendarDto }
+     *     {@link ClasseProgrammDto.ProgrammeCalendars }
      *     
      */
-    public ProgrammeCalendarDto getProgrammeCalendar() {
-        return programmeCalendar;
+    public ClasseProgrammDto.ProgrammeCalendars getProgrammeCalendars() {
+        return programmeCalendars;
     }
 
     /**
-     * Définit la valeur de la propriété programmeCalendar.
+     * Définit la valeur de la propriété programmeCalendars.
      * 
      * @param value
      *     allowed object is
-     *     {@link ProgrammeCalendarDto }
+     *     {@link ClasseProgrammDto.ProgrammeCalendars }
      *     
      */
-    public void setProgrammeCalendar(ProgrammeCalendarDto value) {
-        this.programmeCalendar = value;
+    public void setProgrammeCalendars(ClasseProgrammDto.ProgrammeCalendars value) {
+        this.programmeCalendars = value;
     }
 
     /**
@@ -250,6 +262,65 @@ public class ClasseProgrammDto {
      */
     public void setTeacherResponsable(IdentityTeacherDto value) {
         this.teacherResponsable = value;
+    }
+
+
+    /**
+     * <p>Classe Java pour anonymous complex type.
+     * 
+     * <p>Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
+     * 
+     * <pre>
+     * &lt;complexType>
+     *   &lt;complexContent>
+     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+     *       &lt;sequence>
+     *         &lt;element name="programmeCalendar" type="{http://serviceapi.parameterweb.sepro.org/}programmeCalendarDto" maxOccurs="unbounded" minOccurs="0"/>
+     *       &lt;/sequence>
+     *     &lt;/restriction>
+     *   &lt;/complexContent>
+     * &lt;/complexType>
+     * </pre>
+     * 
+     * 
+     */
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(name = "", propOrder = {
+        "programmeCalendar"
+    })
+    public static class ProgrammeCalendars {
+
+        protected List<ProgrammeCalendarDto> programmeCalendar;
+
+        /**
+         * Gets the value of the programmeCalendar property.
+         * 
+         * <p>
+         * This accessor method returns a reference to the live list,
+         * not a snapshot. Therefore any modification you make to the
+         * returned list will be present inside the JAXB object.
+         * This is why there is not a <CODE>set</CODE> method for the programmeCalendar property.
+         * 
+         * <p>
+         * For example, to add a new item, do as follows:
+         * <pre>
+         *    getProgrammeCalendar().add(newItem);
+         * </pre>
+         * 
+         * 
+         * <p>
+         * Objects of the following type(s) are allowed in the list
+         * {@link ProgrammeCalendarDto }
+         * 
+         * 
+         */
+        public List<ProgrammeCalendarDto> getProgrammeCalendar() {
+            if (programmeCalendar == null) {
+                programmeCalendar = new ArrayList<ProgrammeCalendarDto>();
+            }
+            return this.programmeCalendar;
+        }
+
     }
 
 }

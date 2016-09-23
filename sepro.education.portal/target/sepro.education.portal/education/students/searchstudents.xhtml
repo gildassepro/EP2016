@@ -1104,15 +1104,21 @@
 										<h:outputText value="#{student.studentDto.firstName}"></h:outputText>
 									</p:column>
 
-
 									<p:column priority="1"
 										filterBy="#{student.inscriptionSteptreeDto.academicSector.value}"
-										filterMatchMode="contains">
-										<f:facet name="header">
-											<p:outputLabel value="#{messages.label_curriculum}" />
+										headerText="#{messages.label_curriculum}" filterMatchMode="in">
+										<f:facet name="filter">
+											<p:selectCheckboxMenu label="#{messages.label_curriculum}"
+												onchange="PF('studentTable').filter()"
+												panelStyle="width:125px" scrollHeight="150">
+												<f:selectItems
+													value="#{studentSearchServiceBean.listanneeacademique}"
+													var="academicGrade" itemValue="#{academicGrade}"
+													itemLabel="#{academicGrade.value}" />
+											</p:selectCheckboxMenu>
 										</f:facet>
 										<h:outputText
-											value="#{student.inscriptionSteptreeDto.academicSector.value}"></h:outputText>
+											value="#{student.inscriptionSteptreeDto.academicSector.value}" />
 									</p:column>
 
 								</p:dataTable>

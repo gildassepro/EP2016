@@ -41,14 +41,14 @@
 										icon="fa fa-fw fa-list"
 										action="#{prospectSearchServiceBean.initDualListPro('1')}">
 									</p:commandButton>
-									
+
 									<p:splitButton value="#{messages.label_options}"
 										actionListener="#{buttonView.save}" icon="ui-icon-gear">
-										<p:menuitem value="#{messages.label_validate}"  
+										<p:menuitem value="#{messages.label_validate}"
 											actionListener="#{prospectSearchServiceBean.CreateStudent()}"
 											update="@([id$=liststudents]) forme"
 											icon="ui-icon-circle-check" />
-											<p:separator />
+										<p:separator />
 										<p:menuitem value="#{messages.label_reject}"
 											actionListener="#{prospectSearchServiceBean.RejectStudent()}"
 											icon="ui-icon-cancel" />
@@ -122,8 +122,8 @@
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:calendar id="datedenaissance" immediate="true"
 																	value="#{prospectSearchServiceBean.inscriptionSteponeDto.birthday}"
-																	placeholder="#{messages.label_birthday1}" readonly="true"
-																	showOn="button" pattern="MM/dd/yyyy">
+																	placeholder="#{messages.label_birthday1}"
+																	readonly="true" showOn="button" pattern="MM/dd/yyyy">
 																	<f:converter converterId="dateConverter" />
 																	<p:ajax event="dateSelect" />
 																</p:calendar>
@@ -154,7 +154,7 @@
 
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:inputText styleClass="form-control" id="emailstudent"
-																	immediate="true" readonly="true" 
+																	immediate="true" readonly="true"
 																	value="#{prospectSearchServiceBean.inscAuthentificationDto.emailAdd}">
 																</p:inputText>
 															</div>
@@ -165,7 +165,8 @@
 															</div>
 
 															<div class="col-lg-3 col-md-3 col-sm-3">
-																<p:selectOneMenu styleClass="form-text" id="sexestuden" readonly="true"
+																<p:selectOneMenu styleClass="form-text" id="sexestuden"
+																	readonly="true"
 																	value="#{prospectSearchServiceBean.inscriptionSteponeDto.sexe}"
 																	immediate="true" converter="entityConverter">
 																	<f:selectItem
@@ -366,8 +367,8 @@
 															<div class="col-lg-3 col-md-3 col-sm-3">
 																<p:inputMask styleClass="form-control" id="phone1"
 																	value="#{prospectSearchServiceBean.inscriptionSteponeDto.phoneNumber}"
-																	placeholder="#{messages.label_phoneNumber1}" readonly="true"
-																	immediate="true"
+																	placeholder="#{messages.label_phoneNumber1}"
+																	readonly="true" immediate="true"
 																	validatorMessage="#{messages.label_telephone1eta}"
 																	mask="#{prospectSearchServiceBean.maskphonformat}">
 
@@ -401,7 +402,7 @@
 											</p:tab>
 
 											<p:tab id="tab2" title="#{messages.label_Contact}">
-												
+
 												<h:form id="formdatatableparent">
 													<p:dataTable id="listpar"
 														value="#{prospectSearchServiceBean.listInscriptionSteptwo}"
@@ -447,7 +448,7 @@
 															</f:facet>
 															<h:outputText value="#{parent.emailAddress}"></h:outputText>
 														</p:column>
-														
+
 														<p:column priority="1" filterBy="#{parent.phoneNumber}"
 															filterMatchMode="contains">
 															<f:facet name="header">
@@ -456,7 +457,7 @@
 															<h:outputText value="#{parent.phoneNumber}"></h:outputText>
 														</p:column>
 
-														
+
 													</p:dataTable>
 												</h:form>
 
@@ -476,7 +477,7 @@
 
 
 											<p:tab id="tab3" title="#{messages.label_student_cv}">
-												
+
 												<h:form id="formdatatablecv">
 													<p:dataTable id="listcurriculum"
 														value="#{prospectSearchServiceBean.listInscriptionStepfour}"
@@ -546,7 +547,7 @@
 																value="#{listestablishment.contactTelephoneNumber}"></h:outputText>
 														</p:column>
 
-							
+
 													</p:dataTable>
 												</h:form>
 
@@ -576,14 +577,17 @@
 
 
 								<p:dataTable id="liststudents"
-									value="#{prospectSearchServiceBean.listprospects}" var="student"
-									widgetVar="studentTable" emptyMessage="#{messages.label_empty}"
+									value="#{prospectSearchServiceBean.listprospects}"
+									var="student" widgetVar="studentTable"
+									emptyMessage="#{messages.label_empty}"
 									rendered="#{!prospectSearchServiceBean.isAction2()}"
 									selection="#{prospectSearchServiceBean.prospectDtos}"
 									styleClass="listeTable table-responsive filterable"
 									tableStyleClass="table table-striped table-condensed table-hover"
-									rowKey="#{student.inscriptionAuthentificationDto.idInscription}" selectionMode="single"
-									paginator="true" paginatorPosition="bottom"
+									rowKey="#{student.inscriptionAuthentificationDto.idInscription}"
+									selectionMode="single" paginator="true"
+									filteredValue="#{prospectSearchServiceBean.filteredFiliere}"
+									paginatorPosition="bottom"
 									paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
 									rows="10" filterBy="#{student.idAuthentif}">
 									<!-- 									<p:ajax event="rowSelect" listener="#{dtLazyView.onRowSelect}" -->
@@ -592,36 +596,52 @@
 									<!-- 									<p:ajax event="rowSelect" listener="#{prospectSearchServiceBean.onRowSelect}" -->
 									<!-- 										update="@([id$=updatdetailstudent])" oncomplete="PF('updatedetailstudent').show()" /> -->
 									<p:column priority="3" width="100"
-										filterBy="#{student.inscriptionAuthentificationDto.idInscription}" filterMatchMode="contains">
+										filterBy="#{student.inscriptionAuthentificationDto.idInscription}"
+										filterMatchMode="contains">
 										<f:facet name="header">
 											<p:outputLabel value="#{messages.label_number_inscription}" />
 										</f:facet>
-										<h:outputText value="#{student.inscriptionAuthentificationDto.idInscription}"></h:outputText>
+										<h:outputText
+											value="#{student.inscriptionAuthentificationDto.idInscription}"></h:outputText>
 									</p:column>
 
-									<p:column priority="1" filterBy="#{student.inscriptionSteponeDto.name}"
+									<p:column priority="1"
+										filterBy="#{student.inscriptionSteponeDto.name}"
 										filterMatchMode="contains">
 										<f:facet name="header">
 											<p:outputLabel value="#{messages.label_name}" />
 										</f:facet>
 										<h:outputText value="#{student.inscriptionSteponeDto.name}"></h:outputText>
 									</p:column>
-									<p:column priority="1" filterBy="#{student.inscriptionSteponeDto.firstName}"
+									<p:column priority="1"
+										filterBy="#{student.inscriptionSteponeDto.firstName}"
 										filterMatchMode="contains">
 										<f:facet name="header">
 											<p:outputLabel value="#{messages.label_surname}" />
 										</f:facet>
-										<h:outputText value="#{student.inscriptionSteponeDto.firstName}"></h:outputText>
+										<h:outputText
+											value="#{student.inscriptionSteponeDto.firstName}"></h:outputText>
 									</p:column>
 
-									
-									<p:column priority="1" filterBy="#{student.inscriptionSteptreeDto.academicSector.value}"
-										filterMatchMode="contains">
-										<f:facet name="header">
-											<p:outputLabel value="#{messages.label_curriculum}" />
+									<p:column priority="1"
+										filterBy="#{student.inscriptionSteptreeDto.academicSector.value}"
+										headerText="#{messages.label_curriculum}" filterMatchMode="in">
+										<f:facet name="filter">
+											<p:selectCheckboxMenu label="#{messages.label_curriculum}"
+												onchange="PF('studentTable').filter()"
+												panelStyle="width:125px" scrollHeight="150">
+												<f:selectItems
+													value="#{prospectSearchServiceBean.listanneeacademique}"
+													var="academicGrade" itemValue="#{academicGrade}"
+													itemLabel="#{academicGrade.value}" />
+											</p:selectCheckboxMenu>
 										</f:facet>
-										<h:outputText value="#{student.inscriptionSteptreeDto.academicSector.value}"></h:outputText>
+										<h:outputText
+											value="#{student.inscriptionSteptreeDto.academicSector.value}" />
 									</p:column>
+
+
+
 
 								</p:dataTable>
 

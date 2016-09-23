@@ -10,6 +10,7 @@ import org.sepro.inscriptionweb.serviceapi.InscriptionSteptreeDto;
 import org.sepro.inscriptionweb.serviceapi.InscriptionSteptwoDto;
 
 import org.sepro.parameterweb.serviceapi.PopuplistDto;
+import org.sepro.studentweb.serviceapi.StudentDto;
 
 public class ProspectDto {
 	
@@ -20,6 +21,9 @@ public class ProspectDto {
 	private List<InscriptionSteptreeDto> listInscriptionSteptree = new ArrayList<InscriptionSteptreeDto>();
 	private List<InscriptionStepfourDto> listInscriptionStepfour = new ArrayList<InscriptionStepfourDto>();
 	
+	
+	
+	
 	private String nom; 
 	private String prenom;
 	private InscriptionAuthentificationDto idAuthentification;
@@ -29,7 +33,7 @@ public class ProspectDto {
 	private Long idAuthentif;
 	
 	private List<ProspectDto> listprospects = new ArrayList<ProspectDto>();
-	
+	private List<StudentDto> listStudentPart = new ArrayList<StudentDto>();
 	
 	
 	public Long getIdAuthentif() {
@@ -117,15 +121,49 @@ public class ProspectDto {
 		this.fillier = fillier;
 	}
 	
-	public List<ProspectDto> getInformations(List<InscriptionSteponeDto> listStudentIdentity,List<InscriptionSteptreeDto> listInscriptionSteptree ) {
+	
+	
+	public List<StudentDto> getListStudentPart() {
+		return listStudentPart;
+	}
+	public void setListStudentPart(List<StudentDto> listStudentPart) {
+		this.listStudentPart = listStudentPart;
+	}
+	
+//	
+//	public List<ProspectDto> getInformations(List<InscriptionSteponeDto> listStudentIdentity,List<InscriptionSteptreeDto> listInscriptionSteptree ) {
+//		
+//		
+//		for(int i = 0; i < listStudentIdentity.size(); i++)
+//			{
+//			    ProspectDto prospectDtos = new ProspectDto();
+//				prospectDtos.setNom(listStudentIdentity.get(i).getName());
+//				prospectDtos.setPrenom(listStudentIdentity.get(i).getFirstName());
+//				prospectDtos.setIdAuthentif(listStudentIdentity.get(i).getInscriptionAuthentification().getIdInscription());
+//				
+//				
+//				for(int j = 0; j < listInscriptionSteptree.size(); j ++){
+//					if( prospectDtos.getIdAuthentif() == listInscriptionSteptree.get(j).getInscriptionAuthentification().getIdInscription()){
+//						prospectDtos.setListfilliere(listInscriptionSteptree.get(j).getAcademicSector().getValue());
+//					}
+//				}
+//				listprospects.add(prospectDtos);
+//				
+//			}
+//		
+//		return listprospects;
+//		
+//	}
+	
+public List<ProspectDto> getInformations(List<StudentDto> listStudentPart,List<InscriptionSteptreeDto> listInscriptionSteptree ) {
 		
 		
-		for(int i = 0; i < listStudentIdentity.size(); i++)
+		for(int i = 0; i < listStudentPart.size(); i++)
 			{
 			    ProspectDto prospectDtos = new ProspectDto();
-				prospectDtos.setNom(listStudentIdentity.get(i).getName());
-				prospectDtos.setPrenom(listStudentIdentity.get(i).getFirstName());
-				prospectDtos.setIdAuthentif(listStudentIdentity.get(i).getInscriptionAuthentification().getIdInscription());
+				prospectDtos.setNom(listStudentPart.get(i).getName());
+				prospectDtos.setPrenom(listStudentPart.get(i).getFirstName());
+				prospectDtos.setIdAuthentif(listStudentPart.get(i).getInscriptionAuthentification().getIdInscription());
 				
 				
 				for(int j = 0; j < listInscriptionSteptree.size(); j ++){

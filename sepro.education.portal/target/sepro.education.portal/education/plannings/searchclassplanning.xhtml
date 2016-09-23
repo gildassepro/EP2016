@@ -14,71 +14,78 @@
 				</div>
 
 				<h:form id="forme">
-					<h3>#{messages.label_msg_activity_classe}</h3>
-					<div class="ui-grid ui-grid-responsive wrap class">
-						<div class="col-xs-12">
+					<div id="menubutton">
+						<p:commandButton id="printe" style="display:block;margin-bottom: 20px"
+							title="#{messages.label_print}"
+							type="button" icon="ui-icon-print">
+							<p:printer target="listplanclasse" />
+						</p:commandButton>
+					</div>	
+						<h3>#{messages.label_msg_activity_classe}</h3>
+						<div class="ui-grid ui-grid-responsive wrap class">
+							<div class="col-xs-12">
 
-							<div class="row">
-								<div class="col-lg-3 col-md-3 col-sm-3">
-									<p:outputLabel value="#{messages.label_academic_years}:" />
-									<span class="requireds">(*)</span>
-								</div>
-								<div class="col-lg-3 col-md-3 col-sm-3">
-									<p:selectOneMenu id="selectacademicyears"
-										styleClass="form-text"
-										value="#{planningSearchServiceBean.selectedEventsClasse.academicYear}"
-										converter="entityConverter"
-										placeholder="#{messages.label_subestablishment}"
-										required="true"
-										requiredMessage="#{messages.label_curriculum_requeried}">
-										<f:selectItem
-											itemLabel="#{planningSearchServiceBean.selectedEventsClasse.academicYear.value}"
-											itemValue="#{planningSearchServiceBean.selectedEventsClasse.academicYear}"
-											label="#{messages.label_curriculum}" />
-										<f:selectItems
-											value="#{planningSearchServiceBean.listAcademicYear}"
-											var="academicYear" itemValue="#{academicYear}"
-											itemLabel="#{academicYear.value}" />
-										<p:ajax event="select"
-											listener="#{planningSearchServiceBean.onSelectYears}"
-											update="forme growl" />
-									</p:selectOneMenu>
-								</div>
-								<div class="col-lg-3 col-md-3 col-sm-3">
-									<p:outputLabel value="#{messages.label_msg_classname}:" />
-									<span class="requireds">(*)</span>
-								</div>
-								<div class="col-lg-3 col-md-3 col-sm-3">
-									<p:selectOneMenu id="selectclassname" styleClass="form-text"
-										value="#{planningSearchServiceBean.selectedEventsClasse.classeProgramm}"
-										converter="entityConverter"
-										placeholder="#{messages.label_programme_status}"
-										required="true"
-										requiredMessage="#{messages.label_cursusname_requeried}">
-										<f:selectItem
-											itemLabel="#{planningSearchServiceBean.selectedEventsClasse.classeProgramm.classeName}"
-											itemValue="#{planningSearchServiceBean.selectedEventsClasse.classeProgramm}"
-											label="#{messages.label_cursus}" />
-										<f:selectItems value="#{planningSearchServiceBean.listClass}"
-											var="classeProgramm" itemValue="#{classeProgramm}"
-											itemLabel="#{classeProgramm.classeName}" />
-										<p:ajax event="valueChange"
-											listener="#{planningSearchServiceBean.updatePlanningClasse()}"
-											update="forme @([id$=listplanclasse])" />
-										<p:ajax event="select"
-											listener="#{planningSearchServiceBean.onSelect}"
-											update="forme growl" />
-									</p:selectOneMenu>
+								<div class="row">
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_academic_years}:" />
+										<span class="requireds">(*)</span>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:selectOneMenu id="selectacademicyears"
+											styleClass="form-text"
+											value="#{planningSearchServiceBean.selectedEventsClasse.academicYear}"
+											converter="entityConverter"
+											placeholder="#{messages.label_subestablishment}"
+											required="true"
+											requiredMessage="#{messages.label_curriculum_requeried}">
+											<f:selectItem
+												itemLabel="#{planningSearchServiceBean.selectedEventsClasse.academicYear.value}"
+												itemValue="#{planningSearchServiceBean.selectedEventsClasse.academicYear}"
+												label="#{messages.label_curriculum}" />
+											<f:selectItems
+												value="#{planningSearchServiceBean.listAcademicYear}"
+												var="academicYear" itemValue="#{academicYear}"
+												itemLabel="#{academicYear.value}" />
+											<p:ajax event="select"
+												listener="#{planningSearchServiceBean.onSelectYears}"
+												update="forme growl" />
+										</p:selectOneMenu>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:outputLabel value="#{messages.label_msg_classname}:" />
+										<span class="requireds">(*)</span>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<p:selectOneMenu id="selectclassname" styleClass="form-text"
+											value="#{planningSearchServiceBean.selectedEventsClasse.classeProgramm}"
+											converter="entityConverter"
+											placeholder="#{messages.label_programme_status}"
+											required="true"
+											requiredMessage="#{messages.label_cursusname_requeried}">
+											<f:selectItem
+												itemLabel="#{planningSearchServiceBean.selectedEventsClasse.classeProgramm.classeName}"
+												itemValue="#{planningSearchServiceBean.selectedEventsClasse.classeProgramm}"
+												label="#{messages.label_cursus}" />
+											<f:selectItems value="#{planningSearchServiceBean.listClass}"
+												var="classeProgramm" itemValue="#{classeProgramm}"
+												itemLabel="#{classeProgramm.classeName}" />
+											<p:ajax event="valueChange"
+												listener="#{planningSearchServiceBean.updatePlanningClasse()}"
+												update="forme @([id$=listplanclasse])" />
+											<p:ajax event="select"
+												listener="#{planningSearchServiceBean.onSelect}"
+												update="forme growl" />
+										</p:selectOneMenu>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<br></br>
-					<h:panelGrid columnClasses="value">
-						<p:schedule id="listplanclasse"
-							value="#{planningSearchServiceBean.eventClasse}" />
+						<br></br>
+						<h:panelGrid columnClasses="value">
+							<p:schedule id="listplanclasse"
+								value="#{planningSearchServiceBean.eventClasse}" />
 
-					</h:panelGrid>
+						</h:panelGrid>
 				</h:form>
 			</b:row>
 		</div>

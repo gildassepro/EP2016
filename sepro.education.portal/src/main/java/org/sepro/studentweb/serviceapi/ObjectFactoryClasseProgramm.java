@@ -41,6 +41,14 @@ public class ObjectFactoryClasseProgramm {
     }
 
     /**
+     * Create an instance of {@link ClasseProgrammDto }
+     * 
+     */
+    public ClasseProgrammDto createClasseProgrammDto() {
+        return new ClasseProgrammDto();
+    }
+
+    /**
      * Create an instance of {@link UpdateClasseProgrammServicewsResponse }
      * 
      */
@@ -113,11 +121,11 @@ public class ObjectFactoryClasseProgramm {
     }
 
     /**
-     * Create an instance of {@link ClasseProgrammDto }
+     * Create an instance of {@link ClasseProgrammDto.ProgrammeCalendars }
      * 
      */
-    public ClasseProgrammDto createClasseProgrammDto() {
-        return new ClasseProgrammDto();
+    public ClasseProgrammDto.ProgrammeCalendars createClasseProgrammDtoProgrammeCalendars() {
+        return new ClasseProgrammDto.ProgrammeCalendars();
     }
 
     /**

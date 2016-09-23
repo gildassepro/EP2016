@@ -183,6 +183,7 @@
 																<p:selectOneMenu
 																	styleClass="col-lg-10 col-md-10 col-sm-12 form-text"
 																	id="selectmoduleprogrammess"
+																	disabled="#{programmeCalendarCreateServiceBean.test}"
 																	value="#{programmeCalendarCreateServiceBean.moduleCalendarDto.academicModule}"
 																	converter="entityConverter"
 																	placeholder="#{messages.label_academic_years}"
@@ -204,6 +205,7 @@
 																<p:selectOneMenu
 																	styleClass="col-lg-10 col-md-10 col-sm-12 form-text"
 																	id="selectsessionmodule"
+																	disabled="#{programmeCalendarCreateServiceBean.test}"
 																	value="#{programmeCalendarCreateServiceBean.moduleCalendarDto.session}"
 																	converter="entityConverter"
 																	placeholder="#{messages.label_academic_years}"
@@ -224,6 +226,7 @@
 																	value="#{messages.label_coef}" />
 																<p:inputText
 																	styleClass="col-lg-9 col-md-9 col-sm-12 form-control"
+																	disabled="#{programmeCalendarCreateServiceBean.test}"
 																	id="coef"
 																	value="#{programmeCalendarCreateServiceBean.moduleCalendarDto.coefficient}">
 																</p:inputText>

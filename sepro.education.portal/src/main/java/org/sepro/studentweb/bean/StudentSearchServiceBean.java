@@ -52,6 +52,7 @@ import org.sepro.studentweb.serviceimpl.StudentProgramServicews;
 import org.sepro.studentweb.serviceimpl.StudentProgramServicewsEndpoint;
 import org.sepro.studentweb.serviceimpl.StudentServicews;
 import org.sepro.studentweb.serviceimpl.StudentServicewsEndpoint;
+import org.springframework.security.config.DebugBeanDefinitionParser;
 
 import sepro.education.web.util.FormatNumberPhoneUtil;
 
@@ -771,6 +772,8 @@ public class StudentSearchServiceBean implements Serializable {
 
 			listtypecontact = popuplistDtoServicewsEndpoint
 					.searchPopuplistDtoServicews("typecontact");
+			
+			
 
 			logger.debug("fin dual");
 
@@ -1064,6 +1067,10 @@ public class StudentSearchServiceBean implements Serializable {
 
 			listStudents = studentServicewsEndpoint
 					.searchStudentServicews(studentDto);
+			
+			listfiliere = popuplistDtoServicewsEndpoint.searchPopuplistDtoServicews("filiere");
+			
+	
 			
 			listSearchStudent = studentProgramServicewsEndpoint.searchStudentProgramDtoServicews();
 			// listDataStudent =

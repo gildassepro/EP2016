@@ -113,33 +113,6 @@
 														</p:inputText>
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
-														<p:outputLabel value="#{messages.label_programm_calendar}" />
-														<span class="requireds">(*)</span>
-													</div>
-													<div class="col-lg-3 col-md-3 col-sm-3">
-														<p:selectOneMenu id="selectprogrammecalendar"
-															styleClass="form-text" immediate="true"
-															disabled="#{!studentClassSearchServiceBean.testbutton}"
-															value="#{studentClassSearchServiceBean.classeProgrammDto.programmeCalendar}"
-															converter="entityConverter"
-															placeholder="#{messages.label_academic_years}"
-															required="true"
-															requiredMessage="#{messages.label_academic_years_requeried}">
-															<f:selectItem
-																itemLabel="#{studentClassSearchServiceBean.classeProgrammDto.programmeCalendar.programme.nameProgramme}"
-																itemValue="#{studentClassSearchServiceBean.classeProgrammDto.programmeCalendar}"
-																label="#{messages.labelestablishment}" />
-															<f:selectItems
-																value="#{studentClassSearchServiceBean.listProgrammeCalendar}"
-																var="pcalendar" itemValue="#{pcalendar}"
-																itemLabel="#{pcalendar.programme.nameProgramme}" />
-														</p:selectOneMenu>
-													</div>
-												</div>
-
-
-												<div class="row">
-													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:outputLabel value="#{messages.label_academic_years}:" />
 														<span class="requireds">(*)</span>
 													</div>
@@ -162,13 +135,37 @@
 																itemLabel="#{academicYear.value}" />
 														</p:selectOneMenu>
 													</div>
+													
+												</div>
+
+
+												<div class="row">
+													
+													
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_programm_calendar}" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:selectCheckboxMenu id="selectprogrammecalendar"
+														value="#{studentClassSearchServiceBean.listProgrammeCalendarDestination}"
+														filter="true" filterMatchMode="startsWith"
+														converter="entityConverter" panelStyle="width:250px"
+														label="#{messages.label_programm_calendar}">
+														<f:selectItems
+															value="#{studentClassSearchServiceBean.listProgrammeCalendarSources}"
+															var="pcalendar" itemValue="#{pcalendar}"
+															itemLabel="#{pcalendar.programme.nameProgramme}" />
+													</p:selectCheckboxMenu>	
+														
+													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:outputLabel value="#{messages.label_curriculum}:" />
 														<span class="requireds">(*)</span>
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:selectOneMenu id="selectclassfiliere"
-															styleClass="form-text" immediate="true"
+															styleClass="form-text" 
 															disabled="#{!studentClassSearchServiceBean.testbutton}"
 															value="#{studentClassSearchServiceBean.classeProgrammDto.academicSector}"
 															converter="entityConverter"
@@ -183,6 +180,9 @@
 																value="#{studentClassSearchServiceBean.listFiliere}"
 																var="academicSector" itemValue="#{academicSector}"
 																itemLabel="#{academicSector.value}" />
+																<p:ajax event="valueChange"
+																listener="#{studentClassSearchServiceBean.updateListStudentSector()}"
+																update="@([id$=checkboxmodule])" />
 														</p:selectOneMenu>
 													</div>
 												</div>
@@ -239,9 +239,9 @@
 										
 											<p:dataTable id="checkboxmodule"
 												rendered="#{!studentClassSearchServiceBean.testtable}"
-												value="#{studentClassSearchServiceBean.listeStudentInscritp}"
+												value="#{studentClassSearchServiceBean.listStudentClasse}"
 												var="studenties"
-												selection="#{studentClassSearchServiceBean.selectedlistEtudiantClass}"
+												selection="#{studentClassSearchServiceBean.selectedlistStudentClasse}"
 												rowKey="#{studenties.idStudent}"
 												style="margin-bottom:0">
 												<f:facet name="header">
@@ -250,16 +250,16 @@
 												<p:column selectionMode="multiple"
 													style="width:16px;text-align:center" />
 												<p:column headerText="#{messages.label_number_inscription}">
-													<h:outputText value="#{studenties.inscriptionAuthentification.idInscription}" />
+													<h:outputText value="#{studenties.studentDto.inscriptionAuthentification.idInscription}" />
 												</p:column>
 												<p:column headerText="#{messages.label_name}">
-													<h:outputText value="#{studenties.name}" />
+													<h:outputText value="#{studenties.studentDto.name}" />
 												</p:column>
 												<p:column headerText="#{messages.label_surname}">
-													<h:outputText value="#{studenties.firstName}" />
+													<h:outputText value="#{studenties.studentDto.firstName}" />
 												</p:column>
 												<p:column headerText="#{messages.labeldatedenaiss}">
-													<h:outputText value="#{studenties.birthday}" />
+													<h:outputText value="#{studenties.studentDto.birthday}" />
 												</p:column>
 											</p:dataTable>
 										</div>
@@ -285,15 +285,6 @@
 											<p:outputLabel value="#{messages.label_msg_student_nameclass}" />
 										</f:facet>
 										<h:outputText value="#{studentclasses.classeName}"></h:outputText>
-									</p:column>
-
-									<p:column priority="2"
-										filterBy="#{studentclasses.programmeCalendar.programme.nameProgramme}"
-										filterMatchMode="contains">
-										<f:facet name="header">
-											<p:outputLabel value="#{messages.label_programm_calendar}" />
-										</f:facet>
-										<h:outputText value="#{studentclasses.programmeCalendar.programme.nameProgramme}"></h:outputText>
 									</p:column>
 
 									<p:column priority="4"

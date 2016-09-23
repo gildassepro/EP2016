@@ -14,7 +14,13 @@
 				</div>
 
 				<h:form id="forme">
-
+					<div id="menubutton">
+						<p:commandButton id="printe" style="display:block;margin-bottom: 20px"
+							title="#{messages.label_print}"
+							type="button" icon="ui-icon-print">
+							<p:printer target="listplanprof" />
+						</p:commandButton>
+					</div>
 					<h3>#{messages.label_msg_activity_prof}</h3>
 					<div class="ui-grid ui-grid-responsive wrap class">
 						<div class="col-xs-12">
