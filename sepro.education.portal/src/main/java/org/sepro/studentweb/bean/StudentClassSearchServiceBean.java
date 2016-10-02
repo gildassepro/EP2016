@@ -19,6 +19,9 @@ import org.primefaces.event.TransferEvent;
 import org.primefaces.event.UnselectEvent;
 import org.sepro.authentificationweb.serviceapi.MenuDto;
 import org.sepro.authentificationweb.serviceapi.ModuleDto.Menus;
+import org.sepro.inscriptionweb.serviceapi.InscriptionSteptreeDto;
+import org.sepro.inscriptionweb.serviceimpl.InscriptionSteptreeServicews;
+import org.sepro.inscriptionweb.serviceimpl.InscriptionSteptreeServicewsEndpoint;
 import org.sepro.parameterweb.serviceapi.CityDto;
 import org.sepro.parameterweb.serviceapi.CountryDto;
 import org.sepro.parameterweb.serviceapi.PopuplistDto;
@@ -30,7 +33,7 @@ import org.sepro.parameterweb.serviceimpl.PopuplistDtoServicewsEndpoint;
 import org.sepro.parameterweb.serviceimpl.ProgrammeCalendarDtoServicews;
 import org.sepro.parameterweb.serviceimpl.ProgrammeCalendarDtoServicewsEndpoint;
 import org.sepro.studentweb.serviceapi.ClasseProgrammDto;
-import org.sepro.studentweb.serviceapi.ClasseProgrammDto.ProgrammeCalendars;
+import org.sepro.studentweb.serviceapi.ClasseProgrammDto.ProgrammeCalendar;
 import org.sepro.studentweb.serviceapi.StudentCVDto;
 import org.sepro.studentweb.serviceapi.StudentClasseDto;
 import org.sepro.studentweb.serviceapi.StudentDto;
@@ -85,6 +88,12 @@ public class StudentClassSearchServiceBean implements Serializable {
 	private StudentDataDtoServicewsEndpoint studentDataDtoServicewsEndpoint;
 	private StudentDataDtoServicews studentDataDtoServicews = new StudentDataDtoServicews();
 	
+	private InscriptionSteptreeServicewsEndpoint inscriptionSteptreeServicewsEndpoint;
+	private InscriptionSteptreeServicews inscriptionSteptreeServicews = new InscriptionSteptreeServicews();
+	
+	private InscriptionSteptreeDto inscriptionSteptreeDto = new InscriptionSteptreeDto();
+	
+	private List<InscriptionSteptreeDto> ListeEtu = new ArrayList<InscriptionSteptreeDto>();
 
 	private ProgrammeCalendarDtoServicewsEndpoint programmeCalendarDtoServicewsEndpoint;
 	private ProgrammeCalendarDtoServicews programmeCalendarDtoServicews = new ProgrammeCalendarDtoServicews();
@@ -127,6 +136,23 @@ public class StudentClassSearchServiceBean implements Serializable {
 	
 	
 	
+	public InscriptionSteptreeDto getInscriptionSteptreeDto() {
+		return inscriptionSteptreeDto;
+	}
+
+	public void setInscriptionSteptreeDto(
+			InscriptionSteptreeDto inscriptionSteptreeDto) {
+		this.inscriptionSteptreeDto = inscriptionSteptreeDto;
+	}
+
+	public List<InscriptionSteptreeDto> getListeEtu() {
+		return ListeEtu;
+	}
+
+	public void setListeEtu(List<InscriptionSteptreeDto> listeEtu) {
+		ListeEtu = listeEtu;
+	}
+
 	public List<ProgrammeCalendarDto> getListProgrammeCalendarDestination() {
 		return listProgrammeCalendarDestination;
 	}
@@ -385,6 +411,8 @@ public class StudentClassSearchServiceBean implements Serializable {
 	}
 
 	public void initDualList(String baction) {
+		listProgrammeCalendarDestination =  new ArrayList<ProgrammeCalendarDto>();
+		listProgrammeCalendarSources =  new ArrayList<ProgrammeCalendarDto>();
 		if (baction.equals("1")) {
 			classeProgrammDto = classeProgrammDtos;
 			studentClasseDto = studentClasseDtos;
@@ -449,7 +477,7 @@ public class StudentClassSearchServiceBean implements Serializable {
 				listProgrammeCalendarSources = programmeCalendarDtoServicewsEndpoint.getAllProgrammeCalendarServicews();
 				
 				if (classeProgrammDto != null) {
-					for (ProgrammeCalendarDto pcalendar : classeProgrammDto.getProgrammeCalendars().getProgrammeCalendar()) {
+					for (ProgrammeCalendarDto pcalendar : classeProgrammDto.getProgrammeCalendar().getProgrammeCalendar()) {
 						for (ProgrammeCalendarDto pcalendars : listProgrammeCalendarSources) {
 							if (pcalendars.getIdProgrammeCalendar() == pcalendar.getIdProgrammeCalendar()) {
 								listProgrammeCalendarDestination.add(pcalendars);
@@ -491,7 +519,7 @@ public class StudentClassSearchServiceBean implements Serializable {
 				listProgrammeCalendarSources = programmeCalendarDtoServicewsEndpoint.getAllProgrammeCalendarServicews();
 				
 				if (classeProgrammDto != null) {
-					for (ProgrammeCalendarDto pcalendar : classeProgrammDto.getProgrammeCalendars().getProgrammeCalendar()) {
+					for (ProgrammeCalendarDto pcalendar : classeProgrammDto.getProgrammeCalendar().getProgrammeCalendar()) {
 						for (ProgrammeCalendarDto pcalendars : listProgrammeCalendarSources) {
 							if (pcalendars.getIdProgrammeCalendar() == pcalendar.getIdProgrammeCalendar()) {
 								listProgrammeCalendarDestination.add(pcalendars);
@@ -511,14 +539,15 @@ public class StudentClassSearchServiceBean implements Serializable {
 	public void createClass() {
 		FacesMessage msg = null;
 		ClasseProgrammDto createClass = new ClasseProgrammDto();
-		ProgrammeCalendars poCalendarDto = new ProgrammeCalendars();
-		poCalendarDto.getProgrammeCalendar().addAll(listProgrammeCalendarDestination);
+		ProgrammeCalendar proCalendarDto = new ProgrammeCalendar();
+		proCalendarDto.getProgrammeCalendar().addAll(listProgrammeCalendarDestination);
 		
-		createClass.setProgrammeCalendars(poCalendarDto);
+		logger.debug("SIZE LISTE AFFICHER   "+proCalendarDto.getProgrammeCalendar().size());
 		createClass.setAcademicSector(classeProgrammDto.getAcademicSector());
 		createClass.setAcademicYear(classeProgrammDto.getAcademicYear());
 		createClass.setClasseName(classeProgrammDto.getClasseName());
 		createClass.setNombreEleve(classeProgrammDto.getNombreEleve());
+		createClass.setProgrammeCalendar(proCalendarDto);
 		
 
 		classeProgrammServicewsEndpoint = classeProgrammServicews
@@ -570,10 +599,10 @@ public class StudentClassSearchServiceBean implements Serializable {
 		try {
 
 			ClasseProgrammDto updateClass = new ClasseProgrammDto();
-			ProgrammeCalendars poCalendarDto = new ProgrammeCalendars();
+			ProgrammeCalendar poCalendarDto = new ProgrammeCalendar();
 			poCalendarDto.getProgrammeCalendar().removeAll(listProgrammeCalendarDestination);
 			poCalendarDto.getProgrammeCalendar().addAll(listProgrammeCalendarDestination);
-			updateClass.setProgrammeCalendars(poCalendarDto);
+			updateClass.setProgrammeCalendar(poCalendarDto);
 			updateClass
 					.setAcademicSector(classeProgrammDto.getAcademicSector());
 			updateClass.setAcademicYear(classeProgrammDto.getAcademicYear());
@@ -717,14 +746,28 @@ public class StudentClassSearchServiceBean implements Serializable {
 	
 	public String updateListStudentSector() {
 		logger.debug("@@@@@@ DANS LE UPDATE LISTE STUDENT FILIERE @@@@@@@"+classeProgrammDto.getAcademicSector().getIdPopuplist());
+		studentProgramServicewsEndpoint = studentProgramServicews.getStudentProgramServicewsImplPort();
+		popuplistDtoServicewsEndpoint = popuplistDtoServicews.getPopuplistDtoServicewsImplPort();
+		listeStudentInscritp = studentServicewsEndpoint.searchStudentServicews(studentDto);
+		ListeEtu = inscriptionSteptreeServicewsEndpoint.searchInscriptionSteptreeServicews(inscriptionSteptreeDto);
+		StudentDto studentDtop = new StudentDto();
 		
 		try {
-			
-			studentProgramServicewsEndpoint = studentProgramServicews.getStudentProgramServicewsImplPort();
-			popuplistDtoServicewsEndpoint = popuplistDtoServicews.getPopuplistDtoServicewsImplPort();
-			
-			
+				
 			if(classeProgrammDto.getAcademicSector().getIdPopuplist() != null){
+				for (int i = 0 ; i < ListeEtu.size(); i ++){
+					if(ListeEtu.get(i).getAcademicSector().getIdPopuplist() == classeProgrammDto.getAcademicSector().getIdPopuplist()){
+						for(int j = 0; j < listeStudentInscritp.size(); j ++){
+							if (listeStudentInscritp.get(j).getInscriptionAuthentification().getIdInscription() == ListeEtu.get(i).getInscriptionAuthentification().getIdInscription() ){
+								studentDtop.setName(listeStudentInscritp.get(j).getName());
+								studentDtop.setFirstName(listeStudentInscritp.get(j).getFirstName());
+								studentDtop.setInscriptionAuthentification(listeStudentInscritp.get(j).getInscriptionAuthentification());
+								studentDtop.setBirthday(listeStudentInscritp.get(j).getBirthday());
+								selectedlistEtudiantClass.add(studentDtop);
+							}
+						}
+					}
+				}
 				
 				
 			}

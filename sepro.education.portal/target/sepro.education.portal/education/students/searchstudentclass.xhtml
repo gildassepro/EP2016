@@ -25,7 +25,8 @@
 										value="#{messages.label_new}" title="#{messages.label_new}"
 										action="#{studentClassSearchServiceBean.initDualList('2')}"
 										update="@([id$=updatstudentclass]) forme fdial"
-										onclick="PF('updatestudentclass').show()" icon="fa fa-fw fa-plus">
+										onclick="PF('updatestudentclass').show()"
+										icon="fa fa-fw fa-plus">
 									</p:commandButton>
 									<p:commandButton id="modifse" styleClass="btn btn-success"
 										value="#{messages.label_modifier}"
@@ -38,14 +39,15 @@
 										styleClass="btn btn-danger"
 										value="#{messages.label_supprimer1}"
 										title="#{messages.label_supprimer1}"
-										onclick="PF('confirmationdelete').show()" icon="fa fa-fw fa-remove">
+										onclick="PF('confirmationdelete').show()"
+										icon="fa fa-fw fa-remove">
 									</p:commandButton>
 									<p:commandButton id="printe"
-									styleClass="btn btn-primary submit-button"
+										styleClass="btn btn-primary submit-button"
 										title="#{messages.label_print}"
-										value="#{messages.label_print}"
-										icon="fa fa-fw fa-print">
-										<p:dataExporter type="pdf" fileName="programmes" pageOnly="true" target="listclass" />
+										value="#{messages.label_print}" icon="fa fa-fw fa-print">
+										<p:dataExporter type="pdf" fileName="programmes"
+											pageOnly="true" target="listclass" />
 									</p:commandButton>
 
 									<p:commandButton value="#{messages.label_modifier}"
@@ -62,7 +64,7 @@
 										action="#{studentClassSearchServiceBean.createStudentClasse()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatestudentclass').hide()"
 										update="forme fdial growl" />
-										
+
 									<p:splitButton value="#{messages.label_options}"
 										actionListener="#{buttonView.save}" icon="ui-icon-gear">
 										<p:menuitem value="Update"
@@ -88,7 +90,7 @@
 
 									<h:form id="fdial">
 										<h3 style="margin-top: 0">
-											<p:outputLabel value="#{messages.label_update_student_class}" 
+											<p:outputLabel value="#{messages.label_update_student_class}"
 												rendered="#{!studentClassSearchServiceBean.isAction()}" />
 											<p:outputLabel value="#{messages.label_create_student_class}"
 												rendered="#{studentClassSearchServiceBean.isAction()}" />
@@ -98,7 +100,8 @@
 											<div class="col-xs-12">
 												<div class="row">
 													<div class="col-lg-3 col-md-3 col-sm-3">
-														<p:outputLabel value="#{messages.label_msg_student_nameclass}" />
+														<p:outputLabel
+															value="#{messages.label_msg_student_nameclass}" />
 														<span class="requireds">(*)</span>
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
@@ -118,7 +121,7 @@
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:selectOneMenu id="selectcurriculum"
-														   disabled="#{!studentClassSearchServiceBean.testbutton}"
+															disabled="#{!studentClassSearchServiceBean.testbutton}"
 															styleClass="form-text" immediate="true"
 															value="#{studentClassSearchServiceBean.classeProgrammDto.academicYear}"
 															converter="entityConverter"
@@ -135,29 +138,29 @@
 																itemLabel="#{academicYear.value}" />
 														</p:selectOneMenu>
 													</div>
-													
+
 												</div>
 
 
 												<div class="row">
-													
-													
+
+
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:outputLabel value="#{messages.label_programm_calendar}" />
 														<span class="requireds">(*)</span>
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:selectCheckboxMenu id="selectprogrammecalendar"
-														value="#{studentClassSearchServiceBean.listProgrammeCalendarDestination}"
-														filter="true" filterMatchMode="startsWith"
-														converter="entityConverter" panelStyle="width:250px"
-														label="#{messages.label_programm_calendar}">
-														<f:selectItems
-															value="#{studentClassSearchServiceBean.listProgrammeCalendarSources}"
-															var="pcalendar" itemValue="#{pcalendar}"
-															itemLabel="#{pcalendar.programme.nameProgramme}" />
-													</p:selectCheckboxMenu>	
-														
+															value="#{studentClassSearchServiceBean.listProgrammeCalendarDestination}"
+															filter="true" filterMatchMode="startsWith"
+															converter="entityConverter" panelStyle="width:250px"
+															label="#{messages.label_programm_calendar}">
+															<f:selectItems
+																value="#{studentClassSearchServiceBean.listProgrammeCalendarSources}"
+																var="pcalendar" itemValue="#{pcalendar}"
+																itemLabel="#{pcalendar.programme.nameProgramme}" />
+														</p:selectCheckboxMenu>
+
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:outputLabel value="#{messages.label_curriculum}:" />
@@ -165,7 +168,7 @@
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:selectOneMenu id="selectclassfiliere"
-															styleClass="form-text" 
+															styleClass="form-text"
 															disabled="#{!studentClassSearchServiceBean.testbutton}"
 															value="#{studentClassSearchServiceBean.classeProgrammDto.academicSector}"
 															converter="entityConverter"
@@ -180,13 +183,13 @@
 																value="#{studentClassSearchServiceBean.listFiliere}"
 																var="academicSector" itemValue="#{academicSector}"
 																itemLabel="#{academicSector.value}" />
-																<p:ajax event="valueChange"
+															<p:ajax event="valueChange"
 																listener="#{studentClassSearchServiceBean.updateListStudentSector()}"
 																update="@([id$=checkboxmodule])" />
 														</p:selectOneMenu>
 													</div>
 												</div>
-												
+
 												<div class="row">
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:outputLabel value="#{messages.label_msg_nbre_student}:" />
@@ -200,57 +203,53 @@
 															placeholder="#{messages.label_msg_nbre_student}"
 															required="true"
 															requiredMessage="#{messages.label_msg_nbre_student}">
-															
+
 														</p:inputText>
 													</div>
-													<div class="col-lg-3 col-md-3 col-sm-3">	
-													</div>
-													<div class="col-lg-3 col-md-3 col-sm-3">
-													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3"></div>
+													<div class="col-lg-3 col-md-3 col-sm-3"></div>
 												</div>
-												
+
 											</div>
 										</div>
 										<br></br>
-												<div class="row">
-													<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-														<p:commandButton 
-															styleClass="btn btn-primary submit-button"
-															value="#{messages.label_enregistrer}"
-															disabled="#{!studentClassSearchServiceBean.testbutton}"
-															rendered="#{!studentClassSearchServiceBean.isAction()}"
-															action="#{studentClassSearchServiceBean.updateClass()}"
-															update="forme growl"
-															/>
-														
-														<p:commandButton 
-															action="#{studentClassSearchServiceBean.createClass()}"
-															update="forme growl"
-															disabled="#{!studentClassSearchServiceBean.testtable}"
-															rendered="#{studentClassSearchServiceBean.isAction()}"
-															styleClass="btn btn-danger"
-															value="#{messages.label_enregistrer}"/>
-														
-													</div>
-												</div>
-											<br></br>
+										<div class="row">
+											<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+												<p:commandButton styleClass="btn btn-primary submit-button"
+													value="#{messages.label_enregistrer}"
+													disabled="#{!studentClassSearchServiceBean.testbutton}"
+													rendered="#{!studentClassSearchServiceBean.isAction()}"
+													action="#{studentClassSearchServiceBean.updateClass()}"
+													update="forme growl" />
+
+												<p:commandButton
+													action="#{studentClassSearchServiceBean.createClass()}"
+													update="forme growl"
+													disabled="#{!studentClassSearchServiceBean.testtable}"
+													rendered="#{studentClassSearchServiceBean.isAction()}"
+													styleClass="btn btn-danger"
+													value="#{messages.label_enregistrer}" />
+
+											</div>
+										</div>
+										<br></br>
 
 										<div class="ui-grid ui-grid-responsive">
-										
+
 											<p:dataTable id="checkboxmodule"
 												rendered="#{!studentClassSearchServiceBean.testtable}"
 												value="#{studentClassSearchServiceBean.listStudentClasse}"
 												var="studenties"
 												selection="#{studentClassSearchServiceBean.selectedlistStudentClasse}"
-												rowKey="#{studenties.idStudent}"
-												style="margin-bottom:0">
+												rowKey="#{studenties.idStudent}" style="margin-bottom:0">
 												<f:facet name="header">
 						            #{messages.label_msg_student_msglist}
 						        </f:facet>
 												<p:column selectionMode="multiple"
 													style="width:16px;text-align:center" />
 												<p:column headerText="#{messages.label_number_inscription}">
-													<h:outputText value="#{studenties.studentDto.inscriptionAuthentification.idInscription}" />
+													<h:outputText
+														value="#{studenties.studentDto.inscriptionAuthentification.idInscription}" />
 												</p:column>
 												<p:column headerText="#{messages.label_name}">
 													<h:outputText value="#{studenties.studentDto.name}" />
@@ -274,15 +273,17 @@
 									styleClass="listeTable table-responsive filterable"
 									selection="#{studentClassSearchServiceBean.classeProgrammDtos}"
 									tableStyleClass="table table-striped table-condensed table-hover"
-									rowKey="#{studentclasses.idClasseProgramm}" selectionMode="single"
-									paginator="true" paginatorPosition="bottom"
+									rowKey="#{studentclasses.idClasseProgramm}"
+									selectionMode="single" paginator="true"
+									paginatorPosition="bottom"
 									paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
 									rows="10" filterBy="#{studentclasses.classeName}">
-									
+
 									<p:column priority="3" filterBy="#{studentclasses.classeName}"
 										filterMatchMode="contains">
 										<f:facet name="header">
-											<p:outputLabel value="#{messages.label_msg_student_nameclass}" />
+											<p:outputLabel
+												value="#{messages.label_msg_student_nameclass}" />
 										</f:facet>
 										<h:outputText value="#{studentclasses.classeName}"></h:outputText>
 									</p:column>
@@ -304,9 +305,8 @@
 										</f:facet>
 										<h:outputText value="#{studentclasses.academicSector.value}"></h:outputText>
 									</p:column>
-									
-									<p:column priority="4"
-										filterBy="#{studentclasses.nombreEleve}"
+
+									<p:column priority="4" filterBy="#{studentclasses.nombreEleve}"
 										filterMatchMode="contains">
 										<f:facet name="header">
 											<p:outputLabel value="#{messages.label_msg_nbre_student}" />
@@ -317,9 +317,11 @@
 										filterBy="#{studentclasses.teacherResponsable.name}"
 										filterMatchMode="contains">
 										<f:facet name="header">
-											<p:outputLabel value="#{messages.label_msg_responsable_teacher}" />
+											<p:outputLabel
+												value="#{messages.label_msg_responsable_teacher}" />
 										</f:facet>
-										<h:outputText value="#{studentclasses.teacherResponsable.name}"></h:outputText>
+										<h:outputText
+											value="#{studentclasses.teacherResponsable.name}"></h:outputText>
 									</p:column>
 
 								</p:dataTable>

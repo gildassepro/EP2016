@@ -27,7 +27,7 @@ import org.sepro.teacherweb.serviceapi.IdentityTeacherDto;
  *         &lt;element name="classeName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="idClasseProgramm" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
  *         &lt;element name="nombreEleve" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
- *         &lt;element name="programmeCalendars" minOccurs="0">
+ *         &lt;element name="programmeCalendar" minOccurs="0">
  *           &lt;complexType>
  *             &lt;complexContent>
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
@@ -55,7 +55,7 @@ import org.sepro.teacherweb.serviceapi.IdentityTeacherDto;
     "classeName",
     "idClasseProgramm",
     "nombreEleve",
-    "programmeCalendars",
+    "programmeCalendar",
     "studentResponsable",
     "teacherResponsable"
 })
@@ -68,7 +68,7 @@ public class ClasseProgrammDto {
     protected String classeName;
     protected Long idClasseProgramm;
     protected Long nombreEleve;
-    protected ClasseProgrammDto.ProgrammeCalendars programmeCalendars;
+    protected ClasseProgrammDto.ProgrammeCalendar programmeCalendar;
     protected StudentDto studentResponsable;
     protected IdentityTeacherDto teacherResponsable;
 
@@ -193,27 +193,27 @@ public class ClasseProgrammDto {
     }
 
     /**
-     * Obtient la valeur de la propriété programmeCalendars.
+     * Obtient la valeur de la propriété programmeCalendar.
      * 
      * @return
      *     possible object is
-     *     {@link ClasseProgrammDto.ProgrammeCalendars }
+     *     {@link ClasseProgrammDto.ProgrammeCalendar }
      *     
      */
-    public ClasseProgrammDto.ProgrammeCalendars getProgrammeCalendars() {
-        return programmeCalendars;
+    public ClasseProgrammDto.ProgrammeCalendar getProgrammeCalendar() {
+        return programmeCalendar;
     }
 
     /**
-     * Définit la valeur de la propriété programmeCalendars.
+     * Définit la valeur de la propriété programmeCalendar.
      * 
      * @param value
      *     allowed object is
-     *     {@link ClasseProgrammDto.ProgrammeCalendars }
+     *     {@link ClasseProgrammDto.ProgrammeCalendar }
      *     
      */
-    public void setProgrammeCalendars(ClasseProgrammDto.ProgrammeCalendars value) {
-        this.programmeCalendars = value;
+    public void setProgrammeCalendar(ClasseProgrammDto.ProgrammeCalendar value) {
+        this.programmeCalendar = value;
     }
 
     /**
@@ -288,7 +288,7 @@ public class ClasseProgrammDto {
     @XmlType(name = "", propOrder = {
         "programmeCalendar"
     })
-    public static class ProgrammeCalendars {
+    public static class ProgrammeCalendar {
 
         protected List<ProgrammeCalendarDto> programmeCalendar;
 

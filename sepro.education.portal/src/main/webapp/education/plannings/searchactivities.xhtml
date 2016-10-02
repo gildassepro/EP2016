@@ -133,10 +133,7 @@
 																itemLabel="#{classeProgramm.classeName}" />
 															<p:ajax event="valueChange"
 																listener="#{activitieSearchServiceBean.updateModulesProgrammesCalendar()}"
-																update="forme @([id$=selectedmodules])" />
-															<p:ajax event="select"
-																listener="#{activitieSearchServiceBean.onSelect}"
-																update="forme growl" />
+																update="@([id$=selectedmodules])" />
 														</p:selectOneMenu>
 													</div>
 												</div>
@@ -158,39 +155,21 @@
 																itemValue="#{activitieSearchServiceBean.studentEventsDto.academicModule}"
 																label="#{messages.label_msg_academic_module}" />
 															<f:selectItems
-																value="#{activitieSearchServiceBean.listAcademicModule}"
+																value="#{activitieSearchServiceBean.selectedlistAcademicModules}"
 																var="academicModule" itemValue="#{academicModule}"
 																itemLabel="#{academicModule.moduleName}" />
 															<p:ajax event="valueChange"
-																listener="#{activitieSearchServiceBean.updateSession()}"
-																update="forme @([id$=selectsession])" />
+																listener="#{activitieSearchServiceBean.updateSession()}" />
 														</p:selectOneMenu>
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
-														<p:outputLabel value="#{messages.label_session}" />
+														<p:outputLabel value="#{messages.label_msg_comment}" />
 														<span class="requireds">(*)</span>
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
-
-														<p:selectOneMenu
-															styleClass="col-lg-10 col-md-10 col-sm-12 form-text"
-															id="selectsession"
-															value="#{activitieSearchServiceBean.moduleCalendarDto.session}"
-															converter="entityConverter"
-															placeholder="#{messages.label_session}">
-															<f:selectItem
-																itemLabel="#{activitieSearchServiceBean.moduleCalendarDto.session.sessionName}"
-																itemValue="#{activitieSearchServiceBean.moduleCalendarDto.session}"
-																label="#{messages.label_session}" />
-															<f:selectItems
-																value="#{activitieSearchServiceBean.listSession}"
-																var="sessions" itemValue="#{sessions}"
-																itemLabel="#{sessions.sessionName}" />
-																<p:ajax event="valueChange"
-																listener="#{activitieSearchServiceBean.updateSessionDate()}"
-																update="forme @([id$=selectsession])" />
-														</p:selectOneMenu>
-
+														<p:inputTextarea rows="" cols="33" id="comment1"
+															placeholder="#{messages.label_msg_comment}"
+															value="#{activitieSearchServiceBean.studentEventsDto.comments}" />
 													</div>
 												</div>
 
@@ -303,15 +282,8 @@
 														<h:selectBooleanCheckbox id="allday1"
 															value="#{activitieSearchServiceBean.value}" />
 													</div>
-													<div class="col-lg-3 col-md-3 col-sm-3">
-														<p:outputLabel value="#{messages.label_msg_comment}" />
-														<span class="requireds">(*)</span>
-													</div>
-													<div class="col-lg-3 col-md-3 col-sm-3">
-														<p:inputTextarea rows="" cols="33" id="comment1"
-															placeholder="#{messages.label_msg_comment}"
-															value="#{activitieSearchServiceBean.studentEventsDto.comments}" />
-													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3"></div>
+													<div class="col-lg-3 col-md-3 col-sm-3"></div>
 												</div>
 
 											</div>

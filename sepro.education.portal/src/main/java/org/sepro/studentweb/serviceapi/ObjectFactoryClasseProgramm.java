@@ -121,11 +121,11 @@ public class ObjectFactoryClasseProgramm {
     }
 
     /**
-     * Create an instance of {@link ClasseProgrammDto.ProgrammeCalendars }
+     * Create an instance of {@link ClasseProgrammDto.ProgrammeCalendar }
      * 
      */
-    public ClasseProgrammDto.ProgrammeCalendars createClasseProgrammDtoProgrammeCalendars() {
-        return new ClasseProgrammDto.ProgrammeCalendars();
+    public ClasseProgrammDto.ProgrammeCalendar createClasseProgrammDtoProgrammeCalendar() {
+        return new ClasseProgrammDto.ProgrammeCalendar();
     }
 
     /**

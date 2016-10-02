@@ -13,6 +13,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -26,6 +27,7 @@ import org.sepro.parameterweb.serviceapi.CityDto;
 import org.sepro.parameterweb.serviceapi.ClasseDto;
 import org.sepro.parameterweb.serviceapi.ModuleCalendarDto;
 import org.sepro.parameterweb.serviceapi.PopuplistDto;
+import org.sepro.parameterweb.serviceapi.ProgrammeCalendarDto;
 import org.sepro.parameterweb.serviceapi.RegionDto;
 import org.sepro.parameterweb.serviceapi.RoomInventoryDto;
 import org.sepro.parameterweb.serviceapi.SessionDto;
@@ -71,7 +73,6 @@ public class ActivitieSearchServiceBean implements Serializable {
 	private StudentClasseServicewsEndpoint studentClasseServicewsEndpoint;
 	private StudentClasseServicews studentClasseServicews = new StudentClasseServicews();
 	
-	
 	private StudentEventsServicewsEndpoint studentEventsServicewsEndpoint;
 	private StudentEventsServicews studentEventsServicews = new StudentEventsServicews();
 	
@@ -92,10 +93,12 @@ public class ActivitieSearchServiceBean implements Serializable {
 	
 	private List<AcademicModuleDto> listAcademicModule = new ArrayList<AcademicModuleDto>();
 	private List<AcademicModuleDto> selectedlistAcademicModule = new ArrayList<AcademicModuleDto>();
+	private List<AcademicModuleDto> selectedlistAcademicModules = new ArrayList<AcademicModuleDto>();
 	
 	
 	private AcademicModuleDto academicModuleDto = new AcademicModuleDto();
 	private List<ModuleCalendarDto> selectedlistemodulecalendar = new ArrayList<ModuleCalendarDto>();
+	private List<ModuleCalendarDto> selectedlistemodulecalendar2 = new ArrayList<ModuleCalendarDto>();
 	
 	
 	private ClasseServicewsEndpoint classeServicewsEndpoint;
@@ -121,6 +124,9 @@ public class ActivitieSearchServiceBean implements Serializable {
 	private ClasseDto classeDto = new ClasseDto();
 	private List<ClasseDto> listDesClass = new ArrayList<ClasseDto>();
 	
+	private List<ProgrammeCalendarDto> listProgrammeCalendars = new ArrayList<ProgrammeCalendarDto>();
+	private List<ProgrammeCalendarDto> listProgrammeCalendart = new ArrayList<ProgrammeCalendarDto>();
+	
 	private ClasseProgrammDto classeProgrammDto = new ClasseProgrammDto();
 	private ClasseProgrammDto classeProgrammDtos = new ClasseProgrammDto();
 	private List<ClasseProgrammDto> listClass = new ArrayList<ClasseProgrammDto>();
@@ -139,12 +145,103 @@ public class ActivitieSearchServiceBean implements Serializable {
 	private boolean value;
 	private boolean test = true;
 	private ScheduleModel planningclasse;
+	private XMLGregorianCalendar start;
+	private XMLGregorianCalendar end;
+	
+	private XMLGregorianCalendar startDate;
+	private XMLGregorianCalendar endDate;
+	
+	private String testStartDate;
+	private String testEndDate;
+	
+	
+	
+	
+	
 
-	
-	
-	
-	
-	
+	public List<ModuleCalendarDto> getSelectedlistemodulecalendar2() {
+		return selectedlistemodulecalendar2;
+	}
+
+	public void setSelectedlistemodulecalendar2(
+			List<ModuleCalendarDto> selectedlistemodulecalendar2) {
+		this.selectedlistemodulecalendar2 = selectedlistemodulecalendar2;
+	}
+
+	public String getTestStartDate() {
+		return testStartDate;
+	}
+
+	public void setTestStartDate(String testStartDate) {
+		this.testStartDate = testStartDate;
+	}
+
+	public String getTestEndDate() {
+		return testEndDate;
+	}
+
+	public void setTestEndDate(String testEndDate) {
+		this.testEndDate = testEndDate;
+	}
+
+	public XMLGregorianCalendar getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(XMLGregorianCalendar startDate) {
+		this.startDate = startDate;
+	}
+
+	public XMLGregorianCalendar getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(XMLGregorianCalendar endDate) {
+		this.endDate = endDate;
+	}
+
+	public XMLGregorianCalendar getStart() {
+		return start;
+	}
+
+	public void setStart(XMLGregorianCalendar start) {
+		this.start = start;
+	}
+
+	public XMLGregorianCalendar getEnd() {
+		return end;
+	}
+
+	public void setEnd(XMLGregorianCalendar end) {
+		this.end = end;
+	}
+
+	public List<AcademicModuleDto> getSelectedlistAcademicModules() {
+		return selectedlistAcademicModules;
+	}
+
+	public void setSelectedlistAcademicModules(
+			List<AcademicModuleDto> selectedlistAcademicModules) {
+		this.selectedlistAcademicModules = selectedlistAcademicModules;
+	}
+
+	public List<ProgrammeCalendarDto> getListProgrammeCalendart() {
+		return listProgrammeCalendart;
+	}
+
+	public void setListProgrammeCalendart(
+			List<ProgrammeCalendarDto> listProgrammeCalendart) {
+		this.listProgrammeCalendart = listProgrammeCalendart;
+	}
+
+	public List<ProgrammeCalendarDto> getListProgrammeCalendars() {
+		return listProgrammeCalendars;
+	}
+
+	public void setListProgrammeCalendars(
+			List<ProgrammeCalendarDto> listProgrammeCalendars) {
+		this.listProgrammeCalendars = listProgrammeCalendars;
+	}
 
 	public ModuleCalendarDto getModuleCalendarDto() {
 		return moduleCalendarDto;
@@ -369,6 +466,8 @@ public class ActivitieSearchServiceBean implements Serializable {
 			listAcademicModule = new ArrayList<AcademicModuleDto>();
 			listSession = new ArrayList<SessionDto>();
 			listClass = new ArrayList<ClasseProgrammDto>();
+			listProgrammeCalendars = new ArrayList<ProgrammeCalendarDto>();
+			listProgrammeCalendart = new ArrayList<ProgrammeCalendarDto>();
 			
 			initUpdate();
 		} else {
@@ -380,6 +479,8 @@ public class ActivitieSearchServiceBean implements Serializable {
 			listAcademicModule = new ArrayList<AcademicModuleDto>();
 			listSession = new ArrayList<SessionDto>();
 			listClass = new ArrayList<ClasseProgrammDto>();
+			listProgrammeCalendars = new ArrayList<ProgrammeCalendarDto>();
+			listProgrammeCalendart = new ArrayList<ProgrammeCalendarDto>();
 			
 			initCreate();
 		}
@@ -437,6 +538,7 @@ public class ActivitieSearchServiceBean implements Serializable {
 //		
 //		listDesClass = classeServicewsEndpoint.getAllClasseServicews();
 //		listeTeacherEvent = identityTeacherServicewsEndpoint.getAllIdentityTeacherServicews();
+		
 	}
 	
 	public void updateModulesProgrammes(){
@@ -478,28 +580,55 @@ public class ActivitieSearchServiceBean implements Serializable {
 		try{
 			academicModuleDtoServicewsEndpoint = academicModuleDtoServicews.getAcademicModuleDtoServicewsImplPort();
 			studentEventsServicewsEndpoint = studentEventsServicews.getStudentEventsServicewsImplPort();
-			selectedlistAcademicModule = academicModuleDtoServicewsEndpoint.getAllAcademicModuleServicews();
+			programmeCalendarDtoServicewsEndpoint = programmeCalendarDtoServicews.getProgrammeCalendarDtoServicewsImplPort();
+			selectedlistAcademicModule = new ArrayList<AcademicModuleDto>();
+			logger.debug("@@@@@@ JE SUIS LA 111111 @@@@@@@@@@@@@@");
 			
-			selectedEvents.setClasseProgramm(studentEventsDto.getClasseProgramm());
-			listStudentEvent = studentEventsServicewsEndpoint.searchStudentEventsServicews(selectedEvents);
+			listProgrammeCalendars = programmeCalendarDtoServicewsEndpoint
+					.getAllProgrammeCalendarServicews();
+			logger.debug("@@@@@@ teste liste programme Calendar @@@@@@"+listProgrammeCalendars.size());
+			logger.debug("@@@@@@ JE SUIS LA 2222222 @@@@@@@@@@@@@@");
 			
-//			for(AcademicModuleDto academic : studentEventsDto.getClasseProgramm().getProgrammeCalendars().getProgrammeCalendar().get(index)                      .getProgramme().getAcademicmodule().getAcademicmodule()){
-//				
-//				for(AcademicModuleDto academics : selectedlistAcademicModule){
-//				
-//					if(academics.getIdAcademicModule() == academic.getIdAcademicModule()){
-//						listAcademicModule.add(academics);
-//						break;
-//						
-//					}
-//					
-//				}
-//				
-//				
-//			}
+//			classeProgrammDto.setProgrammeCalendar(studentEventsDto.getClasseProgramm().getProgrammeCalendar());
+//			listClass = classeProgrammServicewsEndpoint.searchClasseProgrammServicews(classeProgrammDto);
+			
+			listProgrammeCalendart = new ArrayList<ProgrammeCalendarDto>();
+			logger.debug("@@@@@@ JE SUIS LA 33333333@@@@@@@@@@@@@@");
+			listAcademicModule = academicModuleDtoServicewsEndpoint
+					.getAllAcademicModuleServicews();
+			
+			if (studentEventsDto.getClasseProgramm() != null){
+				logger.debug("@@@@ TEST NOM PROGRAMME CALENDRIER @@@@@@"+studentEventsDto.getClasseProgramm().getClasseName());
+				for (ProgrammeCalendarDto pcalendar : studentEventsDto.getClasseProgramm().getProgrammeCalendar().getProgrammeCalendar()){
+					logger.debug("@@@@@@ ENTREE DU PCALENDAR 1 @@@@@@@@@@@@@@");
+					for (ProgrammeCalendarDto pcalendars : listProgrammeCalendars){
+						if(pcalendar.getIdProgrammeCalendar() == pcalendars.getIdProgrammeCalendar()){
+							listProgrammeCalendart.add(pcalendars);
+							break;
+						}
+						
+						logger.debug("@@@@@  JE SUIS 1ERE ZONE @@@@@@");
+					}
+					
+					for (int j =0; j < listProgrammeCalendart.size(); j++){
+						
+						listProgrammeCalendart.get(j).getProgramme().getAcademicmodule().getAcademicmodule().size();
+						for(int k = 0; k < listProgrammeCalendart.get(j).getProgramme().getAcademicmodule().getAcademicmodule().size(); k++ ){
+							
+							selectedlistAcademicModules.add(listProgrammeCalendart.get(j).getProgramme().getAcademicmodule().getAcademicmodule().get(k));
+							
+						}
+						
+						logger.debug("@@@@@  JE SUIS 2EME ZONE @@@@@@");
+					}
+					
+				}
+			}
 			
 			
-			logger.debug("@@@@@@ JE SUIS A LA FIN @@@@@@@@@@@@@@");
+			
+			
+			logger.debug("@@@@@@ JE SUIS A LA FIN LOOOO @@@@@@@@@@@@@@");
 			
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -508,6 +637,32 @@ public class ActivitieSearchServiceBean implements Serializable {
 	}
 	
 	public void updateSession(){
+		logger.debug("@@@@ DANS LE UPDATE SESSION @@@@@@ ");
+		academicModuleDtoServicewsEndpoint = academicModuleDtoServicews.getAcademicModuleDtoServicewsImplPort();
+		moduleCalendarDtoServicewsEndpoint = moduleCalendarDtoServicews.getModuleCalendarDtoServicewsImplPort();
+		programmeCalendarDtoServicewsEndpoint = programmeCalendarDtoServicews.getProgrammeCalendarDtoServicewsImplPort();
+		
+		if ( studentEventsDto.getAcademicModule() != null ){
+			moduleCalendarDto.setAcademicModule(studentEventsDto.getAcademicModule());
+			selectedlistemodulecalendar = moduleCalendarDtoServicewsEndpoint.getAllModuleCalendarServicews();
+			selectedlistemodulecalendar2 = new ArrayList<ModuleCalendarDto>();
+			
+			logger.debug("@@@ LISTE DE MODULE CALENDAR  @@@@@@"+selectedlistemodulecalendar.size());
+			
+			logger.debug("@@@@ AFFICHAGE MODULE ACAMDEMIQUE"+moduleCalendarDto.getAcademicModule().getModuleName());
+			logger.debug("@@@@ AFFICHAGE MODULE ACAMDEMIQUE IDDD  "+moduleCalendarDto.getIdModuleCalendar());
+			
+			for(ModuleCalendarDto md : selectedlistemodulecalendar){
+				if(md.getIdModuleCalendar() == moduleCalendarDto.getIdModuleCalendar()){
+					selectedlistemodulecalendar2.add(md);
+				}
+				logger.debug("@@@@ AFFICHAGE DATE SESSION START "+selectedlistemodulecalendar2.size());
+				//logger.debug("@@@@ AFFICHAGE DATE SESSION END  "+selectedlistemodulecalendar2.get(0).getSession().getEndDate());
+			}
+			
+	
+			
+		}
 		
 	}
 	
@@ -522,6 +677,26 @@ public class ActivitieSearchServiceBean implements Serializable {
 	public void addActivities(){
 		
 		logger.debug("@@@@@ DEBUT CREATION ACTIVITIES @@@@@@@@");
+		
+		if ( studentEventsDto.getAcademicModule() != null ){
+			moduleCalendarDto.setAcademicModule(studentEventsDto.getAcademicModule());
+			
+			selectedlistemodulecalendar = moduleCalendarDtoServicewsEndpoint.searchModuleCalendarServicews(moduleCalendarDto);
+			for (int m = 0; m < selectedlistemodulecalendar.size(); m ++){
+				start = selectedlistemodulecalendar.get(m).getSession().getStartDate();
+				end  = selectedlistemodulecalendar.get(m).getSession().getEndDate();
+				
+			}
+//			startDate.setTime(start.getYear(), start.getMonth(), start.getDay(), studentEventsDto.getStartDate());
+//			endDate.setTime(arg0, arg1, arg2, arg3);
+			testStartDate = start.toString() + studentEventsDto.getStartDate().toString();
+			testEndDate = end.toString() + studentEventsDto.getEnDate().toString();
+			
+			
+			
+		}
+		
+		
 		
 		StudentEventsDto addEvent = new StudentEventsDto();
 		addEvent.setAcademicModule(studentEventsDto.getAcademicModule());
