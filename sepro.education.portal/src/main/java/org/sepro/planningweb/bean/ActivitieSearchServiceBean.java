@@ -651,6 +651,7 @@ public class ActivitieSearchServiceBean implements Serializable {
 			
 			logger.debug("@@@@ AFFICHAGE MODULE ACAMDEMIQUE"+moduleCalendarDto.getAcademicModule().getModuleName());
 			logger.debug("@@@@ AFFICHAGE MODULE ACAMDEMIQUE IDDD  "+moduleCalendarDto.getIdModuleCalendar());
+			logger.debug("@@@@ AFFICHAGE MODULE ACAMDEMIQUE IDDD  "+moduleCalendarDto.getIdModuleCalendar());
 			
 			for(ModuleCalendarDto md : selectedlistemodulecalendar){
 				if(md.getIdModuleCalendar() == moduleCalendarDto.getIdModuleCalendar()){
