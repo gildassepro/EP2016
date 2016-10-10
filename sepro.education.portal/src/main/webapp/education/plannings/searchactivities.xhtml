@@ -145,6 +145,28 @@
 														<span class="requireds">(*)</span>
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
+<<<<<<< HEAD
+														<p:selectCheckboxMenu id="selectedmodules"
+															value="#{activitieSearchServiceBean.listModuleCalendarDto}"
+															filter="true" filterMatchMode="startsWith"
+															converter="entityConverter" panelStyle="width:250px"
+															label="#{messages.label_msg_academic_module}">
+															<f:selectItems
+																value="#{activitieSearchServiceBean.listModuleCalendarDtos}"
+																var="academicModu" itemValue="#{academicModu}"
+																itemLabel="#{academicModu.academicModule.moduleName}" />
+																<p:ajax listener="#{activitieSearchServiceBean.updateSession()}" />
+														</p:selectCheckboxMenu>
+														
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_msg_title_activity}" />
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:inputText styleClass="form-control" id="titleactivity"
+															value="#{activitieSearchServiceBean.studentEventsDto.title}"
+															placeholder="#{messages.label_msg_title_activity}" />
+=======
 														<p:selectOneMenu id="selectedmodules"
 															styleClass="form-text"
 															value="#{activitieSearchServiceBean.studentEventsDto.academicModule}"
@@ -170,6 +192,7 @@
 														<p:inputTextarea rows="" cols="33" id="comment1"
 															placeholder="#{messages.label_msg_comment}"
 															value="#{activitieSearchServiceBean.studentEventsDto.comments}" />
+>>>>>>> origin/master
 													</div>
 												</div>
 
@@ -282,8 +305,16 @@
 														<h:selectBooleanCheckbox id="allday1"
 															value="#{activitieSearchServiceBean.value}" />
 													</div>
+<<<<<<< HEAD
+													<div class="col-lg-3 col-md-3 col-sm-3"><p:outputLabel value="#{messages.label_msg_comment}" />
+														<span class="requireds">(*)</span></div>
+													<div class="col-lg-3 col-md-3 col-sm-3"><p:inputTextarea rows="" cols="33" id="comment1"
+															placeholder="#{messages.label_msg_comment}"
+															value="#{activitieSearchServiceBean.studentEventsDto.comments}" /></div>
+=======
 													<div class="col-lg-3 col-md-3 col-sm-3"></div>
 													<div class="col-lg-3 col-md-3 col-sm-3"></div>
+>>>>>>> origin/master
 												</div>
 
 											</div>

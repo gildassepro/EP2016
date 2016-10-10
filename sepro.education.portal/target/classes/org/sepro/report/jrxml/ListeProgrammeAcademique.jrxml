@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ListeProgrammeAcademique" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7e9704de-d6ee-4d8c-b30b-8594c4d2cbfd">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     *,
+     programme.`NAME_PROGRAMME` AS programme_NAME_PROGRAMME,
+     programme.`CURRICULUM` AS programme_CURRICULUM,
+     curriculum.`ID` AS curriculum_ID,
+     curriculum.`NAME_CURRICULUM` AS curriculum_NAME_CURRICULUM,
+     programme.`ID` AS programme_ID,
+     popuplist.`ID` AS popuplist_ID,
+     popuplist.`VALUE` AS popuplist_VALUE,
+     curriculum.`ACADEMIQUE_YEAR` AS curriculum_ACADEMIQUE_YEAR,
+     curriculum.`ACADEMIC_GRADE` AS curriculum_ACADEMIC_GRADE,
+     popuplist.`ENTITE` AS popuplist_ENTITE
+FROM
+     `curriculum` curriculum INNER JOIN `programme` programme ON curriculum.`ID` = programme.`CURRICULUM`
+     INNER JOIN `popuplist` popuplist ON curriculum.`CURSUS_STATUS` = popuplist.`ID`]]>
+	</queryString>
+	<field name="ID" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NAME_CURRICULUM" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NUMBER_OF_YEARS" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NUMBER_OF_SESSIONS" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TYPE_OF_COURSE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CURSUS_PRESENTATION" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ACADEMIQUE_YEAR" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ACADEMIC_GRADE" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CURSUS_STATUS" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CREATEDDATE" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CREATEDBY" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LASTUPDATED" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LASTUPDATEDBY" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VERSION" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NAME_PROGRAMME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CURRICULUM" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ENTITE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VALUE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="programme_NAME_PROGRAMME" class="java.lang.String"/>
+	<field name="programme_CURRICULUM" class="java.lang.Long"/>
+	<field name="curriculum_ID" class="java.lang.Long"/>
+	<field name="curriculum_NAME_CURRICULUM" class="java.lang.String"/>
+	<field name="programme_ID" class="java.lang.Long"/>
+	<field name="popuplist_ID" class="java.lang.Long"/>
+	<field name="popuplist_VALUE" class="java.lang.String"/>
+	<field name="curriculum_ACADEMIQUE_YEAR" class="java.lang.Long"/>
+	<field name="curriculum_ACADEMIC_GRADE" class="java.lang.Long"/>
+	<field name="popuplist_ENTITE" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="79" backcolor="#003399" uuid="8429c676-d378-4325-ba33-3b484768a993"/>
+			</rectangle>
+			<image>
+				<reportElement x="14" y="16" width="257" height="50" uuid="ff08fece-7a03-4733-b07d-47e28751e1b6"/>
+				<imageExpression><![CDATA["C:\\Users\\SEPRO\\Pictures\\UPMLOGO.PNG"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="47" splitType="Stretch">
+			<staticText>
+				<reportElement x="182" y="11" width="235" height="24" uuid="a4c22fae-899d-4d85-b666-6aa147a62ace"/>
+				<textElement>
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LISTE DES PROGRAMMES]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="0" width="138" height="20" forecolor="#000000" backcolor="#000000" uuid="e7380474-3c9d-486b-8587-5ef62a3562f7"/>
+				<textElement textAlignment="Center" rotation="None">
+					<font size="12" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[NOM PROGRAMME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="138" y="0" width="138" height="20" uuid="34639444-cb3b-4997-a9c5-c42660d4fc5b"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ANNEE ACAMDEMIQUE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="288" y="0" width="139" height="20" uuid="88c09b4c-aad4-4cf6-a714-bb54b8ef38e4"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FILIERE ACADEMIQUE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="427" y="0" width="128" height="20" uuid="56cea5ed-b466-4e7d-869f-ac794e19d11c"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CURSUS]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="40" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="138" height="20" uuid="237eecaa-6c2a-4541-a049-cacd9b2f6a00"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{NAME_PROGRAMME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="427" y="0" width="128" height="20" uuid="a88cfe5d-2b92-472b-a518-31c89e4e7ae2"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{NAME_CURRICULUM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="138" y="0" width="133" height="20" uuid="7ccf9c17-69ad-4e8a-93e5-2a1575668a18"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{VALUE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="288" y="0" width="139" height="20" uuid="8d58447f-c801-448c-b24a-7c57ce067249"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{VALUE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

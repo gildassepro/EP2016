@@ -394,9 +394,14 @@ logger.debug("@@@@@@ JE SUIS LA @@@@@@@@@@@@@@");
 				rb.getString("label_msg_create_programme_calendar"));
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null, msg);
+		activateTest();
 
 		logger.debug("+++++++++FIN  createProgramme Calendar +++++++++++++");
 
+	}
+	
+	public void activateTest(){
+		test = false;
 	}
 
 	public String initDualList(String baction) {

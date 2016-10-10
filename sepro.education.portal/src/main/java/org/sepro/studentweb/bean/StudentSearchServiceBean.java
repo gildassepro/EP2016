@@ -139,6 +139,10 @@ public class StudentSearchServiceBean implements Serializable {
 	private boolean action = false;
 	private boolean action2 = false;
 	private boolean action3 = true;
+<<<<<<< HEAD
+	private boolean test3 = true;
+=======
+>>>>>>> origin/master
 
 	private boolean render2 = false;
 	private boolean render3 = false;
@@ -163,6 +167,15 @@ public class StudentSearchServiceBean implements Serializable {
 
 	
 	
+<<<<<<< HEAD
+	public boolean isTest3() {
+		return test3;
+	}
+
+	public void setTest3(boolean test3) {
+		this.test3 = test3;
+	}
+
 	public List<StudentProgramDto> getListSearchStudent() {
 		return listSearchStudent;
 	}
@@ -211,6 +224,56 @@ public class StudentSearchServiceBean implements Serializable {
 		this.listDataStudent = listDataStudent;
 	}
 
+=======
+	public List<StudentProgramDto> getListSearchStudent() {
+		return listSearchStudent;
+	}
+
+	public void setListSearchStudent(List<StudentProgramDto> listSearchStudent) {
+		this.listSearchStudent = listSearchStudent;
+	}
+
+	public StudentProgramDto getStudentProgramDto() {
+		return studentProgramDto;
+	}
+
+	public void setStudentProgramDto(StudentProgramDto studentProgramDto) {
+		this.studentProgramDto = studentProgramDto;
+	}
+
+	public StudentProgramDto getStudentProgramDtos() {
+		return studentProgramDtos;
+	}
+
+	public void setStudentProgramDtos(StudentProgramDto studentProgramDtos) {
+		this.studentProgramDtos = studentProgramDtos;
+	}
+
+	public StudentDataDto getStudentDataDto() {
+		return studentDataDto;
+	}
+
+	public void setStudentDataDto(StudentDataDto studentDataDto) {
+		this.studentDataDto = studentDataDto;
+	}
+
+	public StudentDataDto getStudentDataDtos() {
+		return studentDataDtos;
+	}
+
+	public void setStudentDataDtos(StudentDataDto studentDataDtos) {
+		this.studentDataDtos = studentDataDtos;
+	}
+
+	public List<StudentDataDto> getListDataStudent() {
+		return listDataStudent;
+	}
+
+	public void setListDataStudent(List<StudentDataDto> listDataStudent) {
+		this.listDataStudent = listDataStudent;
+	}
+
+>>>>>>> origin/master
 	public List<PopuplistDto> getListmention() {
 		return listmention;
 	}
@@ -534,6 +597,7 @@ public class StudentSearchServiceBean implements Serializable {
 
 	public String getMaskphonformat() {
 		return maskphonformat;
+<<<<<<< HEAD
 	}
 
 	public void setMaskphonformat(String maskphonformat) {
@@ -548,6 +612,22 @@ public class StudentSearchServiceBean implements Serializable {
 		this.maskphonformatparent = maskphonformatparent;
 	}
 
+=======
+	}
+
+	public void setMaskphonformat(String maskphonformat) {
+		this.maskphonformat = maskphonformat;
+	}
+
+	public String getMaskphonformatparent() {
+		return maskphonformatparent;
+	}
+
+	public void setMaskphonformatparent(String maskphonformatparent) {
+		this.maskphonformatparent = maskphonformatparent;
+	}
+
+>>>>>>> origin/master
 	public void initDualListPro(String daction) {
 		if (daction.equals("1")) {
 			studentDtos.setIdStudent(studentProgramDtos.getStudentDto().getIdStudent());
@@ -555,6 +635,10 @@ public class StudentSearchServiceBean implements Serializable {
 			studentProgramDto = studentProgramDtos;
 			action2 = true;
 			action3 = false;
+<<<<<<< HEAD
+			test3 = false;
+=======
+>>>>>>> origin/master
 
 			listCountry = new ArrayList<CountryDto>();
 			listRegion = new ArrayList<RegionDto>();
@@ -575,6 +659,10 @@ public class StudentSearchServiceBean implements Serializable {
 		} else {
 			action2 = true;
 			action3 = false;
+<<<<<<< HEAD
+			test3 = false;
+=======
+>>>>>>> origin/master
 
 		}
 
@@ -585,6 +673,10 @@ public class StudentSearchServiceBean implements Serializable {
 
 			studentContactDto = studentContactDtos;
 			action2 = true;
+<<<<<<< HEAD
+			test3 = false;
+=======
+>>>>>>> origin/master
 			action3 = false;
 
 			listCountry = new ArrayList<CountryDto>();
@@ -603,6 +695,10 @@ public class StudentSearchServiceBean implements Serializable {
 			action2 = true;
 			action3 = false;
 			render3 = true;
+<<<<<<< HEAD
+			test3 = false;
+=======
+>>>>>>> origin/master
 
 			studentCVDto = studentCVDtos;
 			listtypecontact = new ArrayList<PopuplistDto>();
@@ -630,11 +726,19 @@ public class StudentSearchServiceBean implements Serializable {
 
 			listmention = popuplistDtoServicewsEndpoint
 					.searchPopuplistDtoServicews("mention");
+<<<<<<< HEAD
 
 			logger.debug("fin dual2");
 
 			logger.debug("end init initUpdate2");
 
+=======
+
+			logger.debug("fin dual2");
+
+			logger.debug("end init initUpdate2");
+
+>>>>>>> origin/master
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -712,6 +816,7 @@ public class StudentSearchServiceBean implements Serializable {
 	}
 
 	public String supprimerStudentContact() {
+<<<<<<< HEAD
 
 		FacesMessage msg = null;
 		logger.debug("DEBUT SuppressionContact +++++++++++++");
@@ -725,6 +830,21 @@ public class StudentSearchServiceBean implements Serializable {
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(null, msg);
 
+=======
+
+		FacesMessage msg = null;
+		logger.debug("DEBUT SuppressionContact +++++++++++++");
+		try {
+			studentContactServicewsEndpoint
+					.deleteStudentContactServicews(studentContactDtos);
+			init();
+		} catch (Exception e) {
+			msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					rb.getString("label_warn"), rb.getString("label_warn"));
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, msg);
+
+>>>>>>> origin/master
 		}
 		return null;
 	}
@@ -838,10 +958,17 @@ public class StudentSearchServiceBean implements Serializable {
 		
 		studentContactDtos.setStudent(studentDtos);
 		studentCVDtos.setStudent(studentDtos);
+<<<<<<< HEAD
 
 		// logger.debug("***********STUDENT***************"+studentContactDtos);
 		// logger.debug("***********STUDENT***************"+studentCVDtos);
 
+=======
+
+		// logger.debug("***********STUDENT***************"+studentContactDtos);
+		// logger.debug("***********STUDENT***************"+studentCVDtos);
+
+>>>>>>> origin/master
 		liststudentcontact = studentContactServicewsEndpoint
 				.searchStudentContactServicews(studentContactDtos);
 		listCVstudent = studentCVServicewsEndpoint

@@ -85,12 +85,14 @@
 									<p:commandButton value="#{messages.label_modifier}"
 										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
 										rendered="#{!studentSearchServiceBean.isAction()}"
+										disabled="#{studentSearchServiceBean.test3}"
 										action="#{studentSearchServiceBean.updateProf()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatestudent').hide()"
 										update="forme growl" />
 									<p:commandButton value="#{messages.label_create}"
 										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
 										rendered="#{studentSearchServiceBean.isAction()}"
+										disabled="#{studentSearchServiceBean.test3}"
 										action="#{studentSearchServiceBean.createStudentDetail()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('updatedetailstudent').hide()"
 										update="forme growl" />
@@ -718,7 +720,11 @@
 															title="#{messages.label_modifier}"
 															value="#{messages.label_modifier}"
 															action="#{studentSearchServiceBean.initDualListCo('1')}"
+<<<<<<< HEAD
+															update="@([id$=updatdetailstudent])" icon="fa fa-fw fa-pencil">
+=======
 															update="forme" icon="fa fa-fw fa-pencil">
+>>>>>>> origin/master
 															<f:setPropertyActionListener value="#{parent}"
 																target="#{studentSearchServiceBean.studentContactDtos}" />
 														</p:commandButton>
