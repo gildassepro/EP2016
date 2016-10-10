@@ -185,11 +185,7 @@
 																itemLabel="#{academicSector.value}" />
 															<p:ajax event="valueChange"
 																listener="#{studentClassSearchServiceBean.updateListStudentSector()}"
-<<<<<<< HEAD
 																update="fdata growl" />
-=======
-																update="@([id$=checkboxmodule])" />
->>>>>>> origin/master
 														</p:selectOneMenu>
 													</div>
 												</div>
@@ -210,7 +206,6 @@
 
 														</p:inputText>
 													</div>
-<<<<<<< HEAD
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:outputLabel
 															value="#{messages.label_msg_responsable_teacher}" />
@@ -239,10 +234,6 @@
 													<div class="col-lg-3 col-md-3 col-sm-3"></div>
 													<div class="col-lg-3 col-md-3 col-sm-3"></div>
 
-=======
-													<div class="col-lg-3 col-md-3 col-sm-3"></div>
-													<div class="col-lg-3 col-md-3 col-sm-3"></div>
->>>>>>> origin/master
 												</div>
 
 											</div>
@@ -268,7 +259,6 @@
 											</div>
 										</div>
 										<br></br>
-<<<<<<< HEAD
 										<h:form id="fdata">
 											<div class="ui-grid ui-grid-responsive">
 												<p:dataTable id="checkboxmodules"
@@ -298,37 +288,6 @@
 												</p:dataTable>
 											</div>
 										</h:form>
-=======
-
-										<div class="ui-grid ui-grid-responsive">
-
-											<p:dataTable id="checkboxmodule"
-												rendered="#{!studentClassSearchServiceBean.testtable}"
-												value="#{studentClassSearchServiceBean.listStudentClasse}"
-												var="studenties"
-												selection="#{studentClassSearchServiceBean.selectedlistStudentClasse}"
-												rowKey="#{studenties.idStudent}" style="margin-bottom:0">
-												<f:facet name="header">
-						            #{messages.label_msg_student_msglist}
-						        </f:facet>
-												<p:column selectionMode="multiple"
-													style="width:16px;text-align:center" />
-												<p:column headerText="#{messages.label_number_inscription}">
-													<h:outputText
-														value="#{studenties.studentDto.inscriptionAuthentification.idInscription}" />
-												</p:column>
-												<p:column headerText="#{messages.label_name}">
-													<h:outputText value="#{studenties.studentDto.name}" />
-												</p:column>
-												<p:column headerText="#{messages.label_surname}">
-													<h:outputText value="#{studenties.studentDto.firstName}" />
-												</p:column>
-												<p:column headerText="#{messages.labeldatedenaiss}">
-													<h:outputText value="#{studenties.studentDto.birthday}" />
-												</p:column>
-											</p:dataTable>
-										</div>
->>>>>>> origin/master
 									</h:form>
 								</p:panel>
 
@@ -388,11 +347,7 @@
 												value="#{messages.label_msg_responsable_teacher}" />
 										</f:facet>
 										<h:outputText
-<<<<<<< HEAD
 											value="#{studentclasses.teacherResponsable.name} #{studentclasses.teacherResponsable.firstName}"></h:outputText> 
-=======
-											value="#{studentclasses.teacherResponsable.name}"></h:outputText>
->>>>>>> origin/master
 									</p:column>
 
 								</p:dataTable>
