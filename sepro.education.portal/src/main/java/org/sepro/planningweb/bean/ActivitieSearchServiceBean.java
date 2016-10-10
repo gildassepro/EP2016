@@ -601,20 +601,6 @@ public class ActivitieSearchServiceBean implements Serializable {
 			selectedEvents.setClasseProgramm(studentEventsDto.getClasseProgramm());
 			listStudentEvent = studentEventsServicewsEndpoint.searchStudentEventsServicews(selectedEvents);
 			
-//			for(AcademicModuleDto academic : studentEventsDto.getClasseProgramm().getProgrammeCalendar().getProgramme().getAcademicmodule().getAcademicmodule()){
-//				
-//				for(AcademicModuleDto academics : selectedlistAcademicModule){
-//				
-//					if(academics.getIdAcademicModule() == academic.getIdAcademicModule()){
-//						listAcademicModule.add(academics);
-//						break;
-//						
-//					}
-//					
-//				}
-//				
-//				
-//			}
 			logger.debug("@@@@@@ JE SUIS A LA FIN @@@@@@@@@@@@@@");
 			
 		}catch (Exception e) {
@@ -639,9 +625,6 @@ public class ActivitieSearchServiceBean implements Serializable {
 					.getAllProgrammeCalendarServicews();
 			logger.debug("@@@@@@ teste liste programme Calendar @@@@@@"+listProgrammeCalendars.size());
 			logger.debug("@@@@@@ JE SUIS LA 2222222 @@@@@@@@@@@@@@");
-			
-//			classeProgrammDto.setProgrammeCalendar(studentEventsDto.getClasseProgramm().getProgrammeCalendar());
-//			listClass = classeProgrammServicewsEndpoint.searchClasseProgrammServicews(classeProgrammDto);
 			
 			listProgrammeCalendart = new ArrayList<ProgrammeCalendarDto>();
 			logger.debug("@@@@@@ JE SUIS LA 33333333@@@@@@@@@@@@@@");
@@ -703,11 +686,6 @@ public class ActivitieSearchServiceBean implements Serializable {
 			logger.debug("@@@@ TAILLE LISTE SECOND END @@@@@"+mod.getSession().getEndDate());
 		}
 		
-		//logger.debug("@@@@ TAILLE DE LA LISTE @@@@@@@"+selectedlistAcademicModules.size());
-		
-//		for(int i = 0; i < selectedlistAcademicModules.size(); i++){
-//			logger.debug("@@@@ TAILLE DE LA LISTE @@@@@@@"+selectedlistAcademicModules.size());
-//		}
 		
 	}
 	

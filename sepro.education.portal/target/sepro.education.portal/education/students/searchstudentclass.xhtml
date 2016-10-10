@@ -184,7 +184,7 @@
 																var="academicSector" itemValue="#{academicSector}"
 																itemLabel="#{academicSector.value}" />
 															<p:ajax event="valueChange"
-																listener="#{studentClassSearchServiceBean.updateListStudentSector()}"
+																listener="#{studentClassSearchServiceBean.filteredCursus()}"
 																update="fdata growl" />
 														</p:selectOneMenu>
 													</div>
@@ -263,7 +263,7 @@
 											<div class="ui-grid ui-grid-responsive">
 												<p:dataTable id="checkboxmodules"
 													rendered="#{!studentClassSearchServiceBean.testtable}"
-													value="#{studentClassSearchServiceBean.listStudentClasse}"
+													value="#{studentClassSearchServiceBean.selectedlistEtudiantClass}"
 													var="studenties"
 													selection="#{studentClassSearchServiceBean.selectedlistStudentClasse}"
 													rowKey="#{studenties.idStudent}" style="margin-bottom:0">
@@ -274,16 +274,16 @@
 														style="width:16px;text-align:center" />
 													<p:column headerText="#{messages.label_number_inscription}">
 														<h:outputText
-															value="#{studenties.studentDto.inscriptionAuthentification.idInscription}" />
+															value="#{studenties.inscriptionAuthentification.idInscription}" />
 													</p:column>
 													<p:column headerText="#{messages.label_name}">
-														<h:outputText value="#{studenties.studentDto.name}" />
+														<h:outputText value="#{studenties.name}" />
 													</p:column>
 													<p:column headerText="#{messages.label_surname}">
-														<h:outputText value="#{studenties.studentDto.firstName}" />
+														<h:outputText value="#{studenties.firstName}" />
 													</p:column>
 													<p:column headerText="#{messages.labeldatedenaiss}">
-														<h:outputText value="#{studenties.studentDto.birthday}" />
+														<h:outputText value="#{studenties.birthday}" />
 													</p:column>
 												</p:dataTable>
 											</div>

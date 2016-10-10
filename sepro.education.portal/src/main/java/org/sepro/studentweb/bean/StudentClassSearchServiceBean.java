@@ -639,7 +639,6 @@ public class StudentClassSearchServiceBean implements Serializable {
 		listeProspectStep3 = inscriptionSteptreeServicewsEndpoint.searchInscriptionSteptreeServicews(inscriptionSteptreeDto);
 		listeStudentInscritp = studentServicewsEndpoint.searchStudentServicews(studentDto);
 		
-		
 		logger.debug("@@@@ TAILLE DE LA LISTE DES FIULTREDCURUS 1111 @@@@@@@"+listeProspectStep3.size());
 		logger.debug("@@@@ TAILLE DE LA LISTE DES FIULTREDCURUS 22222 @@@@@@@"+listeStudentInscritp.size());
 		
@@ -655,10 +654,11 @@ public class StudentClassSearchServiceBean implements Serializable {
 				 for(InscriptionSteptreeDto inst : ListeEtu){
 					 logger.debug("!!!!!!!!!!! I AM HERE !!!!!!!!! "+listeStudentInscritp.size());
 					 logger.debug("!!!!!!!!!!! I AM HERE !!!!!!!!! "+ListeEtu.size());
-					 if(stu.getInscriptionAuthentification().getIdInscription() == inst.getInscriptionAuthentification().getIdInscription()){
+					 if(stu.getInscriptionAuthentification().getIdInscription().equals(inst.getInscriptionAuthentification().getIdInscription())){
 						 logger.debug("!!!!!!!!!!! I AM HERE 7777777 !!!!!!!!! ");
 						 selectedlistEtudiantClass.add(stu);
 						 logger.debug("!!!!!!!!!!!!!!!!!!! LISTE FILTRAGE STUDENT 77777 !!!!!!!!!!!!!!!!"+selectedlistEtudiantClass.size());
+						 break;
 					 }
 				 }
 			 }
@@ -927,47 +927,6 @@ public class StudentClassSearchServiceBean implements Serializable {
 				"List Reordered", null));
 	}
 	
-	public String updateListStudentSector() {
-		logger.debug("@@@@@@ DANS LE UPDATE LISTE STUDENT FILIERE @@@@@@@"+classeProgrammDto.getAcademicSector().getIdPopuplist());
-		studentProgramServicewsEndpoint = studentProgramServicews.getStudentProgramServicewsImplPort();
-		popuplistDtoServicewsEndpoint = popuplistDtoServicews.getPopuplistDtoServicewsImplPort();
-		listeStudentInscritp = studentServicewsEndpoint.searchStudentServicews(studentDto);
-		ListeEtu = inscriptionSteptreeServicewsEndpoint.searchInscriptionSteptreeServicews(inscriptionSteptreeDto);
-		StudentDto studentDtop = new StudentDto();
-		
-		try {
-				
-			if(classeProgrammDto.getAcademicSector().getIdPopuplist() != null){
-				logger.debug("@@@@@@ JE SUIS DANS LE UPDATE LISTE STUDENT SECTOR @@@@@@@");
-				for (int i = 0 ; i < ListeEtu.size(); i ++){
-					if(ListeEtu.get(i).getAcademicSector().getIdPopuplist() == classeProgrammDto.getAcademicSector().getIdPopuplist()){
-						logger.debug("@@@@@@ JE SUIS DANS LE UPDATE LISTE STUDENT SECTOR 2222 @@@@@@@"+classeProgrammDto.getAcademicSector().getIdPopuplist());
-						logger.debug("@@@@@@ JE SUIS DANS LE UPDATE LISTE STUDENT SECTOR 2222 @@@@@@@"+classeProgrammDto.getAcademicSector().getValue());
-						
-						for(int j = 0; j < listeStudentInscritp.size(); j ++){
-							logger.debug("@@@@@@ JE SUIS DANS LE UPDATE LISTE STUDENT SECTOR 33333 @@@@@@@"+listeStudentInscritp.size());
-							
-							if (listeStudentInscritp.get(j).getInscriptionAuthentification().getIdInscription() == ListeEtu.get(i).getInscriptionAuthentification().getIdInscription() ){
-								studentDtop.setName(listeStudentInscritp.get(j).getName());
-								studentDtop.setFirstName(listeStudentInscritp.get(j).getFirstName());
-								studentDtop.setInscriptionAuthentification(listeStudentInscritp.get(j).getInscriptionAuthentification());
-								studentDtop.setBirthday(listeStudentInscritp.get(j).getBirthday());
-								selectedlistEtudiantClass.add(studentDtop);
-							}
-						}
-					}
-				}
-				
-				
-			}
-		}catch(Exception ex){
-			
-		}
-		
-		logger.debug("@@@@@@ FIN DU UPDATE LISTE STUDENT FILIERE @@@@@@@");
-		return null;
-	}
-
 	@PostConstruct
 	public void init() {
 		logger.setLevel(Level.DEBUG);

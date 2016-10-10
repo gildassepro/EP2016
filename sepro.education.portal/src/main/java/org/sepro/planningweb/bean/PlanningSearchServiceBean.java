@@ -377,7 +377,6 @@ public class PlanningSearchServiceBean implements Serializable {
 		date.add(Calendar.DATE, ((int) (Math.random() * 30)) + 1); // set random
 																	// day of
 																	// month
-
 		return date.getTime();
 	}
 
@@ -464,16 +463,19 @@ public class PlanningSearchServiceBean implements Serializable {
 	public void updatePlanningClasse() {
 		logger.debug("@@@@@@@ DEBUT UPDATE PLALNNING CLASSE @@@@@"
 				+ selectedEventsClasse.getClasseProgramm().getClasseName());
+		eventClasse = new DefaultScheduleModel();
 		    
 		studentEventsServicewsEndpoint = studentEventsServicews.getStudentEventsServicewsImplPort();
 		//listClasseEvent = studentEventsServicewsEndpoint.searchStudentEventsServicews(studentEventsDto);
 		if(selectedEventsClasse.getClasseProgramm().getIdClasseProgramm() != null){
 			selectedEventsClasse.setClasseProgramm(selectedEventsClasse.getClasseProgramm());
 			listClasseEvent = studentEventsServicewsEndpoint.searchStudentEventsServicews(selectedEventsClasse);
-				
+			logger.debug("@@@ TAILLE @@@@@@@"+listClasseEvent.size());
+			logger.debug("@@@ TAILLE @@@@@@@"+listClasseEvent.size());
+			
 				for (int i = 0; i < listClasseEvent.size(); i ++){
-					eventClasse = new DefaultScheduleModel();
 					eventClasse.addEvent(new DefaultScheduleEvent(listClasseEvent.get(i).getTitle()+ " " + listClasseEvent.get(i).getRoom().getNameOfClass(), XMLCalendarToDate.toDate(listClasseEvent.get(i).getStartDate()), XMLCalendarToDate.toDate(listClasseEvent.get(i).getEnDate())));
+					logger.debug("@@@@ LISTE EVENT @@@@@"+listClasseEvent.get(i).getTitle());
 						
 				}	
 			
