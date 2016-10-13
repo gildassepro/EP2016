@@ -262,7 +262,7 @@ public class CursusSearchServiceBean implements Serializable {
 			
 			listPopulistAY = popuplistDtoServicewsEndpoint.searchPopuplistDtoServicews("academic_years");
 			listPopulistFIL = popuplistDtoServicewsEndpoint.searchPopuplistDtoServicews("filiere");
-			listPopulistEtat = popuplistDtoServicewsEndpoint.searchPopuplistDtoServicews("etat");
+			listPopulistEtat = popuplistDtoServicewsEndpoint.searchPopuplistDtoServicews("statut");
 		
 			
 		} catch (Exception e) {
@@ -280,7 +280,7 @@ public class CursusSearchServiceBean implements Serializable {
 			
 			listPopulistAY = popuplistDtoServicewsEndpoint.searchPopuplistDtoServicews("academic_years");
 			listPopulistFIL = popuplistDtoServicewsEndpoint.searchPopuplistDtoServicews("filiere");
-			listPopulistEtat = popuplistDtoServicewsEndpoint.searchPopuplistDtoServicews("etat");
+			listPopulistEtat = popuplistDtoServicewsEndpoint.searchPopuplistDtoServicews("statut");
 			logger.debug("end init initCreate");
 		} catch (Exception e) {
 			e.printStackTrace();

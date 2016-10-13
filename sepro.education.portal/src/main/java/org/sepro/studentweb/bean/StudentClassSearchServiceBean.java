@@ -148,15 +148,33 @@ public class StudentClassSearchServiceBean implements Serializable {
 
 	private boolean action2 = false;
 	private boolean action3 = true;
+	private boolean action5 = true;
 	private boolean action4 = false;
 	private boolean test = true;
 	private boolean testtable = true;
+	private boolean testtable2 = true;
 	private boolean testbutton = false;
 
 	
 	
 	
 	
+	public boolean isAction5() {
+		return action5;
+	}
+
+	public void setAction5(boolean action5) {
+		this.action5 = action5;
+	}
+
+	public boolean isTesttable2() {
+		return testtable2;
+	}
+
+	public void setTesttable2(boolean testtable2) {
+		this.testtable2 = testtable2;
+	}
+
 	public List<InscriptionSteptreeDto> getListeProspectStep3() {
 		return listeProspectStep3;
 	}
@@ -516,6 +534,44 @@ public class StudentClassSearchServiceBean implements Serializable {
 		}
 
 	}
+	
+	
+	public void initDualListDetail(String caction) {
+		listProgrammeCalendarDestination =  new ArrayList<ProgrammeCalendarDto>();
+		listProgrammeCalendarSources =  new ArrayList<ProgrammeCalendarDto>();
+		if (caction.equals("1")) {
+			classeProgrammDto = classeProgrammDtos;
+			studentClasseDto = studentClasseDtos;
+			listEtudiantClass = new ArrayList<StudentClasseDto>();
+			action2 = true;
+			test = false;
+			action3 = true;
+			action5 = false;
+			testtable2 = false;
+			testbutton = true;
+			
+			selectedlistEtudiantClass = new ArrayList<StudentDto>();
+			listAcademicYear = new ArrayList<PopuplistDto>();
+			listFiliere = new ArrayList<PopuplistDto>();
+			listStudentClasse = new ArrayList<StudentProgramDto>();
+			listeTeacherEvent = new ArrayList<IdentityTeacherDto>();
+			
+
+			initDetailStudentClass();
+
+		} else {
+
+
+		}
+
+	}
+	
+	public void initDetailStudentClass(){
+		studentServicewsEndpoint = studentServicews.getStudentServicewsImplPort();
+		
+	//	selectedlistEtudiantClass = studentServicewsEndpoint.searchStudentServicews(studentDtos);
+		filteredCursus();
+	}
 
 	public void initUpdateStudentClass() {
 		logger.debug("@@@BEGIN INIT UPDATE @@@@");
@@ -820,7 +876,7 @@ public class StudentClassSearchServiceBean implements Serializable {
 
 				StudentClasseDto createStudentClass = new StudentClasseDto();
 				StudentDto studentost = new StudentDto();
-				createStudentClass.setClasseProgramm(classeProgrammDtost);	
+				createStudentClass.setClasseProgramm(classeProgrammDtost);
 				
 				studentost.setIdStudent(selectedlistEtudiantClass.get(i)
 						.getIdStudent());
@@ -847,6 +903,10 @@ public class StudentClassSearchServiceBean implements Serializable {
 		context.addMessage(null, msg);
 		logger.debug("++++@@@@ FIN CREATE STUDENT CLASSE @@@+++++++");
 		return null;
+		
+	}
+	public void listeDetailStudent(){
+		studentServicewsEndpoint = studentServicews.getStudentServicewsImplPort();
 		
 	}
 
@@ -895,19 +955,6 @@ public class StudentClassSearchServiceBean implements Serializable {
 		
 	}
 
-	// public void onTransfer(TransferEvent event) {
-	// StringBuilder builder = new StringBuilder();
-	// for(Object item : event.getItems()) {
-	// builder.append(((Theme) item).getName()).append("<br />");
-	// }
-	//
-	// FacesMessage msg = new FacesMessage();
-	// msg.setSeverity(FacesMessage.SEVERITY_INFO);
-	// msg.setSummary("Items Transferred");
-	// msg.setDetail(builder.toString());
-	//
-	// FacesContext.getCurrentInstance().addMessage(null, msg);
-	// }
 
 	public void onSelect(SelectEvent event) {
 		FacesContext context = FacesContext.getCurrentInstance();

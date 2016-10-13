@@ -42,6 +42,13 @@
 										onclick="PF('confirmationdelete').show()"
 										icon="fa fa-fw fa-remove">
 									</p:commandButton>
+									<p:commandButton id="detail" styleClass="btn btn-primary"
+										value="#{messages.label_modifier}"
+										update="@([id$=detailstudentclass]) forme"
+										onclick="PF('detailestudentclass').show()"
+										icon="fa fa-fw fa-list"
+										action="#{studentClassSearchServiceBean.initDualListDetail('1')}">
+									</p:commandButton>
 									<p:commandButton id="printe"
 										styleClass="btn btn-primary submit-button"
 										title="#{messages.label_print}"
@@ -49,7 +56,7 @@
 										<p:dataExporter type="pdf" fileName="programmes"
 											pageOnly="true" target="listclass" />
 									</p:commandButton>
-
+									
 									<p:commandButton value="#{messages.label_modifier}"
 										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
 										rendered="#{!studentClassSearchServiceBean.isAction()}"
@@ -265,7 +272,7 @@
 													rendered="#{!studentClassSearchServiceBean.testtable}"
 													value="#{studentClassSearchServiceBean.selectedlistEtudiantClass}"
 													var="studenties"
-													selection="#{studentClassSearchServiceBean.selectedlistStudentClasse}"
+													selection="#{studentClassSearchServiceBean.selectedlistEtudiantClass}"
 													rowKey="#{studenties.idStudent}" style="margin-bottom:0">
 													<f:facet name="header">
 						            #{messages.label_msg_student_msglist}
@@ -290,6 +297,190 @@
 										</h:form>
 									</h:form>
 								</p:panel>
+								
+								
+								<p:panel id="detailstudentclass" widgetVar="detailestudentclass"
+									rendered="#{!studentClassSearchServiceBean.isAction5()}">
+
+									<h:form id="fdialdetail">
+										<h3 style="margin-top: 0">
+											<p:outputLabel value="#{messages.label_update_student_class}"
+												rendered="#{!studentClassSearchServiceBean.isAction()}" />
+											<p:outputLabel value="#{messages.label_create_student_class}"
+												rendered="#{studentClassSearchServiceBean.isAction()}" />
+										</h3>
+
+										<div class="ui-grid ui-grid-responsive wrap class">
+											<div class="col-xs-12">
+												<div class="row">
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:outputLabel
+															value="#{messages.label_msg_student_nameclass}" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:inputText id="classenamed" styleClass="form-text"
+															immediate="true"
+															disabled="#{!studentClassSearchServiceBean.testbutton}"
+															value="#{studentClassSearchServiceBean.classeProgrammDto.classeName}"
+															placeholder="#{messages.label_msg_student_nameclass}"
+															required="true"
+															requiredMessage="#{messages.label_programmename_requeried}">
+															<p:ajax update="classname" event="keyup" />
+														</p:inputText>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_academic_years}:" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:selectOneMenu id="selectcurriculumd"
+															disabled="#{!studentClassSearchServiceBean.testbutton}"
+															styleClass="form-text" immediate="true"
+															value="#{studentClassSearchServiceBean.classeProgrammDto.academicYear}"
+															converter="entityConverter"
+															placeholder="#{messages.label_subestablishment}"
+															required="true"
+															requiredMessage="#{messages.label_curriculum_requeried}">
+															<f:selectItem
+																itemLabel="#{studentClassSearchServiceBean.classeProgrammDto.academicYear.value}"
+																itemValue="#{studentClassSearchServiceBean.classeProgrammDto.academicYear}"
+																label="#{messages.label_curriculum}" />
+															<f:selectItems
+																value="#{studentClassSearchServiceBean.listAcademicYear}"
+																var="academicYear" itemValue="#{academicYear}"
+																itemLabel="#{academicYear.value}" />
+														</p:selectOneMenu>
+													</div>
+
+												</div>
+
+
+												<div class="row">
+
+
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_programm_calendar}" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:selectCheckboxMenu id="selectprogrammecalendard"
+															value="#{studentClassSearchServiceBean.listProgrammeCalendarDestination}"
+															filter="true" filterMatchMode="startsWith"
+															converter="entityConverter" panelStyle="width:250px"
+															label="#{messages.label_programm_calendar}">
+															<f:selectItems
+																value="#{studentClassSearchServiceBean.listProgrammeCalendarSources}"
+																var="pcalendar" itemValue="#{pcalendar}"
+																itemLabel="#{pcalendar.programme.nameProgramme}" />
+														</p:selectCheckboxMenu>
+
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_curriculum}:" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:selectOneMenu id="selectclassfiliered"
+															styleClass="form-text"
+															disabled="#{!studentClassSearchServiceBean.testbutton}"
+															value="#{studentClassSearchServiceBean.classeProgrammDto.academicSector}"
+															converter="entityConverter"
+															placeholder="#{messages.label_programme_status}"
+															required="true"
+															requiredMessage="#{messages.label_cursusname_requeried}">
+															<f:selectItem
+																itemLabel="#{studentClassSearchServiceBean.classeProgrammDto.academicSector.value}"
+																itemValue="#{studentClassSearchServiceBean.classeProgrammDto.academicSector}"
+																label="#{messages.label_cursus}" />
+															<f:selectItems
+																value="#{studentClassSearchServiceBean.listFiliere}"
+																var="academicSector" itemValue="#{academicSector}"
+																itemLabel="#{academicSector.value}" />
+														</p:selectOneMenu>
+													</div>
+												</div>
+
+												<div class="row">
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_msg_nbre_student}:" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:inputText id="nombrestudentd" styleClass="form-text"
+															immediate="true"
+															disabled="#{!studentClassSearchServiceBean.testbutton}"
+															value="#{studentClassSearchServiceBean.classeProgrammDto.nombreEleve}"
+															placeholder="#{messages.label_msg_nbre_student}"
+															required="true"
+															requiredMessage="#{messages.label_msg_nbre_student}">
+
+														</p:inputText>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:outputLabel
+															value="#{messages.label_msg_responsable_teacher}" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:selectOneMenu id="profResd" styleClass="form-text"
+															value="#{studentClassSearchServiceBean.classeProgrammDto.teacherResponsable}"
+															converter="entityConverter"
+															placeholder="#{messages.label_msg_prof}"
+															requiredMessage="#{messages.label_msg_prof}">
+															<f:selectItem
+																itemLabel="#{studentClassSearchServiceBean.classeProgrammDto.teacherResponsable.firstName}"
+																itemValue="#{studentClassSearchServiceBean.classeProgrammDto.teacherResponsable}"
+																label="#{messages.label_cursus}" />
+															<f:selectItems
+																value="#{studentClassSearchServiceBean.listeTeacherEvent}"
+																var="teacherevent" itemValue="#{teacherevent}"
+																itemLabel="#{teacherevent.firstName} #{teacherevent.name}" />
+														</p:selectOneMenu>
+													</div>
+												</div>
+
+												<div class="row">
+													<div class="col-lg-3 col-md-3 col-sm-3"></div>
+													<div class="col-lg-3 col-md-3 col-sm-3"></div>
+													<div class="col-lg-3 col-md-3 col-sm-3"></div>
+
+												</div>
+
+											</div>
+										</div>
+										<br></br>
+										
+										<br></br>
+										<h:form id="fdetailstudent">
+											<div class="ui-datatable-tablewrapper">
+												<p:dataTable id="detailstudent"
+													rendered="#{!studentClassSearchServiceBean.testtable2}"
+													value="#{studentClassSearchServiceBean.selectedlistEtudiantClass}"
+													var="detailstudent"
+													rowKey="#{detailstudent.idStudent}" style="margin-bottom:0">
+													<f:facet name="header">
+						            #{messages.label_msg_student_msglist}
+						        </f:facet>
+													<p:column headerText="#{messages.label_number_inscription}">
+														<h:outputText
+															value="#{detailstudent.inscriptionAuthentification.idInscription}" />
+													</p:column>
+													<p:column headerText="#{messages.label_name}">
+														<h:outputText value="#{detailstudent.name}" />
+													</p:column>
+													<p:column headerText="#{messages.label_surname}">
+														<h:outputText value="#{detailstudent.firstName}" />
+													</p:column>
+													<p:column headerText="#{messages.labeldatedenaiss}">
+														<h:outputText value="#{detailstudent.birthday}" />
+													</p:column>
+												</p:dataTable>
+											</div>
+										</h:form>
+									</h:form>
+								</p:panel>
+								
 
 								<p:dataTable id="listclass"
 									value="#{studentClassSearchServiceBean.listClass}"

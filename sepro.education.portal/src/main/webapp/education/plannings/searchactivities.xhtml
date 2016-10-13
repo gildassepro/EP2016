@@ -251,8 +251,8 @@
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:calendar id="from1"
 															value="#{activitieSearchServiceBean.studentEventsDto.startDate}"
-															pattern="HH:mm" timeOnly="true">
-															<f:converter converterId="dateTimeConverter" />
+															pattern="HH:mm:ss" timeOnly="true">
+															<f:converter converterId="timeConverter" />
 														</p:calendar>
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
@@ -262,8 +262,8 @@
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:calendar id="to1"
 															value="#{activitieSearchServiceBean.studentEventsDto.enDate}"
-															pattern="HH:mm" timeOnly="true">
-															<f:converter converterId="dateTimeConverter" />
+															pattern="HH:mm:ss" timeOnly="true">
+															<f:converter converterId="timeConverter" />
 														</p:calendar>
 													</div>
 												</div>

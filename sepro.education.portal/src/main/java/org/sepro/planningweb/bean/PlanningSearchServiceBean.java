@@ -53,6 +53,7 @@ import org.sepro.teacherweb.serviceapi.IdentityTeacherDto;
 import org.sepro.teacherweb.serviceimpl.IdentityTeacherServicews;
 import org.sepro.teacherweb.serviceimpl.IdentityTeacherServicewsEndpoint;
 
+import sepro.education.web.util.XMLCalendarTimeToDate;
 import sepro.education.web.util.XMLCalendarToDate;
 
 @ManagedBean
@@ -428,7 +429,9 @@ public class PlanningSearchServiceBean implements Serializable {
 			eventProf = new DefaultScheduleModel();
 			eventProf.addEvent(new DefaultScheduleEvent("TODAY", today1Pm(), today6Pm() ));
 			
-
+			logger.debug("@@@@ AFICHAGE EVENT TIME 111 @@@@@@ "+today1Pm());
+			logger.debug("@@@@ AFICHAGE EVENT TIME  222 @@@@@@ "+today6Pm());
+			
 			logger.debug("end init");
 
 		} catch (Exception e) {
@@ -474,11 +477,14 @@ public class PlanningSearchServiceBean implements Serializable {
 			logger.debug("@@@ TAILLE @@@@@@@"+listClasseEvent.size());
 			
 				for (int i = 0; i < listClasseEvent.size(); i ++){
-					eventClasse.addEvent(new DefaultScheduleEvent(listClasseEvent.get(i).getTitle()+ " " + listClasseEvent.get(i).getRoom().getNameOfClass(), XMLCalendarToDate.toDate(listClasseEvent.get(i).getStartDate()), XMLCalendarToDate.toDate(listClasseEvent.get(i).getEnDate())));
-					logger.debug("@@@@ LISTE EVENT @@@@@"+listClasseEvent.get(i).getTitle());
+					eventClasse.addEvent(new DefaultScheduleEvent(listClasseEvent.get(i).getTitle()+ " " + listClasseEvent.get(i).getRoom().getNameOfClass(), XMLCalendarTimeToDate.toDate(listClasseEvent.get(i).getStartDate()), XMLCalendarTimeToDate.toDate(listClasseEvent.get(i).getEnDate())));
+					logger.debug("@@@@ LISTE EVENT 999 @@@@@"+XMLCalendarTimeToDate.toDate(listClasseEvent.get(i).getStartDate()));
+					logger.debug("@@@@ LISTE EVENT 888 @@@@@"+XMLCalendarTimeToDate.toDate(listClasseEvent.get(i).getEnDate()));
 						
-				}	
-			
+				}
+				
+				//eventClasse.addEvent(new DefaultScheduleEvent(stu.getTitle(), XMLCalendarToDate.toDate(stu.getStartDate()), XMLCalendarToDate.toDate(stu.getEnDate())));
+	
 			
 		}
 		logger.debug("@@@@@@@ FIN UPDATE PLALNNING CLASSE @@@@@"
@@ -492,15 +498,16 @@ public class PlanningSearchServiceBean implements Serializable {
 		logger.debug("@@@@@@@ DEBUT UPDATE PLALNNING PROF @@@@@"
 				+ selectedEventsProf.getTeacher().getIdIdentityTeacher());
 		studentEventsServicewsEndpoint = studentEventsServicews.getStudentEventsServicewsImplPort();
-		
+		eventProf = new DefaultScheduleModel();
 		//listProfEvent = studentEventsServicewsEndpoint.searchStudentEventsServicews(studentEventsDto);
 		if(selectedEventsProf.getTeacher().getIdIdentityTeacher() != null){
 			selectedEventsProf.setTeacher(selectedEventsProf.getTeacher());
 			listProfEvent = studentEventsServicewsEndpoint.searchStudentEventsServicews(selectedEventsProf);
 			
 			for (int j = 0; j < listProfEvent.size(); j ++){
-				eventProf = new DefaultScheduleModel();
+				
 				eventProf.addEvent(new DefaultScheduleEvent(listProfEvent.get(j).getTitle() + " " + listProfEvent.get(j).getClasseProgramm().getClasseName()+ " " + listProfEvent.get(j).getRoom().getNameOfClass(), XMLCalendarToDate.toDate(listProfEvent.get(j).getStartDate()), XMLCalendarToDate.toDate(listProfEvent.get(j).getEnDate())));
+				logger.debug("@@@@ LISTE EVENT @@@@@"+listProfEvent.get(j).getTitle());
 					
 			}
 			
