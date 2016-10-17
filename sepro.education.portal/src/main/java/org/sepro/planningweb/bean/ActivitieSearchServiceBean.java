@@ -3,6 +3,8 @@ package org.sepro.planningweb.bean;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -10,6 +12,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.stream.Stream;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -24,14 +27,17 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.tools.ant.util.DateUtils;
+import org.jfree.data.time.Day;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.LazyScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
+import org.sepro.authentificationweb.serviceapi.RoleDto;
 import org.sepro.parameterweb.serviceapi.AcademicModuleDto;
 import org.sepro.parameterweb.serviceapi.CityDto;
 import org.sepro.parameterweb.serviceapi.ClasseDto;
+import org.sepro.parameterweb.serviceapi.DaysofWeekDto;
 import org.sepro.parameterweb.serviceapi.ModuleCalendarDto;
 import org.sepro.parameterweb.serviceapi.PopuplistDto;
 import org.sepro.parameterweb.serviceapi.ProgrammeCalendarDto;
@@ -42,6 +48,8 @@ import org.sepro.parameterweb.serviceimpl.AcademicModuleDtoServicews;
 import org.sepro.parameterweb.serviceimpl.AcademicModuleDtoServicewsEndpoint;
 import org.sepro.parameterweb.serviceimpl.ClasseServicews;
 import org.sepro.parameterweb.serviceimpl.ClasseServicewsEndpoint;
+import org.sepro.parameterweb.serviceimpl.DaysofWeekServicews;
+import org.sepro.parameterweb.serviceimpl.DaysofWeekServicewsEndpoint;
 import org.sepro.parameterweb.serviceimpl.ModuleCalendarDtoServicews;
 import org.sepro.parameterweb.serviceimpl.ModuleCalendarDtoServicewsEndpoint;
 import org.sepro.parameterweb.serviceimpl.PopuplistDtoServicews;
@@ -127,6 +135,9 @@ public class ActivitieSearchServiceBean implements Serializable {
 	private PopuplistDtoServicewsEndpoint popuplistDtoServicewsEndpoint;
 	private PopuplistDtoServicews popuplistDtoServicews = new PopuplistDtoServicews();
 	
+	private DaysofWeekServicews dayofweekseServicews = new DaysofWeekServicews();
+	private DaysofWeekServicewsEndpoint dayofweekserServicewsEndpoint;
+	
 	private ModuleCalendarDto moduleCalendarDto = new ModuleCalendarDto();
 	private List<ModuleCalendarDto> listModuleCalendarDto = new ArrayList<ModuleCalendarDto>();
 	private List<ModuleCalendarDto> listModuleCalendarDtos = new ArrayList<ModuleCalendarDto>();
@@ -136,6 +147,10 @@ public class ActivitieSearchServiceBean implements Serializable {
 	private StudentEventsDto studentEventsDto = new StudentEventsDto();
 	private StudentEventsDto selectedEvents = new StudentEventsDto();
 	private List<StudentEventsDto> listStudentEvent = new ArrayList<StudentEventsDto>();
+	
+	private List<DaysofWeekDto> listjoursource = new ArrayList<DaysofWeekDto>();
+	private List<DaysofWeekDto> listjourdestination = new ArrayList<DaysofWeekDto>();
+	private DaysofWeekDto daysofWeekDto = new DaysofWeekDto();
 	
 	private ClasseDto classeDto = new ClasseDto();
 	private List<ClasseDto> listDesClass = new ArrayList<ClasseDto>();
@@ -167,6 +182,9 @@ public class ActivitieSearchServiceBean implements Serializable {
 	private XMLGregorianCalendar startDate;
 	private XMLGregorianCalendar endDate;
 	
+	private XMLGregorianCalendar startd;
+	private XMLGregorianCalendar endd;
+	
 	private String testStartDate;
 	private String testEndDate;
 	
@@ -174,6 +192,46 @@ public class ActivitieSearchServiceBean implements Serializable {
 	
 	
 	
+	
+	public XMLGregorianCalendar getStartd() {
+		return startd;
+	}
+
+	public void setStartd(XMLGregorianCalendar startd) {
+		this.startd = startd;
+	}
+
+	public XMLGregorianCalendar getEndd() {
+		return endd;
+	}
+
+	public void setEndd(XMLGregorianCalendar endd) {
+		this.endd = endd;
+	}
+
+	public List<DaysofWeekDto> getListjoursource() {
+		return listjoursource;
+	}
+
+	public void setListjoursource(List<DaysofWeekDto> listjoursource) {
+		this.listjoursource = listjoursource;
+	}
+
+	public List<DaysofWeekDto> getListjourdestination() {
+		return listjourdestination;
+	}
+
+	public void setListjourdestination(List<DaysofWeekDto> listjourdestination) {
+		this.listjourdestination = listjourdestination;
+	}
+
+	public DaysofWeekDto getDaysofWeekDto() {
+		return daysofWeekDto;
+	}
+
+	public void setDaysofWeekDto(DaysofWeekDto daysofWeekDto) {
+		this.daysofWeekDto = daysofWeekDto;
+	}
 
 	public List<ModuleCalendarDto> getListModuleCalendarDto() {
 		return listModuleCalendarDto;
@@ -523,12 +581,15 @@ public class ActivitieSearchServiceBean implements Serializable {
 			listClass = new ArrayList<ClasseProgrammDto>();
 			listProgrammeCalendars = new ArrayList<ProgrammeCalendarDto>();
 			listProgrammeCalendart = new ArrayList<ProgrammeCalendarDto>();
+			listjoursource = new ArrayList<DaysofWeekDto>();
+			listjourdestination = new ArrayList<DaysofWeekDto>();
 			
 			initUpdate();
 		} else {
 			action2 = true;
 			action3 = false;
 			studentEventsDto = new StudentEventsDto();
+			moduleCalendarDto = new ModuleCalendarDto();
 			listAcademicYear = new ArrayList<PopuplistDto>();
 			listTypeEvent = new ArrayList<PopuplistDto>();
 			listAcademicModule = new ArrayList<AcademicModuleDto>();
@@ -536,6 +597,8 @@ public class ActivitieSearchServiceBean implements Serializable {
 			listClass = new ArrayList<ClasseProgrammDto>();
 			listProgrammeCalendars = new ArrayList<ProgrammeCalendarDto>();
 			listProgrammeCalendart = new ArrayList<ProgrammeCalendarDto>();
+			listjoursource = new ArrayList<DaysofWeekDto>();
+			listjourdestination = new ArrayList<DaysofWeekDto>();
 			
 			initCreate();
 		}
@@ -549,6 +612,7 @@ public class ActivitieSearchServiceBean implements Serializable {
 				.getPopuplistDtoServicewsImplPort();
 		classeProgrammServicewsEndpoint = classeProgrammServicews
 				.getClasseProgrammServicewsImplPort();
+		dayofweekserServicewsEndpoint = dayofweekseServicews.getDaysofWeekServicewsImplPort();
 		identityTeacherServicewsEndpoint = identityTeacherServicews.getIdentityTeacherServicewsImplPort();
 		classeServicewsEndpoint = classeServicews.getClasseServicewsImplPort();
 		academicModuleDtoServicewsEndpoint = academicModuleDtoServicews.getAcademicModuleDtoServicewsImplPort();
@@ -572,6 +636,7 @@ public class ActivitieSearchServiceBean implements Serializable {
 				.getPopuplistDtoServicewsImplPort();
 		classeProgrammServicewsEndpoint = classeProgrammServicews
 				.getClasseProgrammServicewsImplPort();
+		dayofweekserServicewsEndpoint = dayofweekseServicews.getDaysofWeekServicewsImplPort();
 		identityTeacherServicewsEndpoint = identityTeacherServicews.getIdentityTeacherServicewsImplPort();
 		classeServicewsEndpoint = classeServicews.getClasseServicewsImplPort();
 		academicModuleDtoServicewsEndpoint = academicModuleDtoServicews.getAcademicModuleDtoServicewsImplPort();
@@ -583,16 +648,12 @@ public class ActivitieSearchServiceBean implements Serializable {
 		listClass = classeProgrammServicewsEndpoint
 				.searchClasseProgrammServicews(classeProgrammDto);
 		
+		listjoursource = dayofweekserServicewsEndpoint.getAllDaysofWeekServicews();
 		
-//		listAcademicYear = popuplistDtoServicewsEndpoint
-//				.searchPopuplistDtoServicews("academic_years");
-//		listTypeEvent = popuplistDtoServicewsEndpoint
-//				.searchPopuplistDtoServicews("typeevent");
-//		listClass = classeProgrammServicewsEndpoint
-//				.searchClasseProgrammServicews(classeProgrammDto);
-//		
-//		listDesClass = classeServicewsEndpoint.getAllClasseServicews();
-//		listeTeacherEvent = identityTeacherServicewsEndpoint.getAllIdentityTeacherServicews();
+		for(DaysofWeekDto md : listjoursource){
+			
+		}
+		
 		
 	}
 	
@@ -699,30 +760,195 @@ public class ActivitieSearchServiceBean implements Serializable {
 	
 	public void updateSession(){
 		logger.debug("@@@@ DANS LE UPDATE SESSION @@@@@@ ");
+		Date startDate,endDate = new Date();
+		Date startDay = new Date();
+		dayofweekserServicewsEndpoint = dayofweekseServicews.getDaysofWeekServicewsImplPort();
 		academicModuleDtoServicewsEndpoint = academicModuleDtoServicews.getAcademicModuleDtoServicewsImplPort();
 		moduleCalendarDtoServicewsEndpoint = moduleCalendarDtoServicews.getModuleCalendarDtoServicewsImplPort();
 		programmeCalendarDtoServicewsEndpoint = programmeCalendarDtoServicews.getProgrammeCalendarDtoServicewsImplPort();
 		
-		for(ModuleCalendarDto mod : listModuleCalendarDto){
-			listModuleCalendarDtos.add(mod);
-			logger.debug("@@@@ TAILLE LISTE SECOND START @@@@@"+mod.getSession().getStartDate());
-			logger.debug("@@@@ TAILLE LISTE SECOND END @@@@@"+mod.getSession().getEndDate());
+		logger.debug("@@@@ TEST DU MODULE @@@@@"+moduleCalendarDto.getIdModuleCalendar());
+		logger.debug("@@@@ TEST DU MODULE 222 @@@@@"+XMLCalendarToDate.toDate(moduleCalendarDto.getSession().getStartDate()));
+		logger.debug("@@@@ TEST DU MODULE 333 @@@@@"+XMLCalendarToDate.toDate(moduleCalendarDto.getSession().getEndDate()));
+		
+		startDate = XMLCalendarToDate.toDate(moduleCalendarDto.getSession().getStartDate());
+		endDate = XMLCalendarToDate.toDate(moduleCalendarDto.getSession().getEndDate());
+		//Calendar t = Calendar.getInstance();
+		//Calendar t = new GregorianCalendar(2016,10,16);
+		
+		//t.setTime(startDate);
+		//t.get(Calendar.DAY_OF_MONTH);
+		
+		
+
+//		
+//		logger.debug("@@@@ TEST DU MODULE 666 @@@@@ "+t.get(Calendar.DAY_OF_WEEK));
+		logger.debug("@@@@ TEST DU MODULE 666 @@@@@"+listjourdestination.size());
+		//Calendar calendar = Calendar.getInstance();
+		Calendar calendarDebut = Calendar.getInstance();
+		calendarDebut.setTime(startDate);
+		Calendar calendarFin = Calendar.getInstance();
+		calendarFin.setTime(endDate);
+		
+		Calendar calendar = Calendar.getInstance();
+		Date d = startDate;
+		calendar.setTime(d);
+		int jour;
+
+		while(calendar.getTime().compareTo(endDate)<=0)
+		{  
+			logger.debug("@@@@ TEST DU MODULE 777 @@@@@"+listjourdestination.size());
+		 calendar.setTime(d);	
+		 jour = calendar.get(Calendar.DAY_OF_WEEK);
+		 if(listjourdestination!=null && !listjourdestination.isEmpty())
+		 	{for(DaysofWeekDto day : listjourdestination)
+		 		{
+		 		logger.debug("@@@@ TEST DU MODULE 888 @@@@@"+listjourdestination.size());
+		 		
+		 		if(comparerJour(jour, day.getIdDayofWeek()))
+		 		{
+		 			logger.debug("@@@@ TEST DU MODULE 999 @@@@@"+listjourdestination.size());
+		 		 logger.debug("+++ AZERT +++++"+jour);
+		 		}
+		 		
+		 	}
+		 calendar.add(Calendar.DATE, 1);
+		 	}
 		}
 		
-		//logger.debug("@@@@ TAILLE DE LA LISTE @@@@@@@"+selectedlistAcademicModules.size());
-		
-//		for(int i = 0; i < selectedlistAcademicModules.size(); i++){
-//			logger.debug("@@@@ TAILLE DE LA LISTE @@@@@@@"+selectedlistAcademicModules.size());
-//		}
 		
 	}
 	
-//	public Date dateTime(Date date, Date time){
-//		
-//		
-//		return new Date(date.getYear(), date.getMonth(), date.getDay(), time.getHours(), time.getMinutes());
-//	}
 	
+	public Boolean comparerJour(int jour1,Long jour2)
+	{Boolean b = false;
+	 b=(jour1 == 1 && jour2 ==7) ? true:b;	
+	 b=(jour1 == 2 && jour2 ==1) ? true:b;	
+	 b=(jour1 == 3 && jour2 ==2) ? true:b;	
+	 b=(jour1 == 4 && jour2 ==3) ? true:b;	
+	 b=(jour1 == 5 && jour2 ==4) ? true:b;	
+	 b=(jour1 == 6 && jour2 ==5) ? true:b;	
+	 b=(jour1 == 7 && jour2 ==6) ? true:b;	
+	 return b;	
+	}
+	
+	public ModuleCalendarDto getModuleCalendar() {
+		logger.debug("+++++ AER ++++++"+moduleCalendarDto.getIdModuleCalendar());
+		
+		return moduleCalendarDto;
+	}
+	
+	
+	public List<DaysofWeekDto> getListDest() {
+		for(DaysofWeekDto mod : listjourdestination){
+			logger.debug("+++++ LEDSSS +++++"+mod.getDays());
+		}
+		return listjourdestination;
+	}
+	
+	public void addActivitiess(){
+		
+		logger.debug("@@@@ DANS LE UPDATE DAYS @@@@@@ ");
+		FacesMessage msg = null;
+		
+		StudentEventsDto addEvent = new StudentEventsDto();
+		dayofweekserServicewsEndpoint = dayofweekseServicews.getDaysofWeekServicewsImplPort();
+		academicModuleDtoServicewsEndpoint = academicModuleDtoServicews.getAcademicModuleDtoServicewsImplPort();
+		moduleCalendarDtoServicewsEndpoint = moduleCalendarDtoServicews.getModuleCalendarDtoServicewsImplPort();
+		programmeCalendarDtoServicewsEndpoint = programmeCalendarDtoServicews.getProgrammeCalendarDtoServicewsImplPort();
+		
+		Date startDate,endDate = new Date();
+		
+		logger.debug("@@@@ TAILLE @@@@@"+getListDest().size());
+		
+		logger.debug("@@@@ VERIFICATION 111 @@@@@ "+XMLCalendarToDate.toDate(getModuleCalendar().getSession().getStartDate()));
+		logger.debug("@@@@ VERIFICATION 222 @@@@@ "+XMLCalendarToDate.toDate(getModuleCalendar().getSession().getEndDate()));
+		
+//		startDate = XMLCalendarToDate.toDate(moduleCalendarDto.getSession().getStartDate());
+//		endDate = XMLCalendarToDate.toDate(moduleCalendarDto.getSession().getEndDate());
+		
+		startDate = new GregorianCalendar(2016,07,16).getTime();
+		endDate = new GregorianCalendar(2016,10,16).getTime();
+		Calendar calendar = Calendar.getInstance();
+		Calendar cal = Calendar.getInstance();
+		
+		
+		//Date d = startDate;
+		calendar.setTime(startDate);	
+		int jour = 0;
+		
+		logger.debug("@@@@ TEST TAILLE jour @@@@@"+listjourdestination.size());
+		
+		
+		
+		while(calendar.getTime().compareTo(endDate)<=0)
+		{
+		 logger.debug("+++++ PLUS OOO +++++"+calendar.getTime());	
+		 jour = calendar.get(Calendar.DAY_OF_WEEK);
+		 logger.debug("+++++ PLUS  +++++"+jour);
+		 
+		 logger.debug("@@@@ TEST DU MODULE ENTRE jour @@@@@"+jour);
+		 logger.debug("@@@@ TEST DU MODULE TAILLE jour @@@@@"+listjourdestination.size());
+		 
+			 for( DaysofWeekDto day : listjourdestination)
+		 		{
+		 		 logger.debug("@@@@ TEST DU MODULE HHHH @@@@@"+day.getIdDayofWeek());
+		 		 
+		 		if(day.getIdDayofWeek() == jour){
+		 			logger.debug("+++ AZERT 111 +++++"+jour);
+		 			Calendar f = (Calendar) calendar.clone();
+		 			logger.debug("+++ AFFICHAGE DE LA DATE  +++++"+f.getTime());
+		 			start = studentEventsDto.getStartDate();
+		 			startd = XMLCalendarTimeToDate.toXMLGregorianCalendar(f.getTime());
+		 			startd.setHour(studentEventsDto.getStartDate().getHour());
+		 			startd.setMinute(studentEventsDto.getStartDate().getMinute());
+		 			startd.setSecond(studentEventsDto.getStartDate().getSecond());
+		 			
+		 			endd = XMLCalendarTimeToDate.toXMLGregorianCalendar(f.getTime());
+		 			endd.setHour(studentEventsDto.getEnDate().getHour());
+		 			endd.setMinute(studentEventsDto.getEnDate().getMinute());
+		 			endd.setSecond(studentEventsDto.getEnDate().getSecond());
+		 			
+		 			
+		 			addEvent.setAcademicModule(moduleCalendarDto.getAcademicModule());
+					addEvent.setAcademicYear(studentEventsDto.getAcademicYear());
+					addEvent.setAllDayInd(studentEventsDto.isAllDayInd());
+					addEvent.setClasseProgramm(studentEventsDto.getClasseProgramm());
+					addEvent.setComments(studentEventsDto.getComments());
+					addEvent.setDescription(studentEventsDto.getDescription());
+//					logger.debug("@@@@@ DATE TAPE 1 @@@@"+studentEventsDto.getStartDate());
+					addEvent.setStartDate(startd);
+//					logger.debug("@@@@@ DATE TAPE 2 @@@@"+studentEventsDto.getEnDate());
+					addEvent.setEnDate(endd);
+					addEvent.setEventType(studentEventsDto.getEventType());
+					addEvent.setRoom(studentEventsDto.getRoom());
+					logger.debug("@@@@@ CHOIX DE LA SALLE @@@@"+studentEventsDto.getRoom().getIdClass());
+					logger.debug("@@@@@ CHOIX DE LA SALLE @@@@"+studentEventsDto.getRoom().getNameOfClass());
+					logger.debug("@@@@@ DATE TAPE @@@@"+startd);
+					logger.debug("@@@@@ DATE TAPE @@@@"+endd);
+					
+					addEvent.setTeacher(studentEventsDto.getTeacher());
+					addEvent.setTitle(studentEventsDto.getTitle());
+					
+					studentEventsServicewsEndpoint = studentEventsServicews.getStudentEventsServicewsImplPort();
+					
+					addEvent = studentEventsServicewsEndpoint.createStudentEventsServicews(addEvent);
+		 			
+		 		}
+		 			
+		 	}
+			 
+		 calendar.add(Calendar.DATE, 1);
+		 msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					rb.getString("label_succesful"),
+					rb.getString("label_msg_sucess_create_activity"));
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, msg);
+		}
+
+	}
+	
+
 	public void addActivities(){
 		
 		logger.debug("@@@@@ DEBUT CREATION ACTIVITIES @@@@@@@@");
@@ -814,6 +1040,7 @@ public class ActivitieSearchServiceBean implements Serializable {
 					.getPopuplistDtoServicewsImplPort();
 			classeProgrammServicewsEndpoint = classeProgrammServicews
 					.getClasseProgrammServicewsImplPort();
+			dayofweekserServicewsEndpoint = dayofweekseServicews.getDaysofWeekServicewsImplPort();
 			identityTeacherServicewsEndpoint = identityTeacherServicews.getIdentityTeacherServicewsImplPort();
 			classeServicewsEndpoint = classeServicews.getClasseServicewsImplPort();
 			academicModuleDtoServicewsEndpoint = academicModuleDtoServicews.getAcademicModuleDtoServicewsImplPort();
@@ -827,6 +1054,7 @@ public class ActivitieSearchServiceBean implements Serializable {
 			
 			listDesClass = classeServicewsEndpoint.getAllClasseServicews();
 			listeTeacherEvent = identityTeacherServicewsEndpoint.getAllIdentityTeacherServicews();
+			listjoursource = dayofweekserServicewsEndpoint.getAllDaysofWeekServicews();
 			
 			//selectedEvents.setClasseProgramm(studentEventsDto.getClasseProgramm());
 			

@@ -47,7 +47,7 @@
 									<p:commandButton value="#{messages.label_modifier}"
 										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
 										rendered="#{!activitieSearchServiceBean.isAction()}"
-										action="#{activitieSearchServiceBean.addActivities()}"
+										action="#{activitieSearchServiceBean.addActivitiess}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('addeactivities').hide()"
 										update="forme fdial growl" />
 									<p:commandButton value="#{messages.label_create}"
@@ -145,21 +145,28 @@
 														<span class="requireds">(*)</span>
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
-														<p:selectCheckboxMenu id="selectedmodules"
-															value="#{activitieSearchServiceBean.listModuleCalendarDto}"
-															filter="true" filterMatchMode="startsWith"
-															converter="entityConverter" panelStyle="width:250px"
-															label="#{messages.label_msg_academic_module}">
+
+														<p:selectOneMenu id="selectedmodules"
+															styleClass="form-text"
+															value="#{activitieSearchServiceBean.moduleCalendarDto}"
+															converter="entityConverter"
+															placeholder="#{messages.label_msg_academic_module}">
+															<f:selectItem
+																itemLabel="#{activitieSearchServiceBean.moduleCalendarDto.academicModule.moduleName}"
+																itemValue="#{activitieSearchServiceBean.moduleCalendarDto.academicModule}"
+																label="#{messages.label_msg_academic_module}" />
 															<f:selectItems
 																value="#{activitieSearchServiceBean.listModuleCalendarDtos}"
-																var="academicModu" itemValue="#{academicModu}"
-																itemLabel="#{academicModu.academicModule.moduleName}" />
-																<p:ajax listener="#{activitieSearchServiceBean.updateSession()}" />
-														</p:selectCheckboxMenu>
-														
+																var="academicModules" itemValue="#{academicModules}"
+																itemLabel="#{academicModules.academicModule.moduleName}" />
+															<p:ajax
+																listener="#{activitieSearchServiceBean.getModuleCalendar()}" />
+														</p:selectOneMenu>
+
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
-														<p:outputLabel value="#{messages.label_msg_title_activity}" />
+														<p:outputLabel
+															value="#{messages.label_msg_title_activity}" />
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:inputText styleClass="form-control" id="titleactivity"
@@ -190,13 +197,24 @@
 														</p:selectOneMenu>
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
-														<p:outputLabel value="#{messages.label_msg_description}" />
+														
+														<p:outputLabel value="#{messages.labeljourdispo}" />
 														<span class="requireds">(*)</span>
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
-														<p:inputTextarea rows="" cols="33" id="desc2"
-															placeholder="#{messages.label_msg_description}"
-															value="#{activitieSearchServiceBean.studentEventsDto.description}" />
+															<p:selectCheckboxMenu id="jourdispo"
+															styleClass="form-text"
+															value="#{activitieSearchServiceBean.listjourdestination}"
+															filter="true" filterMatchMode="startsWith"
+															converter="entityConverter" panelStyle="width:250px"
+															label="#{messages.label_choix_des_jours}">
+															<f:selectItems
+																value="#{activitieSearchServiceBean.listjoursource}"
+																var="dayofweek" itemValue="#{dayofweek}"
+																itemLabel="#{dayofweek.days}" />
+																<p:ajax
+																listener="#{activitieSearchServiceBean.getListDest()}" />
+														</p:selectCheckboxMenu>
 													</div>
 												</div>
 
@@ -219,6 +237,7 @@
 																value="#{activitieSearchServiceBean.listDesClass}"
 																var="room" itemValue="#{room}"
 																itemLabel="#{room.nameOfClass}" />
+																
 														</p:selectOneMenu>
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
@@ -245,7 +264,7 @@
 
 												<div class="row">
 													<div class="col-lg-3 col-md-3 col-sm-3">
-														<p:outputLabel value="#{messages.labeldatedebut}" />
+														<p:outputLabel value="#{messages.label_start_hour}" />
 														<span class="requireds">(*)</span>
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
@@ -256,7 +275,7 @@
 														</p:calendar>
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
-														<p:outputLabel value="#{messages.labeldatefin}" />
+														<p:outputLabel value="#{messages.label_end_hour}" />
 														<span class="requireds">(*)</span>
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
@@ -270,18 +289,35 @@
 
 												<div class="row">
 													<div class="col-lg-3 col-md-3 col-sm-3">
-														<p:outputLabel value="#{messages.label_msg_day_indicator}" />
+														<p:outputLabel value="#{messages.label_msg_description}" />
 														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+													<p:inputTextarea rows="" cols="33" id="desc2"
+															placeholder="#{messages.label_msg_description}"
+															value="#{activitieSearchServiceBean.studentEventsDto.description}" />	
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_msg_comment}" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:inputTextarea rows="" cols="33" id="comment1"
+															placeholder="#{messages.label_msg_comment}"
+															value="#{activitieSearchServiceBean.studentEventsDto.comments}" />
+													</div>
+												</div>
+
+												<div class="row">
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_msg_day_indicator}" />
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<h:selectBooleanCheckbox id="allday1"
 															value="#{activitieSearchServiceBean.value}" />
 													</div>
-													<div class="col-lg-3 col-md-3 col-sm-3"><p:outputLabel value="#{messages.label_msg_comment}" />
-														<span class="requireds">(*)</span></div>
-													<div class="col-lg-3 col-md-3 col-sm-3"><p:inputTextarea rows="" cols="33" id="comment1"
-															placeholder="#{messages.label_msg_comment}"
-															value="#{activitieSearchServiceBean.studentEventsDto.comments}" /></div>
+													<div class="col-lg-3 col-md-3 col-sm-3"></div>
+													<div class="col-lg-3 col-md-3 col-sm-3"></div>
 												</div>
 
 											</div>
