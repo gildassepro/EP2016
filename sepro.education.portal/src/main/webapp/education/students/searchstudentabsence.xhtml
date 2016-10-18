@@ -15,20 +15,12 @@
 
 				<h:form id="forme">
 					<p:accordionPanel>
-						<p:tab title="#{messages.label_msg_activitie}">
+						<p:tab title="#{messages.label_msg_list_presence}">
 
 							<b:row styleClass="listPage">
 
 								<div id="menubutton">
-									<p:commandButton id="add"
-										styleClass="btn btn-primary submit-button"
-										value="#{messages.label_new}" title="#{messages.label_new}"
-										action="#{activitieSearchServiceBean.initDualList('2')}"
-										update="@([id$=updatactivities]) forme fdial"
-										onclick="PF('updateactivities').show()"
-										icon="fa fa-fw fa-plus">
-									</p:commandButton>
-									
+
 									<p:commandButton id="printe"
 										styleClass="btn btn-primary submit-button"
 										title="#{messages.label_print}"
@@ -37,17 +29,9 @@
 											pageOnly="true" target="" />
 									</p:commandButton>
 
-									<p:commandButton value="#{messages.label_modifier}"
-										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
-										rendered="#{!activitieSearchServiceBean.isAction()}"
-										action="#{activitieSearchServiceBean.addActivities()}"
-										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('addabsences').hide()"
-										update="forme fdial growl" />
 									<p:commandButton value="#{messages.label_create}"
 										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
-										rendered="#{activitieSearchServiceBean.isAction()}"
-										disabled="#{activitieSearchServiceBean.test}"
-										action="#{programmeSearchServiceBean.createProgramme()}"
+										action="#{programmeSearchServiceBean.saveAbsence()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('addabsences').hide()"
 										update="forme fdial growl" />
 									<p:splitButton value="#{messages.label_options}"
@@ -68,17 +52,13 @@
 									</p:commandButton>
 
 								</div>
-								
 
-								<p:panel id="addabsence" widgetVar="addabsences"
-									rendered="#{!activitieSearchServiceBean.isAction2()}">
+
+								<p:panel id="addabsence" widgetVar="addabsences">
 
 									<h:form id="fdial">
 										<h3 style="margin-top: 0">
-											<p:outputLabel value="#{messages.label_create_student_class}"
-												rendered="#{activitieSearchServiceBean.isAction()}" />
-											<p:outputLabel value="#{messages.label_msg_activitie}"
-												rendered="#{!activitieSearchServiceBean.isAction()}" />
+											<p:outputLabel value="#{messages.label_msg_list_presence}" />
 										</h3>
 
 										<div class="ui-grid ui-grid-responsive wrap class">
@@ -89,56 +69,46 @@
 														<p:outputLabel value="#{messages.label_msg_classname}:" />
 														<span class="requireds">(*)</span>
 													</div>
+
 													<div class="col-lg-3 col-md-3 col-sm-3">
-														<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:selectOneMenu id="selectclassname"
 															styleClass="form-control"
-															value="#{activitieSearchServiceBean.studentEventsDto.classeProgramm}"
+															value="#{absenceStudentSearchServiceBean.studentEventsDto.classeProgramm}"
 															converter="entityConverter"
-															placeholder="#{messages.label_programme_status}"
-															>
+															placeholder="#{messages.label_programme_status}">
 															<f:selectItem
-																itemLabel="#{activitieSearchServiceBean.studentEventsDto.classeProgramm.classeName}"
-																itemValue="#{activitieSearchServiceBean.studentEventsDto.classeProgramm}"
+																itemLabel="#{absenceStudentSearchServiceBean.studentEventsDto.classeProgramm.classeName}"
+																itemValue="#{absenceStudentSearchServiceBean.studentEventsDto.classeProgramm}"
 																label="#{messages.label_cursus}" />
 															<f:selectItems
-																value="#{activitieSearchServiceBean.listClass}"
+																value="#{absenceStudentSearchServiceBean.listClass}"
 																var="classeProgramm" itemValue="#{classeProgramm}"
 																itemLabel="#{classeProgramm.classeName}" />
 															<p:ajax event="valueChange"
-																listener="#{activitieSearchServiceBean.updateModulesProgrammes()}"
-																update="forme @([id$=modacademique]) @([id$=listeactivities])" />
-															<p:ajax event="select"
-																listener="#{activitieSearchServiceBean.onSelect}"
-																update="forme growl" />
+																listener="#{absenceStudentSearchServiceBean.updateActivity()}"
+																update="forme @([id$=selectactivities]) @([id$=listeactivities])" />
+
 														</p:selectOneMenu>
 													</div>
-													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
-														<p:outputLabel value="#{messages.label_msg_title_activity}:" />
+														<p:outputLabel
+															value="#{messages.label_msg_title_activity}:" />
 														<span class="requireds">(*)</span>
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:selectOneMenu id="selectactivities"
 															styleClass="form-control"
-															value="#{activitieSearchServiceBean.studentEventsDto.classeProgramm}"
+															value="#{absenceStudentSearchServiceBean.studentEventsDto.title}"
 															converter="entityConverter"
-															placeholder="#{messages.label_programme_status}"
-															>
+															placeholder="#{messages.label_msg_title_activity}">
 															<f:selectItem
-																itemLabel="#{activitieSearchServiceBean.studentEventsDto.classeProgramm.classeName}"
-																itemValue="#{activitieSearchServiceBean.studentEventsDto.classeProgramm}"
+																itemLabel="#{absenceStudentSearchServiceBean.studentEventsDto.title}"
+																itemValue="#{absenceStudentSearchServiceBean.studentEventsDto.title}"
 																label="#{messages.label_cursus}" />
 															<f:selectItems
-																value="#{activitieSearchServiceBean.listClass}"
-																var="classeProgramm" itemValue="#{classeProgramm}"
-																itemLabel="#{classeProgramm.classeName}" />
-															<p:ajax event="valueChange"
-																listener="#{activitieSearchServiceBean.updateModulesProgrammes()}"
-																update="forme @([id$=modacademique]) @([id$=listeactivities])" />
-															<p:ajax event="select"
-																listener="#{activitieSearchServiceBean.onSelect}"
-																update="forme growl" />
+																value="#{absenceStudentSearchServiceBean.listStudentEvent}"
+																var="activity" itemValue="#{activity}"
+																itemLabel="#{activity.title} #{activity.startDate} #{activity.enDate}" />
 														</p:selectOneMenu>
 													</div>
 												</div>
@@ -147,127 +117,71 @@
 										<br></br>
 
 										<div class="ui-grid ui-grid-responsive">
+
 											<p:dataTable id="listeactivities"
-												value="#{activitieSearchServiceBean.listStudentEvent}"
-												var="events" widgetVar="activitiesplan"
-												selection="#{activitieSearchServiceBean.selectedEvents}"
-												rowKey="#{events.idStudentEvents}" style="margin-bottom:0">
-												<f:facet name="header">
-						            #{messages.label_msg_activitie}
-						        </f:facet>
+												value="#{absenceStudentSearchServiceBean.listStudentClass}"
+												var="students" widgetVar="studentsTable"
+												emptyMessage="#{messages.label_empty}"
+												styleClass="listeTable table-responsive filterable"
+												tableStyleClass="table table-striped table-condensed table-hover"
+												rowKey="#{students.student.idStudent}"
+												selectionMode="single" paginator="true" rows="10"
+												filterBy="#{students.student.name}"
+												selection="#{absenceStudentSearchServiceBean.studentClasseDtos}"
+												paginatorPosition="bottom"
+												paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}">
 
-												<p:column priority="2"
-													headerText="#{messages.label_msg_title_activity}">
+												<p:column priority="2" width="15"
+													filterBy="#{students.student.idStudent}"
+													filterMatchMode="contains">
 													<f:facet name="header">
-														#{messages.label_msg_title_activity}
+														<p:outputLabel value="#{messages.label_id}" />
 													</f:facet>
-													<f:facet name="header">
-														<p:inputText styleClass="form-control" id="titleactivity"
-															value="#{activitieSearchServiceBean.studentEventsDto.title}"
-															placeholder="#{messages.label_msg_title_activity}" />
-													</f:facet>
-													<h:outputText value="#{events.title}" />
+													<h:outputText value="#{students.student.idStudent}"></h:outputText>
 												</p:column>
 
-												<p:column priority="3"
-													headerText="#{messages.label_msg_type_activity}">
+												<p:column priority="3" width="25"
+													filterBy="#{students.student.name}"
+													filterMatchMode="contains">
 													<f:facet name="header">
-														#{messages.label_msg_type_activity}
+														<p:outputLabel value="#{messages.label_name_professeur}" />
 													</f:facet>
-													<f:facet name="header">
-														<p:selectOneMenu id="typeactivity" styleClass="form-text"
-															value="#{activitieSearchServiceBean.studentEventsDto.eventType}"
-															converter="entityConverter"
-															placeholder="#{messages.label_msg_type_activity}"
-															requiredMessage="#{messages.label_cursusname_requeried}">
-															<f:selectItem
-																itemLabel="#{activitieSearchServiceBean.studentEventsDto.eventType.value}"
-																itemValue="#{activitieSearchServiceBean.studentEventsDto.eventType}"
-																label="#{messages.label_msg_type_activity}" />
-															<f:selectItems
-																value="#{activitieSearchServiceBean.listTypeEvent}"
-																var="eventTypes" itemValue="#{eventTypes}"
-																itemLabel="#{eventTypes.value}" />
-														</p:selectOneMenu>
-													</f:facet>
-													<h:outputText value="#{events.eventType.value}" />
+													<h:outputText value="#{students.student.name}"></h:outputText>
 												</p:column>
 
-												<p:column priority="4"
-													headerText="#{messages.label_msg_description}">
+												<p:column priority="3" width="30"
+													filterBy="#{students.student.firstName}"
+													filterMatchMode="contains">
 													<f:facet name="header">
-														#{messages.label_msg_description}
+														<p:outputLabel value="#{messages.label_prenomprof}" />
 													</f:facet>
+													<h:outputText value="#{students.student.firstName}"></h:outputText>
+												</p:column>
+												
+												<p:column priority="3" width="38"
+													filterBy="#{students.student.firstName}"
+													filterMatchMode="contains">
 													<f:facet name="header">
-														<p:inputText styleClass="form-control" id="desc"
-															value="#{activitieSearchServiceBean.studentEventsDto.description}"
-															placeholder="#{messages.label_msg_description}" />
+														<p:outputLabel value="#{messages.label_msg_comment}" />
 													</f:facet>
-													<h:outputText value="#{events.description}" />
+													<p:inputTextarea rows="" cols="22" id="comment1"
+															placeholder="#{messages.label_msg_comment}"
+															value="#{absenceStudentSearchServiceBean.studentPresenceDto.comments}" />
 												</p:column>
 
-												<p:column priority="3"
-													headerText="#{messages.label_msg_day_indicator}">
+												<p:column priority="2" width="35"
+													filterBy="#{students.student.idStudent}"
+													filterMatchMode="contains">
 													<f:facet name="header">
-														#{messages.label_msg_day_indicator}
+														<p:outputLabel value="#{messages.label_action}" />
 													</f:facet>
-													<f:facet name="header">
-														<h:selectBooleanCheckbox id="allday"
-															value="#{activitieSearchServiceBean.value}" />
-
-													</f:facet>
-													<h:outputText value="#{events.description}" />
+														<p:selectOneRadio id="pointage"
+															value="#{absenceStudentSearchServiceBean.pointage}">
+															<f:selectItem itemLabel="P" itemValue="value1" />
+															<f:selectItem itemLabel="A" itemValue="value2" />
+															<f:selectItem itemLabel="R" itemValue="value3" />
+														</p:selectOneRadio>
 												</p:column>
-
-
-												<p:column priority="3"
-													headerText="#{messages.label_msg_prof}">
-													<f:facet name="header">
-														#{messages.label_msg_prof}
-													</f:facet>
-													<f:facet name="header">
-														<p:selectOneMenu id="prof" styleClass="form-text"
-															value="#{activitieSearchServiceBean.studentEventsDto.teacher}"
-															converter="entityConverter"
-															placeholder="#{messages.label_msg_prof}"
-															requiredMessage="#{messages.label_msg_prof}">
-															<f:selectItem
-																itemLabel="#{activitieSearchServiceBean.studentEventsDto.teacher.firstName}"
-																itemValue="#{activitieSearchServiceBean.studentEventsDto.teacher}"
-																label="#{messages.label_cursus}" />
-															<f:selectItems
-																value="#{activitieSearchServiceBean.listeTeacherEvent}"
-																var="teacherevent" itemValue="#{teacherevent}"
-																itemLabel="#{teacherevent.firstName} #{teacherevent.name}" />
-														</p:selectOneMenu>
-													</f:facet>
-													<h:outputText value="#{events.teacher.firstName}" />
-												</p:column>
-
-												<p:column priority="3"
-													headerText="#{messages.label_msg_academic_module}">
-													<f:facet name="header">
-														#{messages.label_msg_academic_module}
-													</f:facet>
-													<f:facet name="header">
-														<p:selectOneMenu id="modacademique" styleClass="form-text"
-															value="#{activitieSearchServiceBean.studentEventsDto.academicModule}"
-															converter="entityConverter"
-															placeholder="#{messages.label_msg_academic_module}">
-															<f:selectItem
-																itemLabel="#{activitieSearchServiceBean.studentEventsDto.academicModule.moduleName}"
-																itemValue="#{activitieSearchServiceBean.studentEventsDto.academicModule}"
-																label="#{messages.label_msg_academic_module}" />
-															<f:selectItems
-																value="#{activitieSearchServiceBean.listAcademicModule}"
-																var="academicModule" itemValue="#{academicModule}"
-																itemLabel="#{academicModule.moduleName}" />
-														</p:selectOneMenu>
-													</f:facet>
-													<h:outputText value="#{events.academicModule.moduleName}" />
-												</p:column>
-
-
 											</p:dataTable>
 										</div>
 									</h:form>

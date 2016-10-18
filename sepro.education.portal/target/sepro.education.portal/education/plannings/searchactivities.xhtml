@@ -313,8 +313,10 @@
 														<p:outputLabel value="#{messages.label_msg_day_indicator}" />
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
-														<h:selectBooleanCheckbox id="allday1"
-															value="#{activitieSearchServiceBean.value}" />
+														<p:selectBooleanCheckbox id="allday1"
+															value="#{activitieSearchServiceBean.value2}">
+														<p:ajax update="growl" listener="#{activitieSearchServiceBean.addMessage}" />
+														</p:selectBooleanCheckbox>
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3"></div>
 													<div class="col-lg-3 col-md-3 col-sm-3"></div>

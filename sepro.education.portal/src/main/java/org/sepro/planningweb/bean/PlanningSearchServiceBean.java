@@ -484,7 +484,7 @@ public class PlanningSearchServiceBean implements Serializable {
 	public void updatePlanningClasse() {
 		logger.debug("@@@@@@@ DEBUT UPDATE PLALNNING CLASSE @@@@@"
 				+ selectedEventsClasse.getClasseProgramm().getClasseName());
-		   studentEventsServicewsEndpoint = studentEventsServicews.getStudentEventsServicewsImplPort();
+		    studentEventsServicewsEndpoint = studentEventsServicews.getStudentEventsServicewsImplPort();
 			selectedEventsClasse.setClasseProgramm(selectedEventsClasse.getClasseProgramm());
 			eventClasse = new DefaultScheduleModel();
 			listClasseEvent = studentEventsServicewsEndpoint.searchStudentEventsServicews(selectedEventsClasse);
@@ -497,9 +497,10 @@ public class PlanningSearchServiceBean implements Serializable {
 //					logger.debug("@@@@ LISTE EVENT 888 @@@@@"+XMLCalendarTimeToDate.toDate(listClasseEvent.get(i).getEnDate()));
 					
 				       
-					eventClasse.addEvent(new DefaultScheduleEvent(stu.getTitle()+ " " +stu.getRoom().getNameOfClass(),XMLCalendarTimeToDate.toDate(stu.getStartDate()), XMLCalendarTimeToDate.toDate(stu.getEnDate())));
+					eventClasse.addEvent(new DefaultScheduleEvent(stu.getTitle()+ " " +stu.getRoom().getNameOfClass(),XMLCalendarTimeToDate.toDate(stu.getStartDate()),XMLCalendarTimeToDate.toDate(stu.getEnDate()),stu.isAllDayInd()));
 					logger.debug("++++++++++++ TEST 2 +++++++++++++++++++"+XMLCalendarTimeToDate.toDate(stu.getStartDate()));
 					logger.debug("++++++++++++ TEST 1 +++++++++++++++++++"+XMLCalendarTimeToDate.toDate(stu.getEnDate()));
+					logger.debug("++++++++++++ TEST 1 +++++++++++++++++++"+stu.isAllDayInd());
 				}
 				
 				//eventClasse.addEvent(new DefaultScheduleEvent(stu.getTitle(), XMLCalendarToDate.toDate(stu.getStartDate()), XMLCalendarToDate.toDate(stu.getEnDate())));
@@ -515,16 +516,17 @@ public class PlanningSearchServiceBean implements Serializable {
 		logger.debug("@@@@@@@ DEBUT UPDATE PLALNNING PROF @@@@@"
 				+ selectedEventsProf.getTeacher().getIdIdentityTeacher());
 		studentEventsServicewsEndpoint = studentEventsServicews.getStudentEventsServicewsImplPort();
+		eventProf = new DefaultScheduleModel();
 		//eventProf = new DefaultScheduleModel();
 		//listProfEvent = studentEventsServicewsEndpoint.searchStudentEventsServicews(studentEventsDto);
 		if(selectedEventsProf.getTeacher().getIdIdentityTeacher() != null){
 			selectedEventsProf.setTeacher(selectedEventsProf.getTeacher());
 			listProfEvent = studentEventsServicewsEndpoint.searchStudentEventsServicews(selectedEventsProf);
 			
-			for (int j = 0; j < listProfEvent.size(); j ++){
+			for (StudentEventsDto mp : listProfEvent){
 				
-				eventProf.addEvent(new DefaultScheduleEvent(listProfEvent.get(j).getTitle() + " " + listProfEvent.get(j).getClasseProgramm().getClasseName()+ " " + listProfEvent.get(j).getRoom().getNameOfClass(), XMLCalendarToDate.toDate(listProfEvent.get(j).getStartDate()), XMLCalendarToDate.toDate(listProfEvent.get(j).getEnDate())));
-				logger.debug("@@@@ LISTE EVENT @@@@@"+listProfEvent.get(j).getTitle());
+				eventProf.addEvent(new DefaultScheduleEvent(mp.getTitle() + " " + mp.getClasseProgramm().getClasseName()+ " " + mp.getRoom().getNameOfClass(), XMLCalendarToDate.toDate(mp.getStartDate()), XMLCalendarToDate.toDate(mp.getEnDate()), mp.isAllDayInd()));
+				logger.debug("@@@@ LISTE EVENT @@@@@"+mp.getTitle());
 					
 			}
 			
