@@ -177,9 +177,9 @@
 													</f:facet>
 														<p:selectOneRadio id="pointage"
 															value="#{absenceStudentSearchServiceBean.pointage}">
-															<f:selectItem itemLabel="P" itemValue="value1" />
-															<f:selectItem itemLabel="A" itemValue="value2" />
-															<f:selectItem itemLabel="R" itemValue="value3" />
+															<f:selectItem itemLabel="#{messages.label_presence}" itemValue="value1" />
+															<f:selectItem itemLabel="#{messages.label_retard}" itemValue="value2" />
+															<f:selectItem itemLabel="#{messages.label_absent}" itemValue="value3" />
 														</p:selectOneRadio>
 												</p:column>
 											</p:dataTable>

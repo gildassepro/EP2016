@@ -7,9 +7,11 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -247,11 +249,32 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 	}
 
 	public void saveAbsence() {
+		
 		logger.debug("init Save Absence");
-
+		StudentPresenceDto createStudentPresence = new StudentPresenceDto();
+		FacesMessage msg = null;
+		
+//		logger.debug("");
+		
+		createStudentPresence.setActualStartDate(null);
+		createStudentPresence.setActualEnDate(null);
+		createStudentPresence.setComments(null);
+		createStudentPresence.setEventsStatus(null);
+		createStudentPresence.setStatusStudent(null);
+		createStudentPresence.setStudent(null);
+		
+		studentPresenceServicewsEndpoint = studentPresenceServicews.getStudentPresenceServicewsImplPort();
+		
+		createStudentPresence = studentPresenceServicewsEndpoint.createStudentPresenceServicews(createStudentPresence);
+		
 		logger.debug("init Save Absence");
 	}
 
+	public StudentEventsDto getDate(){
+		logger.debug("@@@@ studentevent  @@@@@"+studentEventsDto.getIdStudentEvents());
+		return studentEventsDto;
+	}
+	
 	public void updateActivity() {
 		logger.debug("init updateActivity");
 

@@ -492,19 +492,13 @@ public class PlanningSearchServiceBean implements Serializable {
 			logger.debug("@@@ TAILLE @@@@@@@"+listClasseEvent.size());
 			
 				for (StudentEventsDto stu : listClasseEvent){
-				//	eventClasse.addEvent(new DefaultScheduleEvent(listClasseEvent.get(i).getTitle()+ " " + listClasseEvent.get(i).getRoom().getNameOfClass(), XMLCalendarTimeToDate.toDate(listClasseEvent.get(i).getStartDate()), XMLCalendarTimeToDate.toDate(listClasseEvent.get(i).getEnDate())));
-//					logger.debug("@@@@ LISTE EVENT 999 @@@@@"+XMLCalendarTimeToDate.toDate(listClasseEvent.get(i).getStartDate()));
-//					logger.debug("@@@@ LISTE EVENT 888 @@@@@"+XMLCalendarTimeToDate.toDate(listClasseEvent.get(i).getEnDate()));
-					
-				       
 					eventClasse.addEvent(new DefaultScheduleEvent(stu.getTitle()+ " " +stu.getRoom().getNameOfClass(),XMLCalendarTimeToDate.toDate(stu.getStartDate()),XMLCalendarTimeToDate.toDate(stu.getEnDate()),stu.isAllDayInd()));
 					logger.debug("++++++++++++ TEST 2 +++++++++++++++++++"+XMLCalendarTimeToDate.toDate(stu.getStartDate()));
 					logger.debug("++++++++++++ TEST 1 +++++++++++++++++++"+XMLCalendarTimeToDate.toDate(stu.getEnDate()));
 					logger.debug("++++++++++++ TEST 1 +++++++++++++++++++"+stu.isAllDayInd());
 				}
 				
-				//eventClasse.addEvent(new DefaultScheduleEvent(stu.getTitle(), XMLCalendarToDate.toDate(stu.getStartDate()), XMLCalendarToDate.toDate(stu.getEnDate())));
-	
+				
 		logger.debug("@@@@@@@ FIN UPDATE PLALNNING CLASSE @@@@@"
 				+ selectedEventsClasse.getClasseProgramm().getClasseName());
 		
@@ -517,8 +511,7 @@ public class PlanningSearchServiceBean implements Serializable {
 				+ selectedEventsProf.getTeacher().getIdIdentityTeacher());
 		studentEventsServicewsEndpoint = studentEventsServicews.getStudentEventsServicewsImplPort();
 		eventProf = new DefaultScheduleModel();
-		//eventProf = new DefaultScheduleModel();
-		//listProfEvent = studentEventsServicewsEndpoint.searchStudentEventsServicews(studentEventsDto);
+		
 		if(selectedEventsProf.getTeacher().getIdIdentityTeacher() != null){
 			selectedEventsProf.setTeacher(selectedEventsProf.getTeacher());
 			listProfEvent = studentEventsServicewsEndpoint.searchStudentEventsServicews(selectedEventsProf);

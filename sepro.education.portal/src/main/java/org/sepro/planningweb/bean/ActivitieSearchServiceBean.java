@@ -671,22 +671,6 @@ public class ActivitieSearchServiceBean implements Serializable {
 			listStudentEvent = studentEventsServicewsEndpoint
 					.searchStudentEventsServicews(selectedEvents);
 
-			// for(AcademicModuleDto academic :
-			// studentEventsDto.getClasseProgramm().getProgrammeCalendar().getProgramme().getAcademicmodule().getAcademicmodule()){
-			//
-			// for(AcademicModuleDto academics : selectedlistAcademicModule){
-			//
-			// if(academics.getIdAcademicModule() ==
-			// academic.getIdAcademicModule()){
-			// listAcademicModule.add(academics);
-			// break;
-			//
-			// }
-			//
-			// }
-			//
-			//
-			// }
 			logger.debug("@@@@@@ JE SUIS A LA FIN @@@@@@@@@@@@@@");
 
 		} catch (Exception e) {
@@ -819,8 +803,6 @@ public class ActivitieSearchServiceBean implements Serializable {
 
 					Calendar f = (Calendar) calendar.clone();
 
-					logger.debug("++++ BOOOLL 222 ++" + addMessage());
-
 					if (addMessage() == false) {
 
 						startd = XMLCalendarTimeToDate.toXMLGregorianCalendar(f
@@ -869,25 +851,24 @@ public class ActivitieSearchServiceBean implements Serializable {
 					addEvent = studentEventsServicewsEndpoint
 							.createStudentEventsServicews(addEvent);
 
-					msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
-							rb.getString("label_succesful"),
-							rb.getString("label_msg_sucess_create_activity"));
-					FacesContext context = FacesContext.getCurrentInstance();
-
-					context.addMessage(null, msg);
-
 				}
 
 			}
 
 			calendar.add(Calendar.DATE, 1);
-
 		}
+		logger.debug("FINNNNNNNNNNNNNNNNNNNNNN");
+		msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+				rb.getString("label_succesful"),
+				rb.getString("label_msg_sucess_create_activity"));
+		FacesContext context = FacesContext.getCurrentInstance();
+
+		context.addMessage(null, msg);
+		logger.debug("FINNNNNNNNNNNNNNNNNNNNNN 2222222222222");
 
 	}
 
 	public Boolean addMessage() {
-		FacesMessage msg = null;
 
 		String summary = value2 ? rb.getString("label_msg_checked") : rb
 				.getString("label_msg_unchecked");
@@ -903,90 +884,11 @@ public class ActivitieSearchServiceBean implements Serializable {
 		return testboolean();
 	}
 
-	public void addActivities() {
-
-		logger.debug("@@@@@ DEBUT CREATION ACTIVITIES @@@@@@@@");
-
-		moduleCalendarDtoServicewsEndpoint = moduleCalendarDtoServicews
-				.getModuleCalendarDtoServicewsImplPort();
-		StudentEventsDto addEvent = new StudentEventsDto();
-
-		for (ModuleCalendarDto mod : listModuleCalendarDto) {
-
-			listModuleCalendarDtos.add(mod);
-			logger.debug("@@@@ TAILLE LISTE SECOND START @@@@@"
-					+ mod.getSession().getStartDate());
-			logger.debug("@@@@ TAILLE LISTE SECOND END @@@@@"
-					+ mod.getSession().getEndDate());
-
-			start = studentEventsDto.getStartDate();
-			start.setYear(mod.getSession().getStartDate().getYear());
-			start.setMonth(mod.getSession().getStartDate().getMonth());
-			start.setDay(mod.getSession().getStartDate().getDay());
-			// start.setTimezone(mod.getSession().getStartDate().getTimezone());
-
-			end = studentEventsDto.getEnDate();
-			end.setYear(mod.getSession().getEndDate().getYear());
-			end.setMonth(mod.getSession().getEndDate().getMonth());
-			end.setDay(mod.getSession().getEndDate().getDay());
-			// end.setTimezone(mod.getSession().getEndDate().getTimezone());
-
-			addEvent.setAcademicModule(mod.getAcademicModule());
-			addEvent.setAcademicYear(studentEventsDto.getAcademicYear());
-			addEvent.setAllDayInd(studentEventsDto.isAllDayInd());
-			addEvent.setClasseProgramm(studentEventsDto.getClasseProgramm());
-			addEvent.setComments(studentEventsDto.getComments());
-			addEvent.setDescription(studentEventsDto.getDescription());
-			// logger.debug("@@@@@ DATE TAPE 1 @@@@"+studentEventsDto.getStartDate());
-			addEvent.setStartDate(start);
-			// logger.debug("@@@@@ DATE TAPE 2 @@@@"+studentEventsDto.getEnDate());
-			addEvent.setEnDate(end);
-			addEvent.setEventType(studentEventsDto.getEventType());
-			addEvent.setRoom(studentEventsDto.getRoom());
-			logger.debug("@@@@@ CHOIX DE LA SALLE @@@@"
-					+ studentEventsDto.getRoom().getIdClass());
-			logger.debug("@@@@@ CHOIX DE LA SALLE @@@@"
-					+ studentEventsDto.getRoom().getNameOfClass());
-			logger.debug("@@@@@ DATE TAPE @@@@" + start);
-			logger.debug("@@@@@ DATE TAPE @@@@" + end);
-
-			addEvent.setTeacher(studentEventsDto.getTeacher());
-			addEvent.setTitle(studentEventsDto.getTitle());
-
-			studentEventsServicewsEndpoint = studentEventsServicews
-					.getStudentEventsServicewsImplPort();
-
-			addEvent = studentEventsServicewsEndpoint
-					.createStudentEventsServicews(addEvent);
-
-		}
-
-		init();
-		logger.debug("@@@@@ FIN CREATION ACTIVITIES @@@@@@@@");
-
-	}
-
-	// public Date addHours(Date dateRef, Date hours){
-	// Date dateFinal = new Date();
-	//
-	// int i = (int) DateUtils.getFragmentInHours(hours, Calendar.DAY_OF_YEAR);
-	// dateFinal = DateUtils.setHours(dateRef,i);
-	//
-	// return dateFinal;
-	// }
+	
 	public void updateDate() {
-		logger.debug("++++DATE ++++"
-				+ XMLCalendarToDate.toDate(studentEventsDto.getStartDate()));
-		logger.debug("++++DATE 777 ++++" + studentEventsDto.getStartDate());
-		logger.debug("++++DATE 777 ++++" + studentEventsDto.getEnDate());
-		logger.debug("++++DATE ++++"
-				+ XMLCalendarToDate.toDate(studentEventsDto.getEnDate()));
+		
 	}
 
-	// public void dateChange(DateSelectEvent event){
-	// Date date = event.getDate();
-	//
-	// }
 
 	@PostConstruct
 	public void init() {
