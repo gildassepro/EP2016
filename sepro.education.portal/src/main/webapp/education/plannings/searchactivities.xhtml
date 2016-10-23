@@ -9,7 +9,7 @@
 		<p:growl id="growl" showDetail="true" sticky="false" />
 		<div class="container-fluid">
 			<b:row>
-				
+
 
 				<h:form id="forme">
 					<p:accordionPanel>
@@ -195,12 +195,12 @@
 														</p:selectOneMenu>
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
-														
+
 														<p:outputLabel value="#{messages.labeljourdispo}" />
 														<span class="requireds">(*)</span>
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
-															<p:selectCheckboxMenu id="jourdispo"
+														<p:selectCheckboxMenu id="jourdispo"
 															styleClass="form-text"
 															value="#{activitieSearchServiceBean.listjourdestination}"
 															filter="true" filterMatchMode="startsWith"
@@ -210,7 +210,7 @@
 																value="#{activitieSearchServiceBean.listjoursource}"
 																var="dayofweek" itemValue="#{dayofweek}"
 																itemLabel="#{dayofweek.days}" />
-																<p:ajax
+															<p:ajax
 																listener="#{activitieSearchServiceBean.getListDest()}" />
 														</p:selectCheckboxMenu>
 													</div>
@@ -235,7 +235,7 @@
 																value="#{activitieSearchServiceBean.listDesClass}"
 																var="room" itemValue="#{room}"
 																itemLabel="#{room.nameOfClass}" />
-																
+
 														</p:selectOneMenu>
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
@@ -291,9 +291,9 @@
 														<span class="requireds">(*)</span>
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
-													<p:inputTextarea rows="" cols="33" id="desc2"
+														<p:inputTextarea rows="" cols="33" id="desc2"
 															placeholder="#{messages.label_msg_description}"
-															value="#{activitieSearchServiceBean.studentEventsDto.description}" />	
+															value="#{activitieSearchServiceBean.studentEventsDto.description}" />
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:outputLabel value="#{messages.label_msg_comment}" />
@@ -313,7 +313,8 @@
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:selectBooleanCheckbox id="allday1"
 															value="#{activitieSearchServiceBean.value2}">
-														<p:ajax update="growl" listener="#{activitieSearchServiceBean.addMessage}" />
+															<p:ajax update="growl"
+																listener="#{activitieSearchServiceBean.addMessage}" />
 														</p:selectBooleanCheckbox>
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3"></div>
@@ -401,12 +402,15 @@
 											<p:dataTable id="listeactivities"
 												value="#{activitieSearchServiceBean.listStudentEvent}"
 												var="events" widgetVar="activitiesplan"
+												selectionMode="single"
 												selection="#{activitieSearchServiceBean.selectedEvents}"
-												rowKey="#{events.idStudentEvents}" style="margin-bottom:0">
+												update=":forme:fdial:eventDetails"
+												rowKey="#{events.idStudentEvents}">
+												<p:ajax event="rowDblselect" listener="#{activitieSearchServiceBean.onActivitySelect}"
+													oncomplete="PF('eventDialog').show()" />
 												<f:facet name="header">
 						            #{messages.label_msg_activitie}
 						        </f:facet>
-
 												<p:column priority="2"
 													headerText="#{messages.label_msg_title_activity}">
 													<f:facet name="header">
@@ -445,31 +449,20 @@
 												</p:column>
 
 												<p:column priority="4"
-													headerText="#{messages.label_msg_description}">
+													headerText="#{messages.label_start_hour}">
 													<f:facet name="header">
-														#{messages.label_msg_description}
+														#{messages.label_start_hour}
 													</f:facet>
-													<f:facet name="header">
-														<p:inputText styleClass="form-control" id="desc"
-															value="#{activitieSearchServiceBean.studentEventsDto.description}"
-															placeholder="#{messages.label_msg_description}" />
-													</f:facet>
-													<h:outputText value="#{events.description}" />
+													<h:outputText value="#{events.startDate}" />
 												</p:column>
 
 												<p:column priority="3"
-													headerText="#{messages.label_msg_day_indicator}">
+													headerText="#{messages.label_end_hour}">
 													<f:facet name="header">
-														#{messages.label_msg_day_indicator}
+														#{messages.label_end_hour}
 													</f:facet>
-													<f:facet name="header">
-														<h:selectBooleanCheckbox id="allday"
-															value="#{activitieSearchServiceBean.value}" />
-
-													</f:facet>
-													<h:outputText value="#{events.description}" />
+													<h:outputText value="#{events.enDate}" />
 												</p:column>
-
 
 												<p:column priority="3"
 													headerText="#{messages.label_msg_prof}">
@@ -517,10 +510,64 @@
 													</f:facet>
 													<h:outputText value="#{events.academicModule.moduleName}" />
 												</p:column>
-
-
 											</p:dataTable>
 										</div>
+
+										<p:dialog widgetVar="eventDialog"
+											header="#{messages.label_event_details}" showEffect="clip"
+											hideEffect="clip">
+											<h:panelGrid id="eventDetails" columns="2">
+												<p:outputLabel for="title"
+													value="#{messages.label_msg_title_activity}" />
+												<p:inputText id="title"
+													value="#{activitieSearchServiceBean.selectedEvents.title}"
+													disabled="#{activitieSearchServiceBean.test3}"
+													required="true" />
+												<p:outputLabel for="from" value="#{messages.label_dedut}" />
+												<p:calendar id="from"
+													disabled="#{activitieSearchServiceBean.test3}"
+													value="#{activitieSearchServiceBean.selectedEvents.startDate}"
+													>
+												</p:calendar>
+
+												<p:outputLabel for="to" value="#{messages.label_fin}" />
+												<p:calendar id="to"
+													disabled="#{activitieSearchServiceBean.test3}"
+													value="#{activitieSearchServiceBean.selectedEvents.enDate}"
+													>
+												</p:calendar>
+												<p:outputLabel for="commentstatus"
+													value="#{messages.label_msg_comment}" />
+												<p:inputTextarea rows="" cols="33" id="commentstatus"
+													placeholder="#{messages.label_msg_comment}"
+													value="#{planningSearchServiceBean.eventp.title}" />
+
+												<p:outputLabel for="status" value="#{messages.label_action}" />
+												<p:selectOneMenu id="status" styleClass="form-text"
+													value="#{planningSearchServiceBean.eventsStatusDto.statusEvent}"
+													converter="entityConverter"
+													placeholder="#{messages.label_msg_type_activity}"
+													requiredMessage="#{messages.label_cursusname_requeried}">
+													<f:selectItem
+														itemLabel="#{planningSearchServiceBean.eventsStatusDto.statusEvent.value}"
+														itemValue="#{planningSearchServiceBean.eventsStatusDto.statusEvent}"
+														label="#{messages.label_msg_type_activity}" />
+													<f:selectItems
+														value="#{planningSearchServiceBean.listTypeAbsence}"
+														var="eventTypes" itemValue="#{eventTypes}"
+														itemLabel="#{eventTypes.value}" />
+													<p:ajax listener="#{planningSearchServiceBean.addEvent}" />
+												</p:selectOneMenu>
+
+												<p:commandButton onclick="PF('eventDialog').hide()"
+													type="button" value="#{messages.label_button_annuler}"
+													immediate="true" />
+												<p:commandButton id="addButton" type="button"
+													value="#{messages.label_save}"
+													actionListener="#{planningSearchServiceBean.addEvent}"
+													oncomplete="PF('profschedule').update();PF('eventDialog').hide();" />
+											</h:panelGrid>
+										</p:dialog>
 									</h:form>
 								</p:panel>
 

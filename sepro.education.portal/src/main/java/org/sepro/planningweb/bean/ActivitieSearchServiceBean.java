@@ -62,11 +62,14 @@ import org.sepro.parameterweb.serviceimpl.RoomInventoryServicews;
 import org.sepro.parameterweb.serviceimpl.RoomInventoryServicewsEndpoint;
 import org.sepro.studentweb.serviceapi.ActivitiesDto;
 import org.sepro.studentweb.serviceapi.ClasseProgrammDto;
+import org.sepro.studentweb.serviceapi.EventsStatusDto;
 import org.sepro.studentweb.serviceapi.StudentEventsDto;
 import org.sepro.studentweb.serviceimpl.ActivitiesServicews;
 import org.sepro.studentweb.serviceimpl.ActivitiesServicewsEndpoint;
 import org.sepro.studentweb.serviceimpl.ClasseProgrammServicews;
 import org.sepro.studentweb.serviceimpl.ClasseProgrammServicewsEndpoint;
+import org.sepro.studentweb.serviceimpl.EventsStatusServicews;
+import org.sepro.studentweb.serviceimpl.EventsStatusServicewsEndpoint;
 import org.sepro.studentweb.serviceimpl.StudentClasseServicews;
 import org.sepro.studentweb.serviceimpl.StudentClasseServicewsEndpoint;
 import org.sepro.studentweb.serviceimpl.StudentEventsServicews;
@@ -104,6 +107,12 @@ public class ActivitieSearchServiceBean implements Serializable {
 
 	private ProgrammeDtoServicewsEndpoint programmeDtoServicewsEndpoint;
 	private ProgrammeDtoServicews programmeDtoServicews = new ProgrammeDtoServicews();
+	
+	private EventsStatusServicewsEndpoint eventsStatusServicewsEndpoint;
+	private EventsStatusServicews eventsStatusServicews = new EventsStatusServicews();
+	
+	private EventsStatusDto eventsStatusDto = new EventsStatusDto();
+	private List<EventsStatusDto> listEventStatus = new ArrayList<EventsStatusDto>();
 
 	private List<ProgrammeCalendarDto> listProgrammeCalendarDestination = new ArrayList<ProgrammeCalendarDto>();
 	private List<ProgrammeCalendarDto> listProgrammeCalendarSources = new ArrayList<ProgrammeCalendarDto>();
@@ -167,6 +176,7 @@ public class ActivitieSearchServiceBean implements Serializable {
 
 	private List<PopuplistDto> listAcademicYear = new ArrayList<PopuplistDto>();
 	private List<PopuplistDto> listTypeEvent = new ArrayList<PopuplistDto>();
+	private List<PopuplistDto> listTypeAbsence =  new ArrayList<PopuplistDto>();
 	private List<SessionDto> listSession = new ArrayList<SessionDto>();
 
 	private boolean action = false;
@@ -175,6 +185,7 @@ public class ActivitieSearchServiceBean implements Serializable {
 	private boolean value;
 	private boolean test = true;
 	private boolean test2 = true;
+	private boolean test3 = false;
 	private ScheduleModel planningclasse;
 	private XMLGregorianCalendar start;
 	private XMLGregorianCalendar end;
@@ -186,6 +197,41 @@ public class ActivitieSearchServiceBean implements Serializable {
 
 	private String testStartDate;
 	private String testEndDate;
+
+	
+	
+	
+	public List<EventsStatusDto> getListEventStatus() {
+		return listEventStatus;
+	}
+
+	public void setListEventStatus(List<EventsStatusDto> listEventStatus) {
+		this.listEventStatus = listEventStatus;
+	}
+
+	public EventsStatusDto getEventsStatusDto() {
+		return eventsStatusDto;
+	}
+
+	public void setEventsStatusDto(EventsStatusDto eventsStatusDto) {
+		this.eventsStatusDto = eventsStatusDto;
+	}
+
+	public boolean isTest3() {
+		return test3;
+	}
+
+	public void setTest3(boolean test3) {
+		this.test3 = test3;
+	}
+
+	public List<PopuplistDto> getListTypeAbsence() {
+		return listTypeAbsence;
+	}
+
+	public void setListTypeAbsence(List<PopuplistDto> listTypeAbsence) {
+		this.listTypeAbsence = listTypeAbsence;
+	}
 
 	public boolean isTest2() {
 		return test2;
@@ -654,6 +700,43 @@ public class ActivitieSearchServiceBean implements Serializable {
 		}
 
 	}
+	
+	public void addEvent(){
+		
+		logger.debug("@@@@ TEST DE DEBUT ADD EVENT @@@@ ");
+		
+		EventsStatusDto createEventStatus = new EventsStatusDto();
+		
+		listEventStatus = eventsStatusServicewsEndpoint.searchEventsStatusServicews(eventsStatusDto);
+		
+		createEventStatus.setActualEnDate(null);
+		createEventStatus.setActualStartDate(null);
+		createEventStatus.setComments(null);
+		createEventStatus.setStatusEvent(null);
+		createEventStatus.setStudentEvents(null);
+		
+		eventsStatusServicewsEndpoint = eventsStatusServicews.getEventsStatusServicewsImplPort();
+		if(listEventStatus != null){
+			createEventStatus = eventsStatusServicewsEndpoint.updateEventsStatusServicews(createEventStatus);
+			
+		}else{
+			createEventStatus = eventsStatusServicewsEndpoint.createEventsStatusServicews(createEventStatus);
+		}
+		logger.debug("@@@@ TEST DE FINS ADD EVENT @@@@ ");
+	}
+	
+	public void onActivitySelect(SelectEvent event){
+		studentEventsServicewsEndpoint = studentEventsServicews.getStudentEventsServicewsImplPort();
+		FacesMessage msg = new FacesMessage("Actitivité selectionné ", ((StudentEventsDto) event.getObject()).getIdStudentEvents().toString());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+		logger.debug("@@@@ TEST ID STUDENT @@@@@"+((StudentEventsDto) event.getObject()).getIdStudentEvents());
+		logger.debug("@@@@@  TEST @@@@@"+selectedEvents);
+		selectedEvents = ((StudentEventsDto) event.getObject());
+		
+		logger.debug("@@@@ SELECTED EVENT @@@@@ "+selectedEvents.getIdStudentEvents());
+		logger.debug("@@@@ SELECTED EVENT @@@@@ "+XMLCalendarTimeToDate.toDate(selectedEvents.getStartDate()));
+		
+	}
 
 	public void updateModulesProgrammes() {
 		logger.debug(Level.DEBUG);
@@ -915,6 +998,9 @@ public class ActivitieSearchServiceBean implements Serializable {
 					.searchPopuplistDtoServicews("academic_years");
 			listTypeEvent = popuplistDtoServicewsEndpoint
 					.searchPopuplistDtoServicews("typeevent");
+			
+			listTypeAbsence = popuplistDtoServicewsEndpoint
+					.searchPopuplistDtoServicews("eventstatus");
 
 			listDesClass = classeServicewsEndpoint.getAllClasseServicews();
 			listeTeacherEvent = identityTeacherServicewsEndpoint

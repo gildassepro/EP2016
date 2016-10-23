@@ -17,8 +17,11 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.sepro.parameterweb.bean.CursusSearchServiceBean;
 import org.sepro.parameterweb.serviceapi.ClasseDto;
+import org.sepro.parameterweb.serviceapi.PopuplistDto;
 import org.sepro.parameterweb.serviceimpl.ClasseServicews;
 import org.sepro.parameterweb.serviceimpl.ClasseServicewsEndpoint;
+import org.sepro.parameterweb.serviceimpl.PopuplistDtoServicews;
+import org.sepro.parameterweb.serviceimpl.PopuplistDtoServicewsEndpoint;
 import org.sepro.studentweb.serviceapi.ClasseProgrammDto;
 import org.sepro.studentweb.serviceapi.StudentClasseDto;
 import org.sepro.studentweb.serviceapi.StudentEventsDto;
@@ -49,6 +52,9 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 
 	private StudentClasseServicewsEndpoint studentClasseServicewsEndpoint;
 	private StudentClasseServicews studentClasseServicews = new StudentClasseServicews();
+	
+	private PopuplistDtoServicewsEndpoint popuplistDtoServicewsEndpoint;
+	private PopuplistDtoServicews popuplistDtoServicews = new PopuplistDtoServicews();
 
 	private StudentPresenceServicewsEndpoint studentPresenceServicewsEndpoint;
 	private StudentPresenceServicews studentPresenceServicews = new StudentPresenceServicews();
@@ -86,6 +92,7 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 	private StudentEventsDto selectedEvents = new StudentEventsDto();
 	private List<StudentEventsDto> listStudentEvent = new ArrayList<StudentEventsDto>();
 	
+	private List<PopuplistDto> listTypeAbsence =  new ArrayList<PopuplistDto>();
 	
 
 	private ClasseDto classeDto = new ClasseDto();
@@ -98,6 +105,16 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 	private String pointage;
 	
 	
+	
+	
+	public List<PopuplistDto> getListTypeAbsence() {
+		return listTypeAbsence;
+	}
+
+	public void setListTypeAbsence(List<PopuplistDto> listTypeAbsence) {
+		this.listTypeAbsence = listTypeAbsence;
+	}
+
 	public StudentPresenceDto getStudentPresenceDto() {
 		return studentPresenceDto;
 	}
@@ -253,8 +270,7 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 		logger.debug("init Save Absence");
 		StudentPresenceDto createStudentPresence = new StudentPresenceDto();
 		FacesMessage msg = null;
-		
-//		logger.debug("");
+		logger.debug("@@@@  LISTE DE PERSONNES 4444 @@@@"+listStudentClass.size());
 		
 		createStudentPresence.setActualStartDate(null);
 		createStudentPresence.setActualEnDate(null);
@@ -266,6 +282,12 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 		studentPresenceServicewsEndpoint = studentPresenceServicews.getStudentPresenceServicewsImplPort();
 		
 		createStudentPresence = studentPresenceServicewsEndpoint.createStudentPresenceServicews(createStudentPresence);
+		msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+				rb.getString("label_succesful"),
+				rb.getString("label_msg_update_list_presence"));
+		FacesContext context = FacesContext.getCurrentInstance();
+
+		context.addMessage(null, msg);
 		
 		logger.debug("init Save Absence");
 	}
@@ -277,7 +299,7 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 	
 	public void updateActivity() {
 		logger.debug("init updateActivity");
-
+		popuplistDtoServicewsEndpoint = popuplistDtoServicews.getPopuplistDtoServicewsImplPort();
 		studentEventsServicewsEndpoint = studentEventsServicews
 				.getStudentEventsServicewsImplPort();
 		studentClasseServicewsEndpoint = studentClasseServicews
@@ -289,7 +311,8 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 
 		studentClasseDto
 				.setClasseProgramm(studentEventsDto.getClasseProgramm());
-
+		
+		listTypeAbsence = popuplistDtoServicewsEndpoint.searchPopuplistDtoServicews("typeabsence");
 		listStudentEvent = studentEventsServicewsEndpoint
 				.searchStudentEventsServicews(studentEventsDto);
 		listStudentClass = studentClasseServicewsEndpoint

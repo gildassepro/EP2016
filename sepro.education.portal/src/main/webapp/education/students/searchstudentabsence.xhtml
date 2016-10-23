@@ -175,12 +175,20 @@
 													<f:facet name="header">
 														<p:outputLabel value="#{messages.label_action}" />
 													</f:facet>
-														<p:selectOneRadio id="pointage"
-															value="#{absenceStudentSearchServiceBean.pointage}">
-															<f:selectItem itemLabel="#{messages.label_presence}" itemValue="value1" />
-															<f:selectItem itemLabel="#{messages.label_retard}" itemValue="value2" />
-															<f:selectItem itemLabel="#{messages.label_absent}" itemValue="value3" />
-														</p:selectOneRadio>
+														<p:selectOneMenu id="pointage" styleClass="form-text"
+															value="#{absenceStudentSearchServiceBean.studentPresenceDto.statusStudent}"
+															converter="entityConverter"
+															placeholder="#{messages.label_msg_type_activity}"
+															requiredMessage="#{messages.label_cursusname_requeried}">
+															<f:selectItem
+																itemLabel="#{absenceStudentSearchServiceBean.studentPresenceDto.statusStudent.value}"
+																itemValue="#{absenceStudentSearchServiceBean.studentPresenceDto.statusStudent}"
+																label="#{messages.label_msg_type_activity}" />
+															<f:selectItems
+																value="#{absenceStudentSearchServiceBean.listTypeAbsence}"
+																var="eventTypes" itemValue="#{eventTypes}"
+																itemLabel="#{eventTypes.value}" />
+														</p:selectOneMenu>
 												</p:column>
 											</p:dataTable>
 										</div>
