@@ -483,6 +483,10 @@ public class ActivitieSearchServiceBean implements Serializable {
 	}
 
 	public StudentEventsDto getSelectedEvents() {
+		if (selectedEvents == null){
+			selectedEvents = studentEventsDto;
+		}
+			
 		return selectedEvents;
 	}
 
@@ -726,7 +730,7 @@ public class ActivitieSearchServiceBean implements Serializable {
 	}
 	
 	public void onActivitySelect(SelectEvent event){
-		studentEventsServicewsEndpoint = studentEventsServicews.getStudentEventsServicewsImplPort();
+		//studentEventsServicewsEndpoint = studentEventsServicews.getStudentEventsServicewsImplPort();
 		FacesMessage msg = new FacesMessage("Actitivité selectionné ", ((StudentEventsDto) event.getObject()).getIdStudentEvents().toString());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 		logger.debug("@@@@ TEST ID STUDENT @@@@@"+((StudentEventsDto) event.getObject()).getIdStudentEvents());
@@ -735,6 +739,9 @@ public class ActivitieSearchServiceBean implements Serializable {
 		
 		logger.debug("@@@@ SELECTED EVENT @@@@@ "+selectedEvents.getIdStudentEvents());
 		logger.debug("@@@@ SELECTED EVENT @@@@@ "+XMLCalendarTimeToDate.toDate(selectedEvents.getStartDate()));
+		selectedEvents.setStartDate(((StudentEventsDto) event.getObject()).getStartDate());
+		selectedEvents.setEnDate(((StudentEventsDto) event.getObject()).getEnDate());
+		selectedEvents.setTitle(((StudentEventsDto) event.getObject()).getTitle());
 		
 	}
 

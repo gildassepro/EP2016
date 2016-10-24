@@ -401,13 +401,14 @@
 										<div class="ui-grid ui-grid-responsive">
 											<p:dataTable id="listeactivities"
 												value="#{activitieSearchServiceBean.listStudentEvent}"
-												var="events" widgetVar="activitiesplan"
+												var="events"
 												selectionMode="single"
 												selection="#{activitieSearchServiceBean.selectedEvents}"
-												update=":forme:fdial:eventDetails"
+												update="eventDetails" 
 												rowKey="#{events.idStudentEvents}">
 												<p:ajax event="rowDblselect" listener="#{activitieSearchServiceBean.onActivitySelect}"
 													oncomplete="PF('eventDialog').show()" />
+													
 												<f:facet name="header">
 						            #{messages.label_msg_activitie}
 						        </f:facet>
@@ -513,7 +514,7 @@
 											</p:dataTable>
 										</div>
 
-										<p:dialog widgetVar="eventDialog"
+										<p:dialog widgetVar="eventDialog" id="ideventDialog"
 											header="#{messages.label_event_details}" showEffect="clip"
 											hideEffect="clip">
 											<h:panelGrid id="eventDetails" columns="2">
@@ -522,41 +523,41 @@
 												<p:inputText id="title"
 													value="#{activitieSearchServiceBean.selectedEvents.title}"
 													disabled="#{activitieSearchServiceBean.test3}"
-													required="true" />
+													/>
 												<p:outputLabel for="from" value="#{messages.label_dedut}" />
 												<p:calendar id="from"
 													disabled="#{activitieSearchServiceBean.test3}"
 													value="#{activitieSearchServiceBean.selectedEvents.startDate}"
-													>
+													pattern="dd/MM/yyyy HH:mm:ss">
 												</p:calendar>
 
 												<p:outputLabel for="to" value="#{messages.label_fin}" />
 												<p:calendar id="to"
 													disabled="#{activitieSearchServiceBean.test3}"
 													value="#{activitieSearchServiceBean.selectedEvents.enDate}"
-													>
+													pattern="dd/MM/yyyy HH:mm:ss">
 												</p:calendar>
 												<p:outputLabel for="commentstatus"
 													value="#{messages.label_msg_comment}" />
 												<p:inputTextarea rows="" cols="33" id="commentstatus"
 													placeholder="#{messages.label_msg_comment}"
-													value="#{planningSearchServiceBean.eventp.title}" />
+													value="#{activitieSearchServiceBean.eventsStatusDto.comments}" />
 
 												<p:outputLabel for="status" value="#{messages.label_action}" />
 												<p:selectOneMenu id="status" styleClass="form-text"
-													value="#{planningSearchServiceBean.eventsStatusDto.statusEvent}"
+													value="#{activitieSearchServiceBean.eventsStatusDto.statusEvent}"
 													converter="entityConverter"
 													placeholder="#{messages.label_msg_type_activity}"
 													requiredMessage="#{messages.label_cursusname_requeried}">
 													<f:selectItem
-														itemLabel="#{planningSearchServiceBean.eventsStatusDto.statusEvent.value}"
-														itemValue="#{planningSearchServiceBean.eventsStatusDto.statusEvent}"
+														itemLabel="#{activitieSearchServiceBean.eventsStatusDto.statusEvent.value}"
+														itemValue="#{activitieSearchServiceBean.eventsStatusDto.statusEvent}"
 														label="#{messages.label_msg_type_activity}" />
 													<f:selectItems
 														value="#{planningSearchServiceBean.listTypeAbsence}"
 														var="eventTypes" itemValue="#{eventTypes}"
 														itemLabel="#{eventTypes.value}" />
-													<p:ajax listener="#{planningSearchServiceBean.addEvent}" />
+													<p:ajax listener="#{activitieSearchServiceBean.addEvent}" />
 												</p:selectOneMenu>
 
 												<p:commandButton onclick="PF('eventDialog').hide()"
@@ -564,8 +565,8 @@
 													immediate="true" />
 												<p:commandButton id="addButton" type="button"
 													value="#{messages.label_save}"
-													actionListener="#{planningSearchServiceBean.addEvent}"
-													oncomplete="PF('profschedule').update();PF('eventDialog').hide();" />
+													actionListener="#{activitieSearchServiceBean.addEvent}"
+													oncomplete="PF('listeactivities').update();PF('eventDialog').hide();" />
 											</h:panelGrid>
 										</p:dialog>
 									</h:form>

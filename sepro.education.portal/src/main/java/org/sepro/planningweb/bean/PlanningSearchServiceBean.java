@@ -1,5 +1,7 @@
 package org.sepro.planningweb.bean;
 
+import groovyjarjarantlr.debug.Event;
+
 import java.awt.event.ActionEvent;
 import java.beans.EventSetDescriptor;
 import java.io.Serializable;
@@ -467,6 +469,7 @@ public class PlanningSearchServiceBean implements Serializable {
 
 	public void onEventSelect(SelectEvent selectEvent) {
 		eventp = (ScheduleEvent) selectEvent.getObject();
+		
 		logger.debug("@@@@ EVENT SELECTED @@@@" + selectEvent.getSource());
 		logger.debug("@@@@@ ID 2222 @@@@" + eventp.getId());
 //		logger.debug("@@@@@ ID 3333 @@@@" +((StudentEventsDto) selectEvent.getObject()).getIdStudentEvents());
