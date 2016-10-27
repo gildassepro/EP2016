@@ -107,10 +107,10 @@ public class ActivitieSearchServiceBean implements Serializable {
 
 	private ProgrammeDtoServicewsEndpoint programmeDtoServicewsEndpoint;
 	private ProgrammeDtoServicews programmeDtoServicews = new ProgrammeDtoServicews();
-	
+
 	private EventsStatusServicewsEndpoint eventsStatusServicewsEndpoint;
 	private EventsStatusServicews eventsStatusServicews = new EventsStatusServicews();
-	
+
 	private EventsStatusDto eventsStatusDto = new EventsStatusDto();
 	private List<EventsStatusDto> listEventStatus = new ArrayList<EventsStatusDto>();
 
@@ -176,7 +176,7 @@ public class ActivitieSearchServiceBean implements Serializable {
 
 	private List<PopuplistDto> listAcademicYear = new ArrayList<PopuplistDto>();
 	private List<PopuplistDto> listTypeEvent = new ArrayList<PopuplistDto>();
-	private List<PopuplistDto> listTypeAbsence =  new ArrayList<PopuplistDto>();
+	private List<PopuplistDto> listTypeAbsence = new ArrayList<PopuplistDto>();
 	private List<SessionDto> listSession = new ArrayList<SessionDto>();
 
 	private boolean action = false;
@@ -198,9 +198,6 @@ public class ActivitieSearchServiceBean implements Serializable {
 	private String testStartDate;
 	private String testEndDate;
 
-	
-	
-	
 	public List<EventsStatusDto> getListEventStatus() {
 		return listEventStatus;
 	}
@@ -483,10 +480,10 @@ public class ActivitieSearchServiceBean implements Serializable {
 	}
 
 	public StudentEventsDto getSelectedEvents() {
-		if (selectedEvents == null){
+		if (selectedEvents == null) {
 			selectedEvents = studentEventsDto;
 		}
-			
+
 		return selectedEvents;
 	}
 
@@ -704,45 +701,60 @@ public class ActivitieSearchServiceBean implements Serializable {
 		}
 
 	}
-	
-	public void addEvent(){
-		
+
+	public void addEvent() {
+
 		logger.debug("@@@@ TEST DE DEBUT ADD EVENT @@@@ ");
+		eventsStatusServicewsEndpoint = eventsStatusServicews.getEventsStatusServicewsImplPort();
 		
 		EventsStatusDto createEventStatus = new EventsStatusDto();
+		EventsStatusDto iventStatuss = new EventsStatusDto();
 		
-		listEventStatus = eventsStatusServicewsEndpoint.searchEventsStatusServicews(eventsStatusDto);
+		logger.debug("@@@@@ ID ID @@@@@"+selectedEvents); 
 		
-		createEventStatus.setActualEnDate(null);
-		createEventStatus.setActualStartDate(null);
-		createEventStatus.setComments(null);
-		createEventStatus.setStatusEvent(null);
-		createEventStatus.setStudentEvents(null);
+		iventStatuss.setStudentEvents(selectedEvents);
+		listEventStatus = eventsStatusServicewsEndpoint.searchEventsStatusServicews(iventStatuss);
 		
-		eventsStatusServicewsEndpoint = eventsStatusServicews.getEventsStatusServicewsImplPort();
-		if(listEventStatus != null){
-			createEventStatus = eventsStatusServicewsEndpoint.updateEventsStatusServicews(createEventStatus);
-			
-		}else{
-			createEventStatus = eventsStatusServicewsEndpoint.createEventsStatusServicews(createEventStatus);
-		}
+		logger.debug("@@@ LISTE SIZE @@@@"+listEventStatus.size());
+		createEventStatus.setActualEnDate(selectedEvents.getEnDate());
+		createEventStatus.setActualStartDate(selectedEvents.getStartDate());
+		logger.debug("@@@@ COMMENT @@@@"+eventsStatusDto.getComments());
+		createEventStatus.setComments(eventsStatusDto.getComments());
+		createEventStatus.setStatusEvent(eventsStatusDto.getStatusEvent());
+		createEventStatus.setStudentEvents(selectedEvents);
+
+		eventsStatusServicewsEndpoint = eventsStatusServicews
+				.getEventsStatusServicewsImplPort();
+		
+			createEventStatus = eventsStatusServicewsEndpoint
+					.createEventsStatusServicews(createEventStatus);
+		
 		logger.debug("@@@@ TEST DE FINS ADD EVENT @@@@ ");
 	}
-	
-	public void onActivitySelect(SelectEvent event){
-		//studentEventsServicewsEndpoint = studentEventsServicews.getStudentEventsServicewsImplPort();
-		FacesMessage msg = new FacesMessage("Actitivité selectionné ", ((StudentEventsDto) event.getObject()).getIdStudentEvents().toString());
+
+	public void onActivitySelect(SelectEvent event) {
+		// studentEventsServicewsEndpoint =
+		// studentEventsServicews.getStudentEventsServicewsImplPort();
+		FacesMessage msg = new FacesMessage("Actitivité selectionné ",
+				((StudentEventsDto) event.getObject()).getIdStudentEvents()
+						.toString());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
-		logger.debug("@@@@ TEST ID STUDENT @@@@@"+((StudentEventsDto) event.getObject()).getIdStudentEvents());
-		logger.debug("@@@@@  TEST @@@@@"+selectedEvents);
+		logger.debug("@@@@ TEST ID STUDENT @@@@@"
+				+ ((StudentEventsDto) event.getObject()).getIdStudentEvents());
+		logger.debug("@@@@@  TEST @@@@@" + selectedEvents);
 		selectedEvents = ((StudentEventsDto) event.getObject());
-		
-		logger.debug("@@@@ SELECTED EVENT @@@@@ "+selectedEvents.getIdStudentEvents());
-		logger.debug("@@@@ SELECTED EVENT @@@@@ "+XMLCalendarTimeToDate.toDate(selectedEvents.getStartDate()));
-		selectedEvents.setStartDate(((StudentEventsDto) event.getObject()).getStartDate());
-		selectedEvents.setEnDate(((StudentEventsDto) event.getObject()).getEnDate());
-		selectedEvents.setTitle(((StudentEventsDto) event.getObject()).getTitle());
-		
+
+		logger.debug("@@@@ SELECTED EVENT @@@@@ "
+				+ selectedEvents.getIdStudentEvents());
+		logger.debug("@@@@ SELECTED EVENT @@@@@ "
+				+ XMLCalendarTimeToDate.toDate(selectedEvents.getStartDate()));
+		selectedEvents.setStartDate(((StudentEventsDto) event.getObject())
+				.getStartDate());
+		selectedEvents.setEnDate(((StudentEventsDto) event.getObject())
+				.getEnDate());
+		selectedEvents.setTitle(((StudentEventsDto) event.getObject())
+				.getTitle());
+
 	}
 
 	public void updateModulesProgrammes() {
@@ -839,6 +851,37 @@ public class ActivitieSearchServiceBean implements Serializable {
 			e.printStackTrace();
 		}
 
+	}
+
+	public StudentEventsDto onRowSelect(SelectEvent event) {
+		FacesMessage msg = new FacesMessage("Actitivité selectionné ",
+				((StudentEventsDto) event.getObject()).getIdStudentEvents()
+						.toString());
+		eventsStatusServicewsEndpoint = eventsStatusServicews.getEventsStatusServicewsImplPort();
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+		EventsStatusDto eventstate = new EventsStatusDto();
+		
+		eventstate.setStudentEvents((StudentEventsDto) event.getObject());
+		logger.debug("@@@@@ EVENT STATUS @@@@@@@ "+eventstate);
+		logger.debug("@@@@@ EVENT STATUS @@@@@@@ "+eventstate.getIdEventsStatus());
+		
+		logger.debug("@@@@ TEST ID STUDENT @@@@@"
+				+ ((StudentEventsDto) event.getObject()).getIdStudentEvents());
+		logger.debug("@@@@@  TEST @@@@@" + selectedEvents);
+		selectedEvents = ((StudentEventsDto) event.getObject());
+
+		logger.debug("@@@@ SELECTED EVENT @@@@@ "
+				+ selectedEvents.getIdStudentEvents());
+		logger.debug("@@@@ SELECTED EVENT @@@@@ "
+				+ XMLCalendarTimeToDate.toDate(selectedEvents.getStartDate()));
+		selectedEvents.setStartDate(((StudentEventsDto) event.getObject())
+				.getStartDate());
+		selectedEvents.setEnDate(((StudentEventsDto) event.getObject())
+				.getEnDate());
+		selectedEvents.setTitle(((StudentEventsDto) event.getObject())
+				.getTitle());
+		
+		return selectedEvents;
 	}
 
 	public ModuleCalendarDto getModuleCalendar() {
@@ -974,11 +1017,9 @@ public class ActivitieSearchServiceBean implements Serializable {
 		return testboolean();
 	}
 
-	
 	public void updateDate() {
-		
-	}
 
+	}
 
 	@PostConstruct
 	public void init() {
@@ -1005,7 +1046,7 @@ public class ActivitieSearchServiceBean implements Serializable {
 					.searchPopuplistDtoServicews("academic_years");
 			listTypeEvent = popuplistDtoServicewsEndpoint
 					.searchPopuplistDtoServicews("typeevent");
-			
+
 			listTypeAbsence = popuplistDtoServicewsEndpoint
 					.searchPopuplistDtoServicews("eventstatus");
 

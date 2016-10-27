@@ -297,6 +297,11 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 		return studentEventsDto;
 	}
 	
+	public void endListe(){
+		
+	}
+	
+	
 	public void updateActivity() {
 		logger.debug("init updateActivity");
 		popuplistDtoServicewsEndpoint = popuplistDtoServicews.getPopuplistDtoServicewsImplPort();

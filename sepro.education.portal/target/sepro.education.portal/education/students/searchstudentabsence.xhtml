@@ -31,13 +31,13 @@
 
 									<p:commandButton value="#{messages.label_create}"
 										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
-										action="#{programmeSearchServiceBean.saveAbsence()}"
+										action="#{absenceStudentSearchServiceBean.saveAbsence()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('addabsences').hide()"
 										update="forme fdial growl" />
 									<p:splitButton value="#{messages.label_options}"
 										actionListener="#{buttonView.save}" icon="ui-icon-gear">
-										<p:menuitem value="Update"
-											actionListener="#{buttonView.update}"
+										<p:menuitem value="Clôturer la liste"
+											actionListener="#{absenceStudentSearchServiceBean.endListe()}"
 											icon="ui-icon-arrowrefresh-1-w" />
 										<p:menuitem value="Delete"
 											actionListener="#{buttonView.delete}" ajax="false"

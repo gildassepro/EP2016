@@ -52,7 +52,7 @@
 										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
 										rendered="#{activitieSearchServiceBean.isAction()}"
 										disabled="#{activitieSearchServiceBean.test}"
-										action="#{programmeSearchServiceBean.createProgramme()}"
+										action="#{activitieSearchServiceBean.addActivitiess()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('addeactivities').hide()"
 										update="forme fdial growl" />
 									<p:splitButton value="#{messages.label_options}"
@@ -387,7 +387,7 @@
 																itemLabel="#{classeProgramm.classeName}" />
 															<p:ajax event="valueChange"
 																listener="#{activitieSearchServiceBean.updateModulesProgrammes()}"
-																update="forme @([id$=modacademique]) @([id$=listeactivities])" />
+																update="forme @([id$=modacademique]) form" />
 															<p:ajax event="select"
 																listener="#{activitieSearchServiceBean.onSelect}"
 																update="forme growl" />
@@ -398,177 +398,109 @@
 										</div>
 										<br></br>
 
-										<div class="ui-grid ui-grid-responsive">
-											<p:dataTable id="listeactivities"
+										<h:form id="form">
+											<p:dataTable var="events"
 												value="#{activitieSearchServiceBean.listStudentEvent}"
-												var="events"
-												selectionMode="single"
+												paginator="true" rows="10" rowKey="#{events.idStudentEvents}"
+												paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+												rowsPerPageTemplate="5,10,15" selectionMode="single"
 												selection="#{activitieSearchServiceBean.selectedEvents}"
-												update="eventDetails" 
-												rowKey="#{events.idStudentEvents}">
-												<p:ajax event="rowDblselect" listener="#{activitieSearchServiceBean.onActivitySelect}"
+												id="eventsTable" lazy="true">
+												<p:ajax event="rowDblselect"
+													listener="#{activitieSearchServiceBean.onRowSelect}"
+													update="@([id$=eventDetail])"
 													oncomplete="PF('eventDialog').show()" />
-													
-												<f:facet name="header">
-						            #{messages.label_msg_activitie}
-						        </f:facet>
-												<p:column priority="2"
-													headerText="#{messages.label_msg_title_activity}">
-													<f:facet name="header">
-														#{messages.label_msg_title_activity}
-													</f:facet>
-													<f:facet name="header">
-														<p:inputText styleClass="form-control" id="titleactivity"
-															value="#{activitieSearchServiceBean.studentEventsDto.title}"
-															placeholder="#{messages.label_msg_title_activity}" />
-													</f:facet>
+												<p:column headerText="#{messages.label_msg_title_activity}"
+													sortBy="#{events.title}" filterBy="#{events.title}">
 													<h:outputText value="#{events.title}" />
 												</p:column>
+												<p:column headerText="#{messages.label_msg_type_activity}"
+													sortBy="#{events.title}" filterBy="#{events.title}">
+													<h:outputText value="#{events.eventType.value}" />
+												</p:column>
+												<p:column headerText="#{messages.label_start_hour}"
+													sortBy="#{events.startDate}" filterBy="#{events.startDate}">
+													<h:outputText value="#{events.startDate}" />
+												</p:column>
+												<p:column headerText="#{messages.label_end_hour}"
+													sortBy="#{events.enDate}" filterBy="#{events.enDate}">
+													<h:outputText value="#{events.enDate}" />
 
-												<p:column priority="3"
-													headerText="#{messages.label_msg_type_activity}">
-													<f:facet name="header">
-														#{messages.label_msg_type_activity}
-													</f:facet>
-													<f:facet name="header">
-														<p:selectOneMenu id="typeactivity" styleClass="form-text"
-															value="#{activitieSearchServiceBean.studentEventsDto.eventType}"
+												</p:column>
+												<p:column headerText="#{messages.label_msg_prof}"
+													sortBy="#{events.teacher.firstName}" filterBy="#{events.teacher.firstName}">
+													<h:outputText value="#{events.teacher.firstName}" />
+												</p:column>
+												
+												<p:column headerText="#{messages.label_msg_academic_module}"
+													sortBy="#{events.academicModule.moduleName}" filterBy="#{events.academicModule.moduleName}">
+													<h:outputText value="#{events.academicModule.moduleName}" />
+												</p:column>
+												
+											</p:dataTable>
+
+											<p:dialog header="#{messages.label_event_details}" widgetVar="eventDialog"
+												modal="true" showEffect="fade" hideEffect="fade"
+												resizable="false">
+												<p:outputPanel id="eventDetail" style="text-align:center;">
+													<h:panelGrid columns="2"
+														rendered="#{not empty activitieSearchServiceBean.selectedEvents}"
+														>
+
+														<p:outputLabel for="title"
+															value="#{messages.label_msg_title_activity}" />
+														<h:outputText id="title"
+															value="#{activitieSearchServiceBean.selectedEvents.title}" />
+
+														<h:outputText value="#{messages.label_msg_type_activity}" />
+														<h:outputText
+															value="#{activitieSearchServiceBean.selectedEvents.eventType.value}" />
+
+														<p:outputLabel for="from" value="#{messages.label_dedut}" />
+														<h:outputText id="from"
+															value="#{activitieSearchServiceBean.selectedEvents.startDate}" />
+
+														<p:outputLabel for="to" value="#{messages.label_fin}" />
+														<h:outputText id="to"
+															value="#{activitieSearchServiceBean.selectedEvents.enDate}">
+														</h:outputText>
+														<p:outputLabel for="commentstat"
+															value="#{messages.label_msg_comment}" />
+														<p:inputTextarea rows="" cols="33" id="commentstat"
+															placeholder="#{messages.label_msg_comment}"
+															value="#{activitieSearchServiceBean.eventsStatusDto.comments}" />
+														<p:outputLabel for="status"
+															value="#{messages.label_action}" />
+														<p:selectOneMenu id="status" styleClass="form-text"
+															value="#{activitieSearchServiceBean.eventsStatusDto.statusEvent}"
 															converter="entityConverter"
 															placeholder="#{messages.label_msg_type_activity}"
 															requiredMessage="#{messages.label_cursusname_requeried}">
 															<f:selectItem
-																itemLabel="#{activitieSearchServiceBean.studentEventsDto.eventType.value}"
-																itemValue="#{activitieSearchServiceBean.studentEventsDto.eventType}"
+																itemLabel="#{activitieSearchServiceBean.eventsStatusDto.statusEvent.value}"
+																itemValue="#{activitieSearchServiceBean.eventsStatusDto.statusEvent}"
 																label="#{messages.label_msg_type_activity}" />
 															<f:selectItems
-																value="#{activitieSearchServiceBean.listTypeEvent}"
+																value="#{activitieSearchServiceBean.listTypeAbsence}"
 																var="eventTypes" itemValue="#{eventTypes}"
 																itemLabel="#{eventTypes.value}" />
+															
 														</p:selectOneMenu>
-													</f:facet>
-													<h:outputText value="#{events.eventType.value}" />
-												</p:column>
+														<p:commandButton onclick="PF('eventDialog').hide()"
+															type="button" value="#{messages.label_button_annuler}"
+															immediate="true" />
+														<p:commandButton id="addButton"
+															value="#{messages.label_save}"
+															action="#{activitieSearchServiceBean.addEvent()}"
+															update="forme growl"
+															oncomplete="if (args &amp;&amp; !args.validationFailed) PF('eventDialog').hide()" />
+													</h:panelGrid>
+												</p:outputPanel>
+											</p:dialog>
+										</h:form>
 
-												<p:column priority="4"
-													headerText="#{messages.label_start_hour}">
-													<f:facet name="header">
-														#{messages.label_start_hour}
-													</f:facet>
-													<h:outputText value="#{events.startDate}" />
-												</p:column>
 
-												<p:column priority="3"
-													headerText="#{messages.label_end_hour}">
-													<f:facet name="header">
-														#{messages.label_end_hour}
-													</f:facet>
-													<h:outputText value="#{events.enDate}" />
-												</p:column>
 
-												<p:column priority="3"
-													headerText="#{messages.label_msg_prof}">
-													<f:facet name="header">
-														#{messages.label_msg_prof}
-													</f:facet>
-													<f:facet name="header">
-														<p:selectOneMenu id="prof" styleClass="form-text"
-															value="#{activitieSearchServiceBean.studentEventsDto.teacher}"
-															converter="entityConverter"
-															placeholder="#{messages.label_msg_prof}"
-															requiredMessage="#{messages.label_msg_prof}">
-															<f:selectItem
-																itemLabel="#{activitieSearchServiceBean.studentEventsDto.teacher.firstName}"
-																itemValue="#{activitieSearchServiceBean.studentEventsDto.teacher}"
-																label="#{messages.label_cursus}" />
-															<f:selectItems
-																value="#{activitieSearchServiceBean.listeTeacherEvent}"
-																var="teacherevent" itemValue="#{teacherevent}"
-																itemLabel="#{teacherevent.firstName} #{teacherevent.name}" />
-														</p:selectOneMenu>
-													</f:facet>
-													<h:outputText value="#{events.teacher.firstName}" />
-												</p:column>
-
-												<p:column priority="3"
-													headerText="#{messages.label_msg_academic_module}">
-													<f:facet name="header">
-														#{messages.label_msg_academic_module}
-													</f:facet>
-													<f:facet name="header">
-														<p:selectOneMenu id="modacademique" styleClass="form-text"
-															value="#{activitieSearchServiceBean.studentEventsDto.academicModule}"
-															converter="entityConverter"
-															placeholder="#{messages.label_msg_academic_module}">
-															<f:selectItem
-																itemLabel="#{activitieSearchServiceBean.studentEventsDto.academicModule.moduleName}"
-																itemValue="#{activitieSearchServiceBean.studentEventsDto.academicModule}"
-																label="#{messages.label_msg_academic_module}" />
-															<f:selectItems
-																value="#{activitieSearchServiceBean.listAcademicModule}"
-																var="academicModule" itemValue="#{academicModule}"
-																itemLabel="#{academicModule.moduleName}" />
-														</p:selectOneMenu>
-													</f:facet>
-													<h:outputText value="#{events.academicModule.moduleName}" />
-												</p:column>
-											</p:dataTable>
-										</div>
-
-										<p:dialog widgetVar="eventDialog" id="ideventDialog"
-											header="#{messages.label_event_details}" showEffect="clip"
-											hideEffect="clip">
-											<h:panelGrid id="eventDetails" columns="2">
-												<p:outputLabel for="title"
-													value="#{messages.label_msg_title_activity}" />
-												<p:inputText id="title"
-													value="#{activitieSearchServiceBean.selectedEvents.title}"
-													disabled="#{activitieSearchServiceBean.test3}"
-													/>
-												<p:outputLabel for="from" value="#{messages.label_dedut}" />
-												<p:calendar id="from"
-													disabled="#{activitieSearchServiceBean.test3}"
-													value="#{activitieSearchServiceBean.selectedEvents.startDate}"
-													pattern="dd/MM/yyyy HH:mm:ss">
-												</p:calendar>
-
-												<p:outputLabel for="to" value="#{messages.label_fin}" />
-												<p:calendar id="to"
-													disabled="#{activitieSearchServiceBean.test3}"
-													value="#{activitieSearchServiceBean.selectedEvents.enDate}"
-													pattern="dd/MM/yyyy HH:mm:ss">
-												</p:calendar>
-												<p:outputLabel for="commentstatus"
-													value="#{messages.label_msg_comment}" />
-												<p:inputTextarea rows="" cols="33" id="commentstatus"
-													placeholder="#{messages.label_msg_comment}"
-													value="#{activitieSearchServiceBean.eventsStatusDto.comments}" />
-
-												<p:outputLabel for="status" value="#{messages.label_action}" />
-												<p:selectOneMenu id="status" styleClass="form-text"
-													value="#{activitieSearchServiceBean.eventsStatusDto.statusEvent}"
-													converter="entityConverter"
-													placeholder="#{messages.label_msg_type_activity}"
-													requiredMessage="#{messages.label_cursusname_requeried}">
-													<f:selectItem
-														itemLabel="#{activitieSearchServiceBean.eventsStatusDto.statusEvent.value}"
-														itemValue="#{activitieSearchServiceBean.eventsStatusDto.statusEvent}"
-														label="#{messages.label_msg_type_activity}" />
-													<f:selectItems
-														value="#{planningSearchServiceBean.listTypeAbsence}"
-														var="eventTypes" itemValue="#{eventTypes}"
-														itemLabel="#{eventTypes.value}" />
-													<p:ajax listener="#{activitieSearchServiceBean.addEvent}" />
-												</p:selectOneMenu>
-
-												<p:commandButton onclick="PF('eventDialog').hide()"
-													type="button" value="#{messages.label_button_annuler}"
-													immediate="true" />
-												<p:commandButton id="addButton" type="button"
-													value="#{messages.label_save}"
-													actionListener="#{activitieSearchServiceBean.addEvent}"
-													oncomplete="PF('listeactivities').update();PF('eventDialog').hide();" />
-											</h:panelGrid>
-										</p:dialog>
 									</h:form>
 								</p:panel>
 

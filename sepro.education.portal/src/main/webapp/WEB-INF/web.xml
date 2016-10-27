@@ -60,7 +60,7 @@
 
 	<!-- Welcome page -->
 	<welcome-file-list>
-		<welcome-file>login.xhtml</welcome-file>
+		<welcome-file>acceuil.xhtml</welcome-file>
 	</welcome-file-list>
 
 	<context-param>

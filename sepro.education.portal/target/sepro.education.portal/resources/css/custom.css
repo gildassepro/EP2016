@@ -14,6 +14,50 @@
 * Coding rules : https://github.com/necolas/idiomatic-css
 *
 */
+html {
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+/* set background image per page */
+.home-bg {
+	width: 100%;
+	height: 100%;
+	background: url("./../images/webdesign2.jpg"),
+		linear-gradient(to right, rgba(30, 75, 115, 1), rgba(255, 255, 255, 0));
+	
+	background-position: bottom right, right;
+	background: -moz-linear-gradient(to right, rgba(30, 75, 115, 1),
+		rgba(255, 255, 255, 0)),
+		-webkit-gradient(to right, rgba(30, 75, 115, 1),
+		rgba(255, 255, 255, 0)),
+		-ms-linear-gradient(to right, rgba(30, 75, 115, 1),
+		rgba(255, 255, 255, 0)),
+		linear-gradient(to right, rgba(30, 75, 115, 1), rgba(255, 255, 255, 0));
+}
+
+.about-bg {
+	width: 100%;
+	height: 400px;
+	background: url("./../images/webdesign2.jpg"),
+		linear-gradient(to right, rrgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
+	background-repeat: no-repeat, no-repeat;
+	background-position: bottom right, right;
+	background: -moz-linear-gradient(to right, rgba(255, 255, 255, 0),
+		rgba(255, 255, 255, 0)),
+		-webkit-gradient(to right, rgba(255, 255, 255, 0),
+		rgba(255, 255, 255, 0)),
+		-ms-linear-gradient(to right, rgba(255, 255, 255, 0),
+		rgba(255, 255, 255, 0)),
+		linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
+}
+
+.login-bg {
+	background: url("./../images/studentback1.jpg") no-repeat center center
+		fixed;
+}
 
 .ui-steps .ui-steps-item {
 	width: 15%;
@@ -45,19 +89,19 @@
 	margin-top: -10px;
 	margin-bottom: 10px;
 }
+
 .ui-growl {
-    left: 700px;
+	left: 700px;
 }
 
 .flaticon-notes:before {
-  content: "\f107";
+	content: "\f107";
 }
 
 .flaticon-teacher-with-stick:before {
-  content: "\f10c";
+	content: "\f10c";
 }
 
 .flaticon-graduate-student-avatar:before {
-  content: "\f104";
+	content: "\f104";
 }
-
