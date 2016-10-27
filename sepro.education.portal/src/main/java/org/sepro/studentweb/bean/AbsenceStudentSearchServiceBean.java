@@ -318,8 +318,10 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 				.setClasseProgramm(studentEventsDto.getClasseProgramm());
 		
 		listTypeAbsence = popuplistDtoServicewsEndpoint.searchPopuplistDtoServicews("typeabsence");
+		
 		listStudentEvent = studentEventsServicewsEndpoint
 				.searchStudentEventsServicews(studentEventsDto);
+		
 		listStudentClass = studentClasseServicewsEndpoint
 				.searchStudentClasseServicews(studentClasseDto);
 

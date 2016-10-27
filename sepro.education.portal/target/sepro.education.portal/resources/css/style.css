@@ -9926,9 +9926,11 @@ footer {
   text-align: center;
 }
 /* line 380, ../scss/layouts/_hooks.scss */
-footer img {
+
+/*footer img {
   background-color: #fafafa;
 }
+*/
 
 /* line 385, ../scss/layouts/_hooks.scss */
 .navbar-toggle {
