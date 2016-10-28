@@ -23,6 +23,7 @@ import org.sepro.parameterweb.serviceimpl.ClasseServicewsEndpoint;
 import org.sepro.parameterweb.serviceimpl.PopuplistDtoServicews;
 import org.sepro.parameterweb.serviceimpl.PopuplistDtoServicewsEndpoint;
 import org.sepro.studentweb.serviceapi.ClasseProgrammDto;
+import org.sepro.studentweb.serviceapi.EventsStatusDto;
 import org.sepro.studentweb.serviceapi.StudentClasseDto;
 import org.sepro.studentweb.serviceapi.StudentEventsDto;
 import org.sepro.studentweb.serviceapi.StudentPresenceDto;
@@ -30,6 +31,8 @@ import org.sepro.studentweb.serviceimpl.ActivitiesServicews;
 import org.sepro.studentweb.serviceimpl.ActivitiesServicewsEndpoint;
 import org.sepro.studentweb.serviceimpl.ClasseProgrammServicews;
 import org.sepro.studentweb.serviceimpl.ClasseProgrammServicewsEndpoint;
+import org.sepro.studentweb.serviceimpl.EventsStatusServicews;
+import org.sepro.studentweb.serviceimpl.EventsStatusServicewsEndpoint;
 import org.sepro.studentweb.serviceimpl.StudentClasseServicews;
 import org.sepro.studentweb.serviceimpl.StudentClasseServicewsEndpoint;
 import org.sepro.studentweb.serviceimpl.StudentEventsServicews;
@@ -38,6 +41,8 @@ import org.sepro.studentweb.serviceimpl.StudentPresenceServicews;
 import org.sepro.studentweb.serviceimpl.StudentPresenceServicewsEndpoint;
 import org.sepro.studentweb.serviceimpl.StudentServicews;
 import org.sepro.studentweb.serviceimpl.StudentServicewsEndpoint;
+
+import com.itextpdf.tool.xml.css.parser.State;
 
 @ManagedBean
 @ViewScoped
@@ -71,6 +76,13 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 	private ClasseServicewsEndpoint classeServicewsEndpoint;
 	private ClasseServicews classeServicews = new ClasseServicews();
 
+	private EventsStatusServicewsEndpoint eventsStatusServicewsEndpoint;
+	private EventsStatusServicews eventsStatusServicews = new EventsStatusServicews();
+
+	private EventsStatusDto eventsStatusDto = new EventsStatusDto();
+	private List<EventsStatusDto> listEventStatus = new ArrayList<EventsStatusDto>();
+	private List<EventsStatusDto> listEventStatusp = new ArrayList<EventsStatusDto>();
+	
 	private ActivitiesServicewsEndpoint activitiesServicewsEndpoint;
 	private ActivitiesServicews activitiesServicews = new ActivitiesServicews();
 	
@@ -91,8 +103,10 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 	private StudentEventsDto studentEventsDto = new StudentEventsDto();
 	private StudentEventsDto selectedEvents = new StudentEventsDto();
 	private List<StudentEventsDto> listStudentEvent = new ArrayList<StudentEventsDto>();
+	private List<StudentEventsDto> listStudentEvents = new ArrayList<StudentEventsDto>();
 	
 	private List<PopuplistDto> listTypeAbsence =  new ArrayList<PopuplistDto>();
+	private List<PopuplistDto> listTypeStatusEvent = new ArrayList<PopuplistDto>();
 	
 
 	private ClasseDto classeDto = new ClasseDto();
@@ -107,6 +121,46 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 	
 	
 	
+	public List<EventsStatusDto> getListEventStatusp() {
+		return listEventStatusp;
+	}
+
+	public void setListEventStatusp(List<EventsStatusDto> listEventStatusp) {
+		this.listEventStatusp = listEventStatusp;
+	}
+
+	public List<StudentEventsDto> getListStudentEvents() {
+		return listStudentEvents;
+	}
+
+	public void setListStudentEvents(List<StudentEventsDto> listStudentEvents) {
+		this.listStudentEvents = listStudentEvents;
+	}
+
+	public EventsStatusDto getEventsStatusDto() {
+		return eventsStatusDto;
+	}
+
+	public void setEventsStatusDto(EventsStatusDto eventsStatusDto) {
+		this.eventsStatusDto = eventsStatusDto;
+	}
+
+	public List<EventsStatusDto> getListEventStatus() {
+		return listEventStatus;
+	}
+
+	public void setListEventStatus(List<EventsStatusDto> listEventStatus) {
+		this.listEventStatus = listEventStatus;
+	}
+
+	public List<PopuplistDto> getListTypeStatusEvent() {
+		return listTypeStatusEvent;
+	}
+
+	public void setListTypeStatusEvent(List<PopuplistDto> listTypeStatusEvent) {
+		this.listTypeStatusEvent = listTypeStatusEvent;
+	}
+
 	public List<PopuplistDto> getListTypeAbsence() {
 		return listTypeAbsence;
 	}
@@ -305,10 +359,12 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 	public void updateActivity() {
 		logger.debug("init updateActivity");
 		popuplistDtoServicewsEndpoint = popuplistDtoServicews.getPopuplistDtoServicewsImplPort();
+		eventsStatusServicewsEndpoint = eventsStatusServicews.getEventsStatusServicewsImplPort();
 		studentEventsServicewsEndpoint = studentEventsServicews
 				.getStudentEventsServicewsImplPort();
 		studentClasseServicewsEndpoint = studentClasseServicews
 				.getStudentClasseServicewsImplPort();
+		
 
 		logger.debug("@@@@ ICI 1 @@@@" + studentEventsDto.getClasseProgramm());
 		studentEventsDto
@@ -317,11 +373,38 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 		studentClasseDto
 				.setClasseProgramm(studentEventsDto.getClasseProgramm());
 		
+		listEventStatus = eventsStatusServicewsEndpoint.searchEventsStatusServicews(eventsStatusDto);
+		
+		logger.debug(" @@@@@@ TAILLLE EVENTSTAZTUS @@@@" +listEventStatus.size());
+		
 		listTypeAbsence = popuplistDtoServicewsEndpoint.searchPopuplistDtoServicews("typeabsence");
 		
 		listStudentEvent = studentEventsServicewsEndpoint
 				.searchStudentEventsServicews(studentEventsDto);
 		
+		
+			logger.debug("@@@@ ENTREE ICI @@@@@ ");
+			
+			for(EventsStatusDto p : listEventStatus ){
+				if(p.getStatusEvent().getIdPopuplist() == 61){
+					listEventStatusp.add(p);
+				}
+			}
+			logger.debug("@@@@ TAILLE LISTE ACITVITY FILTRED 333333333 @@@@@"+listEventStatusp.size());
+			
+			for(EventsStatusDto stat : listEventStatusp){
+				for(StudentEventsDto evt : listStudentEvent){
+					
+					if(evt.getIdStudentEvents().equals(stat.getStudentEvents().getIdStudentEvents())){
+						listStudentEvents.add(evt);
+					}
+					logger.debug("@@@@ LISTE ABSENCE @@@@@ "+listStudentEvents.size());
+				}
+				
+			}
+			logger.debug("@@@@ TAILLE LISTE ACITVITY FILTRED @@@@@"+listStudentEvents.size());
+			
+			
 		listStudentClass = studentClasseServicewsEndpoint
 				.searchStudentClasseServicews(studentClasseDto);
 

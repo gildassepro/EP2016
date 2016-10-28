@@ -88,60 +88,10 @@
 					<h:panelGrid columnClasses="value">
 						<p:schedule id="listplanprof" widgetVar="profschedule"
 							value="#{planningSearchServiceBean.eventProf}">
-							<p:ajax event="dateSelect"
-								listener="#{planningSearchServiceBean.onDateSelect}"
-								update="eventDetails" oncomplete="PF('eventDialog').show();" />
-							<p:ajax event="eventSelect"
-								listener="#{planningSearchServiceBean.onEventSelect}"
-								update="eventDetails" oncomplete="PF('eventDialog').show();" />
+							
 						</p:schedule>
 					</h:panelGrid>
-					<p:dialog widgetVar="eventDialog"
-						header="#{messages.label_event_details}" showEffect="clip"
-						hideEffect="clip">
-						<h:panelGrid id="eventDetails" columns="2">
-							<p:outputLabel for="title"
-								value="#{messages.label_msg_title_activity}" />
-							<p:inputText id="title"
-								value="#{planningSearchServiceBean.eventp.title}"
-								disabled="#{planningSearchServiceBean.test2}" required="true" />
-							<p:outputLabel for="from" value="#{messages.label_dedut}" />
-							<p:calendar id="from"
-								disabled="#{planningSearchServiceBean.test2}"
-								value="#{planningSearchServiceBean.eventp.startDate}"
-								pattern="dd/MM/yyyy HH:mm:ss">
-							</p:calendar>
-
-							<p:outputLabel for="to" value="#{messages.label_fin}" />
-							<p:calendar id="to" disabled="#{planningSearchServiceBean.test2}"
-								value="#{planningSearchServiceBean.eventp.endDate}"
-								pattern="dd/MM/yyyy HH:mm:ss">
-							</p:calendar>
-
-							<p:outputLabel for="status" value="#{messages.label_action}" />
-							<p:selectOneMenu id="status" styleClass="form-text"
-								value="#{planningSearchServiceBean.eventsStatusDto.statusEvent}"
-								converter="entityConverter"
-								placeholder="#{messages.label_msg_type_activity}"
-								requiredMessage="#{messages.label_cursusname_requeried}">
-								<f:selectItem
-									itemLabel="#{planningSearchServiceBean.eventsStatusDto.statusEvent.value}"
-									itemValue="#{planningSearchServiceBean.eventsStatusDto.statusEvent}"
-									label="#{messages.label_msg_type_activity}" />
-								<f:selectItems
-									value="#{planningSearchServiceBean.listTypeAbsence}"
-									var="eventTypes" itemValue="#{eventTypes}"
-									itemLabel="#{eventTypes.value}" />
-								<p:ajax actionListener="#{planningSearchServiceBean.onEventChange}" />
-							</p:selectOneMenu>
-
-							<p:commandButton onclick="PF('eventDialog').hide()" type="button"
-								value="#{messages.label_button_annuler}" immediate="true" />
-							<p:commandButton id="addButton" type="button" value="#{messages.label_save}"
-								actionListener="#{planningSearchServiceBean.addEvent}"
-								oncomplete="PF('profschedule').update();PF('eventDialog').hide();" />
-						</h:panelGrid>
-					</p:dialog>
+					
 				</h:form>
 			</b:row>
 		</div>

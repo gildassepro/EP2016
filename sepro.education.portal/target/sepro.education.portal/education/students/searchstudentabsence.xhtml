@@ -38,7 +38,7 @@
 										actionListener="#{buttonView.save}" icon="ui-icon-gear">
 										<p:menuitem value="Clôturer la liste"
 											actionListener="#{absenceStudentSearchServiceBean.endListe()}"
-											icon="ui-icon-arrowrefresh-1-w" />
+											icon="fa fa-fw fa-lock" />
 										<p:menuitem value="Delete"
 											actionListener="#{buttonView.delete}" ajax="false"
 											icon="ui-icon-close" />
@@ -106,7 +106,7 @@
 																itemValue="#{absenceStudentSearchServiceBean.studentEventsDto.title}"
 																label="#{messages.label_cursus}" />
 															<f:selectItems
-																value="#{absenceStudentSearchServiceBean.listStudentEvent}"
+																value="#{absenceStudentSearchServiceBean.listStudentEvents}"
 																var="activity" itemValue="#{activity}"
 																itemLabel="#{activity.title} #{activity.startDate} #{activity.enDate}" />
 														</p:selectOneMenu>
@@ -130,7 +130,7 @@
 												selection="#{absenceStudentSearchServiceBean.studentClasseDtos}"
 												paginatorPosition="bottom"
 												paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}">
-
+												
 												<p:column priority="2" width="15"
 													filterBy="#{students.student.idStudent}"
 													filterMatchMode="contains">

@@ -77,6 +77,7 @@ import org.sepro.studentweb.serviceimpl.StudentEventsServicewsEndpoint;
 import org.sepro.teacherweb.serviceapi.IdentityTeacherDto;
 import org.sepro.teacherweb.serviceimpl.IdentityTeacherServicews;
 import org.sepro.teacherweb.serviceimpl.IdentityTeacherServicewsEndpoint;
+import org.w3c.dom.events.Event;
 
 import sepro.education.web.util.DateConvert;
 import sepro.education.web.util.XMLCalendarTimeToDate;
@@ -110,7 +111,9 @@ public class ActivitieSearchServiceBean implements Serializable {
 
 	private EventsStatusServicewsEndpoint eventsStatusServicewsEndpoint;
 	private EventsStatusServicews eventsStatusServicews = new EventsStatusServicews();
-
+	
+	private List<EventsStatusDto> listEventStatusp = new ArrayList<EventsStatusDto>();
+	
 	private EventsStatusDto eventsStatusDto = new EventsStatusDto();
 	private List<EventsStatusDto> listEventStatus = new ArrayList<EventsStatusDto>();
 
@@ -197,6 +200,16 @@ public class ActivitieSearchServiceBean implements Serializable {
 
 	private String testStartDate;
 	private String testEndDate;
+	
+	
+	
+	public List<EventsStatusDto> getListEventStatusp() {
+		return listEventStatusp;
+	}
+
+	public void setListEventStatusp(List<EventsStatusDto> listEventStatusp) {
+		this.listEventStatusp = listEventStatusp;
+	}
 
 	public List<EventsStatusDto> getListEventStatus() {
 		return listEventStatus;
@@ -703,7 +716,8 @@ public class ActivitieSearchServiceBean implements Serializable {
 	}
 
 	public void addEvent() {
-
+		FacesMessage msg = null;
+		
 		logger.debug("@@@@ TEST DE DEBUT ADD EVENT @@@@ ");
 		eventsStatusServicewsEndpoint = eventsStatusServicews.getEventsStatusServicewsImplPort();
 		
@@ -725,12 +739,36 @@ public class ActivitieSearchServiceBean implements Serializable {
 
 		eventsStatusServicewsEndpoint = eventsStatusServicews
 				.getEventsStatusServicewsImplPort();
-		
+		logger.debug("@@@@ TEST DE FINS ADD EVENT 11111 @@@@ "+listEventStatus.size());
+		if(listEventStatus.size() == 0){
 			createEventStatus = eventsStatusServicewsEndpoint
 					.createEventsStatusServicews(createEventStatus);
-		
+			msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					rb.getString("label_succesful"),
+					rb.getString("label_msg_create_event"));
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, msg);
+		}else{
+			for(EventsStatusDto  s : listEventStatus){
+				logger.debug("@@@@ TEST DE FINS ADD EVENT 22222 @@@@ "+listEventStatus.size());
+				createEventStatus.setIdEventsStatus(s.getIdEventsStatus());
+				createEventStatus = eventsStatusServicewsEndpoint
+						.updateEventsStatusServicews(createEventStatus);
+				msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+						rb.getString("label_succesful"),
+						rb.getString("label_msg_update_event"));
+				FacesContext context = FacesContext.getCurrentInstance();
+				context.addMessage(null, msg);
+			}
+			logger.debug("@@@@ TEST DE FINS ADD EVENT 33333 @@@@ ");
+			
+		}
 		logger.debug("@@@@ TEST DE FINS ADD EVENT @@@@ ");
 	}
+//	public void onRowEdit(RowEditEvent event) {
+//        FacesMessage msg = new FacesMessage("Car Edited", ((StudentEventsDto) event.getObject()).);
+//        FacesContext.getCurrentInstance().addMessage(null, msg);
+//    }
 
 	public void onActivitySelect(SelectEvent event) {
 		// studentEventsServicewsEndpoint =
@@ -862,6 +900,29 @@ public class ActivitieSearchServiceBean implements Serializable {
 		EventsStatusDto eventstate = new EventsStatusDto();
 		
 		eventstate.setStudentEvents((StudentEventsDto) event.getObject());
+		
+		listEventStatusp = eventsStatusServicewsEndpoint.searchEventsStatusServicews(eventstate);
+		logger.debug("@@@@@ LISTEZ STATUS @@@@@@@ "+listEventStatusp.size());
+		
+		if(listEventStatusp.size() != 0){
+			for(EventsStatusDto pm : listEventStatusp){
+				eventsStatusDto.setComments(pm.getComments());
+				eventsStatusDto.setStatusEvent(pm.getStatusEvent());
+			}
+		}else {
+			eventsStatusDto.setComments(null);
+			eventsStatusDto.setStatusEvent(null);
+		}
+		
+		//listEventStatusp = new ArrayList<EventsStatusDto>();
+		
+		
+//		
+//		for(EventsStatusDto vm : listEventStatusp){
+//			eventsStatusDto.setComments(vm.getComments());
+//			eventsStatusDto.setStatusEvent(vm.getStatusEvent());
+//		}
+		
 		logger.debug("@@@@@ EVENT STATUS @@@@@@@ "+eventstate);
 		logger.debug("@@@@@ EVENT STATUS @@@@@@@ "+eventstate.getIdEventsStatus());
 		
@@ -880,6 +941,8 @@ public class ActivitieSearchServiceBean implements Serializable {
 				.getEnDate());
 		selectedEvents.setTitle(((StudentEventsDto) event.getObject())
 				.getTitle());
+		
+		
 		
 		return selectedEvents;
 	}

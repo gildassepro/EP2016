@@ -1,0 +1,47 @@
+
+.ui-steps .ui-steps-item {
+	width: 15%;
+}
+
+.ui-state-highlight {
+	text-shadow: none !important;
+}
+
+.ui-steps.custom {
+	margin-bottom: 30px;
+}
+
+.ui-steps.custom .ui-steps-item .ui-menuitem-link {
+	height: 10px;
+	padding: 0 1em;
+}
+
+.requireds {
+	color: red;
+}
+
+.ui-steps.custom .ui-steps-item .ui-steps-number {
+	background-color: #0081c2;
+	color: #FFFFFF;
+	display: inline-block;
+	width: 30px;
+	border-radius: 10px;
+	margin-top: -10px;
+	margin-bottom: 10px;
+}
+
+.ui-growl {
+	left: 700px;
+}
+
+.flaticon-notes:before {
+	content: "\f107";
+}
+
+.flaticon-teacher-with-stick:before {
+	content: "\f10c";
+}
+
+.flaticon-graduate-student-avatar:before {
+	content: "\f104";
+}
