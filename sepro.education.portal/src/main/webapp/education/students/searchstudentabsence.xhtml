@@ -18,42 +18,44 @@
 						<p:tab title="#{messages.label_msg_list_presence}">
 
 							<b:row styleClass="listPage">
+								<h:form id="formes">
+									<div id="menubutton">
 
-								<div id="menubutton">
+										<p:commandButton id="printe"
+											styleClass="btn btn-primary submit-button"
+											title="#{messages.label_print}"
+											value="#{messages.label_print}" icon="fa fa-fw fa-print">
+											<p:dataExporter type="pdf" fileName="activitiesmodules"
+												pageOnly="true" target="" />
+										</p:commandButton>
 
-									<p:commandButton id="printe"
-										styleClass="btn btn-primary submit-button"
-										title="#{messages.label_print}"
-										value="#{messages.label_print}" icon="fa fa-fw fa-print">
-										<p:dataExporter type="pdf" fileName="activitiesmodules"
-											pageOnly="true" target="" />
-									</p:commandButton>
+										<p:commandButton value="#{messages.label_create}"
+											styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
+											action="#{absenceStudentSearchServiceBean.saveAbsence()}"
+											disabled="#{absenceStudentSearchServiceBean.test}"
+											oncomplete="if (args &amp;&amp; !args.validationFailed) PF('addabsences').hide()"
+											update="forme growl" />
 
-									<p:commandButton value="#{messages.label_create}"
-										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
-										action="#{absenceStudentSearchServiceBean.saveAbsence()}"
-										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('addabsences').hide()"
-										update="forme fdial growl" />
-									<p:splitButton value="#{messages.label_options}"
-										actionListener="#{buttonView.save}" icon="ui-icon-gear">
-										<p:menuitem value="Clôturer la liste"
-											actionListener="#{absenceStudentSearchServiceBean.endListe()}"
-											icon="fa fa-fw fa-lock" />
-										<p:menuitem value="Delete"
-											actionListener="#{buttonView.delete}" ajax="false"
-											icon="ui-icon-close" />
-										<p:separator />
-										<p:menuitem value="Homepage" icon="ui-icon-extlink" />
-									</p:splitButton>
-									<p:commandButton id="past"
-										styleClass="btn btn-primary submit-button" ajax="false"
-										action="searchstudentabsence.xhtml?faces-redirect=true"
-										icon="fa fa-fw fa-arrow-left">
-									</p:commandButton>
+										<p:splitButton value="#{messages.label_options}"
+											actionListener="#{buttonView.save}" icon="ui-icon-gear">
+											<p:menuitem value="Clôturer la liste"
+												actionListener="#{absenceStudentSearchServiceBean.endListe()}"
+												icon="fa fa-fw fa-lock" />
+											<p:menuitem value="Delete"
+												actionListener="#{buttonView.delete}" ajax="false"
+												icon="ui-icon-close" />
+											<p:separator />
+											<p:menuitem value="Homepage" icon="ui-icon-extlink" />
+										</p:splitButton>
+										<p:commandButton id="past"
+											styleClass="btn btn-primary submit-button" ajax="false"
+											action="searchstudentabsence.xhtml?faces-redirect=true"
+											icon="fa fa-fw fa-arrow-left">
+										</p:commandButton>
 
-								</div>
+									</div>
 
-
+								</h:form>
 								<p:panel id="addabsence" widgetVar="addabsences">
 
 									<h:form id="fdial">
@@ -109,6 +111,8 @@
 																value="#{absenceStudentSearchServiceBean.listStudentEvents}"
 																var="activity" itemValue="#{activity}"
 																itemLabel="#{activity.title} #{activity.startDate} #{activity.enDate}" />
+															<p:ajax event="valueChange"
+																listener="#{absenceStudentSearchServiceBean.getDateActivity()}" />
 														</p:selectOneMenu>
 													</div>
 												</div>
@@ -130,7 +134,9 @@
 												selection="#{absenceStudentSearchServiceBean.studentClasseDtos}"
 												paginatorPosition="bottom"
 												paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}">
-												
+												<p:ajax event="rowSelect"
+													listener="#{absenceStudentSearchServiceBean.onRowStudentSave}"
+													update="growl" />
 												<p:column priority="2" width="15"
 													filterBy="#{students.student.idStudent}"
 													filterMatchMode="contains">
@@ -157,7 +163,7 @@
 													</f:facet>
 													<h:outputText value="#{students.student.firstName}"></h:outputText>
 												</p:column>
-												
+
 												<p:column priority="3" width="38"
 													filterBy="#{students.student.firstName}"
 													filterMatchMode="contains">
@@ -165,8 +171,8 @@
 														<p:outputLabel value="#{messages.label_msg_comment}" />
 													</f:facet>
 													<p:inputTextarea rows="" cols="22" id="comment1"
-															placeholder="#{messages.label_msg_comment}"
-															value="#{absenceStudentSearchServiceBean.studentPresenceDto.comments}" />
+														placeholder="#{messages.label_msg_comment}"
+														value="#{absenceStudentSearchServiceBean.studentPresenceDto.comments}" />
 												</p:column>
 
 												<p:column priority="2" width="35"
@@ -175,20 +181,23 @@
 													<f:facet name="header">
 														<p:outputLabel value="#{messages.label_action}" />
 													</f:facet>
-														<p:selectOneMenu id="pointage" styleClass="form-text"
-															value="#{absenceStudentSearchServiceBean.studentPresenceDto.statusStudent}"
-															converter="entityConverter"
-															placeholder="#{messages.label_msg_type_activity}"
-															requiredMessage="#{messages.label_cursusname_requeried}">
-															<f:selectItem
-																itemLabel="#{absenceStudentSearchServiceBean.studentPresenceDto.statusStudent.value}"
-																itemValue="#{absenceStudentSearchServiceBean.studentPresenceDto.statusStudent}"
-																label="#{messages.label_msg_type_activity}" />
-															<f:selectItems
-																value="#{absenceStudentSearchServiceBean.listTypeAbsence}"
-																var="eventTypes" itemValue="#{eventTypes}"
-																itemLabel="#{eventTypes.value}" />
-														</p:selectOneMenu>
+													<p:selectOneMenu id="pointage" styleClass="form-text"
+														value="#{absenceStudentSearchServiceBean.studentPresenceDto.statusStudent}"
+														converter="entityConverter"
+														placeholder="#{messages.label_msg_type_activity}"
+														requiredMessage="#{messages.label_cursusname_requeried}">
+														<f:selectItem
+															itemLabel="#{absenceStudentSearchServiceBean.studentPresenceDto.statusStudent.value}"
+															itemValue="#{absenceStudentSearchServiceBean.studentPresenceDto.statusStudent}"
+															label="#{messages.label_msg_type_activity}" />
+														<f:selectItems
+															value="#{absenceStudentSearchServiceBean.listTypeAbsence}"
+															var="eventTypes" itemValue="#{eventTypes}"
+															itemLabel="#{eventTypes.value}" />
+														<p:ajax event="valueChange"
+															listener="#{absenceStudentSearchServiceBean.getStatusPresent()}"
+															update="forme growl" />
+													</p:selectOneMenu>
 												</p:column>
 											</p:dataTable>
 										</div>

@@ -15,6 +15,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.primefaces.event.SelectEvent;
 import org.sepro.parameterweb.bean.CursusSearchServiceBean;
 import org.sepro.parameterweb.serviceapi.ClasseDto;
 import org.sepro.parameterweb.serviceapi.PopuplistDto;
@@ -25,6 +26,7 @@ import org.sepro.parameterweb.serviceimpl.PopuplistDtoServicewsEndpoint;
 import org.sepro.studentweb.serviceapi.ClasseProgrammDto;
 import org.sepro.studentweb.serviceapi.EventsStatusDto;
 import org.sepro.studentweb.serviceapi.StudentClasseDto;
+import org.sepro.studentweb.serviceapi.StudentDto;
 import org.sepro.studentweb.serviceapi.StudentEventsDto;
 import org.sepro.studentweb.serviceapi.StudentPresenceDto;
 import org.sepro.studentweb.serviceimpl.ActivitiesServicews;
@@ -57,13 +59,13 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 
 	private StudentClasseServicewsEndpoint studentClasseServicewsEndpoint;
 	private StudentClasseServicews studentClasseServicews = new StudentClasseServicews();
-	
+
 	private PopuplistDtoServicewsEndpoint popuplistDtoServicewsEndpoint;
 	private PopuplistDtoServicews popuplistDtoServicews = new PopuplistDtoServicews();
 
 	private StudentPresenceServicewsEndpoint studentPresenceServicewsEndpoint;
 	private StudentPresenceServicews studentPresenceServicews = new StudentPresenceServicews();
-	
+
 	private StudentServicewsEndpoint studentServicewsEndpoint;
 	private StudentServicews studentServicews = new StudentServicews();
 
@@ -80,15 +82,16 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 	private EventsStatusServicews eventsStatusServicews = new EventsStatusServicews();
 
 	private EventsStatusDto eventsStatusDto = new EventsStatusDto();
+	
 	private List<EventsStatusDto> listEventStatus = new ArrayList<EventsStatusDto>();
 	private List<EventsStatusDto> listEventStatusp = new ArrayList<EventsStatusDto>();
-	
+
 	private ActivitiesServicewsEndpoint activitiesServicewsEndpoint;
 	private ActivitiesServicews activitiesServicews = new ActivitiesServicews();
-	
+
 	private StudentPresenceDto studentPresenceDto = new StudentPresenceDto();
 	private StudentPresenceDto studentPresenceDtos = new StudentPresenceDto();
-	
+
 	private List<StudentPresenceDto> listeStudentPresence = new ArrayList<StudentPresenceDto>();
 
 	private ClasseProgrammDto classeProgrammDto = new ClasseProgrammDto();
@@ -101,13 +104,13 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 	private StudentClasseDto studentClasseDtos = new StudentClasseDto();
 
 	private StudentEventsDto studentEventsDto = new StudentEventsDto();
+	private StudentEventsDto studentEventsDtos = new StudentEventsDto();
 	private StudentEventsDto selectedEvents = new StudentEventsDto();
 	private List<StudentEventsDto> listStudentEvent = new ArrayList<StudentEventsDto>();
 	private List<StudentEventsDto> listStudentEvents = new ArrayList<StudentEventsDto>();
-	
-	private List<PopuplistDto> listTypeAbsence =  new ArrayList<PopuplistDto>();
+
+	private List<PopuplistDto> listTypeAbsence = new ArrayList<PopuplistDto>();
 	private List<PopuplistDto> listTypeStatusEvent = new ArrayList<PopuplistDto>();
-	
 
 	private ClasseDto classeDto = new ClasseDto();
 	private List<ClasseDto> listDesClass = new ArrayList<ClasseDto>();
@@ -115,12 +118,29 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 	private boolean value1;
 	private boolean value2;
 	private boolean value3;
+	private boolean test = true;
 
 	private String pointage;
+
 	
 	
 	
-	
+	public StudentEventsDto getStudentEventsDtos() {
+		return studentEventsDtos;
+	}
+
+	public void setStudentEventsDtos(StudentEventsDto studentEventsDtos) {
+		this.studentEventsDtos = studentEventsDtos;
+	}
+
+	public boolean isTest() {
+		return test;
+	}
+
+	public void setTest(boolean test) {
+		this.test = test;
+	}
+
 	public List<EventsStatusDto> getListEventStatusp() {
 		return listEventStatusp;
 	}
@@ -320,51 +340,127 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 	}
 
 	public void saveAbsence() {
+		eventsStatusServicewsEndpoint = eventsStatusServicews.getEventsStatusServicewsImplPort();
 		
-		logger.debug("init Save Absence");
+		logger.debug("@@@@@@@ init Save Absence @@@@@@");
 		StudentPresenceDto createStudentPresence = new StudentPresenceDto();
+		
 		FacesMessage msg = null;
-		logger.debug("@@@@  LISTE DE PERSONNES 4444 @@@@"+listStudentClass.size());
 		
-		createStudentPresence.setActualStartDate(null);
-		createStudentPresence.setActualEnDate(null);
-		createStudentPresence.setComments(null);
+		logger.debug("@@@@  LISTE DE PERSONNES 4444 @@@@"
+				+ listStudentClass.size());
+		
+
+		logger.debug("@@@@  START DATE   @@@@@"+getDateActivity().getStartDate());
+		logger.debug("@@@@  END DATE    @@@@@"+getDateActivity().getEnDate());
+		
+		createStudentPresence.setActualStartDate(getDateActivity().getStartDate());
+		createStudentPresence.setActualEnDate(getDateActivity().getEnDate());
+		
+		logger.debug("@@@@  COMMENT   @@@@@"+studentPresenceDto.getComments());
+		
+		createStudentPresence.setComments(studentPresenceDto.getComments());
 		createStudentPresence.setEventsStatus(null);
-		createStudentPresence.setStatusStudent(null);
-		createStudentPresence.setStudent(null);
-		
-		studentPresenceServicewsEndpoint = studentPresenceServicews.getStudentPresenceServicewsImplPort();
-		
-		createStudentPresence = studentPresenceServicewsEndpoint.createStudentPresenceServicews(createStudentPresence);
+		createStudentPresence.setStatusStudent(studentPresenceDto.getStatusStudent());
+		createStudentPresence.setStudent(studentClasseDto.getStudent());
+
+		studentPresenceServicewsEndpoint = studentPresenceServicews
+				.getStudentPresenceServicewsImplPort();
+
+		createStudentPresence = studentPresenceServicewsEndpoint
+				.createStudentPresenceServicews(createStudentPresence);
 		msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
 				rb.getString("label_succesful"),
 				rb.getString("label_msg_update_list_presence"));
 		FacesContext context = FacesContext.getCurrentInstance();
 
 		context.addMessage(null, msg);
+		enabledButton();
 		
-		logger.debug("init Save Absence");
+		logger.debug("@@@@@  init Save Absence @@@@@@");
+	}
+	
+	public void enabledButton(){
+		logger.debug("@@@@@  START Save Absence @@@@@@");
+		test = true;
+		logger.debug("@@@@@  END Save Absence @@@@@@");
 	}
 
-	public StudentEventsDto getDate(){
-		logger.debug("@@@@ studentevent  @@@@@"+studentEventsDto.getIdStudentEvents());
+	public StudentEventsDto getDate() {
+		logger.debug("@@@@ studentevent  @@@@@"
+				+ studentEventsDto.getIdStudentEvents());
 		return studentEventsDto;
 	}
-	
-	public void endListe(){
-		
+
+	public void endListe() {
+
 	}
-	
-	
+
+	public StudentClasseDto onRowStudentSave(SelectEvent event) {
+		studentClasseServicewsEndpoint = studentClasseServicews.getStudentClasseServicewsImplPort();
+		FacesMessage msg = new FacesMessage(
+				rb.getString("label_msg_student_selected"),
+				((StudentClasseDto) event.getObject()).getStudent()
+						.getFirstName()
+						+ " "
+						+ ((StudentClasseDto) event.getObject()).getStudent()
+								.getName());
+		
+		studentClasseDto.setStudent(((StudentClasseDto) event.getObject()).getStudent());
+		
+		logger.debug("@@@   11111111 @@@@@@@@@"
+				+ ((StudentClasseDto) event.getObject()).getStudent()
+						.getFirstName());
+		logger.debug("@@@   22222222 @@@@@@@@@"
+				+ ((StudentClasseDto) event.getObject()).getStudent().getName());
+		logger.debug("@@@   33333333 @@@@@@@@@"
+				+ ((StudentClasseDto) event.getObject()).getStudent()
+						.getIdStudent());
+
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+		
+		return studentClasseDto;
+	}
+
+	public void getStatusPresent() {
+
+		logger.debug("@@@@@ DEBUT init getStatusPresent @@@@@");
+
+		logger.debug("@@@@@ IN 1111 init getStatusPresent @@@@@"
+				+ studentPresenceDto.getStatusStudent().getIdPopuplist());
+		logger.debug("@@@@@ IN 2222 init getStatusPresent @@@@@"
+				+ studentPresenceDto.getStatusStudent().getValue());
+
+		test = false;
+
+		logger.debug("@@@@@ END init getStatusPresent @@@@@");
+
+	}
+
+	public StudentEventsDto getDateActivity() {
+		
+		logger.debug("@@@@@ DEBUT init getDateActivity @@@@@");
+		
+		logger.debug("@@@@@ IN 1111 init getDateActivity @@@@@"
+				+ studentEventsDto.getStartDate());
+		logger.debug("@@@@@ IN 2222 init getDateActivity @@@@@"
+				+ studentEventsDto.getEnDate());
+
+		logger.debug("@@@@@ END init getDateActivity @@@@@");
+		
+		return studentEventsDto;
+	}
+
 	public void updateActivity() {
 		logger.debug("init updateActivity");
-		popuplistDtoServicewsEndpoint = popuplistDtoServicews.getPopuplistDtoServicewsImplPort();
-		eventsStatusServicewsEndpoint = eventsStatusServicews.getEventsStatusServicewsImplPort();
+		popuplistDtoServicewsEndpoint = popuplistDtoServicews
+				.getPopuplistDtoServicewsImplPort();
+		eventsStatusServicewsEndpoint = eventsStatusServicews
+				.getEventsStatusServicewsImplPort();
 		studentEventsServicewsEndpoint = studentEventsServicews
 				.getStudentEventsServicewsImplPort();
 		studentClasseServicewsEndpoint = studentClasseServicews
 				.getStudentClasseServicewsImplPort();
-		
 
 		logger.debug("@@@@ ICI 1 @@@@" + studentEventsDto.getClasseProgramm());
 		studentEventsDto
@@ -372,39 +468,44 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 
 		studentClasseDto
 				.setClasseProgramm(studentEventsDto.getClasseProgramm());
-		
-		listEventStatus = eventsStatusServicewsEndpoint.searchEventsStatusServicews(eventsStatusDto);
-		
-		logger.debug(" @@@@@@ TAILLLE EVENTSTAZTUS @@@@" +listEventStatus.size());
-		
-		listTypeAbsence = popuplistDtoServicewsEndpoint.searchPopuplistDtoServicews("typeabsence");
-		
+
+		listEventStatus = eventsStatusServicewsEndpoint
+				.searchEventsStatusServicews(eventsStatusDto);
+
+		logger.debug(" @@@@@@ TAILLLE EVENTSTAZTUS @@@@"
+				+ listEventStatus.size());
+
+		listTypeAbsence = popuplistDtoServicewsEndpoint
+				.searchPopuplistDtoServicews("typeabsence");
+
 		listStudentEvent = studentEventsServicewsEndpoint
 				.searchStudentEventsServicews(studentEventsDto);
-		
-		
-			logger.debug("@@@@ ENTREE ICI @@@@@ ");
-			
-			for(EventsStatusDto p : listEventStatus ){
-				if(p.getStatusEvent().getIdPopuplist() == 61){
-					listEventStatusp.add(p);
-				}
+
+		logger.debug("@@@@ ENTREE ICI @@@@@ ");
+
+		for (EventsStatusDto p : listEventStatus) {
+			if (p.getStatusEvent().getIdPopuplist() == 61) {
+				listEventStatusp.add(p);
 			}
-			logger.debug("@@@@ TAILLE LISTE ACITVITY FILTRED 333333333 @@@@@"+listEventStatusp.size());
-			
-			for(EventsStatusDto stat : listEventStatusp){
-				for(StudentEventsDto evt : listStudentEvent){
-					
-					if(evt.getIdStudentEvents().equals(stat.getStudentEvents().getIdStudentEvents())){
-						listStudentEvents.add(evt);
-					}
-					logger.debug("@@@@ LISTE ABSENCE @@@@@ "+listStudentEvents.size());
+		}
+		logger.debug("@@@@ TAILLE LISTE ACITVITY FILTRED 333333333 @@@@@"
+				+ listEventStatusp.size());
+
+		for (EventsStatusDto stat : listEventStatusp) {
+			for (StudentEventsDto evt : listStudentEvent) {
+
+				if (evt.getIdStudentEvents().equals(
+						stat.getStudentEvents().getIdStudentEvents())) {
+					listStudentEvents.add(evt);
 				}
-				
+				logger.debug("@@@@ LISTE ABSENCE @@@@@ "
+						+ listStudentEvents.size());
 			}
-			logger.debug("@@@@ TAILLE LISTE ACITVITY FILTRED @@@@@"+listStudentEvents.size());
-			
-			
+
+		}
+		logger.debug("@@@@ TAILLE LISTE ACITVITY FILTRED @@@@@"
+				+ listStudentEvents.size());
+
 		listStudentClass = studentClasseServicewsEndpoint
 				.searchStudentClasseServicews(studentClasseDto);
 
