@@ -125,6 +125,14 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 	
 	
 	
+	public StudentPresenceDto getStudentPresenceDto() {
+		return studentPresenceDto;
+	}
+
+	public void setStudentPresenceDto(StudentPresenceDto studentPresenceDto) {
+		this.studentPresenceDto = studentPresenceDto;
+	}
+
 	public StudentEventsDto getStudentEventsDtos() {
 		return studentEventsDtos;
 	}
@@ -189,13 +197,6 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 		this.listTypeAbsence = listTypeAbsence;
 	}
 
-	public StudentPresenceDto getStudentPresenceDto() {
-		return studentPresenceDto;
-	}
-
-	public void setStudentPresenceDto(StudentPresenceDto studentPresenceDto) {
-		this.studentPresenceDto = studentPresenceDto;
-	}
 
 	public StudentPresenceDto getStudentPresenceDtos() {
 		return studentPresenceDtos;
@@ -341,10 +342,12 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 
 	public void saveAbsence() {
 		eventsStatusServicewsEndpoint = eventsStatusServicews.getEventsStatusServicewsImplPort();
+		studentPresenceServicewsEndpoint = studentPresenceServicews.getStudentPresenceServicewsImplPort();
 		
 		logger.debug("@@@@@@@ init Save Absence @@@@@@");
 		StudentPresenceDto createStudentPresence = new StudentPresenceDto();
-		
+		StudentPresenceDto testttt = new StudentPresenceDto();
+		testttt.setComments(studentPresenceDto.getComments());
 		FacesMessage msg = null;
 		
 		logger.debug("@@@@  LISTE DE PERSONNES 4444 @@@@"
@@ -357,9 +360,11 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 		createStudentPresence.setActualStartDate(getDateActivity().getStartDate());
 		createStudentPresence.setActualEnDate(getDateActivity().getEnDate());
 		
-		logger.debug("@@@@  COMMENT   @@@@@"+studentPresenceDto.getComments());
+		logger.debug("@@@@  COMMENT 111   @@@@@"+studentPresenceDto.getComments());
 		
-		createStudentPresence.setComments(studentPresenceDto.getComments());
+		createStudentPresence.setComments(testttt.getComments());
+		
+		logger.debug("@@@@  COMMENT 222  @@@@@"+studentPresenceDto.getComments());
 		createStudentPresence.setEventsStatus(null);
 		createStudentPresence.setStatusStudent(studentPresenceDto.getStatusStudent());
 		createStudentPresence.setStudent(studentClasseDto.getStudent());
@@ -369,17 +374,22 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 
 		createStudentPresence = studentPresenceServicewsEndpoint
 				.createStudentPresenceServicews(createStudentPresence);
+		test = true;
 		msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
 				rb.getString("label_succesful"),
 				rb.getString("label_msg_update_list_presence"));
 		FacesContext context = FacesContext.getCurrentInstance();
 
 		context.addMessage(null, msg);
-		enabledButton();
+		
 		
 		logger.debug("@@@@@  init Save Absence @@@@@@");
 	}
-	
+	public void getComment() {
+		logger.debug("@@@@@  GET COMMENT @@@@@@");
+		
+		logger.debug("@@@@@  GET COMMENT @@@@@@");
+	}
 	public void enabledButton(){
 		logger.debug("@@@@@  START Save Absence @@@@@@");
 		test = true;
@@ -430,23 +440,25 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 				+ studentPresenceDto.getStatusStudent().getIdPopuplist());
 		logger.debug("@@@@@ IN 2222 init getStatusPresent @@@@@"
 				+ studentPresenceDto.getStatusStudent().getValue());
-
+		logger.debug("@@@@  COMMENTS   @@@@@"+studentPresenceDto.getComments());
 		test = false;
 
 		logger.debug("@@@@@ END init getStatusPresent @@@@@");
 
 	}
+	
 
 	public StudentEventsDto getDateActivity() {
 		
-		logger.debug("@@@@@ DEBUT init getDateActivity @@@@@");
+		logger.debug("@@@@@ DEBUT init getDateActivity @@@@@" +studentEventsDto);
 		
 		logger.debug("@@@@@ IN 1111 init getDateActivity @@@@@"
 				+ studentEventsDto.getStartDate());
 		logger.debug("@@@@@ IN 2222 init getDateActivity @@@@@"
 				+ studentEventsDto.getEnDate());
-
-		logger.debug("@@@@@ END init getDateActivity @@@@@");
+		logger.debug("@@@@@ IN 3333 init ID EVENT STATUS @@@@@"
+				+ studentEventsDto.getIdStudentEvents());
+		logger.debug("@@@@@ END init getDateActivity @@@@@" +studentEventsDto);
 		
 		return studentEventsDto;
 	}
@@ -523,6 +535,7 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 					.getStudentClasseServicewsImplPort();
 			classeProgrammServicewsEndpoint = classeProgrammServicews
 					.getClasseProgrammServicewsImplPort();
+			studentEventsServicewsEndpoint = studentEventsServicews.getStudentEventsServicewsImplPort();
 
 			// listStudentClass = studentClasseServicewsEndpoint
 			// .searchStudentClasseServicews(studentClasseDto);

@@ -38,12 +38,13 @@
 										title="#{messages.label_supprimer1}"
 										onclick="PF('confirmationv').show()" icon="fa fa-fw fa-remove">
 									</p:commandButton>
+								
 									<p:commandButton id="printe"
-										update="@([id$=listprogrammecalendar]) formlistprogrammecalendar fdialprogramme"
-										styleClass="btn btn-primary submit-button"
+									styleClass="btn btn-primary submit-button"
 										title="#{messages.label_print}"
 										value="#{messages.label_print}"
-										onclick="PF('confirmation').show()" icon="fa fa-fw fa-print">
+										icon="fa fa-fw fa-print">
+										<p:dataExporter type="pdf" fileName="ModuleCalendar" pageOnly="true" target="listModuleProgramm" />
 									</p:commandButton>
 
 									<p:commandButton value="#{messages.label_modifier}"

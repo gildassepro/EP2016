@@ -29,12 +29,11 @@
 												pageOnly="true" target="" />
 										</p:commandButton>
 
-										<p:commandButton value="#{messages.label_create}"
+										<p:commandButton id="btncreate" value="#{messages.label_create}"
 											styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
 											action="#{absenceStudentSearchServiceBean.saveAbsence()}"
 											disabled="#{absenceStudentSearchServiceBean.test}"
-											oncomplete="if (args &amp;&amp; !args.validationFailed) PF('addabsences').hide()"
-											update="forme growl" />
+											update="@([id$=btncreate]) growl" />
 
 										<p:splitButton value="#{messages.label_options}"
 											actionListener="#{buttonView.save}" icon="ui-icon-gear">
@@ -99,21 +98,22 @@
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:selectOneMenu id="selectactivities"
-															styleClass="form-control"
+															styleClass="form-text"
 															value="#{absenceStudentSearchServiceBean.studentEventsDto.title}"
 															converter="entityConverter"
 															placeholder="#{messages.label_msg_title_activity}">
 															<f:selectItem
 																itemLabel="#{absenceStudentSearchServiceBean.studentEventsDto.title}"
-																itemValue="#{absenceStudentSearchServiceBean.studentEventsDto.title}"
+																itemValue="#{absenceStudentSearchServiceBean.studentEventsDto}"
 																label="#{messages.label_cursus}" />
 															<f:selectItems
 																value="#{absenceStudentSearchServiceBean.listStudentEvents}"
-																var="activity" itemValue="#{activity}"
-																itemLabel="#{activity.title} #{activity.startDate} #{activity.enDate}" />
+																var="activityy" itemValue="#{activityy}"
+																itemLabel="#{activityy.title} #{activityy.startDate} #{activityy.enDate}" />
 															<p:ajax event="valueChange"
 																listener="#{absenceStudentSearchServiceBean.getDateActivity()}" />
 														</p:selectOneMenu>
+													
 													</div>
 												</div>
 											</div>
@@ -164,14 +164,12 @@
 													<h:outputText value="#{students.student.firstName}"></h:outputText>
 												</p:column>
 
-												<p:column priority="3" width="38"
-													filterBy="#{students.student.firstName}"
-													filterMatchMode="contains">
+												<p:column priority="3" width="38">
 													<f:facet name="header">
 														<p:outputLabel value="#{messages.label_msg_comment}" />
 													</f:facet>
-													<p:inputTextarea rows="" cols="22" id="comment1"
-														placeholder="#{messages.label_msg_comment}"
+														<p:inputText styleClass="form-text" id="comments1"
+															placeholder="#{messages.label_msg_comment}"
 														value="#{absenceStudentSearchServiceBean.studentPresenceDto.comments}" />
 												</p:column>
 
@@ -196,7 +194,7 @@
 															itemLabel="#{eventTypes.value}" />
 														<p:ajax event="valueChange"
 															listener="#{absenceStudentSearchServiceBean.getStatusPresent()}"
-															update="forme growl" />
+															update="@([id$=btncreate]) growl" />
 													</p:selectOneMenu>
 												</p:column>
 											</p:dataTable>
