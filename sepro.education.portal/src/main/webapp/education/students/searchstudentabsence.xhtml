@@ -29,17 +29,18 @@
 												pageOnly="true" target="" />
 										</p:commandButton>
 
-										<p:commandButton id="btncreate" value="#{messages.label_create}"
-											styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
+										<p:commandButton id="btncreate"
+											value="#{messages.label_create}" styleClass="btn btn-primary"
+											icon="fa fa-fw fa-check-circle"
 											action="#{absenceStudentSearchServiceBean.saveAbsence()}"
 											disabled="#{absenceStudentSearchServiceBean.test}"
 											update="@([id$=btncreate]) growl" />
 
 										<p:splitButton value="#{messages.label_options}"
-											actionListener="#{buttonView.save}" icon="ui-icon-gear">
-											<p:menuitem value="Clôturer la liste"
-												actionListener="#{absenceStudentSearchServiceBean.endListe()}"
-												icon="fa fa-fw fa-lock" />
+											actionListener="#{absenceStudentSearchServiceBean.blockListe()}" icon="ui-icon-gear">
+											<p:menuitem id="btnendliste" value="Clôturer la liste"
+												actionListener="#{absenceStudentSearchServiceBean.blockListe()}"
+												update="growl" icon="fa fa-fw fa-lock" />
 											<p:menuitem value="Delete"
 												actionListener="#{buttonView.delete}" ajax="false"
 												icon="ui-icon-close" />
@@ -50,6 +51,12 @@
 											styleClass="btn btn-primary submit-button" ajax="false"
 											action="searchstudentabsence.xhtml?faces-redirect=true"
 											icon="fa fa-fw fa-arrow-left">
+										</p:commandButton>
+										<p:commandButton id="closeListe"
+											styleClass="btn btn-danger submit-button"
+											update="growl"
+											action="#{absenceStudentSearchServiceBean.blockListe()}"
+											icon="fa fa-fw fa-lock">
 										</p:commandButton>
 
 									</div>
@@ -98,22 +105,23 @@
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:selectOneMenu id="selectactivities"
-															styleClass="form-text"
-															value="#{absenceStudentSearchServiceBean.studentEventsDto.title}"
+															styleClass="form-control"
+															value="#{absenceStudentSearchServiceBean.selectedEvents}"
 															converter="entityConverter"
 															placeholder="#{messages.label_msg_title_activity}">
 															<f:selectItem
-																itemLabel="#{absenceStudentSearchServiceBean.studentEventsDto.title}"
-																itemValue="#{absenceStudentSearchServiceBean.studentEventsDto}"
+																itemLabel="#{absenceStudentSearchServiceBean.selectedEvents.title}"
+																itemValue="#{absenceStudentSearchServiceBean.selectedEvents}"
 																label="#{messages.label_cursus}" />
 															<f:selectItems
 																value="#{absenceStudentSearchServiceBean.listStudentEvents}"
-																var="activityy" itemValue="#{activityy}"
-																itemLabel="#{activityy.title} #{activityy.startDate} #{activityy.enDate}" />
+																var="activiti" itemValue="#{activiti}"
+																itemLabel="#{activiti.title} #{activiti.startDate} #{activiti.enDate}" />
 															<p:ajax event="valueChange"
+															    update="growl"
 																listener="#{absenceStudentSearchServiceBean.getDateActivity()}" />
 														</p:selectOneMenu>
-													
+
 													</div>
 												</div>
 											</div>
@@ -125,6 +133,7 @@
 											<p:dataTable id="listeactivities"
 												value="#{absenceStudentSearchServiceBean.listStudentClass}"
 												var="students" widgetVar="studentsTable"
+												disabled="#{absenceStudentSearchServiceBean.testblokliste}"
 												emptyMessage="#{messages.label_empty}"
 												styleClass="listeTable table-responsive filterable"
 												tableStyleClass="table table-striped table-condensed table-hover"
@@ -137,7 +146,7 @@
 												<p:ajax event="rowSelect"
 													listener="#{absenceStudentSearchServiceBean.onRowStudentSave}"
 													update="growl" />
-												<p:column priority="2" width="15"
+												<p:column id="col1" priority="2" width="15"
 													filterBy="#{students.student.idStudent}"
 													filterMatchMode="contains">
 													<f:facet name="header">
@@ -146,7 +155,7 @@
 													<h:outputText value="#{students.student.idStudent}"></h:outputText>
 												</p:column>
 
-												<p:column priority="3" width="25"
+												<p:column id="col2" priority="3" width="25"
 													filterBy="#{students.student.name}"
 													filterMatchMode="contains">
 													<f:facet name="header">
@@ -155,7 +164,7 @@
 													<h:outputText value="#{students.student.name}"></h:outputText>
 												</p:column>
 
-												<p:column priority="3" width="30"
+												<p:column id="col3" priority="3" width="30"
 													filterBy="#{students.student.firstName}"
 													filterMatchMode="contains">
 													<f:facet name="header">
@@ -164,16 +173,17 @@
 													<h:outputText value="#{students.student.firstName}"></h:outputText>
 												</p:column>
 
-												<p:column priority="3" width="38">
+												<p:column id="col4" priority="3" width="38">
 													<f:facet name="header">
 														<p:outputLabel value="#{messages.label_msg_comment}" />
 													</f:facet>
-														<p:inputText styleClass="form-text" id="comments1"
-															placeholder="#{messages.label_msg_comment}"
-														value="#{absenceStudentSearchServiceBean.studentPresenceDto.comments}" />
+													<p:inputText styleClass="form-text" id="comments1"
+														placeholder="#{messages.label_msg_comment}"
+														value="#{absenceStudentSearchServiceBean.studentPresenceDtos.comments}" />
 												</p:column>
 
-												<p:column priority="2" width="35"
+												<p:column id="col5" priority="2" width="35"
+												disabled="#{absenceStudentSearchServiceBean.testblokliste}"
 													filterBy="#{students.student.idStudent}"
 													filterMatchMode="contains">
 													<f:facet name="header">
