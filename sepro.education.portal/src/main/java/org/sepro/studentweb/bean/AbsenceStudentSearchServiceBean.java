@@ -433,11 +433,11 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 			logger.debug("@@@ VERIFICATION LISTE TAILLE @@@@"+listeStudentPresence.size());
 			
 			
-				for(StudentPresenceDto endd : listeStudentPresence){
-					if(selectedEvents.getStartDate().equals(endd.getActualEnDate()) && (selectedEvents.getEnDate().equals(endd.getActualStartDate()))){
-						logger.debug("!!!!!!!! MES FELICITATIONS 0007 !!!!!!!!!");
-					}
-				}
+//				for(StudentPresenceDto endd : listeStudentPresence){
+//					if(selectedEvents.getStartDate().equals(endd.getActualEnDate()) && (selectedEvents.getEnDate().equals(endd.getActualStartDate()))){
+//						logger.debug("!!!!!!!! MES FELICITATIONS 0007 !!!!!!!!!");
+//					}
+//				}
 			
 			
 			testblokliste = true;
