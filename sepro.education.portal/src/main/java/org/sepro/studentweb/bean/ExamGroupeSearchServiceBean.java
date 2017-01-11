@@ -419,12 +419,12 @@ public class ExamGroupeSearchServiceBean implements Serializable{
 						.getClasseProgramm().getProgrammeCalendar()
 						.getProgrammeCalendar()) {
 					
-					ModuleCalendarDto moduleCalendarDto = new ModuleCalendarDto();
+					ModuleCalendarDto moduleCalenda = new ModuleCalendarDto();
 					
-					moduleCalendarDto.setProgrammeCalendar(pcalendar);
+					moduleCalenda.setProgrammeCalendar(pcalendar);
 
 					listModuleCalendarDto = moduleCalendarDtoServicewsEndpoint
-							.searchModuleCalendarServicews(moduleCalendarDto);
+							.searchModuleCalendarServicews(moduleCalenda);
 
 					listModuleCalendarDtos.addAll(listModuleCalendarDto);
 
@@ -455,82 +455,64 @@ public class ExamGroupeSearchServiceBean implements Serializable{
 
 	}
 	
-	public void updatexamgroup() {
-		logger.debug(" @@@ TEST 123456 @@@@@ ");
-
-		examGroupServicewsEndpoint = examGroupServicews
-				.getExamGroupServicewsImplPort();
-
-		logger.debug("@@@ LOLO 123 @@@ "
-				+ moduleCalendarDto.getAcademicModule().getModuleName());
-		logger.debug("@@@ LOLO 124 @@@ "
-				+ moduleCalendarDto.getAcademicModule().getIdAcademicModule());
-
-		examGroupDtos.setAcademicModule(moduleCalendarDto.getAcademicModule());
-
-		listeexamgroupe = examGroupServicewsEndpoint
-				.searchExamGroupServicews(examGroupDtos);
-
-		logger.debug(" @@@ TEST 123456 @@@@@ ");
-	}
 	
 	
-	public void initDualList(String baction) {
+	public String initDualList(String baction) {
 		logger.debug("DEBUT initDualList +++++++++++++");
 
 		if (baction.equals("1")) {
-
+			
+			examGroupDtos2 = examGroupDtos;
 			action2 = true;
 			action3 = false;
+			listClass = new ArrayList<ClasseProgrammDto>(); 
 			listAcademicYear = new ArrayList<PopuplistDto>();
-			listAcademicModule = new ArrayList<AcademicModuleDto>();
-			listeexamgroupes = new ArrayList<ExamGroupDto>();
 			listClass = new ArrayList<ClasseProgrammDto>();
-			examGroupDtos = examGroupDtos2;
 			
 
 			initUpdate();
+			return null;
 		} else {
+			examGroupDtos2 = new ExamGroupDto();
 			action2 = true;
 			action3 = false;
-			moduleCalendarDto = new ModuleCalendarDto();
+			
 			listAcademicYear = new ArrayList<PopuplistDto>();
-			listAcademicModule = new ArrayList<AcademicModuleDto>();
 			listeexamgroupes = new ArrayList<ExamGroupDto>();
 			listClass = new ArrayList<ClasseProgrammDto>(); 
-			listexamModuleGroup = new ArrayList<ExamModuleGroupDto>();
 			
-
+			
 			initCreate();
+			return null;
 		}
-		logger.debug("DEBUT initDualList +++++++++++++");
 
 	}
 
 	public void initUpdate() {
-
+		action = false;
 		popuplistDtoServicewsEndpoint = popuplistDtoServicews
 				.getPopuplistDtoServicewsImplPort();
 		classeProgrammServicewsEndpoint = classeProgrammServicews
 				.getClasseProgrammServicewsImplPort();
+		examGroupServicewsEndpoint = examGroupServicews.getExamGroupServicewsImplPort();
+		
 		examModuleGroupServicewsEndpoint = examModuleGroupServicews.getExamModuleGroupServicewsImplPort();
 		classeServicewsEndpoint = classeServicews.getClasseServicewsImplPort();
-		academicModuleDtoServicewsEndpoint = academicModuleDtoServicews
-				.getAcademicModuleDtoServicewsImplPort();
-		moduleCalendarDto.setAcademicModule(examGroupDtos.getAcademicModule());
-		listModuleCalendarDtos = moduleCalendarDtoServicewsEndpoint.searchModuleCalendarServicews(moduleCalendarDto);
+		
+//		moduleCalendarDto.setAcademicModule(examGroupDtos2.getAcademicModule());
+//		listModuleCalendarDtos = moduleCalendarDtoServicewsEndpoint.searchModuleCalendarServicews(moduleCalendarDto);
+		
 		listAcademicYear = popuplistDtoServicewsEndpoint
 				.searchPopuplistDtoServicews("academic_years");
 		
-		listClass = classeProgrammServicewsEndpoint
-				.searchClasseProgrammServicews(classeProgrammDto);
+//		listClass = classeProgrammServicewsEndpoint
+//				.searchClasseProgrammServicews(examGroupDtos2.getClasseProgramm());
 
-		listDesClass = classeServicewsEndpoint.getAllClasseServicews();
 
 	}
 
 	public void initCreate() {
-
+		action = true;
 		popuplistDtoServicewsEndpoint = popuplistDtoServicews
 				.getPopuplistDtoServicewsImplPort();
 		classeProgrammServicewsEndpoint = classeProgrammServicews
@@ -544,12 +526,19 @@ public class ExamGroupeSearchServiceBean implements Serializable{
 
 		listAcademicYear = popuplistDtoServicewsEndpoint
 				.searchPopuplistDtoServicews("academic_years");
+		
 		examGroupDtos2.setAcademicModule(moduleCalendarDto.getAcademicModule());
-		listeexamgroupes = examGroupServicewsEndpoint
-				.searchExamGroupServicews(examGroupDtos2);
+		
+//		listeexamgroupes = examGroupServicewsEndpoint
+//				.searchExamGroupServicews(examGroupDtos2);
+		
+		classeProgrammDto.setAcademicYear(examGroupDtos2.getAcademicYear());
+		
 		listClass = classeProgrammServicewsEndpoint
 				.searchClasseProgrammServicews(classeProgrammDto);
-		listexamModuleGroup = examModuleGroupServicewsEndpoint.searchExamModuleGroupServicews(examModuleGroupDtos);
+		
+		listModuleCalendarDtos = moduleCalendarDtoServicewsEndpoint.searchModuleCalendarServicews(moduleCalendarDto);
+//		listexamModuleGroup = examModuleGroupServicewsEndpoint.searchExamModuleGroupServicews(examModuleGroupDtos);
 
 	}
 
@@ -606,26 +595,25 @@ public class ExamGroupeSearchServiceBean implements Serializable{
 	}
 	
 	public String updateExamGroup() {
-		logger.debug("DEBUT modifierEXAMGROUP");
 		
 		ExamGroupDto updateexamgroup = new ExamGroupDto();
 		
 		FacesMessage msg = null;
 		try {
-			updateexamgroup.setCoefficient(examGroupDtos.getCoefficient());
-			updateexamgroup.setExamGroup(examGroupDtos.getExamGroup());
-			updateexamgroup.setTitle(examGroupDtos.getTitle());
-			updateexamgroup.setExamModuleGroup(examGroupDtos.getExamModuleGroup());
-			updateexamgroup.setAcademicModule(examGroupDtos.getAcademicModule());
-			updateexamgroup.setClasseProgramm(examGroupDtos.getClasseProgramm());
+			updateexamgroup.setCoefficient(examGroupDtos2.getCoefficient());
+			updateexamgroup.setExamGroup(examGroupDtos2.getExamGroup());
+			updateexamgroup.setTitle(examGroupDtos2.getTitle());
+			updateexamgroup.setExamModuleGroup(examGroupDtos2.getExamModuleGroup());
+			updateexamgroup.setAcademicModule(examGroupDtos2.getAcademicModule());
+			updateexamgroup.setClasseProgramm(examGroupDtos2.getClasseProgramm());
 			
 			examGroupServicewsEndpoint = examGroupServicews.getExamGroupServicewsImplPort();
-			updateexamgroup.setIdExamGroup(examGroupDtos.getIdExamGroup());
+			updateexamgroup.setIdExamGroup(examGroupDtos2.getIdExamGroup());
 			
 			updateexamgroup = examGroupServicewsEndpoint.updateExamGroupServicews(updateexamgroup);
 		
 			init();
-			logger.debug("Fin Modification Region  +++++++++++++");
+			
 		} catch (Exception ex) {
 			
 			return null;

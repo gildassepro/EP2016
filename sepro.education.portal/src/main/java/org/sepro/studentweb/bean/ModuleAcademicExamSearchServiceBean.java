@@ -119,7 +119,9 @@ public class ModuleAcademicExamSearchServiceBean implements Serializable {
 	private List<ExamModuleGroupDto> listexamModuleGroup = new ArrayList<ExamModuleGroupDto>();
 	private List<ModuleAcademiExamDto> listStudentExamModuleGroup = new ArrayList<ModuleAcademiExamDto>();
 	
-	
+	private AcademicModuleDto academicModuleDto = new AcademicModuleDto();
+	private List<AcademicModuleDto> listAcademicModuleDto = new ArrayList<AcademicModuleDto>();
+	private List<AcademicModuleDto> listAcademicModuleDtos = new ArrayList<AcademicModuleDto>();
 	
 	private ModuleCalendarDto moduleCalendarDto = new ModuleCalendarDto();
 	private List<ModuleCalendarDto> listModuleCalendarDto = new ArrayList<ModuleCalendarDto>();
@@ -132,10 +134,7 @@ public class ModuleAcademicExamSearchServiceBean implements Serializable {
 	private List<PopuplistDto> listStatusExam = new ArrayList<PopuplistDto>();
 	private List<PopuplistDto> listAcademicYear = new ArrayList<PopuplistDto>();
 	
-	
-	private boolean action = false;
-	private boolean action2 = false;
-	private boolean action3 = true;
+
 	private Double averageExamGroup = 0.0;
 	private Double sommeExamGroup = 0.0;
 	private Double coefficientExamGroup = 0.0;
@@ -147,6 +146,32 @@ public class ModuleAcademicExamSearchServiceBean implements Serializable {
 	
 	
 	
+	public AcademicModuleDto getAcademicModuleDto() {
+		return academicModuleDto;
+	}
+	public void setAcademicModuleDto(AcademicModuleDto academicModuleDto) {
+		this.academicModuleDto = academicModuleDto;
+	}
+	public List<AcademicModuleDto> getListAcademicModuleDto() {
+		return listAcademicModuleDto;
+	}
+	public void setListAcademicModuleDto(
+			List<AcademicModuleDto> listAcademicModuleDto) {
+		this.listAcademicModuleDto = listAcademicModuleDto;
+	}
+	public List<AcademicModuleDto> getListAcademicModuleDtos() {
+		return listAcademicModuleDtos;
+	}
+	public void setListAcademicModuleDtos(
+			List<AcademicModuleDto> listAcademicModuleDtos) {
+		this.listAcademicModuleDtos = listAcademicModuleDtos;
+	}
+	public Double getCoefficientExamGroup() {
+		return coefficientExamGroup;
+	}
+	public void setCoefficientExamGroup(Double coefficientExamGroup) {
+		this.coefficientExamGroup = coefficientExamGroup;
+	}
 	public List<ExamGroupDto> getLisExamGroupDtos() {
 		return lisExamGroupDtos;
 	}
@@ -189,9 +214,7 @@ public class ModuleAcademicExamSearchServiceBean implements Serializable {
 	public void setLisStudentExamGroup(List<StudentExamGroupDto> lisStudentExamGroup) {
 		this.lisStudentExamGroup = lisStudentExamGroup;
 	}
-	public Double getAverageExamGroup() {
-		return averageExamGroup;
-	}
+	
 	public void setAverageExamGroup(Double averageExamGroup) {
 		this.averageExamGroup = averageExamGroup;
 	}
@@ -257,26 +280,7 @@ public class ModuleAcademicExamSearchServiceBean implements Serializable {
 	public void setListStatusExam(List<PopuplistDto> listStatusExam) {
 		this.listStatusExam = listStatusExam;
 	}
-	public boolean isAction() {
-		return action;
-	}
-	public void setAction(boolean action) {
-		this.action = action;
-	}
-	public boolean isAction2() {
-		return action2;
-	}
-	public void setAction2(boolean action2) {
-		this.action2 = action2;
-	}
-	public boolean isAction3() {
-		return action3;
-	}
-	public void setAction3(boolean action3) {
-		this.action3 = action3;
-	}
-		
-		
+	
 	public List<AcademicModuleDto> getListAcademicModule() {
 		return listAcademicModule;
 	}
@@ -373,17 +377,19 @@ public class ModuleAcademicExamSearchServiceBean implements Serializable {
 				for (ProgrammeCalendarDto pcalendar : examGroupDto
 						.getClasseProgramm().getProgrammeCalendar()
 						.getProgrammeCalendar()) {
-
-					moduleCalendarDto.setProgrammeCalendar(pcalendar);
-
+					
+					ModuleCalendarDto moduleCale = new ModuleCalendarDto();
+					moduleCale.setProgrammeCalendar(pcalendar);
+					
 					listModuleCalendarDto = moduleCalendarDtoServicewsEndpoint
-							.searchModuleCalendarServicews(moduleCalendarDto);
+							.searchModuleCalendarServicews(moduleCale);
+					
 
 					listModuleCalendarDtos.addAll(listModuleCalendarDto);
 
 				}
 
-			}
+			
 
 			for (StudentClasseDto stv : listStudentClass) {
 
@@ -398,8 +404,9 @@ public class ModuleAcademicExamSearchServiceBean implements Serializable {
 
 				listStudentExamModuleGroup.add(createstdexam);
 
+			  }
 			}
-
+			
 			logger.debug("@@@@@@ JE SUIS A LA FIN LOOOO @@@@@@@@@@@@@@");
 
 		} catch (Exception e) {
@@ -408,15 +415,11 @@ public class ModuleAcademicExamSearchServiceBean implements Serializable {
 
 	}
 	
-	public void lisStudentExamGroup() {
+	public void lisStudentExam() {
 		logger.debug("+++++++");
 		examGroupServicewsEndpoint = examGroupServicews
 				.getExamGroupServicewsImplPort();
 		studentExamGroupServicewsEndpoint = studentExamGroupServicews.getStudentExamGroupServicewsImplPort();
-		
-//		studentExamGroupDto.setExamGroup(examGroupDto);
-//		
-//		lisStudentExamGroup = studentExamGroupServicewsEndpoint.searchStudentExamGroupServicews(studentExamGroupDto);
 		
 		lisExamGroupDtos = examGroupServicewsEndpoint.searchExamGroupServicews(examGroupDto);
 		
@@ -468,7 +471,7 @@ public class ModuleAcademicExamSearchServiceBean implements Serializable {
 						+ examgrpeDto.getCoefficient();
 
 			}
-			return lisStudentExamGroup.get(0).getMark();
+			return (double)lisStudentExamGroup.get(0).getMark();
 		} else {
 			return null;
 		}
@@ -484,7 +487,7 @@ public class ModuleAcademicExamSearchServiceBean implements Serializable {
 			logger.debug("++++++++++++++     " + examGroupDto.getIdExamGroup());
 
 			createstudentexam.setComments(str.getComments());
-			createstudentexam.setExamModuleGroup(null);
+			createstudentexam.setExamModuleGroup(examGroupDto.getExamModuleGroup());
 			createstudentexam.setMark(str.getMark());
 			logger.debug("+++++++++++++222+     " + str.getMark());
 			createstudentexam.setStatusModuleAcademiExam(str.getStatusModuleAcademiExam());
@@ -499,75 +502,6 @@ public class ModuleAcademicExamSearchServiceBean implements Serializable {
 		}
 
 	}
-
-	public void initDualList(String baction) {
-		logger.debug("DEBUT initDualList +++++++++++++");
-
-		if (baction.equals("1")) {
-
-			action2 = true;
-			action3 = false;
-			listAcademicYear = new ArrayList<PopuplistDto>();
-			listAcademicModule = new ArrayList<AcademicModuleDto>();
-			listClass = new ArrayList<ClasseProgrammDto>();
-			
-
-			initUpdate();
-		} else {
-			action2 = true;
-			action3 = false;
-			moduleCalendarDto = new ModuleCalendarDto();
-			listAcademicYear = new ArrayList<PopuplistDto>();
-			listAcademicModule = new ArrayList<AcademicModuleDto>();
-			listClass = new ArrayList<ClasseProgrammDto>();
-			
-
-			initCreate();
-		}
-		logger.debug("DEBUT initDualList +++++++++++++");
-
-	}
-
-	public void initUpdate() {
-
-		popuplistDtoServicewsEndpoint = popuplistDtoServicews
-				.getPopuplistDtoServicewsImplPort();
-		classeProgrammServicewsEndpoint = classeProgrammServicews
-				.getClasseProgrammServicewsImplPort();
-
-		classeServicewsEndpoint = classeServicews.getClasseServicewsImplPort();
-		academicModuleDtoServicewsEndpoint = academicModuleDtoServicews
-				.getAcademicModuleDtoServicewsImplPort();
-
-		listAcademicYear = popuplistDtoServicewsEndpoint
-				.searchPopuplistDtoServicews("academic_years");
-		listClass = classeProgrammServicewsEndpoint
-				.searchClasseProgrammServicews(classeProgrammDto);
-
-
-	}
-
-	public void initCreate() {
-
-		popuplistDtoServicewsEndpoint = popuplistDtoServicews
-				.getPopuplistDtoServicewsImplPort();
-		classeProgrammServicewsEndpoint = classeProgrammServicews
-				.getClasseProgrammServicewsImplPort();
-		examGroupServicewsEndpoint = examGroupServicews
-				.getExamGroupServicewsImplPort();
-
-		classeServicewsEndpoint = classeServicews.getClasseServicewsImplPort();
-		academicModuleDtoServicewsEndpoint = academicModuleDtoServicews
-				.getAcademicModuleDtoServicewsImplPort();
-
-		listAcademicYear = popuplistDtoServicewsEndpoint
-				.searchPopuplistDtoServicews("academic_years");
-		examGroupDto.setAcademicModule(moduleCalendarDto.getAcademicModule());
-		listClass = classeProgrammServicewsEndpoint
-				.searchClasseProgrammServicews(classeProgrammDto);
-
-	}
-	
 	
 	public void onSelectYears() {
 

@@ -45,7 +45,7 @@
 									<p:commandButton value="#{messages.label_modifier}"
 										icon="fa fa-fw fa-check-circle" styleClass="btn btn-success"
 										rendered="#{!examGroupeSearchServiceBean.isAction()}"
-										action="#{examGroupeSearchServiceBean.addGroupExam}"
+										action="#{examGroupeSearchServiceBean.updateExamGroup()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('addegroupeexam').hide()"
 										update="forme fdial growl" />
 									<p:commandButton value="#{messages.label_create}"
@@ -253,7 +253,7 @@
 
 								</p:panel>
 
-								<p:panel id="addactivities" widgetVar="addegroupeexam"
+								<p:panel id="addgroupeexam" widgetVar="addegroupeexam"
 									rendered="#{!examGroupeSearchServiceBean.isAction2()}">
 
 									<h:form id="fdial">

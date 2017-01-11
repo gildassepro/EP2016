@@ -75,12 +75,6 @@ public class ExamSearchServiceBean implements Serializable {
 			"sepro.education.language.messages", locale);
 	private Logger logger = Logger.getLogger(ExamSearchServiceBean.class);
 
-	private Double averageExamGroup = 0.0;
-	private Double sommeExamGroup = 0.0;
-	private Double coefficientExamGroup = 0.0;
-	private Long idStudent = 0L;
-	private ArrayList<AcademicModuleDto> selectedlistAcademicModule = new ArrayList<AcademicModuleDto>();
-
 	private StudentClasseServicewsEndpoint studentClasseServicewsEndpoint;
 	private StudentClasseServicews studentClasseServicews = new StudentClasseServicews();
 
@@ -99,9 +93,6 @@ public class ExamSearchServiceBean implements Serializable {
 	private ProgrammeCalendarDtoServicewsEndpoint programmeCalendarDtoServicewsEndpoint;
 	private ProgrammeCalendarDtoServicews programmeCalendarDtoServicews = new ProgrammeCalendarDtoServicews();
 
-	private ExamModuleGroupServicewsEndpoint examModuleGroupServicewsEndpoint;
-	private ExamModuleGroupServicews examModuleGroupServicews = new ExamModuleGroupServicews();
-
 	private List<ProgrammeCalendarDto> listProgrammeCalendarDestination = new ArrayList<ProgrammeCalendarDto>();
 	private List<ProgrammeCalendarDto> listProgrammeCalendarSources = new ArrayList<ProgrammeCalendarDto>();
 
@@ -112,17 +103,12 @@ public class ExamSearchServiceBean implements Serializable {
 	private AcademicModuleDtoServicewsEndpoint academicModuleDtoServicewsEndpoint;
 
 	private List<AcademicModuleDto> listAcademicModule = new ArrayList<AcademicModuleDto>();
-	private ClasseServicewsEndpoint classeServicewsEndpoint;
-	private ClasseServicews classeServicews = new ClasseServicews();
 
 	private ClasseProgrammServicewsEndpoint classeProgrammServicewsEndpoint;
 	private ClasseProgrammServicews classeProgrammServicews = new ClasseProgrammServicews();
 
 	private StudentExamGroupDto studentExamGroupDto = new StudentExamGroupDto();
 	private StudentExamGroupDto studentExamGroupDtos = new StudentExamGroupDto();
-	
-	private ExamModuleGroupDto examModuleGroupDtos = new ExamModuleGroupDto();
-	private List<ExamModuleGroupDto> listexamModuleGroup = new ArrayList<ExamModuleGroupDto>();
 
 	private List<StudentExamGroupDto> listStudentExamGroup = new ArrayList<StudentExamGroupDto>();
 	private List<StudentExamGroupDto> listStudentExamGroups = new ArrayList<StudentExamGroupDto>();
@@ -132,10 +118,7 @@ public class ExamSearchServiceBean implements Serializable {
 
 	private ExamGroupDto examGroupDto = new ExamGroupDto();
 	private ExamGroupDto examGroupDtos = new ExamGroupDto();
-	private ExamGroupDto examGroupDto2 = new ExamGroupDto();
-	private ExamGroupDto examGroupDtos2 = new ExamGroupDto();
-	private ExamGroupDto selectedexamGroup = new ExamGroupDto();
-	private List<ExamGroupDto> listeexamgroupe = new ArrayList<ExamGroupDto>();
+
 	private List<ExamGroupDto> listeexamgroupes = new ArrayList<ExamGroupDto>();
 
 	private ExamDto examDto = new ExamDto();
@@ -148,11 +131,8 @@ public class ExamSearchServiceBean implements Serializable {
 	private List<StudentEventsDto> listStudentEvent = new ArrayList<StudentEventsDto>();
 	private StudentClasseDto studentClasseDto = new StudentClasseDto();
 
-	private ClasseDto classeDto = new ClasseDto();
-	private List<ClasseDto> listDesClass = new ArrayList<ClasseDto>();
-
 	private ClasseProgrammDto classeProgrammDto = new ClasseProgrammDto();
-	private ClasseProgrammDto classeProgrammDtos = new ClasseProgrammDto();
+
 	private List<ClasseProgrammDto> listClass = new ArrayList<ClasseProgrammDto>();
 	private List<StudentClasseDto> listStudentClass = new ArrayList<StudentClasseDto>();
 
@@ -160,35 +140,25 @@ public class ExamSearchServiceBean implements Serializable {
 	private List<StudentExamDto> liststudentExam = new ArrayList<StudentExamDto>();
 
 	private List<PopuplistDto> listAcademicYear = new ArrayList<PopuplistDto>();
-	private List<PopuplistDto> listTypeEvent = new ArrayList<PopuplistDto>();
-	private List<PopuplistDto> listTypeAbsence = new ArrayList<PopuplistDto>();
-	private List<SessionDto> listSession = new ArrayList<SessionDto>();
 	private List<PopuplistDto> listStatusExam = new ArrayList<PopuplistDto>();
 
-	private boolean action = false;
-	private boolean action2 = false;
-	private boolean action3 = true;
+	private Double averageExamGroup = 0.0;
+	private Double sommeExamGroup = 0.0;
+	private Double coefficientExamGroup = 0.0;
+	private Long idStudent = 0L;
 
-	boolean value2;
+	
 	private String text1;
 	private String text2;
 
 	
-
-	public ExamModuleGroupDto getExamModuleGroupDtos() {
-		return examModuleGroupDtos;
+	
+	public ClasseProgrammDto getClasseProgrammDto() {
+		return classeProgrammDto;
 	}
 
-	public void setExamModuleGroupDtos(ExamModuleGroupDto examModuleGroupDtos) {
-		this.examModuleGroupDtos = examModuleGroupDtos;
-	}
-
-	public List<ExamModuleGroupDto> getListexamModuleGroup() {
-		return listexamModuleGroup;
-	}
-
-	public void setListexamModuleGroup(List<ExamModuleGroupDto> listexamModuleGroup) {
-		this.listexamModuleGroup = listexamModuleGroup;
+	public void setClasseProgrammDto(ClasseProgrammDto classeProgrammDto) {
+		this.classeProgrammDto = classeProgrammDto;
 	}
 
 	public String getText2() {
@@ -213,18 +183,6 @@ public class ExamSearchServiceBean implements Serializable {
 
 	public void setIdStudent(Long idStudent) {
 		this.idStudent = idStudent;
-	}
-
-	public Double getAverageExamGroup(StudentExamGroupDto studentExamGroupDto) {
-		if (coefficientExamGroup > 0) {
-
-			studentExamGroupDto.setMark(sommeExamGroup / coefficientExamGroup);
-			return sommeExamGroup / coefficientExamGroup;
-
-		} else {
-			studentExamGroupDto.setMark(0.0);
-			return null;
-		}
 	}
 
 	public String getText1() {
@@ -287,30 +245,6 @@ public class ExamSearchServiceBean implements Serializable {
 		this.studentExamGroupDtos = studentExamGroupDtos;
 	}
 
-	public ClasseDto getClasseDto() {
-		return classeDto;
-	}
-
-	public void setClasseDto(ClasseDto classeDto) {
-		this.classeDto = classeDto;
-	}
-
-	public ClasseProgrammDto getClasseProgrammDto() {
-		return classeProgrammDto;
-	}
-
-	public void setClasseProgrammDto(ClasseProgrammDto classeProgrammDto) {
-		this.classeProgrammDto = classeProgrammDto;
-	}
-
-	public ClasseProgrammDto getClasseProgrammDtos() {
-		return classeProgrammDtos;
-	}
-
-	public void setClasseProgrammDtos(ClasseProgrammDto classeProgrammDtos) {
-		this.classeProgrammDtos = classeProgrammDtos;
-	}
-
 	public List<StudentClasseDto> getListStudentClass() {
 		return listStudentClass;
 	}
@@ -318,7 +252,6 @@ public class ExamSearchServiceBean implements Serializable {
 	public void setListStudentClass(List<StudentClasseDto> listStudentClass) {
 		this.listStudentClass = listStudentClass;
 	}
-
 
 	public List<StudentExamGroupDto> getListStudentExamGroup() {
 		return listStudentExamGroup;
@@ -362,39 +295,6 @@ public class ExamSearchServiceBean implements Serializable {
 		this.listExam = listExam;
 	}
 
-	public ExamGroupDto getExamGroupDtos2() {
-		return examGroupDtos2;
-	}
-
-	public void setExamGroupDtos2(ExamGroupDto examGroupDtos2) {
-		this.examGroupDtos2 = examGroupDtos2;
-	}
-
-	public ExamGroupDto getExamGroupDto2() {
-		return examGroupDto2;
-	}
-
-	public void setExamGroupDto2(ExamGroupDto examGroupDto2) {
-		this.examGroupDto2 = examGroupDto2;
-	}
-
-
-	public boolean isAction2() {
-		return action2;
-	}
-
-	public void setAction2(boolean action2) {
-		this.action2 = action2;
-	}
-
-	public ExamGroupDto getSelectedexamGroup() {
-		return selectedexamGroup;
-	}
-
-	public void setSelectedexamGroup(ExamGroupDto selectedexamGroup) {
-		this.selectedexamGroup = selectedexamGroup;
-	}
-
 	public ExamGroupDto getExamGroupDto() {
 		return examGroupDto;
 	}
@@ -411,28 +311,12 @@ public class ExamSearchServiceBean implements Serializable {
 		this.examGroupDtos = examGroupDtos;
 	}
 
-	public List<ExamGroupDto> getListeexamgroupe() {
-		return listeexamgroupe;
-	}
-
-	public void setListeexamgroupe(List<ExamGroupDto> listeexamgroupe) {
-		this.listeexamgroupe = listeexamgroupe;
-	}
-
 	public List<ExamGroupDto> getListeexamgroupes() {
 		return listeexamgroupes;
 	}
 
 	public void setListeexamgroupes(List<ExamGroupDto> listeexamgroupes) {
 		this.listeexamgroupes = listeexamgroupes;
-	}
-
-	public boolean isAction3() {
-		return action3;
-	}
-
-	public void setAction3(boolean action3) {
-		this.action3 = action3;
 	}
 
 	public List<ProgrammeCalendarDto> getListProgrammeCalendarDestination() {
@@ -487,15 +371,6 @@ public class ExamSearchServiceBean implements Serializable {
 		this.listStudentEvent = listStudentEvent;
 	}
 
-	public List<ClasseDto> getListDesClass() {
-		return listDesClass;
-	}
-
-	public void setListDesClass(List<ClasseDto> listDesClass) {
-		this.listDesClass = listDesClass;
-	}
-
-
 	public List<ClasseProgrammDto> getListClass() {
 		return listClass;
 	}
@@ -512,44 +387,12 @@ public class ExamSearchServiceBean implements Serializable {
 		this.listAcademicYear = listAcademicYear;
 	}
 
-	public List<PopuplistDto> getListTypeEvent() {
-		return listTypeEvent;
-	}
-
-	public void setListTypeEvent(List<PopuplistDto> listTypeEvent) {
-		this.listTypeEvent = listTypeEvent;
-	}
-
-	public List<PopuplistDto> getListTypeAbsence() {
-		return listTypeAbsence;
-	}
-
-	public void setListTypeAbsence(List<PopuplistDto> listTypeAbsence) {
-		this.listTypeAbsence = listTypeAbsence;
-	}
-
-	public List<SessionDto> getListSession() {
-		return listSession;
-	}
-
-	public void setListSession(List<SessionDto> listSession) {
-		this.listSession = listSession;
-	}
-
 	public ModuleCalendarDto getModuleCalendarDto() {
 		return moduleCalendarDto;
 	}
 
 	public void setModuleCalendarDto(ModuleCalendarDto moduleCalendarDto) {
 		this.moduleCalendarDto = moduleCalendarDto;
-	}
-
-	public boolean isAction() {
-		return action;
-	}
-
-	public void setAction(boolean action) {
-		this.action = action;
 	}
 
 	public void onSelectYears() {
@@ -567,7 +410,6 @@ public class ExamSearchServiceBean implements Serializable {
 
 	}
 
-
 	public void updateModulesProgrammesCalendar() {
 		logger.debug(Level.DEBUG);
 		logger.debug("@@@@@@ JE SUIS LA @@@@@@@@@@@@@@");
@@ -584,8 +426,8 @@ public class ExamSearchServiceBean implements Serializable {
 					.getPopuplistDtoServicewsImplPort();
 			studentClasseServicewsEndpoint = studentClasseServicews
 					.getStudentClasseServicewsImplPort();
-
-			selectedlistAcademicModule = new ArrayList<AcademicModuleDto>();
+			programmeCalendarDtoServicewsEndpoint = programmeCalendarDtoServicews
+					.getProgrammeCalendarDtoServicewsImplPort();
 
 			studentClasseDto
 					.setClasseProgramm(examGroupDto.getClasseProgramm());
@@ -603,13 +445,13 @@ public class ExamSearchServiceBean implements Serializable {
 				for (ProgrammeCalendarDto pcalendar : examGroupDto
 						.getClasseProgramm().getProgrammeCalendar()
 						.getProgrammeCalendar()) {
-					
-					ModuleCalendarDto moduleCalendarDto = new ModuleCalendarDto();
-					
-					moduleCalendarDto.setProgrammeCalendar(pcalendar);
+
+					ModuleCalendarDto moduleCalendarD = new ModuleCalendarDto();
+
+					moduleCalendarD.setProgrammeCalendar(pcalendar);
 
 					listModuleCalendarDto = moduleCalendarDtoServicewsEndpoint
-							.searchModuleCalendarServicews(moduleCalendarDto);
+							.searchModuleCalendarServicews(moduleCalendarD);
 
 					listModuleCalendarDtos.addAll(listModuleCalendarDto);
 
@@ -622,7 +464,7 @@ public class ExamSearchServiceBean implements Serializable {
 				StudentExamGroupDto createstdexam = new StudentExamGroupDto();
 
 				createstdexam.setComments(null);
-				createstdexam.setExamGroup(null);
+				createstdexam.setExamGroup(examGroupDto);
 				createstdexam.setMark(null);
 				createstdexam.setRattrapageMark(null);
 				createstdexam.setStatusExam(null);
@@ -639,117 +481,33 @@ public class ExamSearchServiceBean implements Serializable {
 		}
 
 	}
-	
-	public void updatexamgroup() {
-		logger.debug(" @@@ TEST 123456 @@@@@ ");
 
-		examGroupServicewsEndpoint = examGroupServicews
-				.getExamGroupServicewsImplPort();
-
-		logger.debug("@@@ LOLO 123 @@@ "
-				+ moduleCalendarDto.getAcademicModule().getModuleName());
-		logger.debug("@@@ LOLO 124 @@@ "
-				+ moduleCalendarDto.getAcademicModule().getIdAcademicModule());
-
-		examGroupDtos.setAcademicModule(moduleCalendarDto.getAcademicModule());
-
-		listeexamgroupe = examGroupServicewsEndpoint
-				.searchExamGroupServicews(examGroupDtos);
-
-		logger.debug(" @@@ TEST 123456 @@@@@ ");
-	}
-
-	public void listexam() {
+	public void updatelistexam() {
 		logger.debug("+++++++");
-		examGroupServicewsEndpoint = examGroupServicews
-				.getExamGroupServicewsImplPort();
+
 		examServicewsEndpoint = examServicews.getExamServicewsImplPort();
-		
+
 		examDto.setExamGroup(examGroupDto);
-		
+
 		listExam = examServicewsEndpoint.searchExamServicews(examDto);
 
 		logger.debug("+++++++" + listExam.size());
 	}
 
-	public void initDualList(String baction) {
-		logger.debug("DEBUT initDualList +++++++++++++");
+	public Double getAverageExamGroup(StudentExamGroupDto studentExamGroupDto) {
+		if (coefficientExamGroup > 0) {
 
-		if (baction.equals("1")) {
+			studentExamGroupDto.setMark(sommeExamGroup / coefficientExamGroup);
+			return sommeExamGroup / coefficientExamGroup;
 
-			action2 = true;
-			action3 = false;
-			listAcademicYear = new ArrayList<PopuplistDto>();
-			listAcademicModule = new ArrayList<AcademicModuleDto>();
-			listeexamgroupes = new ArrayList<ExamGroupDto>();
-			listSession = new ArrayList<SessionDto>();
-			listClass = new ArrayList<ClasseProgrammDto>();
-			
-
-			initUpdate();
 		} else {
-			action2 = true;
-			action3 = false;
-			moduleCalendarDto = new ModuleCalendarDto();
-			listAcademicYear = new ArrayList<PopuplistDto>();
-			listAcademicModule = new ArrayList<AcademicModuleDto>();
-			listeexamgroupes = new ArrayList<ExamGroupDto>();
-			listSession = new ArrayList<SessionDto>();
-			listClass = new ArrayList<ClasseProgrammDto>();
-			
-
-			initCreate();
+			studentExamGroupDto.setMark(0.0);
+			return null;
 		}
-		logger.debug("DEBUT initDualList +++++++++++++");
-
-	}
-
-	public void initUpdate() {
-
-		popuplistDtoServicewsEndpoint = popuplistDtoServicews
-				.getPopuplistDtoServicewsImplPort();
-		classeProgrammServicewsEndpoint = classeProgrammServicews
-				.getClasseProgrammServicewsImplPort();
-
-		classeServicewsEndpoint = classeServicews.getClasseServicewsImplPort();
-		academicModuleDtoServicewsEndpoint = academicModuleDtoServicews
-				.getAcademicModuleDtoServicewsImplPort();
-
-		listAcademicYear = popuplistDtoServicewsEndpoint
-				.searchPopuplistDtoServicews("academic_years");
-		listTypeEvent = popuplistDtoServicewsEndpoint
-				.searchPopuplistDtoServicews("typeevent");
-		listClass = classeProgrammServicewsEndpoint
-				.searchClasseProgrammServicews(classeProgrammDto);
-
-		listDesClass = classeServicewsEndpoint.getAllClasseServicews();
-
-	}
-
-	public void initCreate() {
-
-		popuplistDtoServicewsEndpoint = popuplistDtoServicews
-				.getPopuplistDtoServicewsImplPort();
-		classeProgrammServicewsEndpoint = classeProgrammServicews
-				.getClasseProgrammServicewsImplPort();
-		examGroupServicewsEndpoint = examGroupServicews
-				.getExamGroupServicewsImplPort();
-
-		classeServicewsEndpoint = classeServicews.getClasseServicewsImplPort();
-		academicModuleDtoServicewsEndpoint = academicModuleDtoServicews
-				.getAcademicModuleDtoServicewsImplPort();
-
-		listAcademicYear = popuplistDtoServicewsEndpoint
-				.searchPopuplistDtoServicews("academic_years");
-		examGroupDto.setAcademicModule(moduleCalendarDto.getAcademicModule());
-		listeexamgroupes = examGroupServicewsEndpoint
-				.searchExamGroupServicews(examGroupDto);
-		listClass = classeProgrammServicewsEndpoint
-				.searchClasseProgrammServicews(classeProgrammDto);
-
 	}
 
 	public Double getNote(ExamDto examDto, StudentDto studentDto) {
+
 		if (idStudent == 0L) {
 			coefficientExamGroup = 0.0;
 			sommeExamGroup = 0.0;
@@ -766,6 +524,7 @@ public class ExamSearchServiceBean implements Serializable {
 		studentExamDto.setStudent(studentDto);
 		studentExamServicewsEndpoint = studentExamServicews
 				.getStudentExamServicewsImplPort();
+
 		liststudentExam = studentExamServicewsEndpoint
 				.searchStudentExamServicews(studentExamDto);
 		if (liststudentExam.size() == 1) {
@@ -786,17 +545,6 @@ public class ExamSearchServiceBean implements Serializable {
 			return null;
 		}
 
-	}
-
-	public Boolean addMessage() {
-
-		String summary = value2 ? rb.getString("label_msg_checked") : rb
-				.getString("label_msg_unchecked");
-		logger.debug("@@@@ VOIR @@@@ " + value2);
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(summary));
-
-		return value2;
 	}
 
 	public void saveNoteGroupExam() {
@@ -824,7 +572,6 @@ public class ExamSearchServiceBean implements Serializable {
 
 	}
 
-
 	public ModuleCalendarDto getModuleCalendar() {
 		logger.debug("ME ME ‡‡‡@@@@@");
 		examGroupServicewsEndpoint = examGroupServicews
@@ -851,11 +598,6 @@ public class ExamSearchServiceBean implements Serializable {
 			examGroupServicewsEndpoint = examGroupServicews
 					.getExamGroupServicewsImplPort();
 
-			examModuleGroupServicewsEndpoint = examModuleGroupServicews
-					.getExamModuleGroupServicewsImplPort();
-
-			classeServicewsEndpoint = classeServicews
-					.getClasseServicewsImplPort();
 			academicModuleDtoServicewsEndpoint = academicModuleDtoServicews
 					.getAcademicModuleDtoServicewsImplPort();
 
@@ -864,17 +606,6 @@ public class ExamSearchServiceBean implements Serializable {
 
 			listStatusExam = popuplistDtoServicewsEndpoint
 					.searchPopuplistDtoServicews("statusexam");
-
-			listTypeEvent = popuplistDtoServicewsEndpoint
-					.searchPopuplistDtoServicews("typeevent");
-
-			listTypeAbsence = popuplistDtoServicewsEndpoint
-					.searchPopuplistDtoServicews("eventstatus");
-
-			listDesClass = classeServicewsEndpoint.getAllClasseServicews();
-
-			listexamModuleGroup = examModuleGroupServicewsEndpoint
-					.searchExamModuleGroupServicews(examModuleGroupDtos);
 
 			logger.debug("end init");
 
@@ -890,6 +621,5 @@ public class ExamSearchServiceBean implements Serializable {
 		text2 = text2.toUpperCase();
 
 	}
-
 
 }

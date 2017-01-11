@@ -45,7 +45,7 @@
 									<p:commandButton value="#{messages.label_modifier}"
 										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
 										rendered="#{!examModuleGroupeSearchServiceBean.isAction()}"
-										action="#{examModuleGroupeSearchServiceBean.addexammodulegroupe}"
+										action="#{examModuleGroupeSearchServiceBean.updatexammodulegroupe()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('addegroupeexam').hide()"
 										update="forme fdial growl" />
 									<p:commandButton value="#{messages.label_create}"
@@ -109,7 +109,7 @@
 
 								</p:panel>
 
-								<p:panel id="addactivities" widgetVar="addegroupeexam"
+								<p:panel id="addgroupeexam" widgetVar="addegroupeexam"
 									rendered="#{!examModuleGroupeSearchServiceBean.isAction2()}">
 
 									<h:form id="fdial">
@@ -119,6 +119,7 @@
 										<h:form id="form">
 											<p:dataTable var="groupexagrpe"
 												value="#{examModuleGroupeSearchServiceBean.listexamModuleGroup}"
+												selection="#{examModuleGroupeSearchServiceBean.examModuleGroupDtos}"
 												paginator="true" rows="10" rowKey="#{groupexagrpe.idExamModuleGroup}"
 												paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
 												rowsPerPageTemplate="5,10,15" selectionMode="single"

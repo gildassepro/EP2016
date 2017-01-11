@@ -1272,13 +1272,6 @@ public class PlanningSearchServiceBean implements Serializable {
 
 		}
 
-		logger.debug("@@@@@ LISTEZ STATUS @@@@@@@ " + listEventStatusp.size());
-
-		logger.debug("@@@ EVENT OBJECT @@@ "
-				+ (DefaultScheduleEventExtends) selectEvent.getObject());
-
-		logger.debug("@@@@@ ID 2222 @@@@" + eventp.getIdStudentEvent());
-		logger.debug("@@@@@ ID 2223 @@@@" + eventp.getId());
 
 		return selectedEvents;
 	}
@@ -1314,27 +1307,18 @@ public class PlanningSearchServiceBean implements Serializable {
 		EventsStatusDto createEventStatus = new EventsStatusDto();
 		EventsStatusDto iventStatuss = new EventsStatusDto();
 
-		logger.debug("@@@@@ ID ID @@@@@" + eventp.getIdStudentEvent());
-
 		selectedEvents.setIdStudentEvents(eventp.getIdStudentEvent());
 		iventStatuss.setStudentEvents(selectedEvents);
 		examDto2.setStudentEvents(selectedEvents);
-
-		logger.debug("@@@@@ SELECTED EVENT ID @@@@@"
-				+ selectedEvents.getIdStudentEvents());
-
-		logger.debug("@@@@@  SELECTED EVENT @@@@@" + selectedEvents);
 
 		listEventStatus = eventsStatusServicewsEndpoint
 				.searchEventsStatusServicews(iventStatuss);
 		listStudentEvent = studentEventsServicewsEndpoint
 				.searchStudentEventsServicews(selectedEvents);
-		logger.debug("@@@ LISTE SIZE @@@@" + listEventStatus.size());
 
 		createEventStatus.setActualEnDate(eventp.getStartDateEvent());
 		createEventStatus.setActualStartDate(eventp.getEndDateEvent());
 
-		logger.debug("@@@@ COMMENT @@@@" + eventsStatusDto.getComments());
 		createEventStatus.setComments(eventsStatusDto.getComments());
 		createEventStatus.setStatusEvent(eventsStatusDto.getStatusEvent());
 		createEventStatus.setStudentEvents(selectedEvents);
@@ -1342,16 +1326,9 @@ public class PlanningSearchServiceBean implements Serializable {
 		eventsStatusServicewsEndpoint = eventsStatusServicews
 				.getEventsStatusServicewsImplPort();
 
-		logger.debug("@@@@ TEST DE FINS ADD EVENT 11111 @@@@ "
-				+ listEventStatus.size());
 		examGroupDtos.setAcademicModule(eventp.getMod());
 
 		listexam = examServicewsEndpoint.searchExamServicews(examDto2);
-
-		logger.debug("3         " + listexam.size());
-
-		logger.debug("START         " + eventp.getStartDateEvent());
-		logger.debug("END           " + eventp.getEndDateEvent());
 
 		if (listexam.size() != 0) {
 			for (ExamDto c : listexam) {
@@ -1389,28 +1366,7 @@ public class PlanningSearchServiceBean implements Serializable {
 				}
 			}
 
-		} else {
-
-			logger.debug("TEST QI-3");
-
-			addexam.setActualEnDate(eventp.getEndDateEvent());
-			addexam.setActualStartDate(eventp.getStartDateEvent());
-
-			addexam.setExamGroup(examDtos.getExamGroup());
-			addexam.setTitle(eventp.getTitle());
-			addexam.setCoefficient(examDtos.getCoefficient());
-
-			addexam.setAverageMark(examDtos.getAverageMark());
-			addexam.setComments(examDtos.getComments());
-			addexam.setMaxMark(examDtos.getMaxMark());
-			addexam.setMinimumMark(examDtos.getMinimumMark());
-			addexam.setStudentEvents(examDto2.getStudentEvents());
-			addexam.setTypeExam(examDtos.getTypeExam());
-
-			examServicewsEndpoint = examServicews.getExamServicewsImplPort();
-			addexam = examServicewsEndpoint.createExamServicews(addexam);
-
-		}
+		} 
 
 		if (listEventStatus.size() == 0) {
 
@@ -1458,14 +1414,11 @@ public class PlanningSearchServiceBean implements Serializable {
 
 		logger.debug(" DEBUT ADD EXAMM");
 		ExamDto addexam = new ExamDto();
-		ExamDto addexam2 = new ExamDto();
 
 		selectedEvents.setIdStudentEvents(eventp.getIdStudentEvent());
 		logger.debug("0" + selectedEvents.getIdStudentEvents());
 
 		examDto2.setStudentEvents(selectedEvents);
-
-		logger.debug("1" + examDto2);
 
 		listStudentEvent = studentEventsServicewsEndpoint
 				.searchStudentEventsServicews(selectedEvents);
@@ -1473,11 +1426,7 @@ public class PlanningSearchServiceBean implements Serializable {
 		logger.debug("2         " + listStudentEvent.size());
 
 		listexam = examServicewsEndpoint.searchExamServicews(examDto2);
-
-		logger.debug("3         " + listexam.size());
-
-		logger.debug("START         " + eventp.getStartDateEvent());
-		logger.debug("END           " + eventp.getEndDateEvent());
+		
 
 		if (listexam.size() != 0) {
 			for (ExamDto a : listexam) {
@@ -1509,7 +1458,6 @@ public class PlanningSearchServiceBean implements Serializable {
 
 		}
 
-		logger.debug(" FIN ADD EXAMM");
 	}
 
 	public void onEventChange(SelectEvent selectEvents) {
@@ -1521,19 +1469,6 @@ public class PlanningSearchServiceBean implements Serializable {
 						.getIdStudentEvents());
 
 	}
-
-	// public void addEvent() {
-	// logger.debug("@@@@@ INIT ADD EVENT @@@@");
-	// if (eventp.getId() == null)
-	// eventProf.clear();
-	// else
-	// logger.debug("@@@ AFFICHE ID EVENT @@@" + eventp.getId());
-	// logger.debug("@@@ AFFICHE ID COMMENT @@@" + eventp.getDescription());
-	// logger.debug("@@@ AFFICHE ID START DATE @@@" + eventp.getStartDate());
-	// logger.debug("@@@ AFFICHE ID END DATE @@@" + eventp.getEndDate());
-	//
-	// logger.debug("@@@@@ INIT END EVENT @@@@@");
-	// }
 
 	@PostConstruct
 	public void init() {
@@ -1678,14 +1613,11 @@ public class PlanningSearchServiceBean implements Serializable {
 			eventClasse.addEvent(ev);
 
 		}
-		logger.debug("@@@@@@@ FIN UPDATE PLALNNING CLASSE @@@@@"
-				+ selectedEventsClasse.getClasseProgramm().getClasseName());
 
 	}
 
 	public void updatePlanningProf() {
-		logger.debug("@@@@@@@ DEBUT UPDATE PLALNNING PROF @@@@@"
-				+ selectedEventsProf.getTeacher().getIdIdentityTeacher());
+		
 		studentEventsServicewsEndpoint = studentEventsServicews
 				.getStudentEventsServicewsImplPort();
 		eventProf = new DefaultScheduleModel();
@@ -1707,8 +1639,6 @@ public class PlanningSearchServiceBean implements Serializable {
 
 		}
 
-		logger.debug("@@@@@@@ FIN UPDATE PLALNNING PROF @@@@@"
-				+ selectedEventsProf.getTeacher().getIdIdentityTeacher());
 	}
 
 	public void testEvent() {
@@ -1716,14 +1646,9 @@ public class PlanningSearchServiceBean implements Serializable {
 	}
 
 	public void actionPresencePage() {
-		logger.debug("DEBUT ACTION PRESENCE PAGE");
-
-		logger.debug(" @@@@ TAILLE DE LA LISTE STUDENTEVENT @@@@"
-				+ listStudentEvents.size());
+		
 		action = true;
 		action2 = false;
-
-		logger.debug("@@@ END ACTION PRESENCE PAGE");
 
 	}
 
@@ -1897,15 +1822,6 @@ public class PlanningSearchServiceBean implements Serializable {
 
 		studentClasseDto.setStudent(((StudentClasseDto) event.getObject())
 				.getStudent());
-
-		logger.debug("@@@   11111111 @@@@@@@@@"
-				+ ((StudentClasseDto) event.getObject()).getStudent()
-						.getFirstName());
-		logger.debug("@@@   22222222 @@@@@@@@@"
-				+ ((StudentClasseDto) event.getObject()).getStudent().getName());
-		logger.debug("@@@   33333333 @@@@@@@@@"
-				+ ((StudentClasseDto) event.getObject()).getStudent()
-						.getIdStudent());
 
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 

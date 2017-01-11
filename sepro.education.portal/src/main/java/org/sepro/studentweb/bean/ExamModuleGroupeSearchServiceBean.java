@@ -15,6 +15,7 @@ import javax.faces.context.FacesContext;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
+import org.sepro.studentweb.serviceapi.ExamGroupDto;
 import org.sepro.studentweb.serviceapi.ExamModuleGroupDto;
 
 
@@ -155,37 +156,42 @@ public class ExamModuleGroupeSearchServiceBean implements Serializable{
 	}
 
 
-	public void initDualList(String baction) {
+	public String initDualList(String baction) {
 		logger.debug("DEBUT initDualList +++++++++++++");
 
 		if (baction.equals("1")) {
 
-			
+			examModuleGroupDto = examModuleGroupDtos;
 			action2 = true;
 			action3 = false;
 
 			initUpdate();
+			return null;
 		} else {
-			
+			examModuleGroupDto = new ExamModuleGroupDto();
 			action2 = true;
 			action3 = false;
 			
 
 			initCreate();
+			
+			return null;
 		}
-		logger.debug("DEBUT initDualList +++++++++++++");
+		
 
 	}
 	
 	public void initUpdate() {
-
+		action = false;
+		examModuleGroupServicewsEndpoint = examModuleGroupServicews.getExamModuleGroupServicewsImplPort();
+		
 		
 
 	}
 	
 	public void initCreate() {
-
-		
+		action = true;
+		examModuleGroupServicewsEndpoint = examModuleGroupServicews.getExamModuleGroupServicewsImplPort();
 
 	}
 
@@ -225,6 +231,38 @@ public class ExamModuleGroupeSearchServiceBean implements Serializable{
 
 		createexammodulegroupe = examModuleGroupServicewsEndpoint
 				.createExamModuleGroupServicews(createexammodulegroupe);
+
+	}
+	
+	public String updatexammodulegroupe() {
+		
+		ExamModuleGroupDto upfdateexammodulegroupe = new ExamModuleGroupDto();
+		
+		FacesMessage msg = null;
+		try {
+			
+			upfdateexammodulegroupe.setTitle(examModuleGroupDto.getTitle());
+			upfdateexammodulegroupe.setAverageMark(null);
+			upfdateexammodulegroupe.setMaxMark(null);
+			upfdateexammodulegroupe.setMinimumMark(null);
+			
+			examModuleGroupServicewsEndpoint = examModuleGroupServicews
+					.getExamModuleGroupServicewsImplPort();
+			upfdateexammodulegroupe.setIdExamModuleGroup(examModuleGroupDto.getIdExamModuleGroup());
+			
+			upfdateexammodulegroupe = examModuleGroupServicewsEndpoint.updateExamModuleGroupServicews(upfdateexammodulegroupe);
+		
+			init();
+		} catch (Exception ex) {
+			
+			return null;
+		}
+		msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+				rb.getString("label_succesful"),
+				rb.getString("label_succesful"));
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, msg);
+		return null;
 
 	}
 
