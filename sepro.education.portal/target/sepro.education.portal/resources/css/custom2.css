@@ -1,4 +1,3 @@
-
 .ui-steps .ui-steps-item {
 	width: 15%;
 }
@@ -18,6 +17,47 @@
 
 .requireds {
 	color: red;
+}
+
+.examen-schedule
+{
+	border-color: #F00;
+	background-color: #ff8080;
+	color: #fff;
+}
+
+.tp-schedule
+{
+	border-color: #005ce6;
+	background-color: #009933;
+	color: #fff;
+}
+
+.cours-schedule {
+	border-color: #000000;
+	background-color: #66c2ff;
+	color: #fff;
+}
+
+.open-status {
+	border-color: #00ff00;
+	border-style:solid;
+	border-width:4px;
+	color: #000000;
+}
+
+.close-status {
+	border-color: #F00;
+	border-style:solid;
+	border-width:4px;
+	color: #000000;
+}
+
+.follow-status {
+	border-color: #ffff00;
+	border-style:solid;
+	border-width:4px;
+	color: #000000;
 }
 
 .ui-steps.custom .ui-steps-item .ui-steps-number {

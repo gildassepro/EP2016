@@ -1,0 +1,464 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:uf="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+	template="/templates/template.xhtml">
+	<ui:define name="content">
+		<p:growl id="growl" showDetail="true" sticky="false" />
+		<div class="container-fluid">
+			<b:row>
+
+
+				<h:form id="forme">
+					<p:accordionPanel>
+						<p:tab title="#{messages.label_msg_groupe2_exam}">
+
+							<b:row styleClass="listPage">
+
+								<div id="menubutton">
+									<p:commandButton id="add"
+										styleClass="btn btn-primary submit-button"
+										value="#{messages.label_new}" title="#{messages.label_new}"
+										action="#{examSearchServiceBean.initDualList('2')}"
+										update="@([id$=updatgroupeexam]) forme fdial1"
+										onclick="PF('updategroupeexam').show()"
+										icon="fa fa-fw fa-plus">
+									</p:commandButton>
+									<p:commandButton id="modifs" styleClass="btn btn-success"
+										value="#{messages.label_modifier}"
+										update="@([id$=updatgroupeexam]) forme fdial1"
+										onclick="PF('updategroupeexam').show()"
+										icon="fa fa-fw fa-pencil"
+										action="#{examSearchServiceBean.initDualList('1')}">
+									</p:commandButton>
+
+									<p:commandButton id="printe"
+										styleClass="btn btn-primary submit-button"
+										title="#{messages.label_print}"
+										value="#{messages.label_print}" icon="fa fa-fw fa-print">
+										<p:dataExporter type="pdf" fileName="groupeexam"
+											pageOnly="true" target="" />
+									</p:commandButton>
+
+									<p:commandButton value="#{messages.label_modifier}"
+										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
+										rendered="#{!examSearchServiceBean.isAction()}"
+										action="#{examSearchServiceBean.saveNoteGroupExam}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('addegroupeexam').hide()"
+										update="forme fdial growl" />
+									<p:commandButton value="#{messages.label_create}"
+										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
+										rendered="#{examSearchServiceBean.isAction()}"
+										disabled="#{examSearchServiceBean.test}"
+										action="#{examSearchServiceBean.saveNoteGroupExam()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('addegroupeexam').hide()"
+										update="growl forme fdial" />
+									<p:splitButton value="#{messages.label_options}"
+										actionListener="#{buttonView.save}" icon="ui-icon-gear">
+										<p:menuitem value="Update"
+											actionListener="#{buttonView.update}"
+											icon="ui-icon-arrowrefresh-1-w" />
+										<p:menuitem value="Delete"
+											actionListener="#{buttonView.delete}" ajax="false"
+											icon="ui-icon-close" />
+										<p:separator />
+										<p:menuitem value="Homepage" icon="ui-icon-extlink" />
+									</p:splitButton>
+									<p:commandButton id="past"
+										styleClass="btn btn-primary submit-button" ajax="false"
+										action="searchexamgroupe.xhtml?faces-redirect=true"
+										icon="fa fa-fw fa-arrow-left">
+									</p:commandButton>
+
+								</div>
+								<p:panel id="updatgroupeexam" widgetVar="updategroupeexam"
+									rendered="#{!examSearchServiceBean.isAction3()}">
+									<h:form id="fdial1">
+										<h3 style="margin-top: 0">
+											<p:outputLabel value="#{messages.label_create_student_class}"
+												rendered="#{examSearchServiceBean.isAction()}" />
+											<p:outputLabel value="#{messages.label_msg_groupe2_exam}"
+												rendered="#{!examSearchServiceBean.isAction()}" />
+										</h3>
+										<div class="ui-grid ui-grid-responsive wrap class">
+											<div class="col-xs-12">
+
+												<div class="row">
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_academic_years}:" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:selectOneMenu id="selectacademicyears1"
+															styleClass="form-text"
+															value="#{examSearchServiceBean.examGroupDto.academicYear}"
+															converter="entityConverter"
+															placeholder="#{messages.label_subestablishment}"
+															requiredMessage="#{messages.label_curriculum_requeried}">
+															<f:selectItem
+																itemLabel="#{examSearchServiceBean.examGroupDto.academicYear.value}"
+																itemValue="#{examSearchServiceBean.examGroupDto.academicYear}"
+																label="#{messages.label_curriculum}" />
+															<f:selectItems
+																value="#{examSearchServiceBean.listAcademicYear}"
+																var="academicYear" itemValue="#{academicYear}"
+																itemLabel="#{academicYear.value}" />
+															<p:ajax event="select"
+																listener="#{examSearchServiceBean.onSelectYears}"
+																update="@([id$=selectclassname2]) growl" />
+														</p:selectOneMenu>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_msg_classname}:" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:selectOneMenu id="selectclassname2"
+															styleClass="form-control"
+															value="#{examSearchServiceBean.examGroupDto.classeProgramm}"
+															converter="entityConverter"
+															placeholder="#{messages.label_programme_status}"
+															requiredMessage="#{messages.label_cursusname_requeried}">
+															<f:selectItem
+																itemLabel="#{examSearchServiceBean.examGroupDto.classeProgramm.classeName}"
+																itemValue="#{examSearchServiceBean.examGroupDto.classeProgramm}"
+																label="#{messages.label_cursus}" />
+															<f:selectItems value="#{examSearchServiceBean.listClass}"
+																var="classeProgramm" itemValue="#{classeProgramm}"
+																itemLabel="#{classeProgramm.classeName}" />
+															<p:ajax event="valueChange"
+																listener="#{examSearchServiceBean.updateModulesProgrammesCalendar()}"
+																update="@([id$=selectedmodules])" />
+														</p:selectOneMenu>
+													</div>
+												</div>
+
+												<div class="row">
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:outputLabel
+															value="#{messages.label_msg_academic_module}" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+
+														<p:selectOneMenu id="selectedmodules"
+															styleClass="form-text"
+															value="#{examSearchServiceBean.moduleCalendarDto}"
+															converter="entityConverter"
+															placeholder="#{messages.label_msg_academic_module}">
+															<f:selectItem
+																itemLabel="#{examSearchServiceBean.moduleCalendarDto.academicModule.moduleName}"
+																itemValue="#{examSearchServiceBean.moduleCalendarDto.academicModule}"
+																label="#{messages.label_msg_academic_module}" />
+															<f:selectItems
+																value="#{examSearchServiceBean.listModuleCalendarDtos}"
+																var="academicModules" itemValue="#{academicModules}"
+																itemLabel="#{academicModules.academicModule.moduleName}" />
+															<p:ajax
+																listener="#{examSearchServiceBean.getModuleCalendar()}"
+																update="@([id$=selectessgroupe])" />
+														</p:selectOneMenu>
+
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:outputLabel
+															value="#{messages.label_msg_name_groupe_exam}" />
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:inputText styleClass="form-control" id="titlegroupe"
+															value="#{examSearchServiceBean.examGroupDtos2.title}"
+															placeholder="#{messages.label_msg_name_groupe_exam}" />
+													</div>
+												</div>
+
+												<div class="row">
+													<div class="col-lg-3 col-md-3 col-sm-3">
+
+														<p:outputLabel value="#{messages.label_msg_groupe_exam}" />
+
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:selectOneMenu id="selectessgroupe"
+															styleClass="form-text"
+															value="#{examSearchServiceBean.examGroupDto.title}"
+															converter="entityConverter"
+															placeholder="#{messages.label_msg_academic_module}">
+															<f:selectItem
+																itemLabel="#{examSearchServiceBean.examGroupDto.title}"
+																itemValue="#{examSearchServiceBean.examGroupDto.title}"
+																label="#{messages.label_msg_groupe_exam}" />
+															<f:selectItems
+																value="#{examSearchServiceBean.listeexamgroupes}"
+																var="ssgroupe" itemValue="#{ssgroupe}"
+																itemLabel="#{ssgroupe.title}" />
+
+														</p:selectOneMenu>
+													</div>
+
+													<div class="col-lg-3 col-md-3 col-sm-3"></div>
+													<div class="col-lg-3 col-md-3 col-sm-3"></div>
+												</div>
+
+
+
+											</div>
+										</div>
+									</h:form>
+
+								</p:panel>
+
+								<p:panel id="addactivities" widgetVar="addegroupeexam"
+									rendered="#{!examSearchServiceBean.isAction2()}">
+
+									<h:form id="fdial">
+										<h3 style="margin-top: 0">
+											<p:outputLabel
+												value="#{messages.label_msg_create_groupe_exam}"
+												rendered="#{examSearchServiceBean.isAction()}" />
+											<p:outputLabel value="#{messages.label_msg_groupe2_exam}"
+												rendered="#{!examSearchServiceBean.isAction()}" />
+										</h3>
+
+										<div class="ui-grid ui-grid-responsive wrap class">
+											<div class="col-xs-12">
+
+												<div class="row">
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_academic_years}:" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:selectOneMenu id="selectacademicyearsnotes"
+															styleClass="form-text"
+															value="#{examSearchServiceBean.examGroupDto.academicYear}"
+															converter="entityConverter"
+															placeholder="#{messages.label_subestablishment}"
+															requiredMessage="#{messages.label_curriculum_requeried}">
+															<f:selectItem
+																itemLabel="#{examSearchServiceBean.examGroupDto.academicYear.value}"
+																itemValue="#{examSearchServiceBean.examGroupDto.academicYear}"
+																label="#{messages.label_curriculum}" />
+															<f:selectItems
+																value="#{examSearchServiceBean.listAcademicYear}"
+																var="academicYear" itemValue="#{academicYear}"
+																itemLabel="#{academicYear.value}" />
+															<p:ajax event="valueChange"
+																listener="#{examSearchServiceBean.onSelectYears()}"
+																update="@([id$=selectclassnamenote]) growl" />
+														</p:selectOneMenu>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:outputLabel value="#{messages.label_msg_classname}:" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:selectOneMenu id="selectclassnamenote"
+															styleClass="form-control"
+															value="#{examSearchServiceBean.examGroupDto.classeProgramm}"
+															converter="entityConverter"
+															placeholder="#{messages.label_programme_status}"
+															requiredMessage="#{messages.label_cursusname_requeried}">
+															<f:selectItem
+																itemLabel="#{examSearchServiceBean.examGroupDto.classeProgramm.classeName}"
+																itemValue="#{examSearchServiceBean.examGroupDto.classeProgramm}"
+																label="#{messages.label_cursus}" />
+															<f:selectItems value="#{examSearchServiceBean.listClass}"
+																var="classeProgramm" itemValue="#{classeProgramm}"
+																itemLabel="#{classeProgramm.classeName}" />
+															<p:ajax event="valueChange"
+																listener="#{examSearchServiceBean.updateModulesProgrammesCalendar()}"
+																update="@([id$=selectedmodulesnote]) @([id$=groupexaTable])" />
+														</p:selectOneMenu>
+													</div>
+												</div>
+
+
+												<div class="row">
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:outputLabel
+															value="#{messages.label_msg_academic_module}:" />
+														<span class="requireds">(*)</span>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:selectOneMenu id="selectedmodulesnote"
+															styleClass="form-text"
+															value="#{examSearchServiceBean.moduleCalendarDto}"
+															converter="entityConverter"
+															placeholder="#{messages.label_msg_academic_module}">
+															<f:selectItem
+																itemLabel="#{examSearchServiceBean.moduleCalendarDto.academicModule.moduleName}"
+																itemValue="#{examSearchServiceBean.moduleCalendarDto.academicModule}"
+																label="#{messages.label_msg_academic_module}" />
+															<f:selectItems
+																value="#{examSearchServiceBean.listModuleCalendarDtos}"
+																var="academicModules" itemValue="#{academicModules}"
+																itemLabel="#{academicModules.academicModule.moduleName}" />
+															<p:ajax
+																listener="#{examSearchServiceBean.updatexamgroup()}"
+																update="@([id$=selectedexamgroupe]) growl" />
+														</p:selectOneMenu>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:outputLabel
+															value="#{messages.label_msg_groupe_exam}:" />
+
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:selectOneMenu id="selectedexamgroupe"
+															styleClass="form-text"
+															value="#{examSearchServiceBean.examGroupDto}"
+															converter="entityConverter"
+															placeholder="#{messages.label_msg_name_groupe_exam}">
+															<f:selectItem
+																itemLabel="#{examSearchServiceBean.examGroupDto.title}"
+																itemValue="#{examSearchServiceBean.examGroupDto.title}"
+																label="#{messages.label_msg_academic_module}" />
+															<f:selectItems
+																value="#{examSearchServiceBean.listeexamgroupe}"
+																var="exagroupe" itemValue="#{exagroupe}"
+																itemLabel="#{exagroupe.title}" />
+															<p:ajax listener="#{examSearchServiceBean.listexam()}"
+																update="@([id$=groupexaTable]) growl" />
+														</p:selectOneMenu>
+													</div>
+												</div>
+
+											</div>
+										</div>
+										<br></br>
+
+
+										<h:form id="form">
+
+
+											<p:dataTable id="groupexaTable"
+												value="#{examSearchServiceBean.listStudentExamGroup}"
+												var="groupexa" widgetVar="groupexaTable"
+												emptyMessage="#{messages.label_empty}"
+												styleClass="listeTable table-responsive filterable"
+												tableStyleClass="table table-striped table-condensed table-hover"
+												rowKey="#{groupexa.student.idStudent}" paginator="true"
+												rows="10" filterBy="#{groupexa.student.name}"
+												paginatorPosition="bottom"
+												paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}">
+
+												<p:column id="col1" priority="2"
+													filterBy="#{groupexa.student.idStudent}"
+													filterMatchMode="contains">
+													<f:facet name="header">
+														<p:outputLabel value="#{messages.label_id}" />
+													</f:facet>
+													<h:outputText value="#{groupexa.student.idStudent}"></h:outputText>
+												</p:column>
+
+												<p:column id="col2" priority="3"
+													filterBy="#{groupexa.student.name}"
+													filterMatchMode="contains">
+													<f:facet name="header">
+														<p:outputLabel value="#{messages.label_name_professeur}" />
+													</f:facet>
+													<h:outputText value="#{groupexa.student.name}"></h:outputText>
+												</p:column>
+
+												<p:column id="col3" priority="3"
+													filterBy="#{groupexa.student.firstName}"
+													filterMatchMode="contains">
+													<f:facet name="header">
+														<p:outputLabel value="#{messages.label_prenomprof}" />
+													</f:facet>
+													<h:outputText value="#{groupexa.student.firstName}"></h:outputText>
+												</p:column>
+
+												<p:columns value="#{examSearchServiceBean.listExam}"
+													var="examl">
+													<f:facet name="header">
+														<h:outputText value="#{examl.title}" />
+													</f:facet>
+													<h:outputText
+														value="#{examSearchServiceBean.getNote(examl,groupexa.student)}" />
+												</p:columns>
+
+												<p:column id="col4" priority="2" filterBy="#{groupexa.mark}"
+													filterMatchMode="contains">
+													<f:facet name="header">
+														<p:outputLabel value="#{messages.label_msg_mark}" />
+													</f:facet>
+													<h:outputText
+														value="#{examSearchServiceBean.getAverageExamGroup(groupexa)}">
+
+													</h:outputText>
+
+												</p:column>
+
+												<p:column id="cole5"
+													filterBy="#{groupexa.student.idStudent}"
+													filterMatchMode="contains">
+													<f:facet name="header">
+														<p:outputLabel
+															value="#{messages.label_msg_rattrapagemark}" />
+													</f:facet>
+													<p:inputText styleClass="form-control"
+														value="#{groupexa.rattrapageMark}"
+														placeholder="#{messages.label_msg_note_dev2}">
+														<p:ajax event="keyup" update="out2"
+															listener="#{examSearchServiceBean.handleKeyEvent}" />
+													</p:inputText>
+													<h:outputText id="out2"
+														value="#{examSearchServiceBean.text1}" />
+
+												</p:column>
+
+												<p:column id="col5" priority="3">
+													<f:facet name="header">
+														<p:outputLabel value="#{messages.label_msg_comment}" />
+													</f:facet>
+													<p:inputText styleClass="form-text" id="commentex"
+														placeholder="#{messages.label_msg_comment}"
+														value="#{groupexa.comments}">
+														<p:ajax event="keyup" update="out3"
+															listener="#{examSearchServiceBean.handleKeyEvent}" />
+													</p:inputText>
+													<h:outputText id="out3"
+														value="#{examSearchServiceBean.text2}" />
+												</p:column>
+
+												<p:column id="col6" priority="2">
+													<f:facet name="header">
+														<p:outputLabel value="#{messages.label_msg_statusexam}" />
+													</f:facet>
+													<p:selectOneMenu id="statusgroupeexams"
+														styleClass="form-text" value="#{groupexa.statusExam}"
+														converter="entityConverter"
+														placeholder="#{messages.label_msg_type_activity}"
+														requiredMessage="#{messages.label_cursusname_requeried}">
+														<f:selectItem itemLabel="#{groupexa.statusExam.value}"
+															itemValue="#{groupexa.statusExam}"
+															label="#{messages.label_msg_type_activity}" />
+														<f:selectItems
+															value="#{examSearchServiceBean.listStatusExam}"
+															var="examstat" itemValue="#{examstat}"
+															itemLabel="#{examstat.value}" />
+
+													</p:selectOneMenu>
+												</p:column>
+
+
+											</p:dataTable>
+										</h:form>
+
+
+
+									</h:form>
+								</p:panel>
+
+							</b:row>
+						</p:tab>
+					</p:accordionPanel>
+				</h:form>
+			</b:row>
+		</div>
+	</ui:define>
+</ui:composition>
+

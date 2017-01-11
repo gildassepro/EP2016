@@ -844,43 +844,25 @@ public class ActivitieSearchServiceBean implements Serializable {
 			if (studentEventsDto.getClasseProgramm() != null) {
 				logger.debug("@@@@ TEST NOM PROGRAMME CALENDRIER @@@@@@"
 						+ studentEventsDto.getClasseProgramm().getClasseName());
-				if (classeProgrammDto != null) {
+				
 
-					for (ProgrammeCalendarDto pcalendar : studentEventsDto
-							.getClasseProgramm().getProgrammeCalendar()
-							.getProgrammeCalendar()) {
-
-						for (ProgrammeCalendarDto pcalendars : listProgrammeCalendars) {
-							if (pcalendars.getIdProgrammeCalendar() == pcalendar
-									.getIdProgrammeCalendar()) {
-								listProgrammeCalendarDestination
-										.add(pcalendars);
-
-								moduleCalendarDto
-										.setProgrammeCalendar(pcalendars);
-
-								if (pcalendars != null) {
-
-									listModuleCalendarDto = moduleCalendarDtoServicewsEndpoint
-											.searchModuleCalendarServicews(moduleCalendarDto);
-
-									for (ModuleCalendarDto mod : listModuleCalendarDto) {
-										listModuleCalendarDtos.add(mod);
-									}
-									pcalendars = new ProgrammeCalendarDto();
-									for (int i = 0; i < listModuleCalendarDtos
-											.size(); i++) {
-
-									}
-
-								}
-
-								break;
-							}
-
+					logger.debug("@@@@ TEST NOM PROGRAMME CALENDRIER @@@@@@"
+							+ studentEventsDto.getClasseProgramm().getClasseName());
+					
+						for (ProgrammeCalendarDto pcalendar : studentEventsDto
+								.getClasseProgramm().getProgrammeCalendar()
+								.getProgrammeCalendar()) {
+							ModuleCalendarDto mod = new ModuleCalendarDto();
+							
+							mod.setProgrammeCalendar(pcalendar);
+							
+							listModuleCalendarDto = moduleCalendarDtoServicewsEndpoint.searchModuleCalendarServicews(mod);
+							
+							listModuleCalendarDtos.addAll(listModuleCalendarDto);
+							
+							
 						}
-					}
-				}
+				
 			}
 
 			logger.debug("@@@@@@ JE SUIS A LA FIN LOOOO @@@@@@@@@@@@@@");
@@ -1053,14 +1035,14 @@ public class ActivitieSearchServiceBean implements Serializable {
 
 			calendar.add(Calendar.DATE, 1);
 		}
-		logger.debug("FINNNNNNNNNNNNNNNNNNNNNN");
+		
 		msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
 				rb.getString("label_succesful"),
 				rb.getString("label_msg_sucess_create_activity"));
-		FacesContext context = FacesContext.getCurrentInstance();
+		FacesContext context3 = FacesContext.getCurrentInstance();
 
-		context.addMessage(null, msg);
-		logger.debug("FINNNNNNNNNNNNNNNNNNNNNN 2222222222222");
+		context3.addMessage(null, msg);
+		
 
 	}
 

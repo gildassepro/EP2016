@@ -26,7 +26,7 @@ import org.sepro.teacherweb.serviceapi.IdentityTeacherDto;
  *         &lt;element name="comments" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="eventsStatus" type="{http://serviceapi.studentweb.sepro.org/}eventsStatusDto" minOccurs="0"/>
  *         &lt;element name="idTeacherPresence" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
- *         &lt;element name="rating" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
+ *         &lt;element name="rating" type="{http://www.w3.org/2001/XMLSchema}double" minOccurs="0"/>
  *         &lt;element name="statusTeacher" type="{http://serviceapi.parameterweb.sepro.org/}popuplistDto" minOccurs="0"/>
  *         &lt;element name="teacher" type="{http://serviceapi.teacherweb.sepro.org/}identityTeacherDto" minOccurs="0"/>
  *       &lt;/sequence>
@@ -62,7 +62,7 @@ public class TeacherPresenceDto {
     protected EventsStatusDto eventsStatus;
     protected Long idTeacherPresence;
     @XmlElement(nillable = true)
-    protected Long rating;
+    protected Double rating;
     @XmlElement(nillable = true)
     protected PopuplistDto statusTeacher;
     @XmlElement(nillable = true)
@@ -193,10 +193,10 @@ public class TeacherPresenceDto {
      * 
      * @return
      *     possible object is
-     *     {@link Long }
+     *     {@link Double }
      *     
      */
-    public Long getRating() {
+    public Double getRating() {
         return rating;
     }
 
@@ -205,10 +205,10 @@ public class TeacherPresenceDto {
      * 
      * @param value
      *     allowed object is
-     *     {@link Long }
+     *     {@link Double }
      *     
      */
-    public void setRating(Long value) {
+    public void setRating(Double value) {
         this.rating = value;
     }
 

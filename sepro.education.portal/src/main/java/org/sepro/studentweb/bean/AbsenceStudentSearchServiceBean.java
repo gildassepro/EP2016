@@ -15,6 +15,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import org.sepro.parameterweb.bean.CursusSearchServiceBean;
 import org.sepro.parameterweb.serviceapi.ClasseDto;
@@ -366,11 +367,19 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 				.getEventsStatusServicewsImplPort();
 		studentPresenceServicewsEndpoint = studentPresenceServicews
 				.getStudentPresenceServicewsImplPort();
+		listEventStatus = eventsStatusServicewsEndpoint.searchEventsStatusServicews(eventsStatusDto);
+		
+		logger.debug("@@@  LIST EVENTSTATUS @@@@"+listEventStatus.size());
 
 		logger.debug("@@@@@@@ init Save Absence @@@@@@");
 		StudentPresenceDto createStudentPresence = new StudentPresenceDto();
-	
-
+		for(EventsStatusDto ev : listEventStatus){
+			if(selectedEvents.getIdStudentEvents().equals(ev.getStudentEvents().getIdStudentEvents())){
+				logger.debug("@@ 5555 @@");
+				createStudentPresence.setEventsStatus(ev);
+				break;
+			}
+		}
 		logger.debug("@@@@  LISTE DE PERSONNES 4444 @@@@"
 				+ listStudentClass.size());
 
@@ -384,8 +393,10 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 
 		createStudentPresence.setActualStartDate(selectedEvents.getStartDate());
 		createStudentPresence.setActualEnDate(selectedEvents.getEnDate());
-
-		createStudentPresence.setEventsStatus(null);
+		
+		
+		
+	//	createStudentPresence.setEventsStatus(null);
 		createStudentPresence.setStatusStudent(studentPresenceDto
 				.getStatusStudent());
 		createStudentPresence.setStudent(studentClasseDto.getStudent());
@@ -427,17 +438,29 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 	public void blockListe() {
 			logger.debug("DEBUT END LISTE ");
 			studentPresenceServicewsEndpoint = studentPresenceServicews.getStudentPresenceServicewsImplPort();
-			
+			StudentPresenceDto updatEventPresence = new StudentPresenceDto();
 			listeStudentPresence = studentPresenceServicewsEndpoint.searchStudentPresenceServicews(studentPresenceDt);
 			
 			logger.debug("@@@ VERIFICATION LISTE TAILLE @@@@"+listeStudentPresence.size());
+			logger.debug("@@@ SELECTED EVENT 000 @@@@"+selectedEvents.getStartDate());
+			logger.debug("@@@ SELECTED EVENT 111 @@@@"+selectedEvents.getEnDate());
 			
 			
-//				for(StudentPresenceDto endd : listeStudentPresence){
-//					if(selectedEvents.getStartDate().equals(endd.getActualEnDate()) && (selectedEvents.getEnDate().equals(endd.getActualStartDate()))){
-//						logger.debug("!!!!!!!! MES FELICITATIONS 0007 !!!!!!!!!");
-//					}
-//				}
+				for(StudentPresenceDto endd : listeStudentPresence){
+					if(selectedEvents.getStartDate().equals(endd.getActualStartDate()) && (selectedEvents.getEnDate().equals(endd.getActualEnDate()  ))){
+						logger.debug("!!!!!!!! MES FELICITATIONS 0007 !!!!!!!!!"+endd.getIdStudentPresence());
+						
+						updatEventPresence.setEventsStatus(null);
+						studentPresenceServicewsEndpoint = studentPresenceServicews.getStudentPresenceServicewsImplPort();
+						updatEventPresence.setIdStudentPresence(endd.getIdStudentPresence());
+						updatEventPresence = studentPresenceServicewsEndpoint.updateStudentPresenceServicews(updatEventPresence);
+						init();
+						logger.debug("@@ FIN @@@");
+						
+					}
+				}
+				RequestContext context = RequestContext.getCurrentInstance();
+				context.execute("PF('confirmation').show();");
 			
 			
 			testblokliste = true;
@@ -492,10 +515,15 @@ public class AbsenceStudentSearchServiceBean implements Serializable {
 	public void getDateActivity() {
 		
 		studentEventsServicewsEndpoint = studentEventsServicews.getStudentEventsServicewsImplPort();
+		eventsStatusServicewsEndpoint = eventsStatusServicews.getEventsStatusServicewsImplPort();
+		
+		listEventStatus = eventsStatusServicewsEndpoint.searchEventsStatusServicews(eventsStatusDto);
+		logger.debug("@@@@ ----- @@@@ "+listEventStatus.size());
 		logger.debug("@@@@@ DEBUT getDateActivity @@@@@");
 		
 		logger.debug("@@@@ DEBUT DATE @@@@@"+selectedEvents.getStartDate());
 		logger.debug("@@@@ FIN DATE @@@@@"+selectedEvents.getEnDate());
+		
 		
 		logger.debug("@@@@@ FIN getDateActivity @@@@@");
 		

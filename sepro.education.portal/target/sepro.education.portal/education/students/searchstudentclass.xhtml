@@ -56,7 +56,7 @@
 										<p:dataExporter type="pdf" fileName="programmes"
 											pageOnly="true" target="listclass" />
 									</p:commandButton>
-									
+
 									<p:commandButton value="#{messages.label_modifier}"
 										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
 										rendered="#{!studentClassSearchServiceBean.isAction()}"
@@ -232,27 +232,25 @@
 																value="#{studentClassSearchServiceBean.listeTeacherEvent}"
 																var="teacherevent" itemValue="#{teacherevent}"
 																itemLabel="#{teacherevent.firstName} #{teacherevent.name}" />
-																<p:ajax event="valueChange"
+															<p:ajax event="valueChange"
 																listener="#{studentClassSearchServiceBean.filteredCursus()}"
 																update="fdata growl" />
 														</p:selectOneMenu>
 													</div>
 												</div>
-												
+
 												<div class="row">
-													<div class="col-lg-3 col-md-3 col-sm-3">
-													</div>
-													<div class="col-lg-3 col-md-3 col-sm-3">
-													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3"></div>
+													<div class="col-lg-3 col-md-3 col-sm-3"></div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:outputLabel
-														    rendered="#{!studentClassSearchServiceBean.teststudentresponsable}"
+															rendered="#{!studentClassSearchServiceBean.teststudentresponsable}"
 															value="#{messages.label_msg_responsable_student}" />
-														
+
 													</div>
 													<div class="col-lg-3 col-md-3 col-sm-3">
 														<p:selectOneMenu id="studentRes" styleClass="form-text"
-														    rendered="#{!studentClassSearchServiceBean.teststudentresponsable}"
+															rendered="#{!studentClassSearchServiceBean.teststudentresponsable}"
 															value="#{studentClassSearchServiceBean.classeProgrammDto.studentResponsable}"
 															converter="entityConverter"
 															placeholder="#{messages.label_msg_prof}"
@@ -330,8 +328,8 @@
 										</h:form>
 									</h:form>
 								</p:panel>
-								
-								
+
+
 								<p:panel id="detailstudentclass" widgetVar="detailestudentclass"
 									rendered="#{!studentClassSearchServiceBean.isAction5()}">
 
@@ -472,6 +470,33 @@
 														</p:selectOneMenu>
 													</div>
 												</div>
+												<div class="row">
+													<div class="col-lg-3 col-md-3 col-sm-3"></div>
+													<div class="col-lg-3 col-md-3 col-sm-3"></div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:outputLabel
+															rendered="#{!studentClassSearchServiceBean.teststudentresponsable}"
+															value="#{messages.label_msg_responsable_student}" />
+
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:selectOneMenu id="studentResd" styleClass="form-text"
+															rendered="#{!studentClassSearchServiceBean.teststudentresponsable}"
+															value="#{studentClassSearchServiceBean.classeProgrammDto.studentResponsable}"
+															converter="entityConverter"
+															placeholder="#{messages.label_msg_prof}"
+															requiredMessage="#{messages.label_msg_prof}">
+															<f:selectItem
+																itemLabel="#{studentClassSearchServiceBean.classeProgrammDto.studentResponsable.firstName}"
+																itemValue="#{studentClassSearchServiceBean.classeProgrammDto.studentResponsable}"
+																label="#{messages.label_cursus}" />
+															<f:selectItems
+																value="#{studentClassSearchServiceBean.selectedlistEtudiantClass}"
+																var="studentclass" itemValue="#{studentclass}"
+																itemLabel="#{studentclass.firstName} #{studentclass.name}" />
+														</p:selectOneMenu>
+													</div>
+												</div>
 
 												<div class="row">
 													<div class="col-lg-3 col-md-3 col-sm-3"></div>
@@ -483,7 +508,7 @@
 											</div>
 										</div>
 										<br></br>
-										
+
 										<br></br>
 										<h:form id="fdetailstudent">
 											<div class="ui-datatable-tablewrapper">
@@ -491,13 +516,13 @@
 													rendered="#{!studentClassSearchServiceBean.testtable2}"
 													value="#{studentClassSearchServiceBean.selectedlistEtudiantClass}"
 													selection="#{studentClassSearchServiceBean.selectedalllistEtudiantClass}"
-													var="detailstudent"
-													emptyMessage="#{messages.label_empty}"
+													var="detailstudent" emptyMessage="#{messages.label_empty}"
 													rowKey="#{detailstudent.idStudent}" style="margin-bottom:0">
 													<f:facet name="header">
 						            #{messages.label_msg_student_msglist}
-						        </f:facet>			<p:column selectionMode="multiple"
-													style="width:16px;text-align:center" />
+						        </f:facet>
+													<p:column selectionMode="multiple"
+														style="width:16px;text-align:center" />
 													<p:column headerText="#{messages.label_number_inscription}">
 														<h:outputText
 															value="#{detailstudent.inscriptionAuthentification.idInscription}" />
@@ -512,12 +537,12 @@
 														<h:outputText value="#{detailstudent.birthday}" />
 													</p:column>
 												</p:dataTable>
-								
+
 											</div>
 										</h:form>
 									</h:form>
 								</p:panel>
-								
+
 
 								<p:dataTable id="listclass"
 									value="#{studentClassSearchServiceBean.listClass}"
@@ -575,7 +600,7 @@
 												value="#{messages.label_msg_responsable_teacher}" />
 										</f:facet>
 										<h:outputText
-											value="#{studentclasses.teacherResponsable.name} #{studentclasses.teacherResponsable.firstName}"></h:outputText> 
+											value="#{studentclasses.teacherResponsable.name} #{studentclasses.teacherResponsable.firstName}"></h:outputText>
 									</p:column>
 
 								</p:dataTable>

@@ -37,7 +37,8 @@
 											update="@([id$=btncreate]) growl" />
 
 										<p:splitButton value="#{messages.label_options}"
-											actionListener="#{absenceStudentSearchServiceBean.blockListe()}" icon="ui-icon-gear">
+											actionListener="#{absenceStudentSearchServiceBean.blockListe()}"
+											icon="ui-icon-gear">
 											<p:menuitem id="btnendliste" value="Clôturer la liste"
 												actionListener="#{absenceStudentSearchServiceBean.blockListe()}"
 												update="growl" icon="fa fa-fw fa-lock" />
@@ -53,8 +54,7 @@
 											icon="fa fa-fw fa-arrow-left">
 										</p:commandButton>
 										<p:commandButton id="closeListe"
-											styleClass="btn btn-danger submit-button"
-											update="growl"
+											styleClass="btn btn-danger submit-button" update="growl"
 											action="#{absenceStudentSearchServiceBean.blockListe()}"
 											icon="fa fa-fw fa-lock">
 										</p:commandButton>
@@ -117,8 +117,7 @@
 																value="#{absenceStudentSearchServiceBean.listStudentEvents}"
 																var="activiti" itemValue="#{activiti}"
 																itemLabel="#{activiti.title} #{activiti.startDate} #{activiti.enDate}" />
-															<p:ajax event="valueChange"
-															    update="growl"
+															<p:ajax event="valueChange" update="growl"
 																listener="#{absenceStudentSearchServiceBean.getDateActivity()}" />
 														</p:selectOneMenu>
 
@@ -183,7 +182,7 @@
 												</p:column>
 
 												<p:column id="col5" priority="2" width="35"
-												disabled="#{absenceStudentSearchServiceBean.testblokliste}"
+													disabled="#{absenceStudentSearchServiceBean.testblokliste}"
 													filterBy="#{students.student.idStudent}"
 													filterMatchMode="contains">
 													<f:facet name="header">
@@ -208,6 +207,12 @@
 													</p:selectOneMenu>
 												</p:column>
 											</p:dataTable>
+											<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" width="450" height="180"
+												message="#{messages.label_msg_alerte_tableVerrouillez}"
+												header="#{messages.label_msg_alerte_tableVerrouillez}" widgetVar="confirmation">
+											<p:commandButton value="#{messages.label_msg_close}"
+											 onclick="PF('confirmation').hide()" type="button" />
+											</p:confirmDialog>
 										</div>
 									</h:form>
 								</p:panel>

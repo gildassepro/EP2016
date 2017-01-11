@@ -1,0 +1,167 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:uf="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+	template="/templates/template.xhtml">
+	<ui:define name="content">
+		<p:growl id="growl" showDetail="true" sticky="false" />
+		<div class="container-fluid">
+			<b:row>
+
+
+				<h:form id="forme">
+					<p:accordionPanel>
+						<p:tab title="#{messages.label_msg_groupe2_exam}">
+
+							<b:row styleClass="listPage">
+
+								<div id="menubutton">
+									<p:commandButton id="add"
+										styleClass="btn btn-primary submit-button"
+										value="#{messages.label_new}" title="#{messages.label_new}"
+										action="#{examModuleGroupeSearchServiceBean.initDualList('2')}"
+										update="@([id$=updatgroupeexam]) forme fdial1"
+										onclick="PF('updategroupeexam').show()"
+										icon="fa fa-fw fa-plus">
+									</p:commandButton>
+									<p:commandButton id="modifs" styleClass="btn btn-success"
+										value="#{messages.label_modifier}"
+										update="@([id$=updatgroupeexam]) forme fdial1"
+										onclick="PF('updategroupeexam').show()"
+										icon="fa fa-fw fa-pencil"
+										action="#{examModuleGroupeSearchServiceBean.initDualList('1')}">
+									</p:commandButton>
+
+									<p:commandButton id="printe"
+										styleClass="btn btn-primary submit-button"
+										title="#{messages.label_print}"
+										value="#{messages.label_print}" icon="fa fa-fw fa-print">
+										<p:dataExporter type="pdf" fileName="groupeexam"
+											pageOnly="true" target="" />
+									</p:commandButton>
+
+									<p:commandButton value="#{messages.label_modifier}"
+										icon="fa fa-fw fa-check-circle" styleClass="btn btn-primary"
+										rendered="#{!examModuleGroupeSearchServiceBean.isAction()}"
+										action="#{examModuleGroupeSearchServiceBean.addexammodulegroupe}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('addegroupeexam').hide()"
+										update="forme fdial growl" />
+									<p:commandButton value="#{messages.label_create}"
+										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
+										rendered="#{examModuleGroupeSearchServiceBean.isAction()}"
+										action="#{examModuleGroupeSearchServiceBean.addexammodulegroupe()}"
+										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('addegroupeexam').hide()"
+										update="growl forme fdial" />
+									<p:splitButton value="#{messages.label_options}"
+										actionListener="#{buttonView.save}" icon="ui-icon-gear">
+										<p:menuitem value="Update"
+											actionListener="#{buttonView.update}"
+											icon="ui-icon-arrowrefresh-1-w" />
+										<p:menuitem value="Delete"
+											actionListener="#{buttonView.delete}" ajax="false"
+											icon="ui-icon-close" />
+										<p:separator />
+										<p:menuitem value="Homepage" icon="ui-icon-extlink" />
+									</p:splitButton>
+									<p:commandButton id="past"
+										styleClass="btn btn-primary submit-button" ajax="false"
+										action="searchexammodulegroupe.xhtml?faces-redirect=true"
+										icon="fa fa-fw fa-arrow-left">
+									</p:commandButton>
+
+								</div>
+								<p:panel id="updatgroupeexam" widgetVar="updategroupeexam"
+									rendered="#{!examModuleGroupeSearchServiceBean.isAction3()}">
+									<h:form id="fdial1">
+										<h3 style="margin-top: 0">
+											<p:outputLabel value="#{messages.label_create_student_class}"
+												rendered="#{examModuleGroupeSearchServiceBean.isAction()}" />
+											<p:outputLabel value="#{messages.label_msg_groupe2_exam}"
+												rendered="#{!examModuleGroupeSearchServiceBean.isAction()}" />
+										</h3>
+										<div class="ui-grid ui-grid-responsive wrap class">
+											<div class="col-xs-12">
+
+												<div class="row">
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:outputLabel
+															value="#{messages.label_msg_module_exam_groupe}" />
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														<p:inputText styleClass="form-control" id="titlegroupe"
+															value="#{examModuleGroupeSearchServiceBean.examModuleGroupDto.title}"
+															placeholder="#{messages.label_msg_module_exam_groupe}" />
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-3">
+														
+													</div>
+												</div>
+
+									
+											</div>
+										</div>
+									</h:form>
+
+								</p:panel>
+
+								<p:panel id="addactivities" widgetVar="addegroupeexam"
+									rendered="#{!examModuleGroupeSearchServiceBean.isAction2()}">
+
+									<h:form id="fdial">
+										
+										<br></br>
+
+										<h:form id="form">
+											<p:dataTable var="groupexagrpe"
+												value="#{examModuleGroupeSearchServiceBean.listexamModuleGroup}"
+												paginator="true" rows="10" rowKey="#{groupexagrpe.idExamModuleGroup}"
+												paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+												rowsPerPageTemplate="5,10,15" selectionMode="single"
+												
+												id="groupexagrpeTable" lazy="true">
+												<p:column style="width:16px">
+													<p:rowToggler />
+												</p:column>
+												<p:column id="col1" priority="2"
+													filterBy="#{groupexagrpe.title}" filterMatchMode="contains">
+													<f:facet name="header">
+														<p:outputLabel value="#{messages.label_id}" />
+													</f:facet>
+													<h:outputText value="#{groupexagrpe.idExamModuleGroup}" />
+												</p:column>
+												<p:column id="col2" priority="1"
+													headerText="#{messages.label_msg_name_groupe_exam}"
+													sortBy="#{groupexagrpe.title}" filterBy="#{groupexagrpe.title}">
+													<h:outputText value="#{groupexagrpe.title}" />
+												</p:column>
+												<p:rowExpansion>
+													<p:panelGrid columns="2" columnClasses="label,value"
+														style="width:300px">
+														<f:facet name="header">
+
+														</f:facet>
+													</p:panelGrid>
+												</p:rowExpansion>
+											</p:dataTable>
+
+										</h:form>
+
+
+
+									</h:form>
+								</p:panel>
+
+							</b:row>
+						</p:tab>
+					</p:accordionPanel>
+				</h:form>
+			</b:row>
+		</div>
+	</ui:define>
+</ui:composition>
+

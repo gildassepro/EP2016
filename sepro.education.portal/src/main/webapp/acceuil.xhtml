@@ -42,23 +42,20 @@
 									src="resources/images/logo_upm.png" /></a>
 							</div>
 						</header>
-						<h3>Bienvenue sur votre campus numérique.</h3>
+						<h3>#{messages.label_start_msg1}</h3>
 						<b>
-							<p>Nous mettons à votre disposition des modules pour vous
-								rendre la vie facile cher apprenant , cher parents , cher
-								collaborateurs. Avec EP toute la gestion est centralisée et
-								permet de mieux suivre les activités de chaque eleves.</p>
+							<p>#{messages.label_start_msg2}</p>
 						</b>
-						<h3>Se connecter en tant que :</h3>
+						<h3>#{messages.label_start_msg6}</h3>
 							<div class="row">
 								<div class="col-md-3 col-sm-3 ">
-									<p:commandButton id="pa" styleClass="btn btn-success btn-lg"
+									<p:commandButton id="student" styleClass="btn btn-success btn-lg"
 										ajax="false" action="login.xhtml?faces-redirect=true"
 										style="width:100px;height:100px" icon="fa fa-fw fa-mortar-board">
 									</p:commandButton>
 								</div>
 								<div class="col-md-3 col-sm-3">
-									<h:outputLabel value="Apprenant" />
+									<h:outputLabel value="#{messages.label_start_msg3}" />
 								</div>
 								<div class="col-md-3 col-sm-3"></div>
 								<div class="col-md-3 col-sm-3"></div>
@@ -66,14 +63,14 @@
 							<br/>
 							<div class="row">
 								<div class="col-md-3 col-sm-3 ">
-									<p:commandButton id="app" style="width:100px;height:100px"
+									<p:commandButton id="parent" style="width:100px;height:100px"
 										styleClass="btn btn-info btn-lg" ajax="false"
 										action="login.xhtml?faces-redirect=true"
 										icon="fa fa-fw fa-slideshare">
 									</p:commandButton>
 								</div>
 								<div class="col-md-3 col-sm-3">
-									<h:outputLabel value="Parent" />
+									<h:outputLabel value="#{messages.label_start_msg4}" />
 								</div>
 								<div class="col-md-3 col-sm-3"></div>
 								<div class="col-md-3 col-sm-3"></div>
@@ -89,7 +86,7 @@
 									</p:commandButton>
 								</div>
 								<div class="col-md-3 col-sm-3">
-									<h:outputLabel value="Collaborateur" />
+									<h:outputLabel value="#{messages.label_start_msg5}" />
 								</div>
 								
 								<div class="col-md-3 col-sm-3"></div>
@@ -103,8 +100,7 @@
 						<footer>
 							<div class="colophon">
 								<span class="copyright"
-									style="color: #001e38; font-size: 0.875rem; margin: 0 10px;">Mention
-									légale | aide | © 2016 - <a class="author"
+									style="color: #001e38; font-size: 0.875rem; margin: 0 10px;">#{messages.label_footer_msg1}<a class="author"
 									href="http://www.groupesepro.com" target="_blank"
 									style="display: inline-block; color: #4697ce;">Groupe Sepro</a>
 								</span>
