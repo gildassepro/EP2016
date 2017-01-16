@@ -319,22 +319,16 @@ public class ProgrammeCalendarCreateServiceBean implements Serializable {
 	}
 	
 	public void updateModuleProgramme(){
-logger.debug("@@@@@@ JE SUIS LA @@@@@@@@@@@@@@");
+		
+       logger.debug("@@@@@@ JE SUIS LA @@@@@@@@@@@@@@");
 		
 		academicModuleDtoServicewsEndpoint = academicModuleDtoServicews.getAcademicModuleDtoServicewsImplPort();
-		selectedlistAcademicModule = academicModuleDtoServicewsEndpoint.getAllAcademicModuleServicews();
 		
-		for(AcademicModuleDto academic : programmeCalendarDto.getProgramme().getAcademicmodule().getAcademicmodule()){
-			for(AcademicModuleDto academics : selectedlistAcademicModule){
-				if(academics.getIdAcademicModule() == academic.getIdAcademicModule()){
-					selectedAcademicmodule.add(academics);
-					break;
-				}
-			}
-			
-		}
+		selectedAcademicmodule.addAll(programmeCalendarDto.getProgramme().getAcademicmodule().getAcademicmodule());
+		
 		
 		logger.debug("@@@@@@ JE SUIS A LA FIN @@@@@@@@@@@@@@");
+		
 	}
 	
 	
@@ -537,19 +531,9 @@ logger.debug("@@@@@@ JE SUIS LA @@@@@@@@@@@@@@");
 				listModulesAcademique = academicModuleDtoServicewsEndpoint
 						.getAllAcademicModuleServicews();
 
-				if (programmeCalendarDto != null) {
-					for (AcademicModuleDto programme : programmeCalendarDto
-							.getProgramme().getAcademicmodule()
-							.getAcademicmodule()) {
-						for (AcademicModuleDto modules : listModulesAcademique) {
-							if (modules.getIdAcademicModule() == programme
-									.getIdAcademicModule()) {
-								selectedAcademicmodule.add(modules);
-								break;
-							}
-						}
-					}
-				}
+				selectedAcademicmodule.addAll(programmeCalendarDto
+						.getProgramme().getAcademicmodule()
+						.getAcademicmodule());
 
 				moduleCalendarDto.setProgrammeCalendar(programmeCalendarDto);
 				selectedlistemodulecalendar = moduleCalendarDtoServicewsEndpoint
@@ -571,8 +555,6 @@ logger.debug("@@@@@@ JE SUIS LA @@@@@@@@@@@@@@");
 
 			academicModuleDtoServicewsEndpoint = academicModuleDtoServicews
 					.getAcademicModuleDtoServicewsImplPort();
-//			selectedAcademicmodule = academicModuleDtoServicewsEndpoint
-//					.getAllAcademicModuleServicews();
 
 			popuplistDtoServicewsEndpoint = popuplistDtoServicews
 					.getPopuplistDtoServicewsImplPort();

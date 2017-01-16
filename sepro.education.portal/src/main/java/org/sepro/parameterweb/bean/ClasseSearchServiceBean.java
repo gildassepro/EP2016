@@ -428,24 +428,9 @@ public class ClasseSearchServiceBean implements Serializable {
 			listdayofweek = dayofweekserServicewsEndpoint
 					.getAllDaysofWeekServicews();
 			
-
-			if (classeDto != null) {
-				classeServicewsEndpoint = classeServicews
-						.getClasseServicewsImplPort();
-				listjoursource = dayofweekserServicewsEndpoint
-						.getAllDaysofWeekServicews();
-				if (classeDto != null) {
-					for (DaysofWeekDto day : classeDto.getDayofweek()
-							.getDayofweek()) {
-						for (DaysofWeekDto jour : listjoursource) {
-							if (jour.getIdDayofWeek() == day.getIdDayofWeek()) {
-								listjourdestination.add(jour);
-								break;
-							}
-						}
-					}
-				}
-			}
+			listjourdestination.addAll(classeDto.getDayofweek()
+					.getDayofweek());
+			
 			
 			
 		} catch (Exception e) {

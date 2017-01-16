@@ -113,6 +113,7 @@ public class ClasseNoteModuleSearchServiceBean implements Serializable {
 
 	private ExamModuleGroupDto examModuleGroupDto = new ExamModuleGroupDto();
 	private ExamModuleGroupDto examModuleGroupDtos = new ExamModuleGroupDto();
+	private List<ExamModuleGroupDto> listExamModuleGroupDtos = new ArrayList<ExamModuleGroupDto>();
 	
 	private ClasseProgrammDto classeProgrammDto = new ClasseProgrammDto();
 	private List<ClasseProgrammDto> listClass = new ArrayList<ClasseProgrammDto>();
@@ -151,6 +152,13 @@ public class ClasseNoteModuleSearchServiceBean implements Serializable {
 	
 	
 	
+	public List<ExamModuleGroupDto> getListExamModuleGroupDtos() {
+		return listExamModuleGroupDtos;
+	}
+	public void setListExamModuleGroupDtos(
+			List<ExamModuleGroupDto> listExamModuleGroupDtos) {
+		this.listExamModuleGroupDtos = listExamModuleGroupDtos;
+	}
 	public List<ModuleAcademiExamDto> getListModuleAcademiExams() {
 		return listModuleAcademiExams;
 	}
@@ -442,6 +450,7 @@ public class ClasseNoteModuleSearchServiceBean implements Serializable {
 	}
 	
 	public void lisStudentExamGroup() {
+		
 		logger.debug("+++++++");
 		examGroupServicewsEndpoint = examGroupServicews
 				.getExamGroupServicewsImplPort();
@@ -512,8 +521,6 @@ public class ClasseNoteModuleSearchServiceBean implements Serializable {
 
 			}
 
-			
-			//listStudentExamModuleGroup = moduleAcademiExamServicewsEndpoint.searchModuleAcademiExamServicews(moduleAcademiExamDto);
 
 			logger.debug("@@@@@@ JE SUIS A LA FIN LOOOO @@@@@@@@@@@@@@");
 
@@ -530,19 +537,18 @@ public class ClasseNoteModuleSearchServiceBean implements Serializable {
 		
 		moduleCalendarDto.setProgrammeCalendar(programmeCalendarDto);
 		
-		listModuleCalendarDtos = moduleCalendarDtoServicewsEndpoint
-				.searchModuleCalendarServicews(moduleCalendarDto);
-	
+//		listModuleCalendarDtos = moduleCalendarDtoServicewsEndpoint
+//				.searchModuleCalendarServicews(moduleCalendarDto);
 		
-		logger.debug("+++++++" + listModuleCalendarDtos.size());
+		examGroupDtos.setAcademicModule(moduleCalendarDto.getAcademicModule());
+		logger.debug("+++++++?????" + examGroupDtos.getAcademicModule().getModuleName());
+		listExamModuleGroupDtos = examModuleGroupServicewsEndpoint.searchExamModuleGroupServicews(examGroupDtos.getExamModuleGroup());
 		
-//		for (ModuleCalendarDto mod : listModuleCalendarDto){
-//			if(mod.getAcademicModule().getIdAcademicModule().equals(examGroupDto.getAcademicModule().getIdAcademicModule())){
-//				
-//				listModuleCalendarDtos.add(mod);
-//				
-//			}
-//		}
+		
+		logger.debug("+++++++" + listExamModuleGroupDtos.size());
+		logger.debug("++222++++" + listprogrammeC.size());
+		
+		
 		
 		
 	}
@@ -559,7 +565,7 @@ public class ClasseNoteModuleSearchServiceBean implements Serializable {
 		}
 	}
 	
-	public Double getNote(ModuleCalendarDto modCalendar, StudentDto studentDto) {
+	public Double getNote(ExamModuleGroupDto examodulgroupe, StudentDto studentDto) {
 		if (idStudent == 0L) {
 			coefficientExamGroup = 0.0;
 			sommeExamGroup = 0.0;
@@ -573,6 +579,10 @@ public class ClasseNoteModuleSearchServiceBean implements Serializable {
 		}
 		
 		ModuleAcademiExamDto modC = new ModuleAcademiExamDto();
+		
+		examGroupDto.setExamModuleGroup(examodulgroupe);
+		moduleCalendarDto.setAcademicModule(examGroupDto.getAcademicModule());
+		
 		modC.setExamModuleGroup(examGroupDto.getExamModuleGroup());
 		modC.setStudent(studentDto);
 		
@@ -585,14 +595,13 @@ public class ClasseNoteModuleSearchServiceBean implements Serializable {
 		if (listModuleAcademiExams.size() == 1) {
 			if (sommeExamGroup == 0.0) {
 				sommeExamGroup = (double) listModuleAcademiExams.get(0).getMark()
-						* modCalendar.getCoefficient();
-				coefficientExamGroup = (double) modCalendar.getCoefficient();
+						* moduleCalendarDto.getCoefficient();
+				coefficientExamGroup = (double) moduleCalendarDto.getCoefficient();
 			} else {
 				sommeExamGroup = sommeExamGroup
-						+ ((double) listModuleAcademiExams.get(0).getMark() * modCalendar
-								.getCoefficient());
+						+ ((double) listModuleAcademiExams.get(0).getMark() * moduleCalendarDto.getCoefficient());
 				coefficientExamGroup = coefficientExamGroup
-						+ modCalendar.getCoefficient();
+						+ moduleCalendarDto.getCoefficient();
 
 			}
 			return (double)listModuleAcademiExams.get(0).getMark();

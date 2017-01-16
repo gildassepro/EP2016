@@ -498,16 +498,11 @@ public class ExamGroupeSearchServiceBean implements Serializable{
 		
 		examModuleGroupServicewsEndpoint = examModuleGroupServicews.getExamModuleGroupServicewsImplPort();
 		classeServicewsEndpoint = classeServicews.getClasseServicewsImplPort();
-		
-//		moduleCalendarDto.setAcademicModule(examGroupDtos2.getAcademicModule());
-//		listModuleCalendarDtos = moduleCalendarDtoServicewsEndpoint.searchModuleCalendarServicews(moduleCalendarDto);
+
 		
 		listAcademicYear = popuplistDtoServicewsEndpoint
 				.searchPopuplistDtoServicews("academic_years");
 		
-//		listClass = classeProgrammServicewsEndpoint
-//				.searchClasseProgrammServicews(examGroupDtos2.getClasseProgramm());
-
 
 	}
 
@@ -527,22 +522,20 @@ public class ExamGroupeSearchServiceBean implements Serializable{
 		listAcademicYear = popuplistDtoServicewsEndpoint
 				.searchPopuplistDtoServicews("academic_years");
 		
-		examGroupDtos2.setAcademicModule(moduleCalendarDto.getAcademicModule());
-		
-//		listeexamgroupes = examGroupServicewsEndpoint
-//				.searchExamGroupServicews(examGroupDtos2);
-		
-		classeProgrammDto.setAcademicYear(examGroupDtos2.getAcademicYear());
-		
-		listClass = classeProgrammServicewsEndpoint
-				.searchClasseProgrammServicews(classeProgrammDto);
-		
-		listModuleCalendarDtos = moduleCalendarDtoServicewsEndpoint.searchModuleCalendarServicews(moduleCalendarDto);
-//		listexamModuleGroup = examModuleGroupServicewsEndpoint.searchExamModuleGroupServicews(examModuleGroupDtos);
+	
 
 	}
 
-
+	public void updatexamgroup(){
+		
+		examGroupServicewsEndpoint = examGroupServicews.getExamGroupServicewsImplPort();
+		
+		examGroupDtos2.setAcademicModule(moduleCalendarDto.getAcademicModule());
+		
+		listeexamgroupe = examGroupServicewsEndpoint.searchExamGroupServicews(examGroupDtos2);
+		
+	}
+	
 	public Boolean addMessage() {
 
 		String summary = value2 ? rb.getString("label_msg_checked") : rb

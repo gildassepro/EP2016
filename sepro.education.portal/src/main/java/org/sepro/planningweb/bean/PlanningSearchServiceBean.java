@@ -1128,10 +1128,12 @@ public class PlanningSearchServiceBean implements Serializable {
 				"Classe selectionnée", event.getObject().toString()));
 	}
 
-	public void onSelectYears(SelectEvent event) {
-		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Année selectionnée", event.getObject().toString()));
+	public void onSelectYears() {
+		
+		classeProgrammServicewsEndpoint = classeProgrammServicews.getClasseProgrammServicewsImplPort();
+		classeProgrammDto.setAcademicYear(selectedEventsClasse.getAcademicYear());
+		listClass = classeProgrammServicewsEndpoint.searchClasseProgrammServicews(classeProgrammDto);
+		
 	}
 
 	public void onDateSelect(SelectEvent selectEvent) {
@@ -1487,8 +1489,6 @@ public class PlanningSearchServiceBean implements Serializable {
 			academicModuleDtoServicewsEndpoint = academicModuleDtoServicews
 					.getAcademicModuleDtoServicewsImplPort();
 
-			listClass = classeProgrammServicewsEndpoint
-					.searchClasseProgrammServicews(classeProgrammDto);
 			listAcademicYear = popuplistDtoServicewsEndpoint
 					.searchPopuplistDtoServicews("academic_years");
 			listTypeEvent = popuplistDtoServicewsEndpoint

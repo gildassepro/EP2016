@@ -295,25 +295,8 @@ public class MatiereSearchServiceBean implements Serializable {
 						.getPopuplistDtoServicewsImplPort();  
 				listDesModuleAcademicSource = academicModuleDtoServicewsEndpoint
 						.getAllAcademicModuleServicews();
-				logger.debug("*********LISTE DES MODULES SELECTIONNE 00**********"+selectedAcademicmodule.size());
-				if (matiereDto != null) {
-					logger.debug("+++++JE SUIS LA AAAAAAAAAA+*+*+*+");
-					logger.debug("+++++JE SUIS LA A222222++++++++"+matiereDto.getAcademicmodules().getAcademicmodule().size());
-					for (AcademicModuleDto matiere : matiereDto
-							.getAcademicmodules().getAcademicmodule())
-					{ 
-						logger.debug("+++++JE SUIS LA A22277++++++++"+matiereDto.getAcademicmodules().getAcademicmodule());
-						for (AcademicModuleDto modules : listDesModuleAcademicSource) {
-							logger.debug("+++++JE SUIS LA BBBBBBBBB+*+*+*+");
-							if (modules.getIdAcademicModule() == matiere
-									.getIdAcademicModule()) {
-								selectedAcademicmodule.add(modules);
-								logger.debug("++++++LISTE DES MODULES SELECTIONNE 1111********** "+selectedAcademicmodule.size());
-								break;
-							}
-						}
-					}
-				}
+				selectedAcademicmodule.addAll(matiereDto.getAcademicmodules().getAcademicmodule());
+				
 
 			}
 

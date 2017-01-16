@@ -386,25 +386,6 @@ public class ProgrammeSearchServiceBean implements Serializable {
 	}
 	
 	
-//	private List<ModuleCalendarDto> getListModuleCalendarSelected(){
-//		listModuleCalendarSelected = new ArrayList<ModuleCalendarDto>();
-//		
-//		if(programmeCalendarDto.getProgramme() != null){
-//			ModuleCalendarDto modCal = new ModuleCalendarDto();
-//			modCal.setProgrammeCalendar(programmeCalendarDto);
-//			
-//			List<ModuleCalendarDto> listModuleP = moduleCalendarDtoServicewsEndpoint.getAllModuleCalendarServicews();
-//			
-//			for(ModuleCalendarDto m : listModuleP) {
-//				if(m.getProgrammeCalendar().getIdProgrammeCalendar() == programmeCalendarDto.getIdProgrammeCalendar()){
-//					listModuleCalendarSelected.add(m);
-//				}
-//			}
-//		}
-//		return listModuleCalendarSelected;
-//		
-//	}
-			
 	
 	public void updateProgramme() {
 		logger.debug("DEBUT Modification PROGRAMME");
@@ -522,21 +503,10 @@ public class ProgrammeSearchServiceBean implements Serializable {
 						.getAcademicModuleDtoServicewsImplPort();
 				listDesModuleAcademicSource = academicModuleDtoServicewsEndpoint
 						.getAllAcademicModuleServicews();
-				logger.debug("+++++++++++++++TEST SIZE++++++++++++"+selectedAcademicmodule.size());
+				
 
-				if (programmeDto != null) {
-					for (AcademicModuleDto programme : programmeDto
-							.getAcademicmodule().getAcademicmodule()) {
-						for (AcademicModuleDto modules : listDesModuleAcademicSource) {
-							if (modules.getIdAcademicModule() == programme
-									.getIdAcademicModule()) {
-								selectedAcademicmodule.add(modules);
-								logger.debug("+++++++++++++++TEST SIZE11111++++++++++++"+selectedAcademicmodule.size());
-								break;
-							}
-						}
-					}
-				}
+				selectedAcademicmodule.addAll(programmeDto.getAcademicmodule().getAcademicmodule());
+				logger.debug("+++++++++++++++TEST SIZE++++++++++++"+selectedAcademicmodule.size());
 
 			}
 

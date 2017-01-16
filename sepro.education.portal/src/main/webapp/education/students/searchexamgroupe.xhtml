@@ -51,7 +51,6 @@
 									<p:commandButton value="#{messages.label_create}"
 										styleClass="btn btn-primary" icon="fa fa-fw fa-check-circle"
 										rendered="#{examGroupeSearchServiceBean.isAction()}"
-										disabled="#{examGroupeSearchServiceBean.test}"
 										action="#{examGroupeSearchServiceBean.addGroupExam()}"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('addegroupeexam').hide()"
 										update="growl forme fdial" />

@@ -209,21 +209,10 @@ public class ModuleAcademiqueSearchServiceBean implements Serializable {
 				logger.debug("JE SUIS EN FIN DE ZONE 1******"
 						+ moduleacademiqueDto.getRequiredModules()
 								.getRequiredModule().size());
-				if (moduleacademiqueDto != null) {
-					logger.debug("JE SUIS DANS LA ZONE 2 ****"
-							+ moduleacademiqueDto.getRequiredModules()
-									.getRequiredModule().size());
-					for (AcademicModuleDto requiredmodule : moduleacademiqueDto
-							.getRequiredModules().getRequiredModule()) {
-						for (AcademicModuleDto mod : listmoduleacademique) {
-							if (mod.getIdAcademicModule() == requiredmodule
-									.getIdAcademicModule()) {
-								selectedacademiquemodule.add(mod);
-							}
-						}
-
-					}
-				}
+				selectedacademiquemodule.addAll(moduleacademiqueDto
+						.getRequiredModules().getRequiredModule());
+				
+				
 			}
 
 		} catch (Exception e) {

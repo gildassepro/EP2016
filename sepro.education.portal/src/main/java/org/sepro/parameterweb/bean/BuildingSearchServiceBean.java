@@ -318,17 +318,9 @@ public class BuildingSearchServiceBean implements Serializable {
 				listSubEstablishment = subEstablishmentServicewsEndpoint
 						.getAllSubEstablishmentServicews();
 				listCleanHoursSource = cleanHoursServicewsEndpoint.getAllCleanHoursServicews();
-					
-				if (buildingDto != null) {
-					for (CleanHoursDto cleanHoursDto : buildingDto.getCleaningHours().getCleaningHour()) {
-						for (CleanHoursDto cleanCleanHoursDtos : listCleanHoursSource) {
-							if (cleanCleanHoursDtos.getIdCleanHours() == cleanHoursDto.getIdCleanHours()) {
-								listCleanHoursDestination.add(cleanCleanHoursDtos);
-								break;
-							}
-						}
-					}
-				}
+				
+				listCleanHoursDestination.addAll(buildingDto.getCleaningHours().getCleaningHour());
+				
 				logger.debug("end init ChildMenuCreateServiceBean");
 			}
 
